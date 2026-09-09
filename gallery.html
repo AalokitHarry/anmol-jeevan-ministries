@@ -243,15 +243,17 @@
   footer p{font-size:.86rem}
   footer .verse-sm{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);margin-bottom:22px;font-size:1.05rem}
 
-  /* desktop: whole page fits one screen, no scroll, collage fills edge-to-edge */
+  /* desktop: whole page fits one screen, no scroll, collage is a full-bleed layer behind hero/footer */
   @media(min-width:861px){
     html,body{height:100%}
-    body{display:flex;flex-direction:column;overflow:hidden}
-    .ghero{flex:none;min-height:0;padding:82px 0 12px}
-    #collageSection{flex:1;min-height:0;padding:0;display:flex}
+    body{display:flex;flex-direction:column;overflow:hidden;position:relative;justify-content:space-between}
+    .ghero{flex:none;min-height:0;padding:78px 0 16px;position:relative;z-index:2;
+      background:linear-gradient(180deg,#07081a 0%,#07081a 38%,rgba(7,8,26,.7) 68%,rgba(7,8,26,0) 100%)}
+    #collageSection{position:absolute;inset:0;z-index:1;padding:0;display:flex}
     .scatter-wrap{flex:1;width:100%;position:relative;overflow:hidden}
     .scatter-canvas{position:absolute;top:50%;left:50%;transform-origin:center center}
-    footer#siteFooter{flex:none;padding:8px 0}
+    footer#siteFooter{flex:none;padding:16px 0;position:relative;z-index:2;
+      background:linear-gradient(0deg,#07081a 0%,#07081a 42%,rgba(7,8,26,.7) 72%,rgba(7,8,26,0) 100%)}
     footer#siteFooter .verse-sm,
     footer#siteFooter .addr-line,
     footer#siteFooter .copyright-line{display:none}
