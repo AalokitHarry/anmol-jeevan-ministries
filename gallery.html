@@ -112,14 +112,9 @@
     background:rgba(10,11,34,.78);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
     box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:rgba(255,255,255,.14);
   }
-  .brand{display:flex;align-items:center;gap:12px;color:var(--cream);transition:color .4s}
-  nav.scrolled .brand{color:#eae7f5}
-  .brand .mark{width:34px;height:34px;flex:none;border-radius:50%;
-    background:radial-gradient(circle at 50% 40%,var(--gold-soft),var(--gold) 60%,var(--clay));
-    animation:markPulse 4s ease-in-out infinite}
-  @keyframes markPulse{0%,100%{box-shadow:0 0 22px rgba(232,163,61,.5)}50%{box-shadow:0 0 32px rgba(232,163,61,.85)}}
-  .brand b{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;letter-spacing:.01em}
-  .brand span{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;opacity:.7;font-weight:500;font-family:'Inter',sans-serif}
+  .brand{display:flex;align-items:center;color:var(--cream);transition:color .4s}
+  .brand-logo{height:36px;width:auto;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+  .brand-logo-lg{height:46px}
   .navlinks{display:flex;gap:26px;align-items:center}
   .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
   nav.scrolled .navlinks a{color:#eae7f5}
@@ -249,9 +244,8 @@
 <div class="grain"></div>
 
 <nav id="nav">
-  <a class="brand" href="index.html">
-    <span class="mark"></span>
-    <span><b>Anmol Jeevan</b><span>Ministries · AJM</span></span>
+  <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
+    <img class="brand-logo" src="img/logo.png" alt="Anmol Jeevan Ministries">
   </a>
   <button class="menutoggle" id="menutoggle" aria-label="Menu">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
@@ -433,9 +427,8 @@
 <footer id="siteFooter">
   <div class="wrap">
     <p class="verse-sm">"…that they may have life, and have it to the full." — John 10:10</p>
-    <a class="brand" href="index.html">
-      <span class="mark"></span>
-      <span><b>Anmol Jeevan Ministries</b><span>अनमोल जीवन · AJM Family</span></span>
+    <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
+      <img class="brand-logo brand-logo-lg" src="img/logo.png" alt="Anmol Jeevan Ministries">
     </a>
     <p class="addr-line" style="margin-top:16px">Indore, Madhya Pradesh, India · Hindi-language Christian ministry</p>
     <p class="copyright-line" style="margin-top:8px;opacity:.7">© <span id="yr"></span> Anmol Jeevan Ministries. To God be the glory.</p>
