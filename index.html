@@ -181,10 +181,9 @@
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
   nav.scrolled .menutoggle{color:var(--on-surface)}
 
-  /* floating theme toggle — stacked above the float CTA, same side */
+  /* floating theme toggle — sits beside the float CTA */
   .theme-fab{
-    position:fixed;bottom:96px;right:26px;z-index:70;
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;justify-content:center;flex:none;
     width:52px;height:52px;border-radius:50%;
     background:var(--night);color:var(--cream);
     border:1px solid rgba(232,163,61,.35);
@@ -430,9 +429,10 @@
   footer p{font-size:.86rem}
   footer .verse-sm{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);margin-bottom:22px;font-size:1.05rem}
 
-  /* floating CTA */
+  /* floating CTA + theme toggle, side by side */
+  .float-stack{position:fixed;bottom:26px;right:26px;z-index:70;display:flex;align-items:center;gap:12px}
   .float-cta{
-    position:fixed;bottom:26px;right:26px;z-index:70;display:flex;align-items:center;gap:10px;
+    display:flex;align-items:center;gap:10px;
     padding:14px 22px;border-radius:100px;background:var(--night);color:var(--cream);
     font-weight:600;font-size:.92rem;
     box-shadow:0 16px 40px -10px rgba(20,10,40,.5),0 0 0 1px rgba(232,163,61,.35);
@@ -460,8 +460,10 @@
     .watch-grid{grid-template-columns:1fr}
     .leader-grid{grid-template-columns:1fr}
     .stats-grid{grid-template-columns:1fr}
-    .float-cta{right:16px;bottom:16px;padding:12px 18px;font-size:.85rem}
-    .theme-fab{right:16px;bottom:74px;width:44px;height:44px}
+    .float-stack{right:16px;bottom:16px;gap:8px}
+    .float-cta{padding:12px 18px;font-size:.85rem}
+    .theme-fab{width:44px;height:44px}
+    .theme-fab svg{width:18px;height:18px}
     .theme-fab svg{width:18px;height:18px}
   }
 </style>
@@ -743,14 +745,15 @@
   </div>
 </footer>
 
-<a class="float-cta" id="floatCta" href="#connect" aria-label="Connect with AJM Family">
-  <span class="pulse-dot"></span> Connect
-</a>
-
-<button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-</button>
+<div class="float-stack">
+  <a class="float-cta" id="floatCta" href="#connect" aria-label="Connect with AJM Family">
+    <span class="pulse-dot"></span> Connect
+  </a>
+  <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
 
 <script>
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
