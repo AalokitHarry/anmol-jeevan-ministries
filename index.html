@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta name="theme-color" content="#faf6ee">
+<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anmol Jeevan Ministries (AJM) — Apostle Vishal Samuel</title>
 <meta name="description" content="Anmol Jeevan Ministries (AJM / AJMI) — the AJM Family, proclaiming the love of Jesus to all nations. A Hindi-language ministry led by Apostle Vishal Samuel & Pastor Juhi Vishal, based in Indore.">
 <meta name="keywords" content="Anmol Jeevan Ministries, AJM, AJM Family, AJMI, Apostle Vishal Samuel, Pastor Vishal Samuel, Pastor Juhi Vishal, Indore church, Hindi Christian ministry">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0a0b22">
 <link rel="canonical" href="https://ajmfamily.site/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -969,6 +969,8 @@
       const isDark=root.getAttribute('data-theme')==='dark';
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
+      const metaTheme=document.querySelector('meta[name="theme-color"]');
+      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }

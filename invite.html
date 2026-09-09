@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta name="theme-color" content="#faf6ee">
+<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invite — Anmol Jeevan Ministries (AJM)</title>
 <meta name="description" content="Invite Apostle Vishal Samuel or Pastor Juhi Vishal of Anmol Jeevan Ministries (AJM / AJM Family) to minister at your revival conference, church service, or special event.">
 <meta name="keywords" content="Anmol Jeevan Ministries, AJM, AJM Family, AJMI, Apostle Vishal Samuel, Pastor Vishal Samuel, Pastor Juhi Vishal, invite a speaker, invite a pastor, Indore church">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0a0b22">
 <link rel="canonical" href="https://ajmfamily.site/invite.html">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -405,7 +405,7 @@
 
       <div class="invite-panel">
         <h2>Our Vision and Yours</h2>
-        <p class="instructions">Apostle Vishal Samuel would need a minimum of 45 minutes and a maximum of 60 minutes for every session he ministers in. We intend to share information about AJM Family's podcasts, worship music, and online messages during the visit — please allow us to collect the email addresses of those interested. If there is any change or cancellation of the event, we ask that our host inform us at once. Apostle Vishal Samuel does not require an honorarium when he travels, though one is always welcomed. We'd also be grateful if you would consider taking an offering during one of the sessions toward AJM's outreach ministry.</p>
+        <p class="instructions">Apostle Vishal Samuel would need a minimum of 45 minutes and a maximum of 60 minutes for every session he ministers in. We intend to share information about AJM Family's podcasts, worship music, and online messages during the visit — please allow us to collect the email addresses of those interested. If there is any change or cancellation of the event, we ask that our host inform us at once.</p>
         <div class="field">
           <label>Share your heart! <span class="req">*</span></label>
           <p class="hint" style="margin-bottom:10px">What do you see as an outcome of this meeting or conference? Do you have a message or request for Apostle Vishal Samuel? Please share below.</p>
@@ -499,6 +499,8 @@
       const isDark=root.getAttribute('data-theme')==='dark';
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
+      const metaTheme=document.querySelector('meta[name="theme-color"]');
+      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }
