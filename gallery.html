@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery — Anmol Jeevan Ministries (AJM)</title>
 <meta name="description" content="Moments from Anmol Jeevan Ministries (AJM / AJMI) — worship gatherings, fellowship, and our Independence Day Celebration in Indore.">
@@ -73,38 +72,6 @@
     --ease-out:cubic-bezier(.16,1,.3,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
     --ease-smooth:cubic-bezier(.4,0,.2,1);
-    --surface:#faf6ee;
-    --surface-2:#f3ecdd;
-    --on-surface:#2a2540;
-    --on-surface-muted:#6b6580;
-    --hairline:rgba(42,37,64,.08);
-    --hairline-2:rgba(42,37,64,.22);
-    --nav-glass:rgba(250,246,238,.78);
-    --nav-glass-brd:rgba(255,255,255,.6);
-    color-scheme:light;
-  }
-  @media(prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --surface:#0d0e28;
-      --surface-2:#161a3d;
-      --on-surface:#eae7f5;
-      --on-surface-muted:#a29dc4;
-      --hairline:rgba(255,255,255,.08);
-      --hairline-2:rgba(255,255,255,.22);
-      --nav-glass:rgba(10,11,34,.78);
-      --nav-glass-brd:rgba(255,255,255,.14);
-      color-scheme:dark;
-    }
-  }
-  :root[data-theme="dark"]{
-    --surface:#0d0e28;
-    --surface-2:#161a3d;
-    --on-surface:#eae7f5;
-    --on-surface-muted:#a29dc4;
-    --hairline:rgba(255,255,255,.08);
-    --hairline-2:rgba(255,255,255,.22);
-    --nav-glass:rgba(10,11,34,.78);
-    --nav-glass-brd:rgba(255,255,255,.14);
     color-scheme:dark;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -115,12 +82,11 @@
   }
   body{
     font-family:'Inter','Noto Sans Devanagari',sans-serif;
-    background:var(--surface);
-    color:var(--on-surface);
+    background:#0d0e28;
+    color:#eae7f5;
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
-    transition:background .4s,color .4s;
   }
   .dev{font-family:'Noto Sans Devanagari',sans-serif}
   h1,h2,h3,.display{font-family:'Fraunces',serif}
@@ -143,11 +109,11 @@
   }
   nav.scrolled{
     top:14px;width:min(92%,1080px);padding:10px 22px;border-radius:100px;
-    background:var(--nav-glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-    box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:var(--nav-glass-brd);
+    background:rgba(10,11,34,.78);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+    box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:rgba(255,255,255,.14);
   }
   .brand{display:flex;align-items:center;gap:12px;color:var(--cream);transition:color .4s}
-  nav.scrolled .brand{color:var(--on-surface)}
+  nav.scrolled .brand{color:#eae7f5}
   .brand .mark{width:34px;height:34px;flex:none;border-radius:50%;
     background:radial-gradient(circle at 50% 40%,var(--gold-soft),var(--gold) 60%,var(--clay));
     animation:markPulse 4s ease-in-out infinite}
@@ -156,30 +122,13 @@
   .brand span{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;opacity:.7;font-weight:500;font-family:'Inter',sans-serif}
   .navlinks{display:flex;gap:26px;align-items:center}
   .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
-  nav.scrolled .navlinks a{color:var(--on-surface)}
+  nav.scrolled .navlinks a{color:#eae7f5}
   .navlinks a:hover{opacity:1;color:var(--gold)}
   .navlinks .btn{background:var(--gold);color:var(--night);padding:9px 18px;border-radius:100px;font-weight:600;opacity:1;
     transition:background .3s var(--ease-smooth),transform .3s var(--ease-spring)}
   .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
-  nav.scrolled .menutoggle{color:var(--on-surface)}
-  .theme-toggle{
-    display:flex;align-items:center;justify-content:center;flex:none;
-    width:38px;height:38px;border-radius:50%;margin-left:6px;
-    border:1px solid rgba(250,246,238,.35);background:transparent;color:var(--cream);
-    cursor:pointer;transition:background .3s,color .4s,border-color .4s,transform .3s var(--ease-spring);
-  }
-  nav.scrolled .theme-toggle{color:var(--on-surface);border-color:var(--hairline-2)}
-  .theme-toggle:hover{background:var(--hairline);transform:scale(1.06)}
-  .theme-toggle svg{width:18px;height:18px}
-  .theme-toggle .icon-sun{display:none}
-  .theme-toggle .icon-moon{display:block}
-  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block}
-  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
-  @media(prefers-color-scheme:dark){
-    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:block}
-    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:none}
-  }
+  nav.scrolled .menutoggle{color:#eae7f5}
 
   /* compact page hero */
   .ghero{position:relative;min-height:34vh;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--cream);
@@ -275,7 +224,6 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
-    .navlinks .theme-toggle{margin:8px 0 0;color:var(--cream)!important;border-color:rgba(250,246,238,.35)!important}
     .menutoggle{display:block;z-index:60}
     /* absolute scatter is unusable at phone widths — fall back to a simple overlapping grid, straight (no rotation) */
     .scatter-wrap{position:static;overflow:visible;padding:0}
@@ -316,10 +264,6 @@
     <a href="gallery.html">Gallery</a>
     <a href="index.html#leaders">Leaders</a>
     <a href="index.html#connect" class="btn">Connect</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
   </div>
 </nav>
 
@@ -541,19 +485,6 @@
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
   tog.addEventListener('click',()=>links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
-
-  // theme toggle
-  const themeBtn=document.getElementById('themeToggle');
-  if(themeBtn){
-    themeBtn.addEventListener('click',()=>{
-      const root=document.documentElement;
-      const isDark=root.getAttribute('data-theme')==='dark'
-        || (!root.hasAttribute('data-theme') && matchMedia('(prefers-color-scheme:dark)').matches);
-      const next=isDark?'light':'dark';
-      root.setAttribute('data-theme',next);
-      try{localStorage.setItem('ajm-theme',next);}catch(e){}
-    });
-  }
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){
