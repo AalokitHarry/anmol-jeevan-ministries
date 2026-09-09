@@ -65,6 +65,63 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does AJM stand for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AJM stands for Anmol Jeevan Ministries — also known as AJM Family or AJMI — a Hindi-language Christian ministry based in Indore, Madhya Pradesh, India."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is Apostle Vishal Samuel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apostle Vishal Samuel, also known as Pastor Vishal Samuel, is the founder and lead pastor of Anmol Jeevan Ministries (AJM). He leads the ministry's teaching, worship, and vision, with a desire to proclaim the love of Jesus to all nations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is Pastor Juhi Vishal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pastor Juhi Vishal serves alongside Apostle Vishal Samuel at Anmol Jeevan Ministries, pouring into the AJM Family through ministry, worship, and pastoral care."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is AJM Family the same as Anmol Jeevan Ministries?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AJM Family, AJM, and AJMI are all names people use for Anmol Jeevan Ministries — the same Hindi-language ministry led by Apostle Vishal Samuel and Pastor Juhi Vishal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is Anmol Jeevan Ministries located?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anmol Jeevan Ministries (AJM) is based in Indore, Madhya Pradesh, India, with a weekly in-person Sunday gathering plus daily online prayer meetings on Zoom."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I join a gathering with the AJM Family?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You're welcome any Sunday for worship, or join the Zoom prayer meetings during the week. Visit the Events page to reserve a spot or get the Zoom link."
+      }
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -407,6 +464,19 @@
   .leader .aka{color:var(--on-surface-muted);font-size:.78rem;font-style:italic;margin:-8px 0 14px}
   .leader p{color:var(--on-surface-muted);font-size:.96rem}
 
+  /* faq */
+  .faq{background:var(--surface)}
+  .faq h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 40px}
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  .faq-item{background:var(--surface-2);border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+  .faq-item summary{list-style:none;cursor:pointer;padding:22px 26px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;font-weight:600;font-size:1.05rem;font-family:'Fraunces',serif}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:'+';font-size:1.5rem;color:var(--clay);transition:transform .3s var(--ease-spring);flex:none;line-height:1}
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item p{padding:0 26px 22px;color:var(--on-surface-muted);font-size:.96rem;line-height:1.7}
+  .faq-item p a{color:var(--clay);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+
   /* connect */
   .connect{background:var(--night);color:var(--cream);text-align:center}
   .connect h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:500;line-height:1.08;margin:14px 0 18px}
@@ -708,6 +778,39 @@
         <div class="role">Pastor</div>
         <p>Serving alongside in ministry, worship, and pastoral care — pouring into the AJM Family with grace.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq reveal" id="faq">
+  <div class="wrap">
+    <div style="text-align:center"><span class="eyebrow">Good to know</span></div>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What does AJM stand for?</summary>
+        <p>AJM stands for Anmol Jeevan Ministries — also known as AJM Family or AJMI — a Hindi-language Christian ministry based in Indore, Madhya Pradesh, India.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who is Apostle Vishal Samuel?</summary>
+        <p>Apostle Vishal Samuel, also known as Pastor Vishal Samuel, is the founder and lead pastor of Anmol Jeevan Ministries (AJM). He leads the ministry's teaching, worship, and vision, with a desire to proclaim the love of Jesus to all nations.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who is Pastor Juhi Vishal?</summary>
+        <p>Pastor Juhi Vishal serves alongside Apostle Vishal Samuel at Anmol Jeevan Ministries, pouring into the AJM Family through ministry, worship, and pastoral care.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is AJM Family the same as Anmol Jeevan Ministries?</summary>
+        <p>Yes. AJM Family, AJM, and AJMI are all names people use for Anmol Jeevan Ministries — the same Hindi-language ministry led by Apostle Vishal Samuel and Pastor Juhi Vishal.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where is Anmol Jeevan Ministries located?</summary>
+        <p>Anmol Jeevan Ministries (AJM) is based in Indore, Madhya Pradesh, India, with a weekly in-person Sunday gathering plus daily online prayer meetings on Zoom.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How can I join a gathering with the AJM Family?</summary>
+        <p>You're welcome any Sunday for worship, or join our Zoom prayer meetings during the week. Visit our <a href="events.html">Events page</a> to reserve your spot or get the Zoom link.</p>
+      </details>
     </div>
   </div>
 </section>
