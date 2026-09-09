@@ -95,19 +95,6 @@
     --nav-glass-brd:rgba(255,255,255,.6);
     color-scheme:light;
   }
-  @media(prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --surface:#0d0e28;
-      --surface-2:#161a3d;
-      --on-surface:#eae7f5;
-      --on-surface-muted:#a29dc4;
-      --hairline:rgba(255,255,255,.08);
-      --hairline-2:rgba(255,255,255,.22);
-      --nav-glass:rgba(10,11,34,.78);
-      --nav-glass-brd:rgba(255,255,255,.14);
-      color-scheme:dark;
-    }
-  }
   :root[data-theme="dark"]{
     --surface:#0d0e28;
     --surface-2:#161a3d;
@@ -167,10 +154,6 @@
   nav.scrolled .logo-light{display:block}
   :root[data-theme="dark"] nav.scrolled .logo-dark{display:block}
   :root[data-theme="dark"] nav.scrolled .logo-light{display:none}
-  @media(prefers-color-scheme:dark){
-    :root:not([data-theme="light"]) nav.scrolled .logo-dark{display:block}
-    :root:not([data-theme="light"]) nav.scrolled .logo-light{display:none}
-  }
   .navlinks{display:flex;gap:30px;align-items:center}
   .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
   nav.scrolled .navlinks a{color:var(--on-surface)}
@@ -180,23 +163,25 @@
   .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
   nav.scrolled .menutoggle{color:var(--on-surface)}
-  .theme-toggle{
-    display:flex;align-items:center;justify-content:center;flex:none;
-    width:38px;height:38px;border-radius:50%;margin-left:6px;
-    border:1px solid rgba(250,246,238,.35);background:transparent;color:var(--cream);
-    cursor:pointer;transition:background .3s,color .4s,border-color .4s,transform .3s var(--ease-spring);
+
+  /* floating theme toggle — bottom-left, opposite the float CTA */
+  .theme-fab{
+    position:fixed;bottom:26px;left:26px;z-index:70;
+    display:flex;align-items:center;justify-content:center;
+    width:52px;height:52px;border-radius:50%;
+    background:var(--night);color:var(--cream);
+    border:1px solid rgba(232,163,61,.35);
+    box-shadow:0 16px 40px -10px rgba(20,10,40,.5),0 0 0 1px rgba(232,163,61,.15);
+    opacity:1;transform:none;pointer-events:auto;cursor:pointer;
+    transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s;
   }
-  nav.scrolled .theme-toggle{color:var(--on-surface);border-color:var(--hairline-2)}
-  .theme-toggle:hover{background:var(--hairline);transform:scale(1.06)}
-  .theme-toggle svg{width:18px;height:18px}
-  .theme-toggle .icon-sun{display:none}
-  .theme-toggle .icon-moon{display:block}
-  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block}
-  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
-  @media(prefers-color-scheme:dark){
-    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:block}
-    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:none}
-  }
+  .theme-fab.hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
+  .theme-fab:hover{transform:scale(1.08);background:var(--night-2)}
+  .theme-fab svg{width:20px;height:20px}
+  .theme-fab .icon-sun{display:none}
+  .theme-fab .icon-moon{display:block}
+  :root[data-theme="dark"] .theme-fab .icon-sun{display:block}
+  :root[data-theme="dark"] .theme-fab .icon-moon{display:none}
   .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;animation:pulseDot 2s infinite}
   @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(232,163,61,.6)}70%{box-shadow:0 0 0 10px rgba(232,163,61,0)}100%{box-shadow:0 0 0 0 rgba(232,163,61,0)}}
 
@@ -307,11 +292,12 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
-    .navlinks .theme-toggle{margin:8px 0 0;color:var(--cream)!important;border-color:rgba(250,246,238,.35)!important}
     .menutoggle{display:block;z-index:60}
     .event-card{padding:26px}
     .book-form .field-row{grid-template-columns:1fr}
     .float-cta{right:16px;bottom:16px;padding:12px 18px;font-size:.85rem}
+    .theme-fab{left:16px;bottom:16px;width:44px;height:44px}
+    .theme-fab svg{width:18px;height:18px}
   }
 </style>
 </head>
@@ -335,10 +321,6 @@
     <a href="gallery.html">Gallery</a>
     <a href="index.html#leaders">Leaders</a>
     <a href="index.html#connect" class="btn">Connect</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
   </div>
 </nav>
 
@@ -491,6 +473,11 @@
   <span class="pulse-dot"></span> Book Now
 </a>
 
+<button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+
 <script>
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -505,10 +492,13 @@
   }
   requestAnimationFrame(frame);
 
+  const themeFab=document.getElementById('themeToggle');
   const footerEl=document.getElementById('siteFooter');
-  if(footerEl&&floatCta){
-    new IntersectionObserver(es=>es.forEach(e=>floatCta.classList.toggle('hide',e.isIntersecting)),{threshold:.15})
-      .observe(footerEl);
+  if(footerEl){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(floatCta)floatCta.classList.toggle('hide',e.isIntersecting);
+      if(themeFab)themeFab.classList.toggle('hide',e.isIntersecting);
+    }),{threshold:.15}).observe(footerEl);
   }
 
   const magnets=[...document.querySelectorAll('.magnetic')].map(el=>({el,bx:0,by:0,tx:0,ty:0,lift:0,liftT:0}));
@@ -544,8 +534,7 @@
   if(themeBtn){
     themeBtn.addEventListener('click',()=>{
       const root=document.documentElement;
-      const isDark=root.getAttribute('data-theme')==='dark'
-        || (!root.hasAttribute('data-theme') && matchMedia('(prefers-color-scheme:dark)').matches);
+      const isDark=root.getAttribute('data-theme')==='dark';
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
