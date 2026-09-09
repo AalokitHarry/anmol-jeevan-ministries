@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var t=localStorage.getItem('ajm-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anmol Jeevan Ministries (AJM) — Apostle Vishal Samuel</title>
 <meta name="description" content="Anmol Jeevan Ministries (AJM / AJMI) — the AJM Family, proclaiming the love of Jesus to all nations. A Hindi-language ministry led by Apostle Vishal Samuel & Pastor Juhi Vishal, based in Indore.">
@@ -86,6 +87,39 @@
     --ease-out:cubic-bezier(.16,1,.3,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
     --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --surface:#faf6ee;
+    --surface-2:#f3ecdd;
+    --on-surface:#2a2540;
+    --on-surface-muted:#6b6580;
+    --hairline:rgba(42,37,64,.08);
+    --hairline-2:rgba(42,37,64,.22);
+    --nav-glass:rgba(250,246,238,.78);
+    --nav-glass-brd:rgba(255,255,255,.6);
+    color-scheme:light;
+  }
+  @media(prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --surface:#0d0e28;
+      --surface-2:#161a3d;
+      --on-surface:#eae7f5;
+      --on-surface-muted:#a29dc4;
+      --hairline:rgba(255,255,255,.08);
+      --hairline-2:rgba(255,255,255,.22);
+      --nav-glass:rgba(10,11,34,.78);
+      --nav-glass-brd:rgba(255,255,255,.14);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface:#0d0e28;
+    --surface-2:#161a3d;
+    --on-surface:#eae7f5;
+    --on-surface-muted:#a29dc4;
+    --hairline:rgba(255,255,255,.08);
+    --hairline-2:rgba(255,255,255,.22);
+    --nav-glass:rgba(10,11,34,.78);
+    --nav-glass-brd:rgba(255,255,255,.14);
+    color-scheme:dark;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -97,11 +131,12 @@
   }
   body{
     font-family:'Inter','Noto Sans Devanagari',sans-serif;
-    background:var(--cream);
-    color:var(--ink);
+    background:var(--surface);
+    color:var(--on-surface);
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    transition:background .4s,color .4s;
   }
   .dev{font-family:'Noto Sans Devanagari',sans-serif}
   h1,h2,h3,.display{font-family:'Fraunces',serif}
@@ -130,13 +165,13 @@
   }
   nav.scrolled{
     top:14px;width:min(92%,1080px);padding:10px 22px;border-radius:100px;
-    background:rgba(250,246,238,.78);
+    background:var(--nav-glass);
     backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
     box-shadow:0 10px 40px -12px rgba(20,10,40,.28);
-    border-color:rgba(255,255,255,.6);
+    border-color:var(--nav-glass-brd);
   }
   .brand{display:flex;align-items:center;gap:12px;color:var(--cream);transition:color .4s}
-  nav.scrolled .brand{color:var(--ink)}
+  nav.scrolled .brand{color:var(--on-surface)}
   .brand .mark{
     width:34px;height:34px;flex:none;border-radius:50%;
     background:radial-gradient(circle at 50% 40%,var(--gold-soft),var(--gold) 60%,var(--clay));
@@ -147,7 +182,7 @@
   .brand span{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;opacity:.7;font-weight:500;font-family:'Inter',sans-serif}
   .navlinks{display:flex;gap:30px;align-items:center}
   .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
-  nav.scrolled .navlinks a{color:var(--ink)}
+  nav.scrolled .navlinks a{color:var(--on-surface)}
   .navlinks a:hover{opacity:1;color:var(--gold)}
   .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;animation:pulseDot 2s infinite}
   .navlinks .btn{
@@ -156,7 +191,24 @@
   }
   .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
-  nav.scrolled .menutoggle{color:var(--ink)}
+  nav.scrolled .menutoggle{color:var(--on-surface)}
+  .theme-toggle{
+    display:flex;align-items:center;justify-content:center;flex:none;
+    width:38px;height:38px;border-radius:50%;margin-left:6px;
+    border:1px solid rgba(250,246,238,.35);background:transparent;color:var(--cream);
+    cursor:pointer;transition:background .3s,color .4s,border-color .4s,transform .3s var(--ease-spring);
+  }
+  nav.scrolled .theme-toggle{color:var(--on-surface);border-color:var(--hairline-2)}
+  .theme-toggle:hover{background:var(--hairline);transform:scale(1.06)}
+  .theme-toggle svg{width:18px;height:18px}
+  .theme-toggle .icon-sun{display:none}
+  .theme-toggle .icon-moon{display:block}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+  @media(prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:block}
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:none}
+  }
 
   /* ---- HERO ---- */
   .hero{
@@ -260,11 +312,11 @@
   .verse cite{position:relative;display:block;margin-top:22px;font-style:normal;font-family:'Inter',sans-serif;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,246,238,.55)}
 
   /* marquee */
-  .marquee-wrap{overflow:hidden;background:var(--cream-2);padding:20px 0;border-top:1px solid rgba(42,37,64,.08);border-bottom:1px solid rgba(42,37,64,.08)}
+  .marquee-wrap{overflow:hidden;background:var(--surface-2);padding:20px 0;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
   .marquee-track{display:flex;width:max-content;gap:28px;animation:marquee 32s linear infinite}
   .marquee-wrap:hover .marquee-track{animation-play-state:paused}
   .marquee-track span.word{font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;color:var(--clay);white-space:nowrap;display:flex;align-items:center;gap:28px}
-  .marquee-track span.word .dev{font-family:'Noto Sans Devanagari',sans-serif;font-style:normal;font-weight:600;color:var(--night)}
+  .marquee-track span.word .dev{font-family:'Noto Sans Devanagari',sans-serif;font-style:normal;font-weight:600;color:var(--on-surface)}
   .marquee-track .dot{color:var(--gold)}
   @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
@@ -272,7 +324,7 @@
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
   .about h2{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:500;line-height:1.1;margin:14px 0 22px}
   .about h2 .dev{display:block;color:var(--clay);font-size:.62em;margin-top:8px}
-  .about p{color:var(--muted);margin-bottom:16px;font-size:1.05rem}
+  .about p{color:var(--on-surface-muted);margin-bottom:16px;font-size:1.05rem}
   .about-visual{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
     background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 60%,var(--clay) 130%);
     display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -20px rgba(22,23,58,.5)}
@@ -288,13 +340,13 @@
 
   /* pillars */
   .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
-  .pillar{background:var(--cream-2);border-radius:16px;padding:34px 28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  .pillar{background:var(--surface-2);border-radius:16px;padding:34px 28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
     transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-out);will-change:transform}
   .pillar:hover{transform:translateY(-8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 28px 46px -22px rgba(42,37,64,.4)}
   .pillar .ic{width:46px;height:46px;border-radius:12px;background:var(--night);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:transform .5s var(--ease-spring)}
   .pillar:hover .ic{transform:rotate(-8deg) scale(1.08)}
   .pillar h3{font-size:1.25rem;font-weight:600;margin-bottom:8px}
-  .pillar p{color:var(--muted);font-size:.96rem}
+  .pillar p{color:var(--on-surface-muted);font-size:.96rem}
 
   /* stats */
   .stats{background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 100%);color:var(--cream)}
@@ -326,12 +378,12 @@
   /* latest update */
   .latest-head{max-width:640px;margin:0 auto 40px;text-align:center}
   .latest-head h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 14px}
-  .latest-head .sub{color:var(--muted);font-size:1.02rem}
+  .latest-head .sub{color:var(--on-surface-muted);font-size:1.02rem}
   .latest-foot{text-align:center;margin-top:32px}
 
   /* watch */
   .watch h2{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:500;line-height:1.1;margin:14px 0 10px}
-  .watch .sub{color:var(--muted);max-width:520px;margin-bottom:44px}
+  .watch .sub{color:var(--on-surface-muted);max-width:520px;margin-bottom:44px}
   .watch-featured{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#000;
     border:1px solid rgba(232,163,61,.25);box-shadow:0 30px 60px -20px rgba(22,23,58,.45);margin-bottom:24px}
   .watch-featured iframe{width:100%;height:100%;border:0;display:block}
@@ -350,10 +402,10 @@
   .watch-more{margin-top:40px;text-align:center}
 
   /* leaders */
-  .leaders{background:var(--cream-2)}
+  .leaders{background:var(--surface-2)}
   .leaders h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 50px}
   .leader-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:820px;margin:0 auto}
-  .leader{background:var(--cream);border-radius:20px;padding:38px 34px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+  .leader{background:var(--surface);border-radius:20px;padding:38px 34px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
     transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-out);will-change:transform}
   .leader:hover{transform:translateY(-8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 26px 44px -24px rgba(42,37,64,.4)}
   .leader .av{width:160px;height:160px;border-radius:50%;margin:0 auto 24px;overflow:hidden;
@@ -363,8 +415,8 @@
   .leader:hover .av{box-shadow:0 0 0 8px rgba(232,163,61,.28)}
   .leader h3{font-size:1.4rem;font-weight:600}
   .leader .role{color:var(--clay);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin:6px 0 14px}
-  .leader .aka{color:var(--muted);font-size:.78rem;font-style:italic;margin:-8px 0 14px}
-  .leader p{color:var(--muted);font-size:.96rem}
+  .leader .aka{color:var(--on-surface-muted);font-size:.78rem;font-style:italic;margin:-8px 0 14px}
+  .leader p{color:var(--on-surface-muted);font-size:.96rem}
 
   /* connect */
   .connect{background:var(--night);color:var(--cream);text-align:center}
@@ -407,6 +459,7 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
+    .navlinks .theme-toggle{margin:8px 0 0;color:var(--cream)!important;border-color:rgba(250,246,238,.35)!important}
     .menutoggle{display:block;z-index:60}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .about-visual{max-width:360px;margin:0 auto}
@@ -442,6 +495,10 @@
     <a href="#watch">Watch</a>
     <a href="#leaders">Leaders</a>
     <a href="#connect" class="btn">Connect</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -494,7 +551,7 @@
       <p>The name says it plainly: <em>Anmol Jeevan</em> means <strong>precious life</strong>. We exist to carry the hope of Jesus into homes, streets, and screens across India — in the language people pray and dream in.</p>
       <p>What began as a passion to proclaim Christ's love has grown into a daily rhythm of teaching, worship, and testimony — reaching a growing family online and gathering together each week in Indore.</p>
       <p>Whether you've walked with Jesus for years or you're simply curious, there is a place for you here.</p>
-      <p style="color:var(--muted);font-size:.92rem">You may also know us as <strong>AJM</strong>, <strong>AJM Family</strong>, or <strong>AJMI</strong>.</p>
+      <p style="color:var(--on-surface-muted);font-size:.92rem">You may also know us as <strong>AJM</strong>, <strong>AJM Family</strong>, or <strong>AJMI</strong>.</p>
     </div>
     <div class="about-visual">
       <div class="glow"></div>
@@ -781,6 +838,19 @@
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
   tog.addEventListener('click',()=>links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+  // theme toggle
+  const themeBtn=document.getElementById('themeToggle');
+  if(themeBtn){
+    themeBtn.addEventListener('click',()=>{
+      const root=document.documentElement;
+      const isDark=root.getAttribute('data-theme')==='dark'
+        || (!root.hasAttribute('data-theme') && matchMedia('(prefers-color-scheme:dark)').matches);
+      const next=isDark?'light':'dark';
+      root.setAttribute('data-theme',next);
+      try{localStorage.setItem('ajm-theme',next);}catch(e){}
+    });
+  }
 
   // reveal on scroll — drop will-change after settling
   const io=new IntersectionObserver(es=>es.forEach(e=>{

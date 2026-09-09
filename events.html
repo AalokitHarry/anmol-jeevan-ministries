@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var t=localStorage.getItem('ajm-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events &amp; Booking — Anmol Jeevan Ministries (AJM)</title>
 <meta name="description" content="Join Anmol Jeevan Ministries (AJM / AJMI / AJM Family) for our weekly Sunday gathering in Indore, or reserve your spot for a special event. Book a visit in seconds via WhatsApp.">
@@ -84,6 +85,39 @@
     --ease-out:cubic-bezier(.16,1,.3,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
     --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --surface:#faf6ee;
+    --surface-2:#f3ecdd;
+    --on-surface:#2a2540;
+    --on-surface-muted:#6b6580;
+    --hairline:rgba(42,37,64,.08);
+    --hairline-2:rgba(42,37,64,.22);
+    --nav-glass:rgba(250,246,238,.78);
+    --nav-glass-brd:rgba(255,255,255,.6);
+    color-scheme:light;
+  }
+  @media(prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --surface:#0d0e28;
+      --surface-2:#161a3d;
+      --on-surface:#eae7f5;
+      --on-surface-muted:#a29dc4;
+      --hairline:rgba(255,255,255,.08);
+      --hairline-2:rgba(255,255,255,.22);
+      --nav-glass:rgba(10,11,34,.78);
+      --nav-glass-brd:rgba(255,255,255,.14);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface:#0d0e28;
+    --surface-2:#161a3d;
+    --on-surface:#eae7f5;
+    --on-surface-muted:#a29dc4;
+    --hairline:rgba(255,255,255,.08);
+    --hairline-2:rgba(255,255,255,.22);
+    --nav-glass:rgba(10,11,34,.78);
+    --nav-glass-brd:rgba(255,255,255,.14);
+    color-scheme:dark;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -93,11 +127,12 @@
   }
   body{
     font-family:'Inter','Noto Sans Devanagari',sans-serif;
-    background:var(--cream);
-    color:var(--ink);
+    background:var(--surface);
+    color:var(--on-surface);
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    transition:background .4s,color .4s;
   }
   .dev{font-family:'Noto Sans Devanagari',sans-serif}
   h1,h2,h3,.display{font-family:'Fraunces',serif}
@@ -120,11 +155,11 @@
   }
   nav.scrolled{
     top:14px;width:min(92%,1080px);padding:10px 22px;border-radius:100px;
-    background:rgba(250,246,238,.78);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-    box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:rgba(255,255,255,.6);
+    background:var(--nav-glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+    box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:var(--nav-glass-brd);
   }
   .brand{display:flex;align-items:center;gap:12px;color:var(--cream);transition:color .4s}
-  nav.scrolled .brand{color:var(--ink)}
+  nav.scrolled .brand{color:var(--on-surface)}
   .brand .mark{width:34px;height:34px;flex:none;border-radius:50%;
     background:radial-gradient(circle at 50% 40%,var(--gold-soft),var(--gold) 60%,var(--clay));
     animation:markPulse 4s ease-in-out infinite}
@@ -133,13 +168,30 @@
   .brand span{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;opacity:.7;font-weight:500;font-family:'Inter',sans-serif}
   .navlinks{display:flex;gap:30px;align-items:center}
   .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
-  nav.scrolled .navlinks a{color:var(--ink)}
+  nav.scrolled .navlinks a{color:var(--on-surface)}
   .navlinks a:hover{opacity:1;color:var(--gold)}
   .navlinks .btn{background:var(--gold);color:var(--night);padding:9px 18px;border-radius:100px;font-weight:600;opacity:1;
     transition:background .3s var(--ease-smooth),transform .3s var(--ease-spring)}
   .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
-  nav.scrolled .menutoggle{color:var(--ink)}
+  nav.scrolled .menutoggle{color:var(--on-surface)}
+  .theme-toggle{
+    display:flex;align-items:center;justify-content:center;flex:none;
+    width:38px;height:38px;border-radius:50%;margin-left:6px;
+    border:1px solid rgba(250,246,238,.35);background:transparent;color:var(--cream);
+    cursor:pointer;transition:background .3s,color .4s,border-color .4s,transform .3s var(--ease-spring);
+  }
+  nav.scrolled .theme-toggle{color:var(--on-surface);border-color:var(--hairline-2)}
+  .theme-toggle:hover{background:var(--hairline);transform:scale(1.06)}
+  .theme-toggle svg{width:18px;height:18px}
+  .theme-toggle .icon-sun{display:none}
+  .theme-toggle .icon-moon{display:block}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+  @media(prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:block}
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:none}
+  }
   .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;animation:pulseDot 2s infinite}
   @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(232,163,61,.6)}70%{box-shadow:0 0 0 10px rgba(232,163,61,0)}100%{box-shadow:0 0 0 0 rgba(232,163,61,0)}}
 
@@ -182,26 +234,26 @@
   .btn-gold{background:var(--gold);color:var(--night);box-shadow:0 8px 30px rgba(232,163,61,.4)}
   .btn-gold:hover{box-shadow:0 16px 40px rgba(232,163,61,.6)}
   .btn-gold:not(.jsmag):hover{transform:translateY(-3px) scale(1.02)}
-  .btn-ghost-dark{border:1px solid rgba(42,37,64,.25);color:var(--ink);background:transparent}
-  .btn-ghost-dark:hover{background:rgba(42,37,64,.06)}
+  .btn-ghost-dark{border:1px solid var(--hairline-2);color:var(--on-surface);background:transparent}
+  .btn-ghost-dark:hover{background:var(--hairline)}
   .btn-ghost-dark:not(.jsmag):hover{transform:translateY(-3px) scale(1.02)}
 
   /* events list */
   .events-list h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 40px}
   .event-grid{display:flex;flex-direction:column;gap:20px}
-  .event-card{display:flex;align-items:center;gap:26px;flex-wrap:wrap;background:var(--cream-2);border-radius:18px;padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
-  .event-card.is-placeholder{background:transparent;border:1.5px dashed rgba(42,37,64,.22);box-shadow:none}
+  .event-card{display:flex;align-items:center;gap:26px;flex-wrap:wrap;background:var(--surface-2);border-radius:18px;padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .event-card.is-placeholder{background:transparent;border:1.5px dashed var(--hairline-2);box-shadow:none}
   .date-badge{background:var(--night);color:var(--cream);border-radius:14px;padding:14px 10px;text-align:center;width:128px;flex-shrink:0}
-  .date-badge.muted{background:rgba(42,37,64,.07)}
+  .date-badge.muted{background:var(--hairline)}
   .date-badge .dow{display:block;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold-soft)}
   .date-badge.muted .dow{color:var(--clay)}
   .date-badge .time{display:block;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-top:3px;color:inherit}
-  .date-badge.muted .time{color:var(--muted)}
+  .date-badge.muted .time{color:var(--on-surface-muted)}
   .event-card .info{flex:1;min-width:220px}
   .event-card h3{font-size:1.3rem;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .badge-soon{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(232,163,61,.18);color:var(--gold-deep);padding:4px 10px;border-radius:100px;font-weight:700}
-  .event-card p{color:var(--muted);font-size:.94rem;margin-bottom:6px}
-  .event-card .meta{color:var(--muted);font-size:.85rem}
+  .event-card p{color:var(--on-surface-muted);font-size:.94rem;margin-bottom:6px}
+  .event-card .meta{color:var(--on-surface-muted);font-size:.85rem}
 
   /* booking */
   .book{background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 100%);color:var(--cream)}
@@ -250,6 +302,7 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
+    .navlinks .theme-toggle{margin:8px 0 0;color:var(--cream)!important;border-color:rgba(250,246,238,.35)!important}
     .menutoggle{display:block;z-index:60}
     .event-card{padding:26px}
     .book-form .field-row{grid-template-columns:1fr}
@@ -276,6 +329,10 @@
     <a href="index.html#watch">Watch</a>
     <a href="index.html#leaders">Leaders</a>
     <a href="index.html#connect" class="btn">Connect</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -476,6 +533,19 @@
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
   tog.addEventListener('click',()=>links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+  // theme toggle
+  const themeBtn=document.getElementById('themeToggle');
+  if(themeBtn){
+    themeBtn.addEventListener('click',()=>{
+      const root=document.documentElement;
+      const isDark=root.getAttribute('data-theme')==='dark'
+        || (!root.hasAttribute('data-theme') && matchMedia('(prefers-color-scheme:dark)').matches);
+      const next=isDark?'light':'dark';
+      root.setAttribute('data-theme',next);
+      try{localStorage.setItem('ajm-theme',next);}catch(e){}
+    });
+  }
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){
