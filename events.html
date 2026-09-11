@@ -449,7 +449,7 @@
     <form id="bookForm" class="book-form reveal">
       <div class="field-row">
         <label>Full name<input type="text" name="name" required placeholder="Your name"></label>
-        <label>WhatsApp / phone<input type="tel" name="phone" required placeholder="+91 xxxxx xxxxx" pattern="[+]?[0-9\s\-]{7,17}" title="Enter a valid phone number (digits only, 7–17 characters)"></label>
+        <label>WhatsApp / phone<input type="tel" name="phone" required value="+91 " placeholder="+91 xxxxx xxxxx" pattern="[+]?[0-9\s\-]{7,17}" title="Enter a valid phone number (digits only, 7–17 characters)"></label>
       </div>
       <div class="field-row">
         <label><span>Email <span class="opt">(optional)</span></span><input type="email" name="email" placeholder="you@example.com"></label>
@@ -579,13 +579,18 @@
   for(let i=0;i<50;i++){const d=document.createElement('i');d.style.left=Math.random()*100+'%';d.style.top=Math.random()*90+'%';d.style.animationDelay=Math.random()*4+'s';d.style.animationDuration=(3+Math.random()*3)+'s';frag.appendChild(d)}
   document.getElementById('stars').appendChild(frag);
 
+  function withCountryCode(v){
+    v=(v||'').trim();
+    return v&&!v.startsWith('+')?'+91 '+v:v;
+  }
+
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();
     const fd=new FormData(this);
     const lines=[
       'New booking request from AJM Family website:',
       'Name: '+(fd.get('name')||''),
-      'Phone: '+(fd.get('phone')||''),
+      'Phone: '+withCountryCode(fd.get('phone')),
       fd.get('email')?('Email: '+fd.get('email')):null,
       'Gathering: '+(fd.get('which')||''),
       'Guests: '+(fd.get('guests')||'1'),

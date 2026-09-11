@@ -322,7 +322,7 @@
         <div class="field-row">
           <div class="field">
             <label>Mobile <span class="req">*</span></label>
-            <input type="tel" name="mobile" required placeholder="+91 xxxxx xxxxx" pattern="[+]?[0-9\s\-]{7,17}" title="Enter a valid phone number (digits only, 7–17 characters)">
+            <input type="tel" name="mobile" required value="+91 " placeholder="+91 xxxxx xxxxx" pattern="[+]?[0-9\s\-]{7,17}" title="Enter a valid phone number (digits only, 7–17 characters)">
           </div>
           <div class="field">
             <label>Organization / Church Name</label>
@@ -528,6 +528,11 @@
     });
   }
 
+  function withCountryCode(v){
+    v=(v||'').trim();
+    return v&&!v.startsWith('+')?'+91 '+v:v;
+  }
+
   document.getElementById('inviteForm').addEventListener('submit', function(e){
     e.preventDefault();
     const fd=new FormData(this);
@@ -537,7 +542,7 @@
       '— Your Information —',
       'Name: '+(fd.get('name')||''),
       'Email: '+(fd.get('email')||''),
-      'Mobile: '+(fd.get('mobile')||''),
+      'Mobile: '+withCountryCode(fd.get('mobile')),
       fd.get('org')?('Organization/Church: '+fd.get('org')):null,
       '',
       '— Invitation Information —',
