@@ -458,9 +458,14 @@
     ].filter(Boolean).join('\n');
     const url='https://wa.me/917999929550?text='+encodeURIComponent(lines);
     window.open(url,'_blank','noopener');
+    logRegistration("Women's Meet",{
+      name: fd.get('name')||'', phone: withCountryCode(fd.get('phone')), email: fd.get('email')||'',
+      details: (fd.get('city')?('City/Church: '+fd.get('city')):'')+(fd.get('message')?('; Prayer request: '+fd.get('message')):'')
+    });
   });
 
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
+<script src="js/reglog.js"></script>
 </body>
 </html>

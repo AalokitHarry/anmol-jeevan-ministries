@@ -598,9 +598,14 @@
     ].filter(Boolean).join('\n');
     const url='https://wa.me/917999929550?text='+encodeURIComponent(lines);
     window.open(url,'_blank','noopener');
+    logRegistration('Event Booking',{
+      name: fd.get('name')||'', phone: withCountryCode(fd.get('phone')), email: fd.get('email')||'',
+      details: 'Gathering: '+(fd.get('which')||'')+'; Guests: '+(fd.get('guests')||'1')+(fd.get('message')?('; Message: '+fd.get('message')):'')
+    });
   });
 
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
+<script src="js/reglog.js"></script>
 </body>
 </html>

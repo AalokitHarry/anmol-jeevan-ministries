@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Registrations</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0a0b22; --night-2:#14163f;
+    --gold:#e8a33d; --gold-soft:#f6c968; --gold-deep:#c9832f;
+    --cream:#faf6ee; --clay:#c96f5a;
+    --surface:#faf6ee; --surface-2:#f3ecdd; --on-surface:#2a2540; --on-surface-muted:#6b6580;
+    --hairline:#e7dfcd;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:var(--surface);color:var(--on-surface);line-height:1.5;padding:28px}
+  h1,h2{font-family:'Fraunces',serif}
+  .wrap{max-width:1100px;margin:0 auto}
+
+  /* password gate */
+  #gate{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center}
+  #gate h1{font-size:1.8rem;font-weight:500}
+  #gate p{color:var(--on-surface-muted);max-width:420px;font-size:.9rem}
+  #gate input{padding:14px 18px;border-radius:12px;border:1.5px solid var(--hairline);font-size:1rem;width:280px;max-width:80vw}
+  #gate button{padding:14px 28px;border-radius:100px;background:var(--gold);color:var(--night);font-weight:600;border:0;cursor:pointer;font-size:1rem}
+  #gate button:hover{background:var(--gold-soft)}
+  #gateError{color:var(--clay);font-size:.85rem;min-height:1.2em}
+
+  /* panel */
+  #panel{display:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:28px}
+  header.top h1{font-size:1.7rem;font-weight:500}
+  header.top .sub{color:var(--on-surface-muted);font-size:.85rem;margin-top:4px}
+  .btn{padding:10px 18px;border-radius:100px;border:1.5px solid var(--hairline);background:var(--surface-2);
+    font-weight:600;font-size:.85rem;cursor:pointer;color:var(--on-surface)}
+  .btn:hover{background:var(--hairline)}
+  .btn.primary{background:var(--gold);border-color:var(--gold);color:var(--night)}
+  .btn.primary:hover{background:var(--gold-soft)}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);background:var(--surface);
+    font-size:.82rem;font-weight:600;cursor:pointer;color:var(--on-surface-muted)}
+  .tab.active{background:var(--night);color:var(--cream);border-color:var(--night)}
+  #search{flex:1;min-width:180px;padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);font-size:.85rem}
+
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .stat{background:var(--surface-2);border-radius:14px;padding:14px 20px;min-width:120px}
+  .stat .num{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;display:block}
+  .stat .label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-surface-muted)}
+
+  table{width:100%;border-collapse:collapse;background:var(--surface-2);border-radius:16px;overflow:hidden}
+  th,td{text-align:left;padding:12px 16px;font-size:.86rem;border-bottom:1px solid var(--hairline)}
+  th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-surface-muted);background:rgba(0,0,0,.02)}
+  tr:last-child td{border-bottom:0}
+  .src-badge{display:inline-block;padding:4px 10px;border-radius:100px;font-size:.7rem;font-weight:700}
+  .src-womens{background:rgba(232,143,160,.2);color:#c65d75}
+  .src-event{background:rgba(123,148,184,.2);color:#4a6a94}
+  .src-invite{background:rgba(232,163,61,.2);color:var(--gold-deep)}
+  .details-cell{max-width:280px;color:var(--on-surface-muted);font-size:.8rem}
+  #empty,#loading,#fetchError{text-align:center;padding:60px 20px;color:var(--on-surface-muted)}
+  #fetchError{color:var(--clay);display:none}
+  .table-wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>Admin — Registrations</h1>
+  <p>This page is not indexed or linked from the site. Enter the admin key to view attendee registrations from Women's Meet, event bookings, and speaking invitations.</p>
+  <input type="password" id="keyInput" placeholder="Admin key" autocomplete="off">
+  <button id="gateBtn">Enter</button>
+  <p id="gateError"></p>
+</div>
+
+<div id="panel">
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>Registrations</h1>
+        <div class="sub">Anmol Jeevan Ministries — attendee &amp; invitation log</div>
+      </div>
+      <button class="btn" id="refreshBtn">Refresh</button>
+    </header>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="Women's Meet">Women's Meet</button>
+        <button class="tab" data-filter="Event Booking">Event Booking</button>
+        <button class="tab" data-filter="Speaking Invitation">Speaking Invitation</button>
+      </div>
+      <input type="text" id="search" placeholder="Search name, phone, email…">
+    </div>
+
+    <div id="loading">Loading…</div>
+    <p id="fetchError"></p>
+    <div id="empty" style="display:none">No registrations yet.</div>
+    <div class="table-wrap">
+      <table id="table" style="display:none">
+        <thead>
+          <tr><th>Date</th><th>Source</th><th>Name</th><th>Phone</th><th>Email</th><th>Details</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="js/reglog.js"></script>
+<script>
+  const ADMIN_URL = REG_LOG_URL; // same Apps Script Web App as reglog.js
+  let allRows = [];
+  let activeFilter = 'all';
+
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+  const keyInput = document.getElementById('keyInput');
+  const gateBtn = document.getElementById('gateBtn');
+  const gateError = document.getElementById('gateError');
+
+  function srcClass(src){
+    if(src==="Women's Meet") return 'src-womens';
+    if(src==='Event Booking') return 'src-event';
+    if(src==='Speaking Invitation') return 'src-invite';
+    return '';
+  }
+
+  function render(){
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const rows = allRows.filter(r=>{
+      if(activeFilter!=='all' && r.Source!==activeFilter) return false;
+      if(!q) return true;
+      return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
+    });
+
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = rows.slice().reverse().map(r=>`
+      <tr>
+        <td>${r.Timestamp ? new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}) : ''}</td>
+        <td><span class="src-badge ${srcClass(r.Source)}">${r.Source||''}</span></td>
+        <td>${r.Name||''}</td>
+        <td>${r.Phone||''}</td>
+        <td>${r.Email||''}</td>
+        <td class="details-cell">${r.Details||''}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('table').style.display = rows.length ? 'table' : 'none';
+    document.getElementById('empty').style.display = rows.length ? 'none' : 'block';
+
+    const stats = document.getElementById('stats');
+    const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
+    allRows.forEach(r=>{ if(counts[r.Source]!==undefined) counts[r.Source]++; });
+    stats.innerHTML = `
+      <div class="stat"><span class="num">${allRows.length}</span><span class="label">Total</span></div>
+      <div class="stat"><span class="num">${counts["Women's Meet"]}</span><span class="label">Women's Meet</span></div>
+      <div class="stat"><span class="num">${counts['Event Booking']}</span><span class="label">Event Booking</span></div>
+      <div class="stat"><span class="num">${counts['Speaking Invitation']}</span><span class="label">Speaking Invitation</span></div>
+    `;
+  }
+
+  async function loadData(key){
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('fetchError').style.display = 'none';
+    document.getElementById('table').style.display = 'none';
+    document.getElementById('empty').style.display = 'none';
+    try{
+      const res = await fetch(ADMIN_URL + '?key=' + encodeURIComponent(key));
+      const json = await res.json();
+      if(json.error){
+        throw new Error(json.error === 'unauthorized' ? 'Wrong admin key.' : json.error);
+      }
+      allRows = json.data || [];
+      document.getElementById('loading').style.display = 'none';
+      render();
+      return true;
+    }catch(err){
+      document.getElementById('loading').style.display = 'none';
+      const el = document.getElementById('fetchError');
+      el.textContent = 'Could not load registrations: ' + err.message;
+      el.style.display = 'block';
+      return false;
+    }
+  }
+
+  gateBtn.addEventListener('click', async ()=>{
+    const key = keyInput.value.trim();
+    if(!key){ gateError.textContent = 'Enter the admin key.'; return; }
+    if(!ADMIN_URL){ gateError.textContent = 'Not set up yet — see ADMIN-SETUP.md.'; return; }
+    gateBtn.disabled = true; gateBtn.textContent = 'Checking…';
+    const ok = await loadData(key);
+    gateBtn.disabled = false; gateBtn.textContent = 'Enter';
+    if(ok){
+      try{ sessionStorage.setItem('ajm-admin-key', key); }catch(e){}
+      gate.style.display = 'none';
+      panel.style.display = 'block';
+    } else {
+      gateError.textContent = 'Wrong key, or the sheet is unreachable.';
+    }
+  });
+  keyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') gateBtn.click(); });
+
+  document.getElementById('refreshBtn').addEventListener('click', ()=>{
+    const key = sessionStorage.getItem('ajm-admin-key');
+    if(key) loadData(key);
+  });
+
+  document.getElementById('tabs').addEventListener('click', e=>{
+    const btn = e.target.closest('.tab');
+    if(!btn) return;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+
+  document.getElementById('search').addEventListener('input', render);
+
+  // resume session without re-prompting
+  (function(){
+    try{
+      const key = sessionStorage.getItem('ajm-admin-key');
+      if(key && ADMIN_URL){
+        loadData(key).then(ok=>{
+          if(ok){ gate.style.display='none'; panel.style.display='block'; }
+        });
+      }
+    }catch(e){}
+  })();
+</script>
+</body>
+</html>

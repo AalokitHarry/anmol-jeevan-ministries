@@ -562,9 +562,21 @@
     ].filter(Boolean).join('\n');
     const url='https://wa.me/917999929550?text='+encodeURIComponent(lines);
     window.open(url,'_blank','noopener');
+    logRegistration('Speaking Invitation',{
+      name: fd.get('name')||'', phone: withCountryCode(fd.get('mobile')), email: fd.get('email')||'',
+      details: [
+        fd.get('org')?('Org: '+fd.get('org')):null,
+        'To: '+(fd.get('inviteTo')||''),
+        'Type: '+(fd.get('meetingType')||''),
+        fd.get('fromDate')?('From: '+fd.get('fromDate')):null,
+        fd.get('toDate')?('To: '+fd.get('toDate')):null,
+        fd.get('attendance')?('Attendance: '+fd.get('attendance')):null
+      ].filter(Boolean).join('; ')
+    });
   });
 
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
+<script src="js/reglog.js"></script>
 </body>
 </html>
