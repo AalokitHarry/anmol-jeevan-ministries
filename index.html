@@ -503,6 +503,22 @@
   .invite-cta h2{font-size:clamp(2.1rem,5vw,3.2rem);font-weight:500;line-height:1.14;margin:14px 0 18px}
   .invite-cta .sub{max-width:560px;margin:0 auto 34px;color:rgba(250,246,238,.75);font-size:1.02rem}
 
+  /* next gathering */
+  .next-gathering{position:relative;overflow:hidden;text-align:center;color:var(--cream);
+    background:
+      radial-gradient(120% 140% at 50% 0%,rgba(232,163,61,.35) 0%,transparent 55%),
+      linear-gradient(160deg,var(--night) 0%,var(--night-2) 60%,var(--night-3) 100%);
+    padding:84px 0}
+  .next-gathering-inner{position:relative;z-index:2}
+  .next-gathering .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.28em;
+    text-transform:uppercase;font-weight:600;color:var(--gold-soft);margin-bottom:18px}
+  .next-gathering .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulseDot 2s infinite}
+  .next-gathering h2{font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:500;margin-bottom:14px}
+  .next-gathering .sub{max-width:520px;margin:0 auto 30px;color:rgba(250,246,238,.78);font-size:1.05rem}
+  .ng-meta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:36px}
+  .ng-chip{display:inline-flex;align-items:center;gap:9px;background:var(--glass);border:1px solid var(--glass-brd);
+    padding:13px 24px;border-radius:100px;font-weight:600;font-size:1rem;color:var(--cream)}
+
   /* faq */
   .faq{background:var(--surface)}
   .faq h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 40px}
@@ -650,6 +666,20 @@
   </div>
 </section>
 
+<section class="next-gathering reveal">
+  <div class="aurora"></div>
+  <div class="wrap next-gathering-inner">
+    <span class="kicker"><span class="dot"></span>Next Gathering</span>
+    <h2>Sunday Fellowship</h2>
+    <p class="sub">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
+    <div class="ng-meta">
+      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
+      <span class="ng-chip">🕒 Every Sunday, 3:00 PM</span>
+    </div>
+    <a href="events.html#book" class="btn-lg btn-gold magnetic">Get Directions &amp; Times</a>
+  </div>
+</section>
+
 <section class="latest reveal" id="latest">
   <div class="wrap">
     <div class="latest-head">
@@ -662,6 +692,37 @@
     </div>
     <div class="latest-foot">
       <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">See all updates on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<section class="watch reveal" id="watch">
+  <div class="wrap">
+    <span class="eyebrow">More to explore</span>
+    <h2>Watch &amp; be encouraged</h2>
+    <p class="sub">A few more recent messages, worship sets, and testimonies from the AJM Family channel.</p>
+    <div class="watch-grid stagger reveal">
+      <a class="wcard" href="https://www.youtube.com/watch?v=EqPVT13Xeas" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/EqPVT13Xeas/hqdefault.jpg" alt="Favour आपके जीवन में कब आता है? — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">Favour आपके जीवन में कब आता है?</span>
+      </a>
+      <a class="wcard" href="https://www.youtube.com/watch?v=QUaQGcykCig" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/QUaQGcykCig/hqdefault.jpg" alt="एक सच्चा मित्र कैसा होता है? — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">एक सच्चा मित्र कैसा होता है?</span>
+      </a>
+      <a class="wcard" href="https://www.youtube.com/watch?v=jQ8n9ykJ_eM" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/jQ8n9ykJ_eM/hqdefault.jpg" alt="जब प्रभु का अनुग्रह आप पर आता है — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">जब प्रभु का अनुग्रह आप पर आता है</span>
+      </a>
+    </div>
+    <div class="watch-more">
+      <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">Subscribe on YouTube</a>
     </div>
   </div>
 </section>
@@ -744,7 +805,7 @@
         <span class="eyebrow">Come as you are</span>
         <h2>Gather with us</h2>
         <div class="times">
-          <div class="time-row"><span class="day">Sunday Fellowship</span><span class="det">Praise, the Word &amp; prayer together — every Sunday</span></div>
+          <div class="time-row"><span class="day">Sunday Fellowship</span><span class="det">Praise, the Word &amp; prayer together — every Sunday, 3:00 PM</span></div>
           <div class="time-row"><span class="day">Youth Fellowship</span><span class="det">Worship &amp; the Word for our youth — Thursdays, 8:30 PM · Online via Zoom</span></div>
           <div class="time-row"><span class="day">Morning Devotion</span><span class="det">Start the day in prayer &amp; the Word — Monday to Saturday, 7:30 AM · Online via Zoom</span></div>
           <div class="time-row"><span class="day">Night Prayer</span><span class="det">Join us in prayer together — Monday to Saturday, 10 PM · Online via Zoom</span></div>
@@ -761,43 +822,24 @@
   </div>
 </section>
 
-<section class="invite-cta reveal" id="invite">
-  <div class="aurora"></div>
-  <div class="wrap invite-cta-inner">
-    <span class="eyebrow" style="color:var(--gold-soft)">Speaking invitations</span>
-    <h2>Invite Apostle Vishal Samuel<br>to your church</h2>
-    <p class="sub">Planning a revival meeting, conference, or special service? Apostle Vishal Samuel and Pastor Juhi Vishal would be honored to minister alongside your church.</p>
-    <a href="invite.html" class="btn-lg btn-gold magnetic">Send an Invitation</a>
-  </div>
-</section>
-
-<section class="watch reveal" id="watch">
+<section class="leaders reveal" id="leaders">
   <div class="wrap">
-    <span class="eyebrow">More to explore</span>
-    <h2>Watch &amp; be encouraged</h2>
-    <p class="sub">A few more recent messages, worship sets, and testimonies from the AJM Family channel.</p>
-    <div class="watch-grid stagger reveal">
-      <a class="wcard" href="https://www.youtube.com/watch?v=EqPVT13Xeas" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/EqPVT13Xeas/hqdefault.jpg" alt="Favour आपके जीवन में कब आता है? — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">Favour आपके जीवन में कब आता है?</span>
-      </a>
-      <a class="wcard" href="https://www.youtube.com/watch?v=QUaQGcykCig" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/QUaQGcykCig/hqdefault.jpg" alt="एक सच्चा मित्र कैसा होता है? — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">एक सच्चा मित्र कैसा होता है?</span>
-      </a>
-      <a class="wcard" href="https://www.youtube.com/watch?v=jQ8n9ykJ_eM" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/jQ8n9ykJ_eM/hqdefault.jpg" alt="जब प्रभु का अनुग्रह आप पर आता है — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">जब प्रभु का अनुग्रह आप पर आता है</span>
-      </a>
-    </div>
-    <div class="watch-more">
-      <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">Subscribe on YouTube</a>
+    <div style="text-align:center"><span class="eyebrow">Our shepherds</span></div>
+    <h2>Led by faithful hearts</h2>
+    <div class="leader-grid stagger reveal">
+      <div class="leader">
+        <div class="av"><img src="img/apostle-vishal-samuel.jpg" alt="Apostle Vishal Samuel, also known as Pastor Vishal Samuel" loading="lazy"></div>
+        <h3>Apostle Vishal Samuel</h3>
+        <div class="role">Founder &amp; Lead Pastor</div>
+        <div class="aka">also known as Pastor Vishal Samuel</div>
+        <p>"My desire &amp; passion is to proclaim the love of Jesus to all nations." Apostle Vishal leads AJM's teaching and vision.</p>
+      </div>
+      <div class="leader">
+        <div class="av"><img src="img/pastor-juhi-vishal.jpg" alt="Pastor Juhi Vishal" loading="lazy"></div>
+        <h3>Pastor Juhi Vishal</h3>
+        <div class="role">Pastor</div>
+        <p>Serving alongside in ministry, worship, and pastoral care — pouring into the AJM Family with grace.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -833,25 +875,13 @@
   </div>
 </section>
 
-<section class="leaders reveal" id="leaders">
-  <div class="wrap">
-    <div style="text-align:center"><span class="eyebrow">Our shepherds</span></div>
-    <h2>Led by faithful hearts</h2>
-    <div class="leader-grid stagger reveal">
-      <div class="leader">
-        <div class="av"><img src="img/apostle-vishal-samuel.jpg" alt="Apostle Vishal Samuel, also known as Pastor Vishal Samuel" loading="lazy"></div>
-        <h3>Apostle Vishal Samuel</h3>
-        <div class="role">Founder &amp; Lead Pastor</div>
-        <div class="aka">also known as Pastor Vishal Samuel</div>
-        <p>"My desire &amp; passion is to proclaim the love of Jesus to all nations." Apostle Vishal leads AJM's teaching and vision.</p>
-      </div>
-      <div class="leader">
-        <div class="av"><img src="img/pastor-juhi-vishal.jpg" alt="Pastor Juhi Vishal" loading="lazy"></div>
-        <h3>Pastor Juhi Vishal</h3>
-        <div class="role">Pastor</div>
-        <p>Serving alongside in ministry, worship, and pastoral care — pouring into the AJM Family with grace.</p>
-      </div>
-    </div>
+<section class="invite-cta reveal" id="invite">
+  <div class="aurora"></div>
+  <div class="wrap invite-cta-inner">
+    <span class="eyebrow" style="color:var(--gold-soft)">Speaking invitations</span>
+    <h2>Invite Apostle Vishal Samuel<br>to your church</h2>
+    <p class="sub">Planning a revival meeting, conference, or special service? Apostle Vishal Samuel and Pastor Juhi Vishal would be honored to minister alongside your church.</p>
+    <a href="invite.html" class="btn-lg btn-gold magnetic">Send an Invitation</a>
   </div>
 </section>
 
