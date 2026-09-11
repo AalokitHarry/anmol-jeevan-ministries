@@ -232,7 +232,6 @@
   .events-list h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 40px}
   .event-grid{display:flex;flex-direction:column;gap:20px}
   .event-card{display:flex;align-items:center;gap:26px;flex-wrap:wrap;background:var(--surface-2);border-radius:18px;padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
-  .event-card.is-placeholder{background:transparent;border:1.5px dashed var(--hairline-2);box-shadow:none}
   .event-card.is-featured{
     background:linear-gradient(135deg,rgba(232,143,160,.16),rgba(232,163,61,.12));
     border:1.5px solid rgba(232,143,160,.5);
@@ -436,18 +435,6 @@
         </div>
         <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
-      <!-- Placeholder — replace with a real .event-card once the next special event is scheduled -->
-      <div class="event-card is-placeholder">
-        <div class="date-badge muted">
-          <span class="dow">TBA</span>
-          <span class="time">—</span>
-        </div>
-        <div class="info">
-          <h3>Special Gathering <span class="badge-soon">Coming soon</span></h3>
-          <p>Date &amp; details will be posted here as soon as they're confirmed.</p>
-        </div>
-        <a href="https://wa.me/917999929550" target="_blank" rel="noopener" class="btn-lg btn-ghost-dark magnetic">Ask us</a>
-      </div>
     </div>
   </div>
 </section>
@@ -476,7 +463,6 @@
           <option>Morning Devotion (Mon–Sat, 7:30 AM)</option>
           <option>Night Prayer (Mon–Sat, 10 PM)</option>
           <option>Women's Meet (Mon, Sep 14, 8:30 PM)</option>
-          <option>Special Gathering (TBA)</option>
           <option>General Inquiry / Prayer Request</option>
         </select>
       </label>
