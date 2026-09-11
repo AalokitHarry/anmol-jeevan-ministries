@@ -312,7 +312,7 @@
         <div class="field-row">
           <div class="field">
             <label>Complete Name <span class="req">*</span></label>
-            <input type="text" name="name" required placeholder="Your full name">
+            <input type="text" name="name" required minlength="2" placeholder="Your full name">
           </div>
           <div class="field">
             <label>Your Email <span class="req">*</span></label>
@@ -516,6 +516,17 @@
   const frag=document.createDocumentFragment();
   for(let i=0;i<50;i++){const d=document.createElement('i');d.style.left=Math.random()*100+'%';d.style.top=Math.random()*90+'%';d.style.animationDelay=Math.random()*4+'s';d.style.animationDuration=(3+Math.random()*3)+'s';frag.appendChild(d)}
   document.getElementById('stars').appendChild(frag);
+
+  const fromDateEl=document.querySelector('[name="fromDate"]'),toDateEl=document.querySelector('[name="toDate"]');
+  if(fromDateEl&&toDateEl){
+    const today=new Date().toISOString().split('T')[0];
+    fromDateEl.min=today;
+    toDateEl.min=today;
+    fromDateEl.addEventListener('change',()=>{
+      toDateEl.min=fromDateEl.value||today;
+      if(toDateEl.value&&toDateEl.value<toDateEl.min)toDateEl.value=toDateEl.min;
+    });
+  }
 
   document.getElementById('inviteForm').addEventListener('submit', function(e){
     e.preventDefault();
