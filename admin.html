@@ -145,6 +145,7 @@
 <script src="js/reglog.js"></script>
 <script>
   const ADMIN_URL = REG_LOG_URL; // same Apps Script Web App as reglog.js
+  let adminKey = null; // kept in memory only — never persisted, re-enter on every page load
   let allRows = [];
   let activeFilter = 'all';
   let sortField = 'Timestamp';
@@ -183,9 +184,8 @@
   async function updateStatus(id, status, select){
     if(!id){ select.value = select.dataset.prev; alert('This row has no ID — update it directly in the sheet.'); return; }
     select.disabled = true;
-    const key = sessionStorage.getItem('ajm-admin-key');
     try{
-      const res = await fetch(ADMIN_URL + '?action=setStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(status) + '&key=' + encodeURIComponent(key));
+      const res = await fetch(ADMIN_URL + '?action=setStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(status) + '&key=' + encodeURIComponent(adminKey));
       const json = await res.json();
       if(!json.ok) throw new Error(json.error || 'update failed');
       const row = allRows.find(r=>r.ID===id);
@@ -231,10 +231,9 @@
   async function deleteEntry(id, btn){
     if(!id){ alert('This row has no ID (added before the delete feature) — delete it directly in the sheet.'); return; }
     if(!confirm('Delete this registration? This cannot be undone.')) return;
-    const key = sessionStorage.getItem('ajm-admin-key');
     btn.disabled = true; btn.textContent = '…';
     try{
-      const res = await fetch(ADMIN_URL + '?action=delete&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(key));
+      const res = await fetch(ADMIN_URL + '?action=delete&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(adminKey));
       const json = await res.json();
       if(!json.ok) throw new Error(json.error || 'delete failed');
       allRows = allRows.filter(r=>r.ID!==id);
@@ -333,7 +332,7 @@
     const ok = await loadData(key);
     gateBtn.disabled = false; gateBtn.textContent = 'Enter';
     if(ok){
-      try{ sessionStorage.setItem('ajm-admin-key', key); }catch(e){}
+      adminKey = key;
       gate.style.display = 'none';
       panel.style.display = 'block';
     } else {
@@ -343,12 +342,11 @@
   keyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') gateBtn.click(); });
 
   document.getElementById('refreshBtn').addEventListener('click', ()=>{
-    const key = sessionStorage.getItem('ajm-admin-key');
-    if(key) loadData(key);
+    if(adminKey) loadData(adminKey);
   });
 
   document.getElementById('logoutBtn').addEventListener('click', ()=>{
-    try{ sessionStorage.removeItem('ajm-admin-key'); }catch(e){}
+    adminKey = null;
     allRows = [];
     keyInput.value = '';
     gateError.textContent = '';
@@ -403,17 +401,9 @@
     URL.revokeObjectURL(url);
   });
 
-  // resume session without re-prompting
-  (function(){
-    try{
-      const key = sessionStorage.getItem('ajm-admin-key');
-      if(key && ADMIN_URL){
-        loadData(key).then(ok=>{
-          if(ok){ gate.style.display='none'; panel.style.display='block'; }
-        });
-      }
-    }catch(e){}
-  })();
+  // the key is never persisted — clear out anything stored by an older
+  // version of this page that did save it to sessionStorage
+  try{ sessionStorage.removeItem('ajm-admin-key'); }catch(e){}
 </script>
 </body>
 </html>
