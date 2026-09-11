@@ -449,7 +449,7 @@
     <form id="bookForm" class="book-form reveal">
       <div class="field-row">
         <label>Full name<input type="text" name="name" required placeholder="Your name"></label>
-        <label>WhatsApp / phone<input type="tel" name="phone" required placeholder="+91 xxxxx xxxxx"></label>
+        <label>WhatsApp / phone<input type="tel" name="phone" required placeholder="+91 xxxxx xxxxx" pattern="[+]?[0-9\s\-]{7,17}" title="Enter a valid phone number (digits only, 7–17 characters)"></label>
       </div>
       <div class="field-row">
         <label><span>Email <span class="opt">(optional)</span></span><input type="email" name="email" placeholder="you@example.com"></label>
