@@ -198,6 +198,9 @@
   .whero h1{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02;font-weight:500;margin-bottom:14px}
   .whero h1 em{font-style:italic;color:var(--rose)}
   .whero .tagline{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--gold-soft);margin-bottom:22px}
+  .whero .theme-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,143,160,.14);border:1px solid rgba(232,143,160,.4);
+    color:var(--rose);padding:9px 18px;border-radius:100px;font-size:.85rem;margin-bottom:22px}
+  .whero .theme-badge strong{color:var(--cream);font-weight:700}
   .whero .details{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px}
   .whero .chip{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--glass-brd);
     padding:10px 18px;border-radius:100px;font-size:.9rem;font-weight:600}
@@ -234,6 +237,8 @@
   .wreg-form input:focus,.wreg-form textarea:focus{outline:none;border-color:var(--rose);background:rgba(255,255,255,.09)}
   .wreg-form textarea{resize:vertical;min-height:80px}
   .wreg-form button{align-self:center;margin-top:6px}
+  .wreg-audience{display:inline-flex;align-items:center;gap:8px;background:rgba(232,143,160,.12);border:1px solid rgba(232,143,160,.35);
+    color:rgba(250,246,238,.85);padding:10px 20px;border-radius:100px;font-size:.85rem;margin-top:18px}
   .wreg-note{text-align:center;margin-top:32px;padding-top:28px;border-top:1px solid rgba(250,246,238,.12);
     color:rgba(250,246,238,.6);font-size:.88rem}
   .wreg-note a{color:var(--rose);font-weight:600}
@@ -259,6 +264,7 @@
     .whero-grid{grid-template-columns:1fr;gap:0}
     .whero-copy{padding-bottom:32px;text-align:center}
     .whero .details{justify-content:center}
+    .whero .theme-badge{white-space:normal;text-align:center;font-size:.78rem}
     .whero-photo img{max-width:260px;margin:0 auto}
     .wreg-form .field-row{grid-template-columns:1fr}
     .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
@@ -298,6 +304,7 @@
       <span class="kicker"><span class="dot"></span>AJM Family Special Gathering</span>
       <h1>Women's <em>Meet</em></h1>
       <p class="tagline">"Rooted in Christ. Rising in purpose."</p>
+      <span class="theme-badge">Theme: <strong>War&nbsp;Room</strong> — Win Your Battle With Love</span>
       <div class="details">
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Monday, Sep 14, 2026</span>
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>8:30 PM IST</span>
@@ -316,7 +323,7 @@
   <div class="wrap">
     <span class="eyebrow">Join us</span>
     <h2 style="margin-top:12px">An evening for the women of the AJM Family</h2>
-    <p>Come as you are for an evening of worship, the Word, and encouragement with Pastor Juhi Vishal — a space to be rooted in Christ and rise into the purpose He's called you to. Whether you're part of the AJM Family already or joining for the first time, you're warmly welcome.</p>
+    <p>Come as you are for an evening of worship, the Word, and encouragement with Pastor Juhi Vishal — a space to be rooted in Christ and rise into the purpose He's called you to. This gathering's theme, "War Room — Win Your Battle With Love," is about standing in prayer for the battles you're facing. Whether you're part of the AJM Family already or joining for the first time, you're warmly welcome.</p>
   </div>
 </section>
 
@@ -326,6 +333,7 @@
       <span class="eyebrow" style="color:var(--rose)">Free — reserve your spot</span>
       <h2>Register for Women's Meet</h2>
       <p class="sub">Fill this in and it'll open a WhatsApp message to us — we'll confirm and send you the Zoom link.</p>
+      <span class="wreg-audience">✝️ This gathering is open to women of the Christian community</span>
     </div>
     <form id="wregForm" class="wreg-form">
       <div class="field-row">
