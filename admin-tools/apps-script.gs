@@ -9,7 +9,8 @@
 const ADMIN_KEY = 'ajm-2026-change-me';
 
 const SHEET_NAME = 'Registrations';
-const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details'];
+const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID'];
+const ID_COL = 7;
 
 function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -18,6 +19,10 @@ function getSheet_() {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(HEADERS);
     sheet.setFrozenRows(1);
+  } else if (sheet.getLastColumn() < HEADERS.length) {
+    // migrate an existing sheet from before the ID column was added
+    sheet.getRange(1, sheet.getLastColumn() + 1, 1, HEADERS.length - sheet.getLastColumn())
+      .setValues([HEADERS.slice(sheet.getLastColumn())]);
   }
   return sheet;
 }
@@ -41,7 +46,10 @@ function doPost(e) {
     data.details || ''
   ]]);
 
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+  const id = Utilities.getUuid();
+  sheet.getRange(row, ID_COL).setNumberFormat('@').setValue(id);
+
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, id: id }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -50,6 +58,11 @@ function doGet(e) {
     return ContentService.createTextOutput(JSON.stringify({ error: 'unauthorized' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+
+  if (e.parameter.action === 'delete') {
+    return handleDelete_(e.parameter.id);
+  }
+
   const sheet = getSheet_();
   const rows = sheet.getDataRange().getValues();
   const headers = rows.shift();
@@ -59,5 +72,23 @@ function doGet(e) {
     return obj;
   });
   return ContentService.createTextOutput(JSON.stringify({ ok: true, data: data }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function handleDelete_(id) {
+  if (!id) {
+    return ContentService.createTextOutput(JSON.stringify({ error: 'missing id' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  const sheet = getSheet_();
+  const ids = sheet.getRange(2, ID_COL, Math.max(sheet.getLastRow() - 1, 0), 1).getValues();
+  for (let i = 0; i < ids.length; i++) {
+    if (ids[i][0] === id) {
+      sheet.deleteRow(i + 2); // +2: 1-indexed, plus header row
+      return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify({ error: 'not found' }))
     .setMimeType(ContentService.MimeType.JSON);
 }
