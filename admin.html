@@ -72,6 +72,11 @@
   .del-btn{background:none;border:1.5px solid var(--hairline);border-radius:100px;width:30px;height:30px;
     cursor:pointer;color:var(--clay);font-size:1rem;line-height:1}
   .del-btn:hover{background:rgba(201,111,90,.12);border-color:var(--clay)}
+  .status-select{border:1.5px solid var(--hairline);border-radius:100px;padding:6px 12px;font-size:.78rem;
+    font-weight:700;cursor:pointer;background:var(--surface)}
+  .status-select.st-pending{background:rgba(107,101,128,.12);color:var(--on-surface-muted);border-color:transparent}
+  .status-select.st-contacted{background:rgba(123,148,184,.2);color:#4a6a94;border-color:transparent}
+  .status-select.st-confirmed{background:rgba(76,153,102,.18);color:#2f8a4e;border-color:transparent}
   #empty,#loading,#fetchError{text-align:center;padding:60px 20px;color:var(--on-surface-muted)}
   #fetchError{color:var(--clay);display:none}
   .table-wrap{overflow-x:auto}
@@ -95,6 +100,7 @@
         <div class="sub">Anmol Jeevan Ministries — attendee &amp; invitation log</div>
       </div>
       <div style="display:flex;gap:10px">
+        <button class="btn" id="printBtn">Print List</button>
         <button class="btn" id="exportBtn">Export CSV</button>
         <button class="btn" id="refreshBtn">Refresh</button>
       </div>
@@ -125,6 +131,7 @@
             <th class="sortable" data-sort="Phone">Phone <span class="arrow">▾</span></th>
             <th class="sortable" data-sort="Email">Email <span class="arrow">▾</span></th>
             <th>Details</th>
+            <th class="sortable" data-sort="Status">Status <span class="arrow">▾</span></th>
             <th></th>
           </tr>
         </thead>
@@ -149,11 +156,75 @@
   }
 
   function toCSV(rows){
-    const cols = ['Timestamp','Source','Name','Phone','Email','Details'];
+    const cols = ['Timestamp','Source','Name','Phone','Email','Details','Status'];
     const esc = v => `"${String(v??'').replace(/"/g,'""')}"`;
     const lines = [cols.join(',')];
     rows.forEach(r=> lines.push(cols.map(c=>esc(r[c])).join(',')));
     return lines.join('\n');
+  }
+
+  const STATUSES = ['Pending','Contacted','Confirmed'];
+
+  function getFilteredRows(){
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    return allRows.filter(r=>{
+      if(activeFilter!=='all' && r.Source!==activeFilter) return false;
+      if(!q) return true;
+      return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
+    });
+  }
+
+  function statusOptions(current){
+    current = current || 'Pending';
+    return STATUSES.map(s=>`<option value="${s}"${s===current?' selected':''}>${s}</option>`).join('');
+  }
+
+  async function updateStatus(id, status, select){
+    if(!id){ select.value = select.dataset.prev; alert('This row has no ID — update it directly in the sheet.'); return; }
+    select.disabled = true;
+    const key = sessionStorage.getItem('ajm-admin-key');
+    try{
+      const res = await fetch(ADMIN_URL + '?action=setStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(status) + '&key=' + encodeURIComponent(key));
+      const json = await res.json();
+      if(!json.ok) throw new Error(json.error || 'update failed');
+      const row = allRows.find(r=>r.ID===id);
+      if(row) row.Status = status;
+      select.className = 'status-select st-' + status.toLowerCase();
+      select.dataset.prev = status;
+    }catch(err){
+      alert('Could not update status: ' + err.message);
+      select.value = select.dataset.prev;
+    }
+    select.disabled = false;
+  }
+
+  function printList(){
+    const rows = getFilteredRows().slice().sort((a,b)=>(a.Name||'').localeCompare(b.Name||''));
+    const label = activeFilter==='all' ? 'All Registrations' : activeFilter;
+    const w = window.open('', '_blank');
+    if(!w){ alert('Your browser blocked the print window. Please allow pop-ups for this site and try again.'); return; }
+    w.document.write(`
+      <!DOCTYPE html><html><head><title>${label} — Attendee List</title>
+      <style>
+        body{font-family:Arial,sans-serif;padding:32px;color:#111}
+        h1{font-size:1.4rem;margin-bottom:2px}
+        .sub{color:#666;font-size:.85rem;margin-bottom:20px}
+        table{width:100%;border-collapse:collapse}
+        th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #ccc;font-size:.95rem}
+        th{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:#666}
+        .box{width:18px;height:18px;border:1.5px solid #333;display:inline-block}
+        @media print{ body{padding:0} }
+      </style></head><body>
+      <h1>Anmol Jeevan Ministries — ${label}</h1>
+      <div class="sub">Attendee list · ${rows.length} total · generated ${new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})}</div>
+      <table><thead><tr><th style="width:36px">#</th><th style="width:36px"></th><th>Name</th><th>Phone</th></tr></thead><tbody>
+      ${rows.map((r,i)=>`<tr><td>${i+1}</td><td><span class="box"></span></td><td>${r.Name||''}</td><td>${r.Phone||''}</td></tr>`).join('')}
+      </tbody></table>
+      </body></html>
+    `);
+    w.document.close();
+    w.focus();
+    setTimeout(()=>w.print(), 300);
   }
 
   async function deleteEntry(id, btn){
@@ -187,12 +258,7 @@
   }
 
   function render(){
-    const q = document.getElementById('search').value.trim().toLowerCase();
-    let rows = allRows.filter(r=>{
-      if(activeFilter!=='all' && r.Source!==activeFilter) return false;
-      if(!q) return true;
-      return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
-    });
+    let rows = getFilteredRows();
 
     rows = rows.slice().sort((a,b)=>{
       const av = (a[sortField]||''), bv = (b[sortField]||'');
@@ -215,6 +281,7 @@
         <td>${waLink(r.Phone)}</td>
         <td>${r.Email||''}</td>
         <td class="details-cell">${r.Details||''}</td>
+        <td><select class="status-select st-${(r.Status||'Pending').toLowerCase()}" data-id="${r.ID||''}" data-prev="${r.Status||'Pending'}">${statusOptions(r.Status)}</select></td>
         <td><button class="del-btn" data-id="${r.ID||''}" title="Delete">✕</button></td>
       </tr>
     `).join('');
@@ -305,13 +372,16 @@
     deleteEntry(btn.dataset.id, btn);
   });
 
+  document.getElementById('tbody').addEventListener('change', e=>{
+    const sel = e.target.closest('.status-select');
+    if(!sel) return;
+    updateStatus(sel.dataset.id, sel.value, sel);
+  });
+
+  document.getElementById('printBtn').addEventListener('click', printList);
+
   document.getElementById('exportBtn').addEventListener('click', ()=>{
-    const q = document.getElementById('search').value.trim().toLowerCase();
-    const rows = allRows.filter(r=>{
-      if(activeFilter!=='all' && r.Source!==activeFilter) return false;
-      if(!q) return true;
-      return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
-    });
+    const rows = getFilteredRows();
     const blob = new Blob([toCSV(rows)], {type:'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

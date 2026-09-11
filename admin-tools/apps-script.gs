@@ -9,8 +9,10 @@
 const ADMIN_KEY = 'ajm-2026-change-me';
 
 const SHEET_NAME = 'Registrations';
-const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID'];
+const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status'];
 const ID_COL = 7;
+const STATUS_COL = 8;
+const STATUSES = ['Pending', 'Contacted', 'Confirmed'];
 
 function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -20,7 +22,7 @@ function getSheet_() {
     sheet.appendRow(HEADERS);
     sheet.setFrozenRows(1);
   } else if (sheet.getLastColumn() < HEADERS.length) {
-    // migrate an existing sheet from before the ID column was added
+    // migrate an existing sheet from before the ID/Status columns were added
     sheet.getRange(1, sheet.getLastColumn() + 1, 1, HEADERS.length - sheet.getLastColumn())
       .setValues([HEADERS.slice(sheet.getLastColumn())]);
   }
@@ -48,6 +50,7 @@ function doPost(e) {
 
   const id = Utilities.getUuid();
   sheet.getRange(row, ID_COL).setNumberFormat('@').setValue(id);
+  sheet.getRange(row, STATUS_COL).setNumberFormat('@').setValue('Pending');
 
   return ContentService.createTextOutput(JSON.stringify({ ok: true, id: id }))
     .setMimeType(ContentService.MimeType.JSON);
@@ -62,6 +65,9 @@ function doGet(e) {
   if (e.parameter.action === 'delete') {
     return handleDelete_(e.parameter.id);
   }
+  if (e.parameter.action === 'setStatus') {
+    return handleSetStatus_(e.parameter.id, e.parameter.status);
+  }
 
   const sheet = getSheet_();
   const rows = sheet.getDataRange().getValues();
@@ -75,20 +81,42 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+function findRowById_(sheet, id) {
+  const ids = sheet.getRange(2, ID_COL, Math.max(sheet.getLastRow() - 1, 0), 1).getValues();
+  for (let i = 0; i < ids.length; i++) {
+    if (ids[i][0] === id) return i + 2; // +2: 1-indexed, plus header row
+  }
+  return -1;
+}
+
 function handleDelete_(id) {
   if (!id) {
     return ContentService.createTextOutput(JSON.stringify({ error: 'missing id' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
   const sheet = getSheet_();
-  const ids = sheet.getRange(2, ID_COL, Math.max(sheet.getLastRow() - 1, 0), 1).getValues();
-  for (let i = 0; i < ids.length; i++) {
-    if (ids[i][0] === id) {
-      sheet.deleteRow(i + 2); // +2: 1-indexed, plus header row
-      return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+  const row = findRowById_(sheet, id);
+  if (row === -1) {
+    return ContentService.createTextOutput(JSON.stringify({ error: 'not found' }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
-  return ContentService.createTextOutput(JSON.stringify({ error: 'not found' }))
+  sheet.deleteRow(row);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function handleSetStatus_(id, status) {
+  if (!id || STATUSES.indexOf(status) === -1) {
+    return ContentService.createTextOutput(JSON.stringify({ error: 'invalid id or status' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  const sheet = getSheet_();
+  const row = findRowById_(sheet, id);
+  if (row === -1) {
+    return ContentService.createTextOutput(JSON.stringify({ error: 'not found' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  sheet.getRange(row, STATUS_COL).setNumberFormat('@').setValue(status);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
 }
