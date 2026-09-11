@@ -233,8 +233,16 @@
   .event-grid{display:flex;flex-direction:column;gap:20px}
   .event-card{display:flex;align-items:center;gap:26px;flex-wrap:wrap;background:var(--surface-2);border-radius:18px;padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
   .event-card.is-placeholder{background:transparent;border:1.5px dashed var(--hairline-2);box-shadow:none}
+  .event-card.is-featured{
+    background:linear-gradient(135deg,rgba(232,143,160,.16),rgba(232,163,61,.12));
+    border:1.5px solid rgba(232,143,160,.5);
+    box-shadow:0 0 0 1px rgba(232,143,160,.12),0 24px 50px -24px rgba(232,143,160,.5),inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .event-card.is-featured .badge-soon{background:rgba(232,143,160,.22);color:#c65d75}
   .date-badge{background:var(--night);color:var(--cream);border-radius:14px;padding:14px 10px;text-align:center;width:128px;flex-shrink:0}
   .date-badge.muted{background:var(--hairline)}
+  .date-badge.featured{background:linear-gradient(135deg,#e88fa0,#c9832f)}
+  .date-badge.featured .dow{color:rgba(255,255,255,.85)}
   .date-badge .dow{display:block;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold-soft)}
   .date-badge.muted .dow{color:var(--clay)}
   .date-badge .time{display:block;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-top:3px;color:inherit}
@@ -344,6 +352,18 @@
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
+      <div class="event-card is-featured">
+        <div class="date-badge featured">
+          <span class="dow">Mon</span>
+          <span class="time">Sep 14</span>
+        </div>
+        <div class="info">
+          <h3>Women's Meet <span class="badge-soon">Special</span></h3>
+          <p>"Rooted in Christ. Rising in purpose." — with Pastor Juhi Vishal, 8:30 PM. No registration fee.</p>
+          <div class="meta">💻 Online via Zoom</div>
+        </div>
+        <a href="womens-meet.html" class="btn-lg btn-gold magnetic">Register Now</a>
+      </div>
       <div class="event-card">
         <div class="date-badge">
           <span class="dow">Every</span>
@@ -400,18 +420,6 @@
         <div class="info">
           <h3>Night Prayer</h3>
           <p>Join us in prayer together.</p>
-          <div class="meta">💻 Online via Zoom</div>
-        </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
-      </div>
-      <div class="event-card">
-        <div class="date-badge">
-          <span class="dow">Mon</span>
-          <span class="time">Sep 14</span>
-        </div>
-        <div class="info">
-          <h3>Women's Meet <span class="badge-soon">Special</span></h3>
-          <p>"Rooted in Christ. Rising in purpose." — with Pastor Juhi Vishal, 8:30 PM. No registration fee.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
         <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
