@@ -25,14 +25,22 @@ function getSheet_() {
 function doPost(e) {
   const sheet = getSheet_();
   const data = JSON.parse(e.postData.contents);
-  sheet.appendRow([
-    new Date(),
+  const row = sheet.getLastRow() + 1;
+
+  sheet.getRange(row, 1).setValue(new Date());
+
+  // Source..Details as plain text — otherwise Sheets reads a phone number
+  // like "+91 99999 99999" as a formula and stores #ERROR! instead.
+  const textRange = sheet.getRange(row, 2, 1, 5);
+  textRange.setNumberFormat('@');
+  textRange.setValues([[
     data.source || '',
     data.name || '',
     data.phone || '',
     data.email || '',
     data.details || ''
-  ]);
+  ]]);
+
   return ContentService.createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
 }

@@ -4,7 +4,7 @@
 // REG_LOG_URL below is filled in.
 //
 // Setup: see ADMIN-SETUP.md in the project root.
-const REG_LOG_URL = ''; // e.g. 'https://script.google.com/macros/s/XXXXXXXX/exec'
+const REG_LOG_URL = 'https://script.google.com/macros/s/AKfycbyqh0rTjG0TkuftMk2Q4RxUOQ0aZvaawtHpY1l_jU_GbtdbZr8hwoRXylv6Wr0t0UVf/exec';
 
 function logRegistration(source, fields) {
   if (!REG_LOG_URL) return;
