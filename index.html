@@ -353,21 +353,27 @@
   /* women's meet banner */
   .wmeet-banner{
     display:block;position:relative;overflow:hidden;
-    background:linear-gradient(135deg,#2a1420 0%,var(--night) 55%,var(--night-2) 100%);
+    background:
+      radial-gradient(60% 100% at 85% 50%,rgba(232,143,160,.22),transparent 70%),
+      linear-gradient(135deg,#2a1420 0%,var(--night) 55%,var(--night-2) 100%);
+    box-shadow:inset 0 -1px 0 rgba(232,143,160,.25),inset 0 1px 0 rgba(232,143,160,.25);
     transition:box-shadow .4s var(--ease-out)}
-  .wmeet-banner:hover{box-shadow:inset 0 0 0 1px rgba(232,143,160,.3)}
-  .wmeet-banner-inner{display:flex;align-items:center;gap:30px;padding:30px 28px;flex-wrap:wrap}
-  .wmeet-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:top center;flex:none;
-    box-shadow:0 0 0 4px rgba(232,143,160,.35),0 10px 30px rgba(0,0,0,.4)}
-  .wmeet-copy{flex:1;min-width:260px;color:var(--cream)}
-  .wmeet-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.22em;
-    text-transform:uppercase;font-weight:700;color:#e88fa0;margin-bottom:8px}
-  .wmeet-kicker .dot{width:7px;height:7px;border-radius:50%;background:#ff4d6d;animation:wmeetPulse 2s infinite}
-  @keyframes wmeetPulse{0%{box-shadow:0 0 0 0 rgba(255,77,109,.6)}70%{box-shadow:0 0 0 9px rgba(255,77,109,0)}100%{box-shadow:0 0 0 0 rgba(255,77,109,0)}}
-  .wmeet-copy h2{font-size:clamp(1.35rem,3vw,1.8rem);font-weight:500;margin-bottom:6px;font-family:'Fraunces',serif}
-  .wmeet-tag{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);font-size:.96rem;margin-bottom:10px}
-  .wmeet-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:.84rem;color:rgba(250,246,238,.75)}
-  .wmeet-cta{flex:none;background:#e88fa0;color:var(--night);box-shadow:0 8px 30px rgba(232,143,160,.4)}
+  .wmeet-banner:hover{box-shadow:inset 0 -1px 0 rgba(232,143,160,.4),inset 0 1px 0 rgba(232,143,160,.4)}
+  .wmeet-banner-inner{display:flex;align-items:center;gap:52px;padding:72px 28px;flex-wrap:wrap}
+  .wmeet-photo{width:150px;height:auto;border-radius:16px;object-fit:cover;flex:none;
+    box-shadow:0 0 0 1px rgba(232,143,160,.35),0 25px 50px -18px rgba(0,0,0,.6)}
+  .wmeet-copy{flex:1;min-width:280px;color:var(--cream)}
+  .wmeet-kicker{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;letter-spacing:.24em;
+    text-transform:uppercase;font-weight:700;color:#f2a8b6;margin-bottom:16px}
+  .wmeet-kicker .dot{width:9px;height:9px;border-radius:50%;background:#ff4d6d;animation:wmeetPulse 2s infinite}
+  @keyframes wmeetPulse{0%{box-shadow:0 0 0 0 rgba(255,77,109,.6)}70%{box-shadow:0 0 0 11px rgba(255,77,109,0)}100%{box-shadow:0 0 0 0 rgba(255,77,109,0)}}
+  .wmeet-copy h2{font-size:clamp(2.4rem,5.5vw,4rem);line-height:1.04;font-weight:500;margin-bottom:12px;font-family:'Fraunces',serif}
+  .wmeet-tag{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);font-size:clamp(1.05rem,2vw,1.3rem);margin-bottom:20px}
+  .wmeet-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:.92rem;color:var(--cream)}
+  .wmeet-meta span{display:inline-flex;align-items:center;background:var(--glass);border:1px solid var(--glass-brd);
+    padding:9px 18px;border-radius:100px;font-weight:600}
+  .wmeet-cta{flex:none;padding:20px 44px;font-size:1.12rem;background:#e88fa0;color:var(--night);
+    box-shadow:0 12px 40px rgba(232,143,160,.5)}
   .wmeet-cta:hover{background:#f2a8b6}
 
   /* verse strip */
@@ -550,9 +556,11 @@
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .menutoggle{display:block;z-index:60}
-    .wmeet-banner-inner{justify-content:center;text-align:center;padding:26px 22px}
+    .wmeet-banner-inner{justify-content:center;text-align:center;padding:48px 24px;gap:26px}
+    .wmeet-photo{width:170px}
     .wmeet-copy{text-align:center}
     .wmeet-meta{justify-content:center}
+    .wmeet-cta{width:100%;justify-content:center}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .about-visual{max-width:360px;margin:0 auto}
     .pillars{grid-template-columns:1fr}
@@ -616,7 +624,7 @@
 
 <a href="womens-meet.html" class="wmeet-banner reveal in">
   <div class="wrap wmeet-banner-inner">
-    <img class="wmeet-photo" src="img/pastor-juhi-vishal.jpg" alt="Pastor Juhi Vishal">
+    <img class="wmeet-photo" src="img/womens-meet-flyer.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal">
     <div class="wmeet-copy">
       <span class="wmeet-kicker"><span class="dot"></span>AJM Family Special Gathering</span>
       <h2>Women's Meet</h2>
