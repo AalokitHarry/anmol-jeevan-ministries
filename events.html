@@ -237,8 +237,15 @@
     background:linear-gradient(135deg,rgba(232,143,160,.16),rgba(232,163,61,.12));
     border:1.5px solid rgba(232,143,160,.5);
     box-shadow:0 0 0 1px rgba(232,143,160,.12),0 24px 50px -24px rgba(232,143,160,.5),inset 0 1px 0 rgba(255,255,255,.6);
+    padding:36px 40px;gap:32px;position:relative;overflow:hidden
   }
-  .event-card.is-featured .badge-soon{background:rgba(232,143,160,.22);color:#c65d75}
+  .event-card.is-featured .badge-soon{background:rgba(232,143,160,.22);color:#c65d75;display:inline-flex;align-items:center;gap:6px}
+  .event-card.is-featured .badge-soon .dot{width:6px;height:6px;border-radius:50%;background:#ff4d6d;animation:eventPulse 2s infinite}
+  @keyframes eventPulse{0%{box-shadow:0 0 0 0 rgba(255,77,109,.6)}70%{box-shadow:0 0 0 8px rgba(255,77,109,0)}100%{box-shadow:0 0 0 0 rgba(255,77,109,0)}}
+  .event-photo{width:104px;height:auto;border-radius:14px;flex-shrink:0;box-shadow:0 16px 34px -14px rgba(0,0,0,.4)}
+  .event-card.is-featured h3{font-size:1.55rem}
+  .event-card.is-featured p{font-size:1.02rem;color:var(--on-surface)}
+  .event-card.is-featured .btn-lg{padding:18px 36px;font-size:1.05rem}
   .date-badge{background:var(--night);color:var(--cream);border-radius:14px;padding:14px 10px;text-align:center;width:128px;flex-shrink:0}
   .date-badge.muted{background:var(--hairline)}
   .date-badge.featured{background:linear-gradient(135deg,#e88fa0,#c9832f)}
@@ -303,6 +310,10 @@
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .menutoggle{display:block;z-index:60}
     .event-card{padding:26px}
+    .event-card.is-featured{padding:28px;justify-content:center;text-align:center}
+    .event-card.is-featured .info{text-align:center}
+    .event-card.is-featured h3{justify-content:center}
+    .event-photo{width:120px}
     .book-form .field-row{grid-template-columns:1fr}
     .float-stack{right:16px;bottom:16px;gap:8px}
     .float-cta{padding:12px 18px;font-size:.85rem}
@@ -353,12 +364,13 @@
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
       <div class="event-card is-featured">
+        <img class="event-photo" src="img/womens-meet-flyer.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal">
         <div class="date-badge featured">
           <span class="dow">Mon</span>
           <span class="time">Sep 14</span>
         </div>
         <div class="info">
-          <h3>Women's Meet <span class="badge-soon">Special</span></h3>
+          <h3>Women's Meet <span class="badge-soon"><span class="dot"></span>Special</span></h3>
           <p>"Rooted in Christ. Rising in purpose." — with Pastor Juhi Vishal, 8:30 PM. No registration fee.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
