@@ -309,18 +309,21 @@
       const res = await fetch(ADMIN_URL + '?key=' + encodeURIComponent(key));
       const json = await res.json();
       if(json.error){
-        throw new Error(json.error === 'unauthorized' ? 'Wrong admin key.' : json.error);
+        throw new Error(json.error === 'unauthorized' ? 'wrongkey' : json.error);
       }
       allRows = json.data || [];
       document.getElementById('loading').style.display = 'none';
       render();
-      return true;
+      return null; // no error
     }catch(err){
       document.getElementById('loading').style.display = 'none';
+      const msg = err.message === 'wrongkey'
+        ? 'Wrong admin key.'
+        : 'Could not reach the sheet — Google Apps Script can be slow to respond, especially on the first try. Wait a few seconds and try again.';
       const el = document.getElementById('fetchError');
-      el.textContent = 'Could not load registrations: ' + err.message;
+      el.textContent = msg;
       el.style.display = 'block';
-      return false;
+      return msg;
     }
   }
 
@@ -329,14 +332,14 @@
     if(!key){ gateError.textContent = 'Enter the admin key.'; return; }
     if(!ADMIN_URL){ gateError.textContent = 'Not set up yet — see ADMIN-SETUP.md.'; return; }
     gateBtn.disabled = true; gateBtn.textContent = 'Checking…';
-    const ok = await loadData(key);
+    const errMsg = await loadData(key);
     gateBtn.disabled = false; gateBtn.textContent = 'Enter';
-    if(ok){
+    if(!errMsg){
       adminKey = key;
       gate.style.display = 'none';
       panel.style.display = 'block';
     } else {
-      gateError.textContent = 'Wrong key, or the sheet is unreachable.';
+      gateError.textContent = errMsg;
     }
   });
   keyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') gateBtn.click(); });
