@@ -103,6 +103,7 @@
         <button class="btn" id="printBtn">Print List</button>
         <button class="btn" id="exportBtn">Export CSV</button>
         <button class="btn" id="refreshBtn">Refresh</button>
+        <button class="btn" id="logoutBtn">Log out</button>
       </div>
     </header>
 
@@ -344,6 +345,15 @@
   document.getElementById('refreshBtn').addEventListener('click', ()=>{
     const key = sessionStorage.getItem('ajm-admin-key');
     if(key) loadData(key);
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    try{ sessionStorage.removeItem('ajm-admin-key'); }catch(e){}
+    allRows = [];
+    keyInput.value = '';
+    gateError.textContent = '';
+    panel.style.display = 'none';
+    gate.style.display = 'flex';
   });
 
   document.getElementById('tabs').addEventListener('click', e=>{
