@@ -670,11 +670,11 @@
   <div class="aurora"></div>
   <div class="wrap next-gathering-inner">
     <span class="kicker"><span class="dot"></span>Next Gathering</span>
-    <h2>Sunday Fellowship</h2>
-    <p class="sub">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
+    <h2 id="ngName">Sunday Fellowship</h2>
+    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
     <div class="ng-meta">
       <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
-      <span class="ng-chip">🕒 Every Sunday, 3:00 PM</span>
+      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
     </div>
     <a href="events.html#book" class="btn-lg btn-gold magnetic">Get Directions &amp; Times</a>
   </div>
@@ -964,6 +964,36 @@
 <script>
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  // "Next Gathering" section — auto-picks whichever recurring gathering
+  // (Sunday Fellowship or 90 Minutes with Jesus) comes up soonest
+  (function(){
+    const ngName=document.getElementById('ngName'), ngDesc=document.getElementById('ngDesc'), ngTime=document.getElementById('ngTime');
+    if(!ngName||!ngDesc||!ngTime)return;
+    function nextOccurrence(day,hour,minute){
+      const now=new Date();
+      const d=new Date(now);
+      d.setHours(hour,minute,0,0);
+      let diff=(day-now.getDay()+7)%7;
+      if(diff===0&&d<=now)diff=7;
+      d.setDate(now.getDate()+diff);
+      return d;
+    }
+    const gatherings=[
+      {name:'Sunday Fellowship',day:0,hour:15,minute:0,desc:"Praise, the Word & prayer together — come as you are."},
+      {name:'90 Minutes with Jesus',day:3,hour:19,minute:0,desc:'A focused time in His presence — worship, the Word & prayer.'}
+    ].map(g=>({...g,next:nextOccurrence(g.day,g.hour,g.minute)}));
+    gatherings.sort((a,b)=>a.next-b.next);
+    const upcoming=gatherings[0];
+    const isToday=upcoming.next.toDateString()===new Date().toDateString();
+    const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+    const isTomorrow=upcoming.next.toDateString()===tomorrow.toDateString();
+    const dayLabel=isToday?'Today':isTomorrow?'Tomorrow':'This '+upcoming.next.toLocaleDateString('en-US',{weekday:'long'});
+    const timeLabel=upcoming.next.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    ngName.textContent=upcoming.name;
+    ngDesc.textContent=upcoming.desc;
+    ngTime.textContent='🕒 '+dayLabel+', '+timeLabel;
+  })();
 
   const nav=document.getElementById('nav');
   const heroInner=document.querySelector('.hero-inner');
