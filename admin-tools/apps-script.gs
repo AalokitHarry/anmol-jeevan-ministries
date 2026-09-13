@@ -14,13 +14,6 @@ const ID_COL = 7;
 const STATUS_COL = 8;
 const STATUSES = ['Pending', 'Contacted', 'Confirmed'];
 
-// Free SMS confirmation via sms-gate.app's "SMS Gateway for Android" app.
-// Install it on a phone, turn on Cloud Server mode, and it will show you a
-// username/password once it's online — paste them below. Leave both blank
-// to skip SMS confirmations (registrations still log normally either way).
-const SMS_GATEWAY_USER = '';
-const SMS_GATEWAY_PASS = '';
-
 function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(SHEET_NAME);
@@ -59,38 +52,8 @@ function doPost(e) {
   sheet.getRange(row, ID_COL).setNumberFormat('@').setValue(id);
   sheet.getRange(row, STATUS_COL).setNumberFormat('@').setValue('Pending');
 
-  sendConfirmationSms_(data.phone, data.name, data.source);
-
   return ContentService.createTextOutput(JSON.stringify({ ok: true, id: id }))
     .setMimeType(ContentService.MimeType.JSON);
-}
-
-function sendConfirmationSms_(phone, name, source) {
-  if (!SMS_GATEWAY_USER || !SMS_GATEWAY_PASS || !phone) return;
-
-  const e164 = phone.replace(/[^\d+]/g, '');
-  const label = source === "Women's Meet" ? "Women's Meet"
-    : source === 'Speaking Invitation' ? 'your invitation'
-    : 'the gathering';
-  const text = 'Hi ' + (name || 'there') + ', AJM Family here — we’ve received your registration for '
-    + label + '. We’ll be in touch soon. God bless!';
-
-  try {
-    UrlFetchApp.fetch('https://api.sms-gate.app/3rdparty/v1/messages', {
-      method: 'post',
-      contentType: 'application/json',
-      headers: {
-        Authorization: 'Basic ' + Utilities.base64Encode(SMS_GATEWAY_USER + ':' + SMS_GATEWAY_PASS)
-      },
-      payload: JSON.stringify({
-        textMessage: { text: text },
-        phoneNumbers: [e164]
-      }),
-      muteHttpExceptions: true
-    });
-  } catch (err) {
-    // Never let an SMS failure block registration logging.
-  }
 }
 
 function doGet(e) {
