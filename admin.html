@@ -112,6 +112,7 @@
   .queue-progress{font-size:.78rem;color:var(--on-surface-muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
   .queue-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;margin-bottom:4px}
   .queue-phone{color:var(--on-surface-muted);margin-bottom:24px}
+  .queue-confirm{font-weight:600;margin:-14px 0 20px}
   .queue-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .queue-done{text-align:center;padding:20px 0}
   .queue-done .big{font-size:2.4rem;margin-bottom:10px}
@@ -372,26 +373,57 @@ See you there!</textarea>
     bulkModal.classList.remove('open');
   }
 
+  function openWhatsAppFor(person){
+    const template = document.getElementById('bulkMessage').value;
+    const message = template.replaceAll('{name}', person.Name||'there');
+    const digits = (person.Phone||'').replace(/[^\d]/g,'');
+    if(digits) window.open('https://wa.me/' + digits + '?text=' + encodeURIComponent(message), '_blank');
+  }
+
+  // Two deliberate steps per person: opening WhatsApp does NOT by itself
+  // count as sent — the admin confirms afterward that they actually hit
+  // send, so the "sent" tally reflects real confirmations, not just tabs
+  // that were opened and possibly closed unsent.
   function showQueueStep(){
-    const person = bulkQueue[bulkIndex];
-    document.getElementById('queueStep').innerHTML = `
-      <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
-      <div class="queue-name">${person.Name||''}</div>
-      <div class="queue-phone">${person.Phone||''}</div>
-      <div class="queue-actions">
-        <button class="btn ghost" id="queueSkipBtn">Skip</button>
-        <button class="btn primary" id="queueSendBtn">Open WhatsApp &amp; Next →</button>
-      </div>
-    `;
-    document.getElementById('queueSendBtn').addEventListener('click', ()=>{
-      const template = document.getElementById('bulkMessage').value;
-      const message = template.replaceAll('{name}', person.Name||'there');
-      const digits = (person.Phone||'').replace(/[^\d]/g,'');
-      if(digits) window.open('https://wa.me/' + digits + '?text=' + encodeURIComponent(message), '_blank');
-      bulkSent++;
-      advanceQueue();
-    });
-    document.getElementById('queueSkipBtn').addEventListener('click', advanceQueue);
+    renderQueueStep(bulkQueue[bulkIndex], false);
+  }
+
+  function renderQueueStep(person, opened){
+    const step = document.getElementById('queueStep');
+    if(!opened){
+      step.innerHTML = `
+        <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
+        <div class="queue-name">${person.Name||''}</div>
+        <div class="queue-phone">${person.Phone||''}</div>
+        <div class="queue-actions">
+          <button class="btn ghost" id="queueSkipBtn">Skip</button>
+          <button class="btn primary" id="queueOpenBtn">Open WhatsApp →</button>
+        </div>
+      `;
+      document.getElementById('queueOpenBtn').addEventListener('click', ()=>{
+        openWhatsAppFor(person);
+        renderQueueStep(person, true);
+      });
+      document.getElementById('queueSkipBtn').addEventListener('click', advanceQueue);
+    } else {
+      step.innerHTML = `
+        <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
+        <div class="queue-name">${person.Name||''}</div>
+        <div class="queue-phone">${person.Phone||''}</div>
+        <p class="queue-confirm">Did you hit send in WhatsApp?</p>
+        <div class="queue-actions">
+          <button class="btn ghost" id="queueReopenBtn">Reopen WhatsApp</button>
+          <button class="btn ghost" id="queueSkipBtn">Skip (not sent)</button>
+          <button class="btn primary" id="queueConfirmBtn">✓ Yes, sent — Next</button>
+        </div>
+      `;
+      document.getElementById('queueReopenBtn').addEventListener('click', ()=>openWhatsAppFor(person));
+      document.getElementById('queueSkipBtn').addEventListener('click', advanceQueue);
+      document.getElementById('queueConfirmBtn').addEventListener('click', ()=>{
+        bulkSent++;
+        advanceQueue();
+      });
+    }
   }
 
   function advanceQueue(){
@@ -400,7 +432,7 @@ See you there!</textarea>
       bulkQueueEl.style.display = 'none';
       bulkDoneEl.style.display = 'block';
       document.getElementById('bulkDoneSummary').textContent =
-        `Opened WhatsApp for ${bulkSent} of ${bulkQueue.length} recipient${bulkQueue.length===1?'':'s'}.`;
+        `Confirmed sent to ${bulkSent} of ${bulkQueue.length} recipient${bulkQueue.length===1?'':'s'}.`;
     } else {
       showQueueStep();
     }
