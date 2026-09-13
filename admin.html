@@ -48,6 +48,8 @@
     font-size:.82rem;font-weight:600;cursor:pointer;color:var(--on-surface-muted)}
   .tab.active{background:var(--night);color:var(--cream);border-color:var(--night)}
   #search{flex:1;min-width:180px;padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);font-size:.85rem}
+  .sort-select{padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);font-size:.85rem;
+    background:var(--surface);color:var(--on-surface);font-weight:600;cursor:pointer}
 
   .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
   .stat{background:var(--surface-2);border-radius:14px;padding:14px 20px;min-width:120px}
@@ -152,6 +154,14 @@
         <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates</button>
       </div>
       <input type="text" id="search" placeholder="Search name, phone, email…">
+      <select id="sortSelect" class="sort-select">
+        <option value="Timestamp:desc">Newest first</option>
+        <option value="Timestamp:asc">Oldest first</option>
+        <option value="Name:asc">Name (A–Z)</option>
+        <option value="Name:desc">Name (Z–A)</option>
+        <option value="Status:asc">Status (A–Z)</option>
+        <option value="Source:asc">Source (A–Z)</option>
+      </select>
     </div>
 
     <div id="loading">Loading…</div>
@@ -455,6 +465,9 @@ See you there!</textarea>
       th.classList.toggle('active', active);
       th.querySelector('.arrow').textContent = active ? (sortDir==='asc' ? '▴' : '▾') : '▾';
     });
+    const sortSelect = document.getElementById('sortSelect');
+    const sortValue = sortField + ':' + sortDir;
+    if([...sortSelect.options].some(o=>o.value===sortValue)) sortSelect.value = sortValue;
 
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = rows.map(r=>`
@@ -553,6 +566,13 @@ See you there!</textarea>
   });
 
   document.getElementById('search').addEventListener('input', render);
+
+  document.getElementById('sortSelect').addEventListener('change', e=>{
+    const [field, dir] = e.target.value.split(':');
+    sortField = field;
+    sortDir = dir;
+    render();
+  });
 
   document.querySelector('thead').addEventListener('click', e=>{
     const th = e.target.closest('th.sortable');
