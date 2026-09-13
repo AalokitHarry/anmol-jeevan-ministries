@@ -32,6 +32,25 @@ Send me that URL (and confirm the `ADMIN_KEY` you set), and I'll paste it into [
 - Every form submission gets logged to the sheet automatically, in addition to opening WhatsApp.
 - Visit `https://ajmfamily.site/admin.html`, enter your `ADMIN_KEY`, and you'll see every registration in a searchable, filterable table.
 
+## 4. (Optional) Turn on free SMS confirmations
+
+By default, WhatsApp still opens as before and that's the only confirmation people get. If you also want registrants to receive a free text on their own phone the moment they submit, here's how — no cost, no DLT registration needed, because it sends from an ordinary personal SIM rather than a commercial bulk route.
+
+1. On an Android phone that can stay switched on and connected to the internet (your own phone is fine — it just needs a working SIM with SMS), install the **SMS Gateway for Android** app — search for it on the Play Store, or get it from [github.com/capcom6/android-sms-gateway](https://github.com/capcom6/android-sms-gateway) if it's not listed for your region.
+2. Open the app and turn on **Cloud Server** mode.
+3. Tap the **Offline** button to connect — it'll switch to **Online** and show you a **username** and **password** on screen. That's all the setup the app needs.
+4. Back in your Apps Script editor, find these two lines near the top and paste in that username and password:
+   ```
+   const SMS_GATEWAY_USER = '';
+   const SMS_GATEWAY_PASS = '';
+   ```
+5. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy** (same redeploy step as always — don't use "New deployment," it issues a different URL).
+6. Test it: submit any of the site's registration forms with your own phone number and confirm you receive a text like *"Hi [name], AJM Family here — we've received your registration for [event]. We'll be in touch soon. God bless!"*
+
+Leave both fields blank and this step is skipped entirely — registrations keep logging normally either way, so there's no risk in leaving it off until you're ready.
+
+**Good to know:** the phone needs to stay on and connected for messages to send (the free "Cloud" mode routes through sms-gate.app's server to your phone, so no port-forwarding or static IP needed). It's meant for the volume this site sees (dozens/hundreds a week), not mass marketing blasts.
+
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.
