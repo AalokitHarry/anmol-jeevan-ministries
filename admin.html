@@ -77,6 +77,11 @@
   .status-select.st-pending{background:rgba(107,101,128,.12);color:var(--on-surface-muted);border-color:transparent}
   .status-select.st-contacted{background:rgba(123,148,184,.2);color:#4a6a94;border-color:transparent}
   .status-select.st-confirmed{background:rgba(76,153,102,.18);color:#2f8a4e;border-color:transparent}
+  tr.dup-row{background:rgba(232,163,61,.1)}
+  .dup-badge{display:inline-block;background:rgba(232,163,61,.22);color:var(--gold-deep);font-size:.68rem;
+    font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px;white-space:nowrap;cursor:help}
+  .tab.dup-tab{border-color:rgba(232,163,61,.5);color:var(--gold-deep)}
+  .tab.dup-tab.active{background:var(--gold-deep);border-color:var(--gold-deep);color:var(--night)}
   #empty,#loading,#fetchError{text-align:center;padding:60px 20px;color:var(--on-surface-muted)}
   #fetchError{color:var(--clay);display:none}
   .table-wrap{overflow-x:auto}
@@ -144,6 +149,7 @@
         <button class="tab" data-filter="Women's Meet">Women's Meet</button>
         <button class="tab" data-filter="Event Booking">Event Booking</button>
         <button class="tab" data-filter="Speaking Invitation">Speaking Invitation</button>
+        <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates</button>
       </div>
       <input type="text" id="search" placeholder="Search name, phone, email…">
     </div>
@@ -230,10 +236,44 @@ See you there!</textarea>
 
   const STATUSES = ['Pending','Contacted','Confirmed'];
 
+  // Duplicate detection is display-only — it never removes or merges data,
+  // it just flags rows that share a phone number so nothing gets missed
+  // (or messaged twice) while the sheet keeps every entry intact.
+  function phoneKey(phone){
+    const digits = (phone||'').replace(/[^\d]/g,'');
+    return digits.length >= 8 ? digits.slice(-10) : '';
+  }
+
+  function markDuplicates(){
+    const counts = new Map();
+    allRows.forEach(r=>{
+      r._dupKey = phoneKey(r.Phone);
+      if(r._dupKey) counts.set(r._dupKey, (counts.get(r._dupKey)||0)+1);
+    });
+    allRows.forEach(r=>{ r._dupCount = r._dupKey ? counts.get(r._dupKey) : 1; });
+  }
+
+  function dedupeByPhone(rows){
+    const map = new Map();
+    let blankCounter = 0;
+    rows.forEach(r=>{
+      const key = phoneKey(r.Phone) || ('__blank' + (blankCounter++));
+      const existing = map.get(key);
+      if(!existing || new Date(r.Timestamp) > new Date(existing.Timestamp)) map.set(key, r);
+    });
+    return [...map.values()];
+  }
+
   function getFilteredRows(){
+    markDuplicates();
     const q = document.getElementById('search').value.trim().toLowerCase();
-    return allRows.filter(r=>{
-      if(activeFilter!=='all' && r.Source!==activeFilter) return false;
+    let base = allRows;
+    if(activeFilter === '__duplicates'){
+      base = allRows.filter(r=>r._dupCount>1);
+    } else if(activeFilter !== 'all'){
+      base = allRows.filter(r=>r.Source===activeFilter);
+    }
+    return base.filter(r=>{
       if(!q) return true;
       return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
     });
@@ -301,7 +341,7 @@ See you there!</textarea>
   const bulkDoneEl = document.getElementById('bulkDone');
 
   function openBulkModal(){
-    const confirmed = getFilteredRows().filter(r=>r.Status==='Confirmed');
+    const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
     document.getElementById('bulkFilterLabel').textContent = activeFilter==='all' ? 'All' : activeFilter;
     document.getElementById('bulkCount').textContent = confirmed.length;
     document.getElementById('recipientList').innerHTML = confirmed.length ? confirmed.map(r=>`
@@ -361,7 +401,7 @@ See you there!</textarea>
   document.getElementById('bulkCloseBtn').addEventListener('click', closeBulkModal);
 
   document.getElementById('bulkStartBtn').addEventListener('click', ()=>{
-    const confirmed = getFilteredRows().filter(r=>r.Status==='Confirmed');
+    const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
     const checkedIds = new Set([...document.querySelectorAll('.rcheck:checked')].map(c=>c.dataset.id));
     bulkQueue = confirmed.filter(r=>checkedIds.has(r.ID));
     if(!bulkQueue.length){ alert('Select at least one recipient.'); return; }
@@ -418,10 +458,10 @@ See you there!</textarea>
 
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = rows.map(r=>`
-      <tr>
+      <tr class="${r._dupCount>1 ? 'dup-row' : ''}">
         <td>${r.Timestamp ? new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}) : ''}</td>
         <td><span class="src-badge ${srcClass(r.Source)}">${r.Source||''}</span></td>
-        <td>${r.Name||''}</td>
+        <td>${r.Name||''}${r._dupCount>1 ? `<span class="dup-badge" title="This phone number appears ${r._dupCount} times">⚠ ×${r._dupCount}</span>` : ''}</td>
         <td>${waLink(r.Phone)}</td>
         <td>${r.Email||''}</td>
         <td class="details-cell">${r.Details||''}</td>
@@ -436,11 +476,13 @@ See you there!</textarea>
     const stats = document.getElementById('stats');
     const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
     allRows.forEach(r=>{ if(counts[r.Source]!==undefined) counts[r.Source]++; });
+    const dupCount = allRows.filter(r=>r._dupCount>1).length;
     stats.innerHTML = `
       <div class="stat"><span class="num">${allRows.length}</span><span class="label">Total</span></div>
       <div class="stat"><span class="num">${counts["Women's Meet"]}</span><span class="label">Women's Meet</span></div>
       <div class="stat"><span class="num">${counts['Event Booking']}</span><span class="label">Event Booking</span></div>
       <div class="stat"><span class="num">${counts['Speaking Invitation']}</span><span class="label">Speaking Invitation</span></div>
+      <div class="stat"><span class="num">${dupCount}</span><span class="label">Duplicate Entries</span></div>
     `;
   }
 
