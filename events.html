@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#faf6ee">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
+<meta name="theme-color" content="#050c26">
+<script>(function(){var t='dark';try{t=localStorage.getItem('ajm-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#050c26':'#faf6ee');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events &amp; Booking — Apostle Vishal Samuel | AJM Family</title>
 <meta name="description" content="Join Anmol Jeevan Ministries (AJM / AJMI / AJM Family), led by Apostle Vishal Samuel (Pastor Vishal Samuel) & Pastor Juhi Vishal, for our weekly Sunday gathering in Indore, or reserve your spot for a special event. Book a visit in seconds via WhatsApp.">
@@ -330,7 +330,29 @@
     .theme-fab svg{width:18px;height:18px}
     .theme-fab svg{width:18px;height:18px}
   }
+
+  /* ---- 13th anniversary look ---- */
+  .ehero{background:
+      radial-gradient(70% 55% at 50% -5%,rgba(46,96,225,.4),transparent 70%),
+      radial-gradient(120% 90% at 50% 130%,rgba(233,168,58,.6) 0%,rgba(150,92,20,.25) 30%,transparent 60%),
+      linear-gradient(180deg,#030817 0%,var(--night) 45%,var(--night-2) 100%)}
+  .ehero h1 em{font-style:italic;padding-right:.05em;
+    background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .ehero .hindi{color:#f2c25f}
+  .event-card.is-featured{
+    background:linear-gradient(135deg,rgba(242,194,95,.16),rgba(27,63,160,.14));
+    border:1.5px solid rgba(242,194,95,.6);
+    box-shadow:0 0 0 1px rgba(242,194,95,.14),0 24px 50px -24px rgba(233,168,58,.5),inset 0 1px 0 rgba(255,255,255,.2)}
+  .event-card.is-featured .badge-soon{background:rgba(242,194,95,.2);color:var(--accent-text)}
+  .event-card.is-featured .badge-soon .dot{background:#f2c25f;animation:none}
+  .event-crown{width:88px;height:auto;flex-shrink:0;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+  .date-badge.featured{background:var(--gold-btn)}
+  .date-badge.featured .dow{color:rgba(27,19,5,.75)}
+  .date-badge.featured .time{color:#1b1305}
+  .book{position:relative;overflow:hidden}
+  .book .wrap{position:relative;z-index:2}
 </style>
+<link rel="stylesheet" href="css/celebrate.css">
 </head>
 <body>
 
@@ -358,7 +380,11 @@
 
 <header class="ehero">
   <div class="aurora"></div>
+  <div class="rays"></div>
   <div class="stars" id="stars"></div>
+  <div class="bokeh" data-bokeh="22"></div>
+  <div class="ribbon ribbon-tl" aria-hidden="true"></div>
+  <div class="ribbon ribbon-br" aria-hidden="true"></div>
   <div class="ehero-inner reveal in">
     <span class="kicker">Join Us</span>
     <h1>Events &amp; <em>Gatherings</em></h1>
@@ -372,18 +398,18 @@
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
-      <div class="event-card is-featured">
-        <img class="event-photo" src="img/womens-meet-flyer.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal">
+      <div class="event-card is-featured" data-expires="2026-09-21T00:00:00+05:30">
+        <img class="event-crown" src="img/crown.svg" alt="" aria-hidden="true">
         <div class="date-badge featured">
-          <span class="dow">Mon</span>
-          <span class="time">Sep 14</span>
+          <span class="dow">Sun</span>
+          <span class="time">Sep 20</span>
         </div>
         <div class="info">
-          <h3>Women's Meet <span class="badge-soon"><span class="dot"></span>Special</span></h3>
-          <p>"Rooted in Christ. Rising in purpose." — with Pastor Juhi Vishal, 8:30 PM. No registration fee.</p>
-          <div class="meta">💻 Online via Zoom</div>
+          <h3>13th Church Anniversary <span class="badge-soon"><span class="dot"></span>Special</span></h3>
+          <p>"God's Faithfulness, Our Testimony." Join the AJM Family as we celebrate 13 years of God's grace, love and provision — 4:00 PM.</p>
+          <div class="meta">🎉 One Family | One Faith | One Mission</div>
         </div>
-        <a href="womens-meet.html" class="btn-lg btn-gold magnetic">Register Now</a>
+        <a href="index.html#anniversary" class="btn-lg btn-gold magnetic">See the celebration</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -450,6 +476,7 @@
 </section>
 
 <section class="book reveal" id="book">
+  <div class="bokeh" data-bokeh="16"></div>
   <div class="wrap">
     <div class="book-head">
       <span class="eyebrow" style="color:var(--gold-soft)"><span class="live-dot"></span>Reserve your spot</span>
@@ -472,7 +499,7 @@
           <option>Youth Fellowship (Thursdays, 8:30 PM)</option>
           <option>Morning Devotion (Mon–Sat, 7:30 AM)</option>
           <option>Night Prayer (Mon–Sat, 10 PM)</option>
-          <option>Women's Meet (Mon, Sep 14, 8:30 PM)</option>
+          <option data-expires="2026-09-21T00:00:00+05:30">13th Church Anniversary (Sun, Sep 20, 4 PM)</option>
           <option>General Inquiry / Prayer Request</option>
         </select>
       </label>
@@ -578,7 +605,7 @@
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
       const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
+      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#050c26':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }
@@ -633,8 +660,14 @@
     form.style.display = 'flex';
   });
 
+  // hide one-off events once their date has passed
+  document.querySelectorAll('[data-expires]').forEach(el=>{
+    if(Date.now()>=Date.parse(el.dataset.expires))el.remove();
+  });
+
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="js/reglog.js"></script>
+<script src="js/celebrate.js"></script>
 </body>
 </html>

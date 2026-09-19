@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#faf6ee">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
+<meta name="theme-color" content="#050c26">
+<script>(function(){var t='dark';try{t=localStorage.getItem('ajm-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#050c26':'#faf6ee');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Women's Meet Recap — with Pastor Juhi Vishal | Anmol Jeevan Ministries (AJM)</title>
 <meta name="description" content="The AJM Family Women's Meet with Pastor Juhi Vishal took place Monday, Sep 14, 2026, on Zoom. Thank you to everyone who joined us — rooted in Christ, rising in purpose.">
@@ -235,6 +235,7 @@
     .theme-fab svg{width:18px;height:18px}
   }
 </style>
+<link rel="stylesheet" href="css/celebrate.css">
 </head>
 <body>
 
@@ -377,7 +378,7 @@
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
       const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
+      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#050c26':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }

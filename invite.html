@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#faf6ee">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
+<meta name="theme-color" content="#050c26">
+<script>(function(){var t='dark';try{t=localStorage.getItem('ajm-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#050c26':'#faf6ee');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invite Apostle Vishal Samuel to Speak | AJM Family</title>
 <meta name="description" content="Invite Apostle Vishal Samuel or Pastor Juhi Vishal of Anmol Jeevan Ministries (AJM / AJM Family) to minister at your revival conference, church service, or special event.">
@@ -277,7 +277,18 @@
     .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
     .theme-fab svg{width:18px;height:18px}
   }
+
+  /* ---- 13th anniversary look ---- */
+  .ihero{background:
+      radial-gradient(70% 55% at 50% -5%,rgba(46,96,225,.4),transparent 70%),
+      radial-gradient(120% 90% at 50% 130%,rgba(233,168,58,.6) 0%,rgba(150,92,20,.25) 30%,transparent 60%),
+      linear-gradient(180deg,#030817 0%,var(--night) 45%,var(--night-2) 100%)}
+  .ihero h1 em{font-style:italic;padding-right:.05em;
+    background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .ihero .hindi{color:#f2c25f}
+  .invite-panel label .req,.invite-note a{color:var(--accent-text)}
 </style>
+<link rel="stylesheet" href="css/celebrate.css">
 </head>
 <body>
 
@@ -305,7 +316,11 @@
 
 <header class="ihero">
   <div class="aurora"></div>
+  <div class="rays"></div>
   <div class="stars" id="stars"></div>
+  <div class="bokeh" data-bokeh="20"></div>
+  <div class="ribbon ribbon-tl" aria-hidden="true"></div>
+  <div class="ribbon ribbon-br" aria-hidden="true"></div>
   <div class="ihero-inner reveal in">
     <span class="kicker">Speaking Invitations</span>
     <h1>Invite Apostle <em>Vishal Samuel</em></h1>
@@ -517,7 +532,7 @@
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
       const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
+      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#050c26':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }
@@ -608,5 +623,6 @@
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="js/reglog.js"></script>
+<script src="js/celebrate.js"></script>
 </body>
 </html>
