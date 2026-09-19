@@ -349,7 +349,9 @@
   .date-badge.featured{background:var(--gold-btn)}
   .date-badge.featured .dow{color:rgba(27,19,5,.75)}
   .date-badge.featured .time{color:#1b1305}
-  .book{position:relative;overflow:hidden}
+  .ehero .ribbon-tl{top:64px;left:-70px;width:min(max(26vw,150px),320px)}
+  .ehero .ribbon-br{bottom:36px;right:-70px;width:min(max(26vw,150px),320px)}
+  .book{position:relative;overflow:hidden;--seam-b:#030716;--seam-h:100px}
   .book .wrap{position:relative;z-index:2}
 </style>
 <link rel="stylesheet" href="css/celebrate.css">
@@ -378,7 +380,7 @@
   </div>
 </nav>
 
-<header class="ehero">
+<header class="ehero seam-b">
   <div class="aurora"></div>
   <div class="rays"></div>
   <div class="stars" id="stars"></div>
@@ -393,7 +395,8 @@
   </div>
 </header>
 
-<section class="events-list reveal">
+<section class="events-list reveal glow-bg">
+  <div class="bokeh" data-bokeh="10"></div>
   <div class="wrap">
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
@@ -475,7 +478,7 @@
   </div>
 </section>
 
-<section class="book reveal" id="book">
+<section class="book reveal seam-t seam-b" id="book">
   <div class="bokeh" data-bokeh="16"></div>
   <div class="wrap">
     <div class="book-head">

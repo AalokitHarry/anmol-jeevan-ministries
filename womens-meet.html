@@ -234,6 +234,8 @@
     .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
     .theme-fab svg{width:18px;height:18px}
   }
+  .whero{--seam-b:var(--surface-2)}
+  .wreg{--seam-t:var(--surface-2);--seam-b:#030716;--seam-h:100px}
 </style>
 <link rel="stylesheet" href="css/celebrate.css">
 </head>
@@ -261,7 +263,7 @@
   </div>
 </nav>
 
-<header class="whero">
+<header class="whero seam-b">
   <div class="aurora"></div>
   <div class="stars" id="stars"></div>
   <div class="wrap whero-grid">
@@ -292,7 +294,7 @@
   </div>
 </section>
 
-<section class="wreg reveal" id="register">
+<section class="wreg reveal seam-t seam-b" id="register">
   <div class="wrap">
     <div class="wreg-head">
       <span class="eyebrow" style="color:var(--rose)">Gathering concluded</span>

@@ -33,6 +33,4 @@
     <rect x="14" y="388" width="12" height="18"/><rect x="38" y="381" width="12" height="18"/><rect x="62" y="374" width="12" height="18"/><rect x="86" y="367" width="12" height="18"/>
   </g>
   <path d="M192 300 L300 330 L300 520 L192 520 Z" fill="#101d4a" fill-opacity=".8"/>
-  <ellipse cx="60" cy="510" rx="80" ry="34" fill="#060f2e"/>
-  <ellipse cx="250" cy="512" rx="70" ry="28" fill="#060f2e"/>
 </svg>

@@ -287,6 +287,8 @@
     background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .ihero .hindi{color:#f2c25f}
   .invite-panel label .req,.invite-note a{color:var(--accent-text)}
+  .ihero .ribbon-tl{top:64px;left:-70px;width:min(max(26vw,150px),320px)}
+  .ihero .ribbon-br{bottom:30px;right:-70px;width:min(max(26vw,150px),320px)}
 </style>
 <link rel="stylesheet" href="css/celebrate.css">
 </head>
@@ -314,7 +316,7 @@
   </div>
 </nav>
 
-<header class="ihero">
+<header class="ihero seam-b">
   <div class="aurora"></div>
   <div class="rays"></div>
   <div class="stars" id="stars"></div>
@@ -329,7 +331,8 @@
   </div>
 </header>
 
-<section class="reveal">
+<section class="reveal glow-bg">
+  <div class="bokeh" data-bokeh="12"></div>
   <div class="wrap">
     <form id="inviteForm" class="invite-form">
 

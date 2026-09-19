@@ -603,8 +603,14 @@
       linear-gradient(180deg,#030817 0%,#071336 50%,#030817 100%);
   }
   .anniv .wrap{position:relative;z-index:2}
-  .anniv-church{position:absolute;left:0;bottom:0;height:78%;max-height:640px;z-index:1;pointer-events:none;opacity:.5;
+  .anniv{--seam-t:#030817;--seam-h:150px}
+  .anniv-church{position:absolute;left:0;bottom:0;height:78%;max-height:640px;pointer-events:none;opacity:.5;
     -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 100%);mask-image:linear-gradient(90deg,#000 45%,transparent 100%)}
+  .hero{--seam-b:#030817;--seam-h:150px}
+  .next-gathering{--seam-h:90px}
+  .stats{--seam-t:var(--surface-2);--seam-h:90px}
+  .invite-cta{--seam-h:90px}
+  .connect{--seam-b:#030716;--seam-h:90px}
   .anniv-crownrow{display:flex;align-items:center;gap:22px;max-width:640px;margin:0 auto}
   .anniv-crownrow::before,.anniv-crownrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#f2c25f)}
   .anniv-crownrow::after{transform:scaleX(-1)}
@@ -624,8 +630,8 @@
   .anniv-banner{display:block;width:min(880px,100%);margin:-1.6rem auto 0;position:relative;z-index:3;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5))}
   .anniv-glory{position:absolute;right:2%;top:196px;z-index:2;font-size:clamp(2.4rem,4.2vw,3.5rem);line-height:1.08;color:#f3cf98;text-align:center;
     transform:rotate(-7deg);text-shadow:0 2px 16px rgba(240,184,74,.35);width:190px}
-  .anniv .ribbon-tl{top:-30px;left:-60px;width:min(32vw,400px)}
-  .anniv .ribbon-br{width:min(34vw,420px)}
+  .anniv .ribbon-tl{top:40px;left:-70px;width:min(30vw,380px)}
+  .anniv .ribbon-br{bottom:70px;right:-60px;width:min(32vw,400px)}
   .anniv-glory .heart{display:block;font-size:.55em;color:#f2c25f;margin-top:.15em}
   .anniv-glory-inline{display:none;font-size:2.2rem;color:#f3cf98;margin-top:34px}
   .anniv-testimony{display:flex;align-items:center;justify-content:center;gap:14px;margin:30px auto 0;font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:clamp(.62rem,1.8vw,.86rem)}
@@ -694,8 +700,8 @@
   @media(max-width:560px){
     .hero .kicker{font-size:.62rem;letter-spacing:.2em;gap:8px}
     .hero .kicker::before,.hero .kicker::after{width:14px}
-    .anniv .ribbon-tl{width:46vw;left:-60px}
-    .anniv .ribbon-br{width:52vw;right:-70px}
+    .anniv .ribbon-tl{width:44vw;left:-60px;top:24px}
+    .anniv .ribbon-br{width:50vw;right:-70px;bottom:60px}
     .anniv-motto{letter-spacing:.12em;font-size:.58rem}
     .anniv-testimony{letter-spacing:.14em;font-size:.6rem;gap:10px}
     .anniv-testimony::before,.anniv-testimony::after{width:18px}
@@ -732,7 +738,7 @@
   </div>
 </nav>
 
-<header class="hero" id="top">
+<header class="hero seam-b" id="top">
   <div class="aurora"></div>
   <div class="rays"></div>
   <div class="stars" id="stars"></div>
@@ -756,7 +762,7 @@
   <div class="scroll-hint">Scroll</div>
 </header>
 
-<section class="anniv" id="anniversary">
+<section class="anniv seam-t seam-b" id="anniversary">
   <div class="rays"></div>
   <div class="bokeh" data-bokeh="44"></div>
   <img class="anniv-church" src="img/church.svg" alt="" aria-hidden="true">
@@ -856,8 +862,9 @@
   </div>
 </section>
 
-<section class="next-gathering reveal">
+<section class="next-gathering reveal seam-t seam-b">
   <div class="aurora"></div>
+  <div class="bokeh" data-bokeh="12"></div>
   <div class="wrap next-gathering-inner">
     <span class="kicker"><span class="dot"></span>Next Gathering</span>
     <h2 id="ngName">Sunday Fellowship</h2>
@@ -870,7 +877,8 @@
   </div>
 </section>
 
-<section class="latest reveal" id="latest">
+<section class="latest reveal glow-bg" id="latest">
+  <div class="bokeh" data-bokeh="10"></div>
   <div class="wrap">
     <div class="latest-head">
       <span class="eyebrow"><span class="live-dot"></span>Fresh from YouTube</span>
@@ -886,7 +894,8 @@
   </div>
 </section>
 
-<section class="watch reveal" id="watch">
+<section class="watch reveal glow-bg flip" id="watch">
+  <div class="bokeh" data-bokeh="9"></div>
   <div class="wrap">
     <span class="eyebrow">More to explore</span>
     <h2>Watch &amp; be encouraged</h2>
@@ -917,7 +926,8 @@
   </div>
 </section>
 
-<section class="about reveal" id="about">
+<section class="about reveal glow-bg" id="about">
+  <div class="bokeh" data-bokeh="10"></div>
   <div class="wrap about-grid">
     <div>
       <span class="eyebrow">Who we are</span>
@@ -974,7 +984,8 @@
   </div>
 </div>
 
-<section class="stats reveal">
+<section class="stats reveal seam-t seam-b">
+  <div class="bokeh" data-bokeh="12"></div>
   <div class="wrap">
     <div class="stats-head">
       <span class="eyebrow orn" style="color:var(--gold-soft)">By His grace</span>
@@ -988,7 +999,8 @@
   </div>
 </section>
 
-<section id="service" class="reveal">
+<section id="service" class="reveal glow-bg flip">
+  <div class="bokeh" data-bokeh="8"></div>
   <div class="wrap">
     <div class="service">
       <div class="left">
@@ -1012,7 +1024,8 @@
   </div>
 </section>
 
-<section class="leaders reveal" id="leaders">
+<section class="leaders reveal glow-bg" id="leaders">
+  <div class="bokeh" data-bokeh="10"></div>
   <div class="wrap">
     <div style="text-align:center"><span class="eyebrow orn">Our shepherds</span></div>
     <h2>Led by faithful hearts</h2>
@@ -1042,7 +1055,8 @@
   </div>
 </section>
 
-<section class="watch reveal" id="songs">
+<section class="watch reveal glow-bg" id="songs">
+  <div class="bokeh" data-bokeh="9"></div>
   <div class="wrap">
     <span class="eyebrow">Worship with us</span>
     <h2>Featured Songs</h2>
@@ -1073,8 +1087,9 @@
   </div>
 </section>
 
-<section class="invite-cta reveal" id="invite">
+<section class="invite-cta reveal seam-t seam-b" id="invite">
   <div class="aurora"></div>
+  <div class="bokeh" data-bokeh="12"></div>
   <div class="wrap invite-cta-inner">
     <span class="eyebrow orn" style="color:var(--gold-soft)">Speaking invitations</span>
     <h2>Invite Apostle Vishal Samuel<br>to your church</h2>
@@ -1083,7 +1098,8 @@
   </div>
 </section>
 
-<section class="faq reveal" id="faq">
+<section class="faq reveal glow-bg flip" id="faq">
+  <div class="bokeh" data-bokeh="8"></div>
   <div class="wrap">
     <div style="text-align:center"><span class="eyebrow orn">Good to know</span></div>
     <h2>Frequently asked questions</h2>
@@ -1116,7 +1132,8 @@
   </div>
 </section>
 
-<section class="connect reveal" id="connect">
+<section class="connect reveal glow-bg seam-b" id="connect">
+  <div class="bokeh" data-bokeh="14"></div>
   <div class="wrap">
     <span class="eyebrow orn" style="color:var(--gold-soft)">Stay connected</span>
     <h2>Join the <em>AJM Family</em></h2>
