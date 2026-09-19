@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#050c26">
-<script>(function(){var t='dark';try{t=localStorage.getItem('ajm-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#050c26':'#faf6ee');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events &amp; Booking — Apostle Vishal Samuel | AJM Family</title>
 <meta name="description" content="Join Anmol Jeevan Ministries (AJM / AJMI / AJM Family), led by Apostle Vishal Samuel (Pastor Vishal Samuel) & Pastor Juhi Vishal, for our weekly Sunday gathering in Indore, or reserve your spot for a special event. Book a visit in seconds via WhatsApp.">
@@ -166,23 +165,6 @@
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
   nav.scrolled .menutoggle{color:var(--on-surface)}
 
-  /* floating theme toggle — stacked above the float CTA, same side */
-  .theme-fab{
-    display:flex;align-items:center;justify-content:center;flex:none;
-    width:52px;height:52px;border-radius:50%;
-    background:var(--night);color:var(--cream);
-    border:1px solid rgba(232,163,61,.35);
-    box-shadow:0 16px 40px -10px rgba(20,10,40,.5),0 0 0 1px rgba(232,163,61,.15);
-    opacity:1;transform:none;pointer-events:auto;cursor:pointer;
-    transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s;
-  }
-  .theme-fab.hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
-  .theme-fab:hover{transform:scale(1.08);background:var(--night-2)}
-  .theme-fab svg{width:20px;height:20px}
-  .theme-fab .icon-sun{display:none}
-  .theme-fab .icon-moon{display:block}
-  :root[data-theme="dark"] .theme-fab .icon-sun{display:block}
-  :root[data-theme="dark"] .theme-fab .icon-moon{display:none}
   .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;animation:pulseDot 2s infinite}
   @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(232,163,61,.6)}70%{box-shadow:0 0 0 10px rgba(232,163,61,0)}100%{box-shadow:0 0 0 0 rgba(232,163,61,0)}}
 
@@ -326,9 +308,6 @@
     .book-form .field-row{grid-template-columns:1fr}
     .float-stack{right:16px;bottom:16px;gap:8px}
     .float-cta{padding:12px 18px;font-size:.85rem}
-    .theme-fab{width:44px;height:44px}
-    .theme-fab svg{width:18px;height:18px}
-    .theme-fab svg{width:18px;height:18px}
   }
 
   /* ---- 13th anniversary look ---- */
@@ -542,10 +521,6 @@
   <a class="float-cta" id="floatCta" href="invite.html" aria-label="Invite Apostle Vishal Samuel">
     <span class="pulse-dot"></span> Invite
   </a>
-  <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  </button>
 </div>
 
 <script>
@@ -562,12 +537,10 @@
   }
   requestAnimationFrame(frame);
 
-  const themeFab=document.getElementById('themeToggle');
   const footerEl=document.getElementById('siteFooter');
   if(footerEl){
     new IntersectionObserver(es=>es.forEach(e=>{
       if(floatCta)floatCta.classList.toggle('hide',e.isIntersecting);
-      if(themeFab)themeFab.classList.toggle('hide',e.isIntersecting);
     }),{threshold:.15}).observe(footerEl);
   }
 
@@ -598,20 +571,6 @@
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
   tog.addEventListener('click',()=>links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
-
-  // theme toggle
-  const themeBtn=document.getElementById('themeToggle');
-  if(themeBtn){
-    themeBtn.addEventListener('click',()=>{
-      const root=document.documentElement;
-      const isDark=root.getAttribute('data-theme')==='dark';
-      const next=isDark?'light':'dark';
-      root.setAttribute('data-theme',next);
-      const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#050c26':'#faf6ee');
-      try{localStorage.setItem('ajm-theme',next);}catch(e){}
-    });
-  }
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){

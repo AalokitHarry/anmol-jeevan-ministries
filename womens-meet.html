@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#050c26">
-<script>(function(){var t='dark';try{t=localStorage.getItem('ajm-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#050c26':'#faf6ee');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Women's Meet Recap — with Pastor Juhi Vishal | Anmol Jeevan Ministries (AJM)</title>
 <meta name="description" content="The AJM Family Women's Meet with Pastor Juhi Vishal took place Monday, Sep 14, 2026, on Zoom. Thank you to everyone who joined us — rooted in Christ, rising in purpose.">
@@ -130,25 +129,6 @@
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
   nav.scrolled .menutoggle{color:var(--on-surface)}
 
-  /* floating theme toggle */
-  .theme-fab{
-    position:fixed;bottom:26px;right:26px;z-index:70;
-    display:flex;align-items:center;justify-content:center;
-    width:52px;height:52px;border-radius:50%;
-    background:var(--night);color:var(--cream);
-    border:1px solid rgba(232,163,61,.35);
-    box-shadow:0 16px 40px -10px rgba(20,10,40,.5),0 0 0 1px rgba(232,163,61,.15);
-    opacity:1;transform:none;pointer-events:auto;cursor:pointer;
-    transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s;
-  }
-  .theme-fab.hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
-  .theme-fab:hover{transform:scale(1.08);background:var(--night-2)}
-  .theme-fab svg{width:20px;height:20px}
-  .theme-fab .icon-sun{display:none}
-  .theme-fab .icon-moon{display:block}
-  :root[data-theme="dark"] .theme-fab .icon-sun{display:block}
-  :root[data-theme="dark"] .theme-fab .icon-moon{display:none}
-
   /* hero */
   .whero{position:relative;overflow:hidden;color:var(--cream);
     background:
@@ -231,8 +211,6 @@
     .whero .details{justify-content:center}
     .whero .theme-badge{white-space:normal;text-align:center;font-size:.78rem}
     .whero-photo img{max-width:260px;margin:0 auto}
-    .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
-    .theme-fab svg{width:18px;height:18px}
   }
   .whero{--seam-b:var(--surface-2)}
   .wreg{--seam-t:var(--surface-2);--seam-b:#030716;--seam-h:100px}
@@ -321,11 +299,6 @@
   </div>
 </footer>
 
-<button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-</button>
-
 <script>
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -336,13 +309,6 @@
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
-
-  const themeFab=document.getElementById('themeToggle');
-  const footerEl=document.getElementById('siteFooter');
-  if(footerEl&&themeFab){
-    new IntersectionObserver(es=>es.forEach(e=>themeFab.classList.toggle('hide',e.isIntersecting)),{threshold:.15})
-      .observe(footerEl);
-  }
 
   const magnets=[...document.querySelectorAll('.magnetic')].map(el=>({el,bx:0,by:0,tx:0,ty:0,lift:0,liftT:0}));
   if(fine&&!reduced&&magnets.length){
@@ -371,19 +337,6 @@
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
   tog.addEventListener('click',()=>links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
-
-  // theme toggle
-  if(themeFab){
-    themeFab.addEventListener('click',()=>{
-      const root=document.documentElement;
-      const isDark=root.getAttribute('data-theme')==='dark';
-      const next=isDark?'light':'dark';
-      root.setAttribute('data-theme',next);
-      const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#050c26':'#faf6ee');
-      try{localStorage.setItem('ajm-theme',next);}catch(e){}
-    });
-  }
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){
