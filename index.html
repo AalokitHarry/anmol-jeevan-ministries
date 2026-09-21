@@ -457,6 +457,13 @@
   .blessing .watch-featured{max-width:960px;margin:0 auto 22px}
   .blessing-cap{max-width:760px;margin:0 auto;text-align:center;color:var(--on-surface-muted);font-size:1rem;line-height:1.6}
   .blessing-cap strong{color:var(--on-surface);font-weight:600}
+  .blessing-cap .hl{color:var(--on-surface);font-weight:700;padding:0 4px;background:linear-gradient(transparent 58%,rgba(232,163,61,.5) 58%)}
+  /* who the message is from — the first thing you notice above the video */
+  .from-badge{display:flex;flex-direction:column;align-items:center;gap:3px;width:max-content;max-width:100%;margin:-14px auto 30px;padding:16px 38px;border-radius:22px;
+    background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:var(--night);text-align:center;box-shadow:0 20px 40px -20px rgba(201,131,47,.75)}
+  .from-badge .from-lab{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:700;opacity:.75}
+  .from-badge strong{font-family:'Fraunces',serif;font-size:clamp(1.35rem,3.4vw,2rem);font-weight:600;line-height:1.2}
+  .from-badge .from-org{font-size:.86rem;font-weight:600;opacity:.8}
   .blessing-cap a{display:inline-block;margin-top:10px;color:var(--clay);font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
 
   /* leaders */
@@ -696,10 +703,11 @@
       <span class="eyebrow">A word of blessing</span>
       <h2>Anniversary Wishes<span class="dev">आशीर्वाद और शुभकामनाएँ</span></h2>
     </div>
+    <p class="from-badge"><span class="from-lab">A message from</span><strong>Apostle Dr. P.S. Rambabu</strong><span class="from-org">New Creation Ministries</span></p>
     <div class="watch-featured reveal">
       <iframe src="https://www.youtube.com/embed/VBzm2YlUHCc?rel=0" title="Church Anniversary wishes from Apostle Dr. P.S. Rambabu to Apostle Vishal Samuel and Pastor Juhi" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
-    <p class="blessing-cap"><strong>Church Anniversary wishes</strong> from Apostle Dr. P.S. Rambabu to Apostle Vishal Samuel and Pastor Juhi.<br><a href="https://youtu.be/VBzm2YlUHCc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+    <p class="blessing-cap"><strong>Church Anniversary wishes</strong> from <span class="hl">Apostle Dr. P.S. Rambabu</span> to Apostle Vishal Samuel and Pastor Juhi.<br><a href="https://youtu.be/VBzm2YlUHCc" target="_blank" rel="noopener">Watch on YouTube</a></p>
   </div>
 </section>
 
