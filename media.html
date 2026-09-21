@@ -244,6 +244,8 @@
   table.tt .tot{font-weight:800;color:var(--navy)}
   table.tt input.num{width:74px;padding:7px 8px;border:1.5px solid var(--line);border-radius:10px;text-align:center;font:inherit;font-weight:700;font-size:.85rem;background:#fcfdff}
   table.tt input.num:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .mlink{color:inherit;text-decoration:underline dotted #9fb0cf;text-underline-offset:4px;cursor:pointer}
+  .mlink:hover{color:var(--blue);text-decoration-color:var(--blue)}
   .bar{display:inline-block;width:110px;height:8px;border-radius:100px;background:#e8edf6;overflow:hidden;vertical-align:middle;margin-right:8px}
   .bar i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#3b6fd6,#27a06a)}
   .ttype{display:inline-flex;align-items:center;gap:8px;font-weight:700}
@@ -466,7 +468,7 @@
           <div class="tc-scroll"><table class="tt" id="tcLedger"></table></div>
         </section>
         <section class="card tcard">
-          <div class="tcard-head"><h3>By month</h3><select id="tcYear" aria-label="Year"></select></div>
+          <div class="tcard-head"><h3>By month</h3><span class="hint">Tap a number to open the log it was added up from</span><select id="tcYear" aria-label="Year"></select></div>
           <div class="tc-scroll"><table class="tt" id="tcMonth"></table></div>
         </section>
       </div>
@@ -1279,9 +1281,30 @@
     const grand = sums.reduce((a, b) => a + b, 0), grandUp = mrows.reduce((t, r) => t + r.up, 0);
     $('tcMonth').innerHTML =
       `<thead><tr><th>Month</th>${mList.map(c => `<th>${esc(c)}</th>`).join('')}<th>Made</th>${hasUploads ? '<th>Uploaded</th>' : ''}</tr></thead><tbody>` +
-      mrows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${fmtN(r.cats.reduce((a, b) => a + b, 0))}</td>${hasUploads ? `<td>${showNum(r.up)}</td>` : ''}</tr>`).join('') +
+      mrows.map(r => {
+        const made = r.cats.reduce((a, b) => a + b, 0), mk = r.c.month;
+        return `<tr><td><strong>${mlink(mk, 'made', esc(monthLabel(mk)))}</strong></td>${r.cats.map(n => `<td>${n ? mlink(mk, 'made', showNum(n)) : showNum(n)}</td>`).join('')}<td class="tot">${made ? mlink(mk, 'made', fmtN(made)) : fmtN(made)}</td>${hasUploads ? `<td>${r.up ? mlink(mk, 'up', showNum(r.up)) : showNum(r.up)}</td>` : ''}</tr>`;
+      }).join('') +
       `</tbody><tfoot><tr><td>${$('tcYear').value === 'all' ? 'All months' : esc($('tcYear').value)}</td>${sums.map(n => `<td>${fmtN(n)}</td>`).join('')}<td>${fmtN(grand)}</td>${hasUploads ? `<td>${fmtN(grandUp)}</td>` : ''}</tr></tfoot>`;
   }
+
+  // A number in "By month" is a link to the chart it was added up from: Made numbers open the month's
+  // Made log, the Uploaded number opens its Uploaded log — so a total can always be traced and fixed.
+  const mlink = (month, view, text) => `<a href="#" class="mlink" data-month="${month}" data-view="${view}" title="Open this month’s ${view === 'up' ? 'Uploaded' : 'Made'} log">${text}</a>`;
+
+  async function openMonth(month, view){
+    const [y, m] = month.split('-').map(Number);
+    if(!$('yearSel').querySelector(`option[value="${y}"]`)) $('yearSel').insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`);
+    state.year = y; state.month = m; state.view = view; // showTab loads the chart for whatever is set here
+    syncPeriodControls();
+    await showTab('chart');
+  }
+  $('tcMonth').addEventListener('click', e => {
+    const a = e.target.closest('a.mlink');
+    if(!a) return;
+    e.preventDefault();
+    openMonth(a.dataset.month, a.dataset.view);
+  });
 
   $('tcYear').addEventListener('change', () => renderTotals());
   $('tcRefresh').addEventListener('click', loadTotals);
