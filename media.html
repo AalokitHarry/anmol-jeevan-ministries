@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Office — Monthly Work Chart</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b365d; --blue:#2f6db5; --blue-soft:#eaf2fb; --line:#cdd7e5; --bg:#f3f6fa;
+    --ink:#1f2a3a; --muted:#66758a; --ok:#2f8a4e; --warn:#b7791f; --bad:#c0392b; --white:#fff;
+    --row-a:#fff; --row-b:#f7f9fc; --lbl-a:#eef2f8; --lbl-b:#e2e8f1;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding:24px;overflow-x:hidden}
+  h1,h2{font-family:'Fraunces',serif}
+  .wrap{max-width:1240px;margin:0 auto}
+  [hidden]{display:none!important}
+
+  /* login gate — same idea as the admin page */
+  #gate{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center}
+  #gate h1{font-size:1.8rem;font-weight:500}
+  #gate p{color:var(--muted);max-width:440px;font-size:.9rem}
+  #gate input{padding:14px 18px;border-radius:12px;border:1.5px solid var(--line);font-size:1rem;width:280px;max-width:80vw;background:#fff}
+  #gate button{padding:14px 28px;border-radius:100px;background:var(--navy);color:#fff;font-weight:600;border:0;cursor:pointer;font-size:1rem}
+  #gate button:hover{background:var(--blue)}
+  #gate button:disabled{opacity:.6;cursor:default}
+  #gateError{color:var(--bad);font-size:.85rem;min-height:1.2em}
+
+  #panel{display:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px}
+  header.top h1{font-size:1.7rem;font-weight:500}
+  header.top .sub{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .role-badge{display:inline-block;margin-left:8px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;background:var(--blue-soft);color:var(--blue)}
+  .role-badge.sup{background:#e6f4ea;color:var(--ok)}
+  .btn{padding:10px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:inherit}
+  .btn:hover{background:var(--blue-soft)}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.primary:hover{background:var(--blue);border-color:var(--blue)}
+  .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+  .btn.ok:hover{filter:brightness(1.08)}
+  .btn:disabled{opacity:.45;cursor:default;pointer-events:none}
+
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tab{padding:9px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--muted);font-family:inherit}
+  .tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  /* the chart itself — laid out like the paper Monthly Work Chart */
+  .sheet{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 26px 22px;box-shadow:0 10px 30px -18px rgba(27,54,93,.35)}
+  .sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--navy);margin-bottom:16px}
+  .sheet-head h2{font-family:'Inter',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.01em;color:var(--navy);line-height:1.15}
+  .sheet-head .mwc{font-weight:600;color:var(--muted);font-size:1rem}
+  .pill{display:inline-block;padding:6px 16px;border-radius:100px;background:var(--blue-soft);border:1px solid #b9d3f0;color:var(--blue);font-weight:700;font-size:.72rem;letter-spacing:.06em}
+
+  .fields{display:grid;grid-template-columns:1.3fr 1.2fr 1fr 1fr;gap:18px;background:#f6f8fc;border:1px solid #e3e9f2;border-radius:8px;padding:14px 18px;margin-bottom:14px}
+  .field label,.field .lab{display:block;font-size:.72rem;font-weight:700;color:#4a5a72;letter-spacing:.02em;margin-bottom:4px}
+  .field input,.field select{width:100%;padding:6px 2px;border:0;border-bottom:1.5px solid #b8c6da;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--ink);border-radius:0}
+  .field input:focus,.field select:focus{outline:none;border-bottom-color:var(--blue)}
+  .field .pair{display:flex;gap:8px}
+  .field .static{padding:6px 2px;border-bottom:1.5px solid #b8c6da;font-size:.95rem;font-weight:500;min-height:2rem}
+  .status{display:inline-block;padding:3px 12px;border-radius:100px;font-size:.78rem;font-weight:700}
+  .st-draft{background:#eceff4;color:var(--muted)}
+  .st-submitted{background:#fdf0d5;color:var(--warn)}
+  .st-approved{background:#e2f3e8;color:var(--ok)}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;font-size:.78rem;color:var(--muted)}
+  .chip{padding:5px 13px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--ink);font-family:inherit}
+  .chip:hover{background:var(--blue-soft)}
+  .chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+  #banner{border-radius:10px;padding:10px 16px;font-size:.86rem;font-weight:500;margin-bottom:12px}
+  #banner.info{background:var(--blue-soft);color:#28527f}
+  #banner.warn{background:#fdf0d5;color:#8a5a0b}
+  #banner.ok{background:#e2f3e8;color:#226b3b}
+
+  .grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table.grid{border-collapse:collapse;width:100%;min-width:980px;font-size:.82rem}
+  table.grid th,table.grid td{border:1px solid var(--line);text-align:center;padding:0}
+  table.grid thead th{background:var(--navy);color:#fff;font-weight:700;font-size:.72rem;padding:6px 0;line-height:1.15}
+  table.grid thead th small{display:block;font-weight:500;opacity:.65;font-size:.6rem}
+  table.grid thead th.sun{background:#284a7c}
+  table.grid thead th.tot{background:var(--blue);min-width:48px}
+  table.grid th.lbl{text-align:left;padding:0 10px;font-weight:700;min-width:116px;position:sticky;left:0;z-index:2;white-space:nowrap}
+  table.grid thead th.lbl{background:var(--navy);text-align:center}
+  table.grid tbody tr:nth-child(odd) th.lbl{background:var(--lbl-a);color:var(--ink)}
+  table.grid tbody tr:nth-child(even) th.lbl{background:var(--lbl-b);color:var(--ink)}
+  table.grid tbody tr:nth-child(odd) td{background:var(--row-a)}
+  table.grid tbody tr:nth-child(even) td{background:var(--row-b)}
+  table.grid td.sun{background:#eef4fc!important}
+  table.grid td.na,table.grid th.na{background:#e9edf3!important;border-color:#e0e6ee}
+  table.grid td.tot{background:var(--blue-soft)!important;font-weight:700;min-width:48px;color:var(--navy)}
+  table.grid tfoot th.lbl{background:var(--lbl-b);color:var(--navy)}
+  table.grid tfoot td{background:var(--lbl-a);font-weight:700;color:var(--navy);height:30px;font-size:.78rem}
+  table.grid tfoot td.tot{background:var(--blue)!important;color:#fff}
+  input.cell{width:100%;min-width:27px;height:32px;border:0;background:transparent;text-align:center;font:inherit;font-weight:600;font-size:.82rem;color:var(--ink);padding:0}
+  input.cell:focus{outline:2px solid var(--blue);outline-offset:-2px;background:#fff}
+  input.cell[readonly]{cursor:default}
+  td.s-c input.cell{color:var(--ok);font-size:1rem}
+  td.s-p{background:#fdf0d5!important} td.s-p input.cell{color:var(--warn)}
+  td.s-r{background:#efe6fa!important} td.s-r input.cell{color:#6b3fa0}
+  td.s-o{background:#eceff4!important} td.s-o input.cell{color:var(--muted)}
+  td.s-n input.cell{color:var(--navy)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin-top:12px;padding:10px 16px;border:1.5px dashed #c9d6e8;border-radius:10px;background:#f7f9fc;font-size:.78rem;color:var(--muted)}
+  .legend strong{color:#4a5a72}
+  .legend b{color:var(--ink)}
+  .palette{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:.78rem;color:var(--muted)}
+  .palette button{min-width:40px;padding:6px 12px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem;color:var(--ink)}
+  .palette button:hover{background:var(--blue-soft)}
+
+  .notes{margin-top:14px}
+  .notes label{display:block;font-size:.72rem;font-weight:700;color:#4a5a72;margin-bottom:4px}
+  .notes textarea{width:100%;min-height:64px;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font:inherit;font-size:.88rem;resize:vertical}
+  .notes textarea:focus{outline:none;border-color:var(--blue)}
+  .notes textarea[readonly]{background:#f7f9fc}
+
+  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+  #saveState{font-size:.82rem;color:var(--muted);margin-right:auto;min-width:160px}
+  #saveState.err{color:var(--bad);font-weight:600}
+  #saveState.ok{color:var(--ok)}
+  .sup-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;border:1.5px solid #cfe5d6;border-radius:100px;background:#f2faf5}
+  .sup-actions input{padding:7px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.82rem;width:190px}
+
+  .signatures{display:flex;justify-content:space-between;gap:40px;margin-top:34px;font-size:.82rem;font-weight:700;color:#3a4a62}
+  .signatures .sig{flex:1;border-top:1px solid var(--navy);padding-top:6px}
+  .signatures .sig.r{text-align:right}
+  .signatures .sig small{display:block;font-weight:500;color:var(--muted);margin-top:2px;min-height:1.2em}
+  .print-only{display:none}
+  .foot-note{margin-top:18px;text-align:right;font-size:.72rem;color:#8a97ab}
+
+  /* team overview (supervisor) */
+  .ov-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+  .ov-bar select{padding:9px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;font-weight:600;background:#fff}
+  .ov-bar input{padding:9px 16px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;width:220px}
+  .ov-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.85rem}
+  .ov-table th,.ov-table td{text-align:center;padding:11px 12px;border-bottom:1px solid #e6ecf4}
+  .ov-table th{background:var(--navy);color:#fff;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
+  .ov-table td:first-child,.ov-table th:first-child{text-align:left}
+  .ov-table tfoot td{font-weight:700;background:var(--blue-soft);color:var(--navy)}
+  .ov-table tr:last-child td{border-bottom:0}
+  .ov-table .tot{font-weight:800;color:var(--navy)}
+  .ov-table .rowbtn{padding:6px 12px;font-size:.75rem}
+  .ov-scroll{overflow-x:auto}
+  #ovEmpty,#ovLoading,#ovError{text-align:center;padding:50px 20px;color:var(--muted)}
+  #ovError{color:var(--bad)}
+
+  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:860px){
+    body{padding:14px}
+    .fields{grid-template-columns:1fr 1fr}
+    .sheet{padding:16px 14px}
+    .sheet-head h2{font-size:1.25rem}
+    .signatures{flex-direction:column;gap:26px}
+    .signatures .sig.r{text-align:left}
+  }
+  @media(max-width:520px){ .fields{grid-template-columns:1fr} }
+
+  @media print{
+    @page{size:A4 landscape;margin:10mm}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{background:#fff;padding:0}
+    #gate,header.top,.tabs,.chips,.palette,.actions,#banner,#overview,#toast,.no-print,.foot-note{display:none!important}
+    #panel{display:block!important}
+    #chartView{display:block!important}
+    .wrap{max-width:none}
+    .sheet{box-shadow:none;border:0;padding:0;border-radius:0}
+    .grid-wrap{overflow:visible;border:0}
+    table.grid{min-width:0;font-size:.62rem}
+    table.grid th.lbl{position:static;min-width:88px;padding:0 6px}
+    table.grid thead th{padding:4px 0}
+    input.cell{min-width:0;height:22px;font-size:.66rem}
+    td.s-c input.cell{font-size:.78rem}
+    .field input,.field select{border-bottom:1.5px solid #8fa3bf}
+    select{appearance:none;-webkit-appearance:none}
+    .fields{padding:8px 12px}
+    .print-only{display:block}
+    .notes textarea{border:1px solid var(--line);min-height:40px;resize:none}
+    .notes textarea::placeholder{color:transparent}
+    .legend{margin-top:8px;padding:6px 12px}
+    .signatures{margin-top:22px}
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>Media Office</h1>
+  <p>This page is not indexed or linked from the site. Enter the media office key to fill in or review the Monthly Work Chart.</p>
+  <input type="password" id="keyInput" placeholder="Media key" autocomplete="off">
+  <button id="gateBtn">Enter</button>
+  <p id="gateError"></p>
+</div>
+
+<div id="panel">
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>Media Office <span class="role-badge" id="roleBadge">Team</span></h1>
+        <div class="sub">Anmol Jeevan Ministries — Monthly Work Chart</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="printBtn">Print / Save as PDF</button>
+        <button class="btn" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="chart">My Chart</button>
+      <button class="tab" data-tab="overview" id="overviewTab" hidden>Team Overview</button>
+    </div>
+
+    <!-- ===== the chart ===== -->
+    <div id="chartView">
+      <div class="sheet" id="sheet">
+        <div class="sheet-head">
+          <div>
+            <h2>ANMOL JEEVAN MINISTRIES</h2>
+            <div class="mwc">Monthly Work Chart (MWC)</div>
+          </div>
+          <span class="pill">MEDIA &amp; CONTENT LOG</span>
+        </div>
+
+        <div class="fields">
+          <div class="field">
+            <label for="employee">Employee Name</label>
+            <input type="text" id="employee" list="employeeList" placeholder="Type or pick your name" autocomplete="off" maxlength="60">
+            <datalist id="employeeList"></datalist>
+          </div>
+          <div class="field">
+            <span class="lab">Month / Year</span>
+            <div class="pair"><select id="monthSel" aria-label="Month"></select><select id="yearSel" aria-label="Year"></select></div>
+          </div>
+          <div class="field">
+            <span class="lab">Submission Date</span>
+            <div class="static" id="submittedOn">—</div>
+          </div>
+          <div class="field">
+            <span class="lab no-print">Status</span>
+            <div class="static no-print" style="border-bottom:0"><span class="status st-draft" id="statusPill">Draft</span></div>
+            <div class="print-only"><span class="lab">Employee Signature</span><div class="static"></div></div>
+          </div>
+        </div>
+
+        <div class="chips" id="chips"></div>
+        <div id="banner" class="info">Type your name above to open or start your chart.</div>
+
+        <div class="grid-wrap"><table class="grid" id="grid"></table></div>
+
+        <div class="legend">
+          <strong>Instructions &amp; Status Symbols:</strong>
+          <span><b>✓</b> – Completed</span>
+          <span><b>P</b> – In Progress</span>
+          <span><b>R</b> – Under Review</span>
+          <span><b>O</b> – Off / Holiday</span>
+          <em>Note: Fill a number (e.g. 1, 2) or a status mark in each date column. Total = the numbers plus 1 for every ✓.</em>
+        </div>
+        <div class="palette no-print">
+          Quick fill for the selected cell:
+          <button data-fill="c" title="Completed">✓</button>
+          <button data-fill="p" title="In progress">P</button>
+          <button data-fill="r" title="Under review">R</button>
+          <button data-fill="o" title="Off / holiday">O</button>
+          <button data-fill="" title="Clear">Clear</button>
+          <span>· On a keyboard just type a number, or c / p / r / o.</span>
+        </div>
+
+        <div class="notes">
+          <label for="note">Notes / other work details</label>
+          <textarea id="note" maxlength="300" placeholder="Optional — e.g. what “Other Work” covered this month"></textarea>
+        </div>
+
+        <div class="actions no-print">
+          <span id="saveState" role="status" aria-live="polite">Enter your name to start</span>
+          <div class="sup-actions" id="supActions" hidden>
+            <input type="text" id="approverName" placeholder="Approver name" maxlength="60" autocomplete="off">
+            <button class="btn ok" id="approveBtn">Approve</button>
+            <button class="btn" id="unlockBtn">Unlock</button>
+          </div>
+          <button class="btn" id="saveBtn">Save</button>
+          <button class="btn primary" id="submitBtn">Submit for approval</button>
+        </div>
+
+        <div class="signatures">
+          <div class="sig">Employee Signature &amp; Date<small id="sigEmployee"></small></div>
+          <div class="sig r">Supervisor / Manager Approval<small id="sigSupervisor"></small></div>
+        </div>
+        <div class="foot-note">Anmol Jeevan Ministries • Internal Monthly Tracking</div>
+      </div>
+    </div>
+
+    <!-- ===== supervisor: everyone's month at a glance ===== -->
+    <div id="overview" hidden>
+      <div class="ov-bar">
+        <select id="ovMonthSel" aria-label="Month"></select>
+        <select id="ovYearSel" aria-label="Year"></select>
+        <input type="text" id="ovApprover" placeholder="Approver name" maxlength="60" autocomplete="off">
+        <button class="btn" id="ovRefresh">Refresh</button>
+        <button class="btn" id="ovExport">Export CSV</button>
+      </div>
+      <div id="ovLoading">Loading…</div>
+      <p id="ovError" hidden></p>
+      <div id="ovEmpty" hidden>No charts for this month yet.</div>
+      <div class="ov-scroll"><table class="ov-table" id="ovTable" hidden></table></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script src="js/reglog.js"></script>
+<script>
+  const MEDIA_URL = REG_LOG_URL; // same Apps Script Web App as the admin page
+  // Work types on the chart, in order. Anything saved under a name that isn't here still shows up.
+  const CATEGORIES = ['Reel','Long Content','Sunday Flyer','Monday Flyer','Video Promo','T-Shirt Work','Other Work'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAY_LETTERS = ['S','M','T','W','T','F','S'];
+  const REMEMBER_KEY = 'ajm-media-employee'; // just the employee's name, never the access key
+
+  let mediaKey = null;   // kept in memory only — never persisted, re-enter on every page load
+  let role = null;       // 'team' | 'supervisor'
+  let employees = [];
+  let activeTab = 'chart';
+  let activeCell = null;
+  let editSeq = 0;
+  let autosaveTimer = null;
+  let ovCharts = [];
+
+  const now = new Date();
+  const state = {
+    year: now.getFullYear(), month: now.getMonth() + 1, employee: '',
+    cells: {}, extraCats: [], note: '', status: 'Draft',
+    submittedAt: '', approvedBy: '', approvedAt: '',
+    dirty: false, saving: false
+  };
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const pad = n => String(n).padStart(2, '0');
+  const monthKey = () => state.year + '-' + pad(state.month);
+  const daysInMonth = () => new Date(state.year, state.month, 0).getDate();
+  const isLocked = () => state.status === 'Approved';
+  const cats = () => CATEGORIES.concat(state.extraCats);
+  const cleanName = s => String(s || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+
+  function toast(msg){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  function fmtDate(iso){
+    if(!iso) return '—';
+    const d = new Date(iso);
+    if(isNaN(d)) return '—';
+    return d.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  }
+
+  /* ---------- cell values ----------
+     '' empty | '7' a number | 'c' completed | 'p' in progress | 'r' under review | 'o' off / holiday */
+  function display(v){ return v === 'c' ? '✓' : (/^[pro]$/.test(v) ? v.toUpperCase() : v); }
+  function cellClass(v){ return v === 'c' ? 's-c' : v === 'p' ? 's-p' : v === 'r' ? 's-r' : v === 'o' ? 's-o' : v !== '' ? 's-n' : ''; }
+  function cellValue(v){ return /^\d+$/.test(v) ? parseInt(v, 10) : v === 'c' ? 1 : 0; }
+
+  function liveClean(raw){
+    const s = String(raw || '').toLowerCase().trim();
+    if(!s) return '';
+    if(/^\d+$/.test(s)) return s.slice(0, 3).replace(/^0+(?=\d)/, '');
+    const last = s[s.length - 1];
+    if('cpro✓✔'.includes(last)) return last === '✓' || last === '✔' ? 'c' : last;
+    const digits = s.replace(/\D/g, '').slice(0, 3).replace(/^0+(?=\d)/, '');
+    return digits;
+  }
+
+  function getCell(cat, d){ return (state.cells[cat] || [])[d - 1] || ''; }
+  function setCell(cat, d, v){
+    if(!state.cells[cat]) state.cells[cat] = [];
+    state.cells[cat][d - 1] = v;
+  }
+  function rowTotal(cat){
+    let t = 0;
+    (state.cells[cat] || []).slice(0, daysInMonth()).forEach(v => { t += cellValue(v || ''); });
+    return t;
+  }
+  function colTotal(d){
+    return cats().reduce((t, c) => t + cellValue(getCell(c, d)), 0);
+  }
+
+  /* ---------- talking to the Apps Script ---------- */
+  async function api(params){
+    const qs = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
+    let json;
+    try{
+      const res = await fetch(MEDIA_URL + '?' + qs);
+      json = await res.json();
+    }catch(e){
+      throw new Error('network');
+    }
+    if(json.error) throw new Error(json.error);
+    return json;
+  }
+
+  /* ---------- login ---------- */
+  const gateBtn = $('gateBtn'), keyInput = $('keyInput'), gateError = $('gateError');
+
+  gateBtn.addEventListener('click', async () => {
+    const key = keyInput.value.trim();
+    if(!key){ gateError.textContent = 'Enter the media key.'; return; }
+    gateBtn.disabled = true; gateBtn.textContent = 'Checking…'; gateError.textContent = '';
+    try{
+      const j = await api({action:'mediaLogin', key});
+      mediaKey = key; role = j.role;
+      $('gate').style.display = 'none';
+      $('panel').style.display = 'block';
+      startSession();
+    }catch(e){
+      gateError.textContent = e.message === 'unauthorized'
+        ? 'Wrong key — or the media chart has not been added to the Google Sheet script yet (see ADMIN-SETUP.md).'
+        : 'Could not reach the sheet — Google Apps Script can be slow to respond, especially on the first try. Wait a few seconds and try again.';
+    }finally{
+      gateBtn.disabled = false; gateBtn.textContent = 'Enter';
+    }
+  });
+  keyInput.addEventListener('keydown', e => { if(e.key === 'Enter') gateBtn.click(); });
+
+  function logout(){
+    clearTimeout(autosaveTimer);
+    mediaKey = null; role = null;
+    state.dirty = false;
+    location.reload();
+  }
+  $('logoutBtn').addEventListener('click', async () => {
+    if(state.dirty && state.employee && !isLocked()){
+      const ok = await save(false);
+      if(!ok && !confirm('Your latest changes could not be saved. Log out anyway?')) return;
+    }
+    logout();
+  });
+
+  /* ---------- session start ---------- */
+  function fillPeriodSelects(){
+    const y = now.getFullYear();
+    [['monthSel','yearSel'], ['ovMonthSel','ovYearSel']].forEach(([m, yr]) => {
+      $(m).innerHTML = MONTHS.map((n, i) => `<option value="${i + 1}">${n}</option>`).join('');
+      let opts = '';
+      for(let v = y - 2; v <= y + 1; v++) opts += `<option value="${v}">${v}</option>`;
+      $(yr).innerHTML = opts;
+    });
+    syncPeriodControls();
+  }
+  function syncPeriodControls(){
+    ['monthSel','ovMonthSel'].forEach(id => $(id).value = String(state.month));
+    ['yearSel','ovYearSel'].forEach(id => $(id).value = String(state.year));
+  }
+
+  async function startSession(){
+    $('roleBadge').textContent = role === 'supervisor' ? 'Supervisor' : 'Team';
+    $('roleBadge').classList.toggle('sup', role === 'supervisor');
+    $('overviewTab').hidden = role !== 'supervisor';
+    $('supActions').hidden = role !== 'supervisor';
+    fillPeriodSelects();
+    try{ state.employee = cleanName(localStorage.getItem(REMEMBER_KEY)); }catch(e){}
+    $('employee').value = state.employee;
+    await Promise.all([refreshEmployees(), loadChart()]);
+  }
+
+  async function refreshEmployees(){
+    try{
+      const j = await api({action:'mediaList', key:mediaKey, month:monthKey()});
+      employees = j.employees || [];
+      if(role === 'supervisor') ovCharts = j.charts || [];
+    }catch(e){ /* names are just a convenience */ }
+    renderEmployeeHelpers();
+  }
+
+  function renderEmployeeHelpers(){
+    $('employeeList').innerHTML = employees.map(n => `<option value="${esc(n)}"></option>`).join('');
+    const me = state.employee.toLowerCase();
+    $('chips').innerHTML = employees.length
+      ? '<span>Team:</span>' + employees.map(n => `<button class="chip${n.toLowerCase() === me ? ' active' : ''}" data-name="${esc(n)}">${esc(n)}</button>`).join('')
+      : '';
+  }
+  $('chips').addEventListener('click', e => {
+    const b = e.target.closest('.chip');
+    if(b) switchTo({employee: b.dataset.name});
+  });
+
+  /* ---------- loading / applying a chart ---------- */
+  function resetChart(){
+    state.cells = {}; state.extraCats = []; state.note = '';
+    state.status = 'Draft'; state.submittedAt = ''; state.approvedBy = ''; state.approvedAt = '';
+    state.dirty = false;
+  }
+
+  function applyChart(c){
+    resetChart();
+    if(!c) return;
+    Object.keys(c.data || {}).forEach(cat => {
+      state.cells[cat] = String(c.data[cat] || '').split('.');
+      if(!CATEGORIES.includes(cat) && state.cells[cat].some(v => v !== '')) state.extraCats.push(cat);
+    });
+    state.note = c.note || '';
+    state.status = c.status || 'Draft';
+    state.submittedAt = c.submittedAt || '';
+    state.approvedBy = c.approvedBy || '';
+    state.approvedAt = c.approvedAt || '';
+  }
+
+  async function loadChart(){
+    clearTimeout(autosaveTimer);
+    if(!state.employee){
+      resetChart(); render();
+      setSaveState('Enter your name to start');
+      return;
+    }
+    resetChart(); render();
+    setSaveState('Loading…');
+    try{
+      const j = await api({action:'mediaGet', key:mediaKey, month:monthKey(), employee:state.employee});
+      applyChart(j.chart);
+      render();
+      setSaveState(j.chart ? 'All changes saved' : 'New chart — not saved yet', j.chart ? 'ok' : '');
+    }catch(e){
+      handleApiError(e, 'Could not load this chart — check your connection and try again');
+    }
+  }
+
+  function handleApiError(e, msg){
+    if(e.message === 'unauthorized'){ toast('Session expired — please log in again'); setTimeout(logout, 900); return; }
+    setSaveState(msg, 'err');
+  }
+
+  /* ---------- switching person / month ---------- */
+  async function switchTo(patch){
+    if(state.dirty && state.employee && !isLocked()){
+      const ok = await save(false);
+      if(!ok && !confirm('Your latest changes could not be saved. Discard them and continue?')){
+        syncControls();
+        return;
+      }
+    }
+    Object.assign(state, patch);
+    try{ localStorage.setItem(REMEMBER_KEY, state.employee); }catch(e){}
+    syncControls();
+    if(activeTab === 'overview') await loadOverview();
+    else { await loadChart(); refreshEmployees(); }
+  }
+  function syncControls(){
+    $('employee').value = state.employee;
+    syncPeriodControls();
+    renderEmployeeHelpers();
+  }
+
+  $('employee').addEventListener('change', () => {
+    const name = cleanName($('employee').value);
+    if(name.toLowerCase() === state.employee.toLowerCase() && name === state.employee) return;
+    switchTo({employee: name});
+  });
+  $('employee').addEventListener('keydown', e => { if(e.key === 'Enter') e.target.blur(); });
+  [['monthSel','yearSel'], ['ovMonthSel','ovYearSel']].forEach(([m, y]) => {
+    [m, y].forEach(id => $(id).addEventListener('change', () => switchTo({month: +$(m).value, year: +$(y).value})));
+  });
+
+  /* ---------- drawing the chart ---------- */
+  function render(){
+    renderGrid();
+    $('note').value = state.note;
+    const locked = isLocked();
+    $('note').readOnly = locked;
+    $('statusPill').textContent = state.status;
+    $('statusPill').className = 'status st-' + state.status.toLowerCase();
+    $('submittedOn').textContent = fmtDate(state.submittedAt);
+    $('sigEmployee').textContent = state.submittedAt ? state.employee + ' — ' + fmtDate(state.submittedAt) : '';
+    $('sigSupervisor').textContent = state.approvedAt ? state.approvedBy + ' — ' + fmtDate(state.approvedAt) : '';
+    renderBanner();
+    renderButtons();
+    renderEmployeeHelpers();
+  }
+
+  function renderBanner(){
+    const b = $('banner');
+    if(!state.employee){ b.className = 'info'; b.textContent = 'Type your name above to open or start your chart.'; b.hidden = false; return; }
+    if(isLocked()){
+      b.className = 'ok';
+      b.textContent = `✓ Approved by ${state.approvedBy} on ${fmtDate(state.approvedAt)}. This chart is locked` + (role === 'supervisor' ? ' — use Unlock to change it.' : '.');
+      b.hidden = false; return;
+    }
+    if(state.status === 'Submitted'){
+      b.className = 'warn';
+      b.textContent = `Submitted on ${fmtDate(state.submittedAt)} — waiting for supervisor approval. You can still make changes until it is approved.`;
+      b.hidden = false; return;
+    }
+    b.hidden = true;
+  }
+
+  function renderButtons(){
+    const locked = isLocked(), has = !!state.employee;
+    $('saveBtn').disabled = !has || locked;
+    $('submitBtn').disabled = !has || locked;
+    $('submitBtn').textContent = state.status === 'Submitted' ? 'Re-submit' : 'Submit for approval';
+    $('approveBtn').disabled = !(has && state.status === 'Submitted');
+    $('unlockBtn').disabled = !(has && locked);
+    $('approverName').value = approverName;
+  }
+
+  function renderGrid(){
+    const n = daysInMonth(), list = cats(), locked = isLocked() || !state.employee;
+    let h = '<thead><tr><th class="lbl">Date</th>';
+    for(let d = 1; d <= 31; d++){
+      if(d > n){ h += '<th class="na"></th>'; continue; }
+      const dow = new Date(state.year, state.month - 1, d).getDay();
+      h += `<th class="${dow === 0 ? 'sun' : ''}">${d}<small>${DAY_LETTERS[dow]}</small></th>`;
+    }
+    h += '<th class="tot">Total</th></tr></thead><tbody>';
+    list.forEach((c, ci) => {
+      h += `<tr><th class="lbl" scope="row">${esc(c)}</th>`;
+      for(let d = 1; d <= 31; d++){
+        if(d > n){ h += '<td class="na"></td>'; continue; }
+        const v = getCell(c, d);
+        const dow = new Date(state.year, state.month - 1, d).getDay();
+        h += `<td class="${(cellClass(v) + (dow === 0 ? ' sun' : '')).trim()}"><input class="cell" data-ci="${ci}" data-d="${d}" value="${esc(display(v))}" maxlength="3" autocomplete="off" inputmode="text" aria-label="${esc(c)}, day ${d}"${locked ? ' readonly' : ''}></td>`;
+      }
+      h += `<td class="tot" id="rt-${ci}">${rowTotal(c)}</td></tr>`;
+    });
+    h += '</tbody><tfoot><tr><th class="lbl">Daily total</th>';
+    for(let d = 1; d <= 31; d++) h += d > n ? '<td class="na"></td>' : `<td id="ct-${d}">${colTotal(d) || ''}</td>`;
+    h += `<td class="tot" id="gt">${grandTotal()}</td></tr></tfoot>`;
+    $('grid').innerHTML = h;
+    activeCell = null;
+  }
+
+  function grandTotal(){ return cats().reduce((t, c) => t + rowTotal(c), 0); }
+
+  function updateTotals(){
+    const n = daysInMonth();
+    cats().forEach((c, ci) => { const el = $('rt-' + ci); if(el) el.textContent = rowTotal(c); });
+    for(let d = 1; d <= n; d++){ const el = $('ct-' + d); if(el) el.textContent = colTotal(d) || ''; }
+    $('gt').textContent = grandTotal();
+  }
+
+  /* ---------- editing cells ---------- */
+  const gridEl = $('grid');
+
+  gridEl.addEventListener('focusin', e => {
+    if(e.target.classList.contains('cell')){ activeCell = e.target; e.target.select(); }
+  });
+
+  gridEl.addEventListener('input', e => {
+    const el = e.target;
+    if(!el.classList.contains('cell') || el.readOnly) return;
+    applyToCell(el, liveClean(el.value));
+  });
+
+  function applyToCell(el, v){
+    const cat = cats()[+el.dataset.ci], d = +el.dataset.d;
+    el.value = display(v);
+    setCell(cat, d, v);
+    const dow = new Date(state.year, state.month - 1, d).getDay();
+    el.parentElement.className = (cellClass(v) + (dow === 0 ? ' sun' : '')).trim();
+    updateTotals();
+    markDirty();
+  }
+
+  gridEl.addEventListener('keydown', e => {
+    const el = e.target;
+    if(!el.classList.contains('cell')) return;
+    const dRow = {ArrowUp:-1, ArrowDown:1, Enter:1}[e.key];
+    const dCol = {ArrowLeft:-1, ArrowRight:1}[e.key];
+    if(dRow === undefined && dCol === undefined) return;
+    e.preventDefault();
+    const ci = +el.dataset.ci + (dRow || 0), d = +el.dataset.d + (dCol || 0);
+    const next = gridEl.querySelector(`.cell[data-ci="${ci}"][data-d="${d}"]`);
+    if(next) next.focus();
+  });
+
+  document.querySelectorAll('.palette button').forEach(b => {
+    b.addEventListener('mousedown', e => e.preventDefault()); // keep the selected cell focused
+    b.addEventListener('click', () => {
+      if(!activeCell || !document.body.contains(activeCell)){ toast('Click a cell first'); return; }
+      if(activeCell.readOnly){ toast(state.employee ? 'This chart is locked' : 'Enter your name first'); return; }
+      applyToCell(activeCell, b.dataset.fill);
+      activeCell.focus();
+    });
+  });
+
+  $('note').addEventListener('input', () => { state.note = $('note').value; markDirty(); });
+
+  /* ---------- saving ---------- */
+  function setSaveState(text, kind){
+    const el = $('saveState');
+    el.textContent = text;
+    el.className = kind || '';
+  }
+
+  function markDirty(){
+    if(!state.employee || isLocked()) return;
+    state.dirty = true;
+    editSeq++;
+    setSaveState('Unsaved changes…');
+    clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(() => save(false), 2000);
+  }
+
+  function toData(){
+    const n = daysInMonth(), out = {};
+    cats().forEach(c => {
+      const s = (state.cells[c] || []).slice(0, n).map(v => v || '').join('.').replace(/\.+$/, '');
+      if(s) out[c] = s;
+    });
+    return out;
+  }
+
+  async function save(submit){
+    if(!state.employee){ toast('Enter the employee name first'); return false; }
+    if(isLocked()) return false;
+    if(state.saving) { await waitWhileSaving(); if(!state.dirty && !submit) return true; }
+    clearTimeout(autosaveTimer);
+    state.saving = true;
+    const seq = editSeq;
+    setSaveState(submit ? 'Submitting…' : 'Saving…');
+    try{
+      const j = await api({action:'mediaSave', key:mediaKey, month:monthKey(), employee:state.employee, data:JSON.stringify(toData()), note:state.note, submit:submit ? '1' : '0'});
+      state.status = j.chart.status;
+      state.submittedAt = j.chart.submittedAt;
+      state.approvedBy = j.chart.approvedBy;
+      state.approvedAt = j.chart.approvedAt;
+      state.saving = false;
+      if(seq === editSeq){ state.dirty = false; setSaveState(submit ? 'Submitted ✓' : 'All changes saved', 'ok'); }
+      else { setSaveState('Unsaved changes…'); autosaveTimer = setTimeout(() => save(false), 500); }
+      $('statusPill').textContent = state.status;
+      $('statusPill').className = 'status st-' + state.status.toLowerCase();
+      $('submittedOn').textContent = fmtDate(state.submittedAt);
+      renderBanner(); renderButtons();
+      if(!employees.some(n => n.toLowerCase() === state.employee.toLowerCase())){ employees.push(state.employee); employees.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1); renderEmployeeHelpers(); }
+      return true;
+    }catch(e){
+      state.saving = false;
+      if(e.message === 'locked'){
+        toast('This chart was approved — it can no longer be changed');
+        await loadChart();
+        return false;
+      }
+      handleApiError(e, 'Not saved — check your connection and press Save');
+      return false;
+    }
+  }
+  function waitWhileSaving(){
+    return new Promise(res => { const t = setInterval(() => { if(!state.saving){ clearInterval(t); res(); } }, 150); });
+  }
+
+  $('saveBtn').addEventListener('click', async () => {
+    const ok = await save(false);
+    if(ok) toast('Saved');
+  });
+  $('submitBtn').addEventListener('click', async () => {
+    if(!state.employee) return;
+    if(!confirm('Submit this chart for approval?\nYou can still make changes until it is approved.')) return;
+    const ok = await save(true);
+    if(ok){ render(); toast('Submitted for approval'); }
+  });
+
+  window.addEventListener('beforeunload', e => {
+    if(state.dirty && state.employee && !isLocked()){ e.preventDefault(); e.returnValue = ''; }
+  });
+
+  /* ---------- supervisor: approve / unlock ---------- */
+  let approverName = '';
+  [['approverName'], ['ovApprover']].forEach(([id]) => {
+    $(id).addEventListener('input', () => {
+      approverName = cleanName($(id).value);
+      $('approverName').value = $('ovApprover').value = $(id).value;
+    });
+  });
+
+  async function setApproval(employee, approve){
+    if(approve && !approverName){ toast('Enter the approver name first'); return false; }
+    try{
+      const j = await api({action:'mediaApprove', key:mediaKey, month:monthKey(), employee, approve:approve ? '1' : '0', by:approverName});
+      toast(approve ? 'Approved ✓' : 'Chart unlocked');
+      if(employee.toLowerCase() === state.employee.toLowerCase()){
+        state.status = j.chart.status; state.approvedBy = j.chart.approvedBy; state.approvedAt = j.chart.approvedAt;
+      }
+      return true;
+    }catch(e){
+      if(e.message === 'not submitted') toast('Only a submitted chart can be approved');
+      else if(e.message === 'unauthorized' || e.message === 'forbidden'){ toast('Session expired — please log in again'); setTimeout(logout, 900); }
+      else toast('Could not update — try again');
+      return false;
+    }
+  }
+
+  $('approveBtn').addEventListener('click', async () => {
+    if(state.dirty) await save(false);
+    if(await setApproval(state.employee, true)){ render(); }
+  });
+  $('unlockBtn').addEventListener('click', async () => {
+    if(await setApproval(state.employee, false)){ render(); }
+  });
+
+  /* ---------- team overview (supervisor) ---------- */
+  function ovCats(){
+    const extra = [];
+    ovCharts.forEach(c => Object.keys(c.data || {}).forEach(k => { if(!CATEGORIES.includes(k) && !extra.includes(k)) extra.push(k); }));
+    return CATEGORIES.concat(extra);
+  }
+  function catTotal(data, cat){
+    let t = 0;
+    String((data || {})[cat] || '').split('.').forEach(v => { t += cellValue(v); });
+    return t;
+  }
+
+  async function loadOverview(){
+    $('ovLoading').hidden = false; $('ovError').hidden = true; $('ovEmpty').hidden = true; $('ovTable').hidden = true;
+    try{
+      const j = await api({action:'mediaList', key:mediaKey, month:monthKey()});
+      employees = j.employees || []; ovCharts = j.charts || [];
+      $('ovLoading').hidden = true;
+      renderOverview();
+    }catch(e){
+      $('ovLoading').hidden = true;
+      $('ovError').hidden = false;
+      $('ovError').textContent = e.message === 'unauthorized' ? 'Session expired — please log in again.' : 'Could not reach the sheet — wait a few seconds and press Refresh.';
+    }
+  }
+
+  function renderOverview(){
+    if(!ovCharts.length){ $('ovEmpty').hidden = false; $('ovTable').hidden = true; return; }
+    const list = ovCats();
+    let h = '<thead><tr><th>Employee</th><th>Status</th>' + list.map(c => `<th>${esc(c)}</th>`).join('') + '<th>Total</th><th>Submitted</th><th></th></tr></thead><tbody>';
+    const sums = list.map(() => 0); let grand = 0;
+    ovCharts.forEach(c => {
+      const totals = list.map(cat => catTotal(c.data, cat));
+      totals.forEach((t, i) => sums[i] += t);
+      const tot = totals.reduce((a, b) => a + b, 0); grand += tot;
+      const btn = c.status === 'Approved'
+        ? `<button class="btn rowbtn" data-act="unlock" data-name="${esc(c.employee)}">Unlock</button>`
+        : c.status === 'Submitted' ? `<button class="btn ok rowbtn" data-act="approve" data-name="${esc(c.employee)}">Approve</button>` : '';
+      h += `<tr><td><strong>${esc(c.employee)}</strong></td><td><span class="status st-${esc(c.status.toLowerCase())}">${esc(c.status)}</span></td>`
+        + totals.map(t => `<td>${t || '–'}</td>`).join('')
+        + `<td class="tot">${tot}</td><td>${c.submittedAt ? fmtDate(c.submittedAt) : '—'}</td>`
+        + `<td style="white-space:nowrap"><button class="btn rowbtn" data-act="open" data-name="${esc(c.employee)}">Open</button> ${btn}</td></tr>`;
+    });
+    h += '</tbody><tfoot><tr><td>All employees</td><td></td>' + sums.map(t => `<td>${t}</td>`).join('') + `<td>${grand}</td><td></td><td></td></tr></tfoot>`;
+    $('ovTable').innerHTML = h;
+    $('ovTable').hidden = false; $('ovEmpty').hidden = true;
+  }
+
+  $('ovTable').addEventListener('click', async e => {
+    const b = e.target.closest('button[data-act]');
+    if(!b) return;
+    const name = b.dataset.name;
+    if(b.dataset.act === 'open'){ await showTab('chart', {employee: name}); return; }
+    b.disabled = true;
+    if(await setApproval(name, b.dataset.act === 'approve')) await loadOverview();
+    else b.disabled = false;
+  });
+  $('ovRefresh').addEventListener('click', loadOverview);
+
+  $('ovExport').addEventListener('click', () => {
+    if(!ovCharts.length){ toast('Nothing to export for this month'); return; }
+    const list = ovCats();
+    const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const lines = [['Employee','Month','Status'].concat(list, ['Total','Submitted','Approved by','Approved on','Note']).map(q).join(',')];
+    ovCharts.forEach(c => {
+      const totals = list.map(cat => catTotal(c.data, cat));
+      lines.push([c.employee, MONTHS[state.month - 1] + ' ' + state.year, c.status].concat(totals, [totals.reduce((a, b) => a + b, 0), c.submittedAt ? fmtDate(c.submittedAt) : '', c.approvedBy, c.approvedAt ? fmtDate(c.approvedAt) : '', c.note]).map(q).join(','));
+    });
+    const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `media-work-chart-${monthKey()}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  /* ---------- tabs & print ---------- */
+  async function showTab(tab, patch){
+    if(tab === activeTab) return;
+    if(tab === 'overview' && state.dirty && state.employee && !isLocked()) await save(false);
+    activeTab = tab;
+    document.querySelectorAll('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    $('chartView').hidden = tab !== 'chart';
+    $('overview').hidden = tab !== 'overview';
+    if(patch){
+      Object.assign(state, patch);
+      try{ localStorage.setItem(REMEMBER_KEY, state.employee); }catch(e){}
+      syncControls();
+    }
+    if(tab === 'overview') await loadOverview();
+    else { await loadChart(); refreshEmployees(); }
+  }
+  $('tabs').addEventListener('click', e => {
+    const t = e.target.closest('.tab');
+    if(t) showTab(t.dataset.tab);
+  });
+
+  $('printBtn').addEventListener('click', async () => {
+    if(activeTab !== 'chart') await showTab('chart');
+    if(state.dirty && state.employee && !isLocked()) await save(false);
+    window.print();
+  });
+</script>
+</body>
+</html>

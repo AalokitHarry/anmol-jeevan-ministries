@@ -32,6 +32,31 @@ Send me that URL (and confirm the `ADMIN_KEY` you set), and I'll paste it into [
 - Every form submission gets logged to the sheet automatically, in addition to opening WhatsApp.
 - Visit `https://ajmfamily.site/admin.html`, enter your `ADMIN_KEY`, and you'll see every registration in a searchable, filterable table.
 
+## 4. Media office — Monthly Work Chart
+
+`/media.html` is a private page for the media office: an online version of the paper Monthly Work Chart (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals). It is saved in a new **MediaCharts** tab of the same Google Sheet, completely separate from the registrations.
+
+To turn it on, update the script once:
+
+1. Open the sheet → **Extensions → Apps Script**, and paste in the entire new contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
+2. At the top, put your **existing** `ADMIN_KEY` back (the pasted file has a placeholder), and set the two new keys to secrets of your own:
+   ```
+   const MEDIA_KEY = '...';        // the whole media team uses this one
+   const SUPERVISOR_KEY = '...';   // supervisor only: sees everyone's charts and approves them
+   ```
+3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy**. (Don't use "New deployment" — it issues a different URL.)
+4. Visit `https://ajmfamily.site/media.html` and log in with the media key (team) or the supervisor key.
+
+How it works:
+
+- **Team:** type your name, fill in the numbers (or ✓ / P / R / O) for each day, and it saves automatically. Press **Submit for approval** when the month is done — you can keep editing until it's approved.
+- **Supervisor:** the **Team Overview** tab shows everyone's totals for the month. Type your name, then **Approve** a submitted chart. Approved charts are locked; **Unlock** puts one back to Submitted.
+- **Total** = the numbers plus 1 for every ✓ (P, R and O don't count).
+- **Print / Save as PDF** prints the chart in the same layout as the paper form, with the approval on the signature line. **Export CSV** (supervisor) gives the month's totals per person.
+- The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.
+
+The media key and supervisor key don't open the registrations list, and the admin key doesn't open the media charts.
+
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.
