@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Media Office — Monthly Work Chart</title>
+<title>Media Office — Content Log</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +74,7 @@
   .fade{animation:fade .35s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* ---------- the chart (laid out like the paper Monthly Work Chart) ---------- */
+  /* ---------- the shared log ---------- */
   .sheet{padding:0 0 22px;overflow:hidden}
   .sheet::before{content:"";display:block;height:6px;background:linear-gradient(90deg,#16305a,#3b6fd6 55%,var(--gold))}
   .sheet-in{padding:22px 26px 0}
@@ -83,19 +83,15 @@
   .sheet-head .mwc{font-weight:600;color:var(--muted);font-size:1rem}
   .pill{display:inline-block;padding:6px 16px;border-radius:100px;background:var(--blue-soft);border:1px solid #c5d6fb;color:var(--blue);font-weight:700;font-size:.72rem;letter-spacing:.06em}
 
-  .fields{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr;gap:18px;background:#f7f9fd;border:1px solid var(--line-2);border-radius:14px;padding:14px 18px;margin-bottom:14px}
+  .periodbar{display:flex;align-items:flex-end;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;background:#f7f9fd;border:1px solid var(--line-2);border-radius:14px;padding:14px 18px;margin-bottom:14px}
+  .periodbar .field{min-width:260px}
   .field .lab{display:block;font-size:.7rem;font-weight:700;color:#5b6a84;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
   .field select{width:100%;padding:6px 2px;border:0;border-bottom:1.5px solid #c3cee2;background:transparent;font:inherit;font-size:.95rem;font-weight:600;color:var(--ink);border-radius:0;cursor:pointer}
   .field select:focus{outline:none;border-bottom-color:var(--blue)}
   .field .pair{display:flex;gap:8px}
   .field .static{padding:6px 2px;border-bottom:1.5px solid #c3cee2;font-size:.95rem;font-weight:600;min-height:2rem}
-  .status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:.78rem;font-weight:700}
-  .status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-  .st-draft{background:var(--warn-soft);color:var(--warn)}
-  .st-done{background:var(--ok-soft);color:var(--ok)}
 
   #banner{border-radius:12px;padding:10px 16px;font-size:.86rem;font-weight:500;margin-bottom:14px;background:var(--blue-soft);color:#28527f}
-  #banner.ok{background:var(--ok-soft);color:#166b45}
 
   .viewswitch{display:inline-flex;gap:4px;padding:4px;border-radius:100px;background:#eef2fa;margin:0 0 12px}
   .viewswitch button{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;border:0;background:transparent;font:inherit;font-weight:700;font-size:.82rem;color:var(--muted);cursor:pointer;transition:background .2s,color .2s}
@@ -169,10 +165,6 @@
   #lastUpdated{font-size:.76rem;color:var(--muted)}
   @keyframes pulse{50%{opacity:.35}}
 
-  .signatures{display:flex;justify-content:space-between;gap:40px;margin-top:34px;font-size:.82rem;font-weight:700;color:#3a4a62}
-  .signatures .sig{flex:1;border-top:1px solid var(--navy);padding-top:6px}
-  .signatures .sig.r{text-align:right}
-  .print-only{display:none}
   .foot-note{margin-top:18px;text-align:right;font-size:.72rem;color:#8a97ab}
 
   /* ---------- content stock ---------- */
@@ -221,7 +213,7 @@
   #itemsLoading,#tcLoading{text-align:center;padding:40px;color:var(--muted)}
   #itemsError,#tcError{text-align:center;padding:40px;color:var(--bad)}
 
-  /* ---------- total work ---------- */
+  /* ---------- stock summary ---------- */
   .tiles{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px;margin-bottom:18px}
   .tile{padding:20px 22px;position:relative;overflow:hidden}
   .tile .k{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -271,11 +263,8 @@
   }
   @media(max-width:860px){
     body{padding:14px}
-    .fields{grid-template-columns:1fr 1fr}
     .sheet-in{padding:18px 14px 0}
     .sheet-head h2{font-size:1.25rem}
-    .signatures{flex-direction:column;gap:26px}
-    .signatures .sig.r{text-align:left}
     .item{grid-template-columns:1fr}
     .item-side{align-items:flex-start}
     .platforms{justify-content:flex-start}
@@ -291,7 +280,7 @@
     .top-actions{width:100%}
     .top-actions .btn{flex:1}
   }
-  @media(max-width:520px){ .fields{grid-template-columns:1fr} .tiles{grid-template-columns:1fr} .tile .v{font-size:2.1rem} .tile.hero .v{font-size:2.6rem} }
+  @media(max-width:520px){ .periodbar .field{min-width:0;width:100%} .tiles{grid-template-columns:1fr} .tile .v{font-size:2.1rem} .tile.hero .v{font-size:2.6rem} }
 
   @media print{
     @page{size:A4 landscape;margin:10mm}
@@ -315,14 +304,11 @@
     input.cell{min-width:0;height:22px;font-size:.66rem}
     td.s-c input.cell{font-size:.78rem}
     .field select{border-bottom:1.5px solid #8fa3bf;appearance:none;-webkit-appearance:none}
-    .fields{padding:8px 12px;grid-template-columns:1.2fr 1.2fr 1fr 1fr;gap:18px}
+    .periodbar{padding:8px 12px}
     .sheet-head h2{font-size:1.6rem}
-    .print-only{display:block}
     .notes textarea{border:1px solid var(--line);min-height:40px;resize:none}
     .notes textarea::placeholder{color:transparent}
     .legend{margin-top:8px;padding:6px 12px}
-    .signatures{margin-top:22px;flex-direction:row;gap:40px}
-    .signatures .sig.r{text-align:right}
   }
 </style>
 </head>
@@ -332,7 +318,7 @@
   <div class="gate-card fade">
     <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
     <h1>Media Office</h1>
-    <p>Enter the media key to fill in the Monthly Work Chart together with your team.</p>
+    <p>Enter the media key to open the team’s shared content log.</p>
     <div class="gate-field">
       <svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
       <input type="password" id="keyInput" placeholder="Media key" autocomplete="off">
@@ -349,7 +335,7 @@
         <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
         <div>
           <h1>Media Office</h1>
-          <div class="sub">Monthly work chart &amp; content stock</div>
+          <div class="sub">Shared content log &amp; stock</div>
         </div>
       </div>
       <div class="top-actions">
@@ -359,9 +345,9 @@
     </header>
 
     <nav class="tabs" id="tabs">
-      <button class="tab active" data-tab="chart"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Monthly Chart</button>
+      <button class="tab active" data-tab="chart"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Content Log</button>
       <button class="tab" data-tab="stock" id="stockTab" hidden><svg class="i" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg>Content Stock</button>
-      <button class="tab" data-tab="total"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Total Work</button>
+      <button class="tab" data-tab="total"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Stock Summary</button>
     </nav>
 
     <!-- ===== the shared chart ===== -->
@@ -370,78 +356,61 @@
         <div class="sheet-in">
           <div class="sheet-head">
             <div>
-              <h2>ANMOL JEEVAN MINISTRIES</h2>
-              <div class="mwc">Monthly Work Chart (MWC)</div>
+              <h2>Content Log</h2>
+              <div class="mwc">Anmol Jeevan Ministries · Media team</div>
             </div>
-            <span class="pill">MEDIA &amp; CONTENT LOG</span>
+            <span class="pill">SHARED · NO NAMES</span>
           </div>
 
-          <div class="fields">
-            <div class="field">
-              <span class="lab">Team</span>
-              <div class="static">Media &amp; Content Team</div>
-            </div>
+          <div class="periodbar">
             <div class="field">
               <span class="lab">Month / Year</span>
               <div class="pair"><select id="monthSel" aria-label="Month"></select><select id="yearSel" aria-label="Year"></select></div>
             </div>
-            <div class="field">
-              <span class="lab">Submission Date</span>
-              <div class="static" id="submittedOn">—</div>
-            </div>
-            <div class="field">
-              <span class="lab no-print">Status</span>
-              <div class="static no-print" style="border-bottom:0"><span class="status st-draft" id="statusPill">In progress</span></div>
-              <div class="print-only"><span class="lab">Signature</span><div class="static"></div></div>
-            </div>
+            <span id="lastUpdated" class="no-print"></span>
           </div>
 
-          <div id="banner">Everyone on the media team fills in this same chart. Changes save automatically and show up for the whole team within a few seconds.</div>
+          <div id="banner">One log shared by the whole media team, only to see how much content is made, uploaded and still left to upload. It <strong>doesn’t record who</strong> made or uploaded anything, and nobody is compared with anybody. Changes save automatically and show up for everyone within a few seconds.</div>
 
           <div class="viewswitch no-print" id="viewSwitch" hidden>
-            <button type="button" data-view="made" class="active">Work done <b id="vsMade">0</b></button>
+            <button type="button" data-view="made" class="active">Made <b id="vsMade">0</b></button>
             <button type="button" data-view="up">Uploaded <b id="vsUp">0</b></button>
           </div>
           <div class="gridtitle" id="gridTitle" hidden>UPLOADED — how many were posted each day</div>
-          <p class="gridhelp" id="gridHelp" hidden>Fill in how many of each type were <strong>uploaded</strong> (posted) on each day. Total Work then shows how many are still left to upload.</p>
+          <p class="gridhelp" id="gridHelp" hidden>Fill in how many of each type were <strong>uploaded</strong> (posted) on each day. Stock Summary then shows how many are still left to upload.</p>
 
           <div class="grid-wrap"><table class="grid" id="grid"></table></div>
 
           <div class="legend">
-            <strong>Instructions &amp; Status Symbols:</strong>
-            <span><b>✓</b> – Completed</span>
-            <span><b>P</b> – In Progress</span>
-            <span><b>R</b> – Under Review</span>
-            <span><b>O</b> – Off / Holiday</span>
-            <em>Note: Fill a number (e.g. 1, 2) or a status mark in each date column. Total = the numbers plus 1 for every ✓.</em>
+            <strong>How to fill in:</strong>
+            <span>type a number for how many pieces (e.g. 1, 2)</span>
+            <span><b>✓</b> – one finished piece</span>
+            <span><b>P</b> – in progress</span>
+            <span><b>R</b> – in review</span>
+            <span><b>O</b> – nothing that day</span>
+            <em>Total = the numbers plus 1 for every ✓.</em>
           </div>
           <div class="palette no-print">
             Quick fill for the selected cell:
-            <button data-fill="c" title="Completed">✓</button>
+            <button data-fill="c" title="One finished piece">✓</button>
             <button data-fill="p" title="In progress">P</button>
-            <button data-fill="r" title="Under review">R</button>
-            <button data-fill="o" title="Off / holiday">O</button>
+            <button data-fill="r" title="In review">R</button>
+            <button data-fill="o" title="Nothing that day">O</button>
             <button data-fill="" title="Clear">Clear</button>
             <span>· On a keyboard just type a number, or c / p / r / o.</span>
           </div>
 
           <div class="notes">
-            <label for="note">Notes / other work details</label>
-            <textarea id="note" maxlength="300" placeholder="Optional — e.g. what “Other Work” covered this month"></textarea>
+            <label for="note">Notes (optional)</label>
+            <textarea id="note" maxlength="300" placeholder="e.g. what “Other Work” covered this month"></textarea>
           </div>
 
           <div class="actions no-print">
             <span class="savechip" id="saveState" role="status" aria-live="polite">Loading…</span>
-            <span id="lastUpdated"></span>
             <button class="btn" id="saveBtn">Save</button>
-            <button class="btn primary" id="submitBtn">Submit month</button>
           </div>
 
-          <div class="signatures">
-            <div class="sig">Signature &amp; Date</div>
-            <div class="sig r">Supervisor / Manager Approval</div>
-          </div>
-          <div class="foot-note">Anmol Jeevan Ministries • Internal Monthly Tracking</div>
+          <div class="foot-note">Anmol Jeevan Ministries · Media content log — one shared team log, no individual records</div>
         </div>
       </div>
     </div>
@@ -479,7 +448,7 @@
     <div id="totalView" hidden>
       <div class="panel-head">
         <div>
-          <h2>Total Work</h2>
+          <h2>Stock Summary</h2>
           <p id="tcIntro"></p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -528,14 +497,14 @@
   let autosaveTimer = null;
   let pollTimer = null;
 
-  // Two charts per month share one shape: "made" (work done) and "up" (uploaded).
+  // Two charts per month share one shape: "made" (made) and "up" (uploaded).
   // pending = the cells this screen has changed but not saved yet, e.g. {"Reel": {"3": "2"}}.
   // Only those are sent on save, and the server merges them into the shared chart.
   const state = {
     year: 0, month: 0, view: 'made', today: 0,
     sets: { made: {cells: {}, pending: {}}, up: {cells: {}, pending: {}} },
     extraCats: [], note: '', noteDirty: false,
-    submittedAt: '', updatedAt: '',
+    updatedAt: '',
     ready: false, saving: false
   };
   const cur = () => state.sets[state.view];
@@ -613,7 +582,6 @@
     for(let d = 1; d <= daysInMonth(); d++) t += cellValue(getCell(cat, d, set));
     return t;
   }
-  function colTotal(d){ return cats().reduce((t, c) => t + cellValue(getCell(c, d)), 0); }
   function grandTotal(set){ return cats().reduce((t, c) => t + rowTotal(c, set), 0); }
   function catTotal(data, cat){
     let t = 0;
@@ -710,7 +678,7 @@
   function resetChart(){
     state.sets = { made: {cells: {}, pending: {}}, up: {cells: {}, pending: {}} };
     state.extraCats = []; state.note = ''; state.noteDirty = false;
-    state.submittedAt = ''; state.updatedAt = '';
+    state.updatedAt = '';
   }
 
   function findExtraCats(c){
@@ -729,7 +697,6 @@
     });
     state.extraCats = findExtraCats(c);
     state.note = c.note || '';
-    state.submittedAt = c.submittedAt || '';
     state.updatedAt = c.updatedAt || '';
   }
 
@@ -749,7 +716,6 @@
     const pendingExtra = k => (state.sets.made.pending[k] || state.sets.up.pending[k]);
     state.extraCats = remoteExtra.concat(state.extraCats.filter(k => !remoteExtra.includes(k) && pendingExtra(k)));
     if(!state.noteDirty) state.note = c.note || '';
-    state.submittedAt = c.submittedAt || '';
     state.updatedAt = c.updatedAt || '';
   }
 
@@ -788,7 +754,7 @@
   }
   ['monthSel','yearSel'].forEach(id => $(id).addEventListener('change', () => switchMonth({month:+$('monthSel').value, year:+$('yearSel').value})));
 
-  // Work done <-> Uploaded (the two charts share the same grid)
+  // Made <-> Uploaded (the two charts share the same grid)
   $('viewSwitch').addEventListener('click', e => {
     const b = e.target.closest('button[data-view]');
     if(!b || b.dataset.view === state.view) return;
@@ -804,17 +770,7 @@
   }
 
   function renderMeta(){
-    const done = !!state.submittedAt;
-    $('submittedOn').textContent = fmtDate(state.submittedAt);
-    $('statusPill').textContent = done ? 'Submitted' : 'In progress';
-    $('statusPill').className = 'status ' + (done ? 'st-done' : 'st-draft');
-    const b = $('banner');
-    if(done){ b.className = 'ok'; b.textContent = `Submitted on ${fmtDate(state.submittedAt)}. You can still add to the chart if something was missed.`; }
-    else { b.className = ''; b.textContent = 'Everyone on the media team fills in this same chart. Changes save automatically and show up for the whole team within a few seconds.'; }
-    $('submitBtn').textContent = done ? 'Reopen month' : 'Submit month';
-    $('submitBtn').classList.toggle('primary', !done);
     $('saveBtn').disabled = false;
-    $('submitBtn').disabled = !state.ready;
     $('lastUpdated').textContent = state.updatedAt ? 'Last updated ' + fmtWhen(state.updatedAt) : '';
     const up = state.view === 'up';
     document.querySelectorAll('#viewSwitch button').forEach(x => x.classList.toggle('active', x.dataset.view === state.view));
@@ -842,9 +798,7 @@
       }
       h += `<td class="tot" id="rt-${ci}">${rowTotal(c)}</td></tr>`;
     });
-    h += '</tbody><tfoot><tr><th class="lbl">Daily total</th>';
-    for(let d = 1; d <= 31; d++) h += d > n ? '<td class="na"></td>' : `<td id="ct-${d}"${d === state.today ? ' class="today"' : ''}>${colTotal(d) || ''}</td>`;
-    h += `<td class="tot" id="gt">${grandTotal()}</td></tr></tfoot>`;
+    h += '</tbody>';
     $('grid').innerHTML = h;
     activeCell = null;
     updateSwitchCounts();
@@ -856,10 +810,7 @@
   }
 
   function updateTotals(){
-    const n = daysInMonth();
     cats().forEach((c, ci) => { const el = $('rt-' + ci); if(el) el.textContent = rowTotal(c); });
-    for(let d = 1; d <= n; d++){ const el = $('ct-' + d); if(el) el.textContent = colTotal(d) || ''; }
-    $('gt').textContent = grandTotal();
     updateSwitchCounts();
   }
 
@@ -961,23 +912,21 @@
     }));
   }
 
-  // submit: '1' = mark the month submitted, '0' = reopen it, undefined = just save.
-  async function save(submit){
+  async function save(){
     if(!state.ready){ await loadChart(); return state.ready; } // "Save" after a failed load = try again
     if(state.saving) await waitWhileSaving();
     const sent = {made: JSON.parse(JSON.stringify(state.sets.made.pending)), up: JSON.parse(JSON.stringify(state.sets.up.pending))};
     const sentNote = state.noteDirty ? state.note : undefined;
-    if(!Object.keys(sent.made).length && !Object.keys(sent.up).length && sentNote === undefined && submit === undefined){
+    if(!Object.keys(sent.made).length && !Object.keys(sent.up).length && sentNote === undefined){
       setSaveState('All changes saved', 'ok');
       return true;
     }
     clearTimeout(autosaveTimer);
     state.saving = true;
-    setSaveState(submit === '1' ? 'Submitting…' : 'Saving…', 'busy');
+    setSaveState('Saving…', 'busy');
     const params = {month: monthKey(), changes: JSON.stringify(sent.made)};
     if(hasUploads) params.upChanges = JSON.stringify(sent.up);
     if(sentNote !== undefined) params.note = sentNote;
-    if(submit !== undefined) params.submit = submit;
     try{
       const j = await call('mediaSave', params);
       state.saving = false;
@@ -987,7 +936,7 @@
       mergeRemote(j.chart);
       refreshView();
       if(hasUnsaved()){ setSaveState('Unsaved changes…', 'busy'); autosaveTimer = setTimeout(() => save(), 500); }
-      else setSaveState(submit === '1' ? 'Submitted ✓' : 'All changes saved', 'ok');
+      else setSaveState('All changes saved', 'ok');
       return true;
     }catch(e){
       state.saving = false;
@@ -998,11 +947,6 @@
 
   $('saveBtn').addEventListener('click', async () => {
     if(await save()) toast('Saved');
-  });
-  $('submitBtn').addEventListener('click', async () => {
-    const reopening = !!state.submittedAt;
-    if(!confirm(reopening ? 'Reopen this month? The submission date will be cleared.' : 'Mark this month as submitted?\nThe team can still add to the chart if something was missed.')) return;
-    if(await save(reopening ? '0' : '1')) toast(reopening ? 'Month reopened' : 'Month submitted');
   });
 
   window.addEventListener('beforeunload', e => {
@@ -1225,7 +1169,7 @@
     URL.revokeObjectURL(a.href);
   }
 
-  /* ================= total work: made, uploaded and left ================= */
+  /* ================= stock summary: made, uploaded and left ================= */
   let tcCharts = [];
   let stock = {}; // type -> {opening, notNeeded}
   const monthLabel = m => MONTHS[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
@@ -1312,7 +1256,7 @@
     const num = (r, f) => `<input class="num" type="number" min="0" max="99999" step="1" data-type="${esc(r.cat)}" data-field="${f}" value="${r[f]}" aria-label="${f === 'opening' ? 'Opening stock' : 'Not needed'} for ${esc(r.cat)}">`;
     const listFlag = r => r.left === r.ready ? (r.left ? '<span class="flag ok">✓ all listed</span>' : '<span class="muted">—</span>')
       : r.left > r.ready ? `<span class="flag add">${r.left - r.ready} to add</span>` : `<span class="flag extra">${r.ready - r.left} extra</span>`;
-    const head = ['Type'].concat(hasStock ? ['Opening'] : [], ['Made'], hasUploads ? ['Uploaded'] : [], hasStock ? ['Not needed'] : [], hasUploads ? ['Left to upload', 'Progress'] : [], hasStock ? ['In content list'] : []);
+    const head = ['Type'].concat(hasStock ? ['Opening'] : [], ['Made'], hasUploads ? ['Uploaded'] : [], hasStock ? ['Not needed'] : [], hasUploads ? ['Left to upload', '% uploaded'] : [], hasStock ? ['In content list'] : []);
     $('tcLedger').innerHTML =
       `<thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>` +
       rows.map(r => `<tr><td><span class="ttype" style="--c:${colorOf(r.cat)}"><i></i>${esc(r.cat)}</span></td>` +
@@ -1334,9 +1278,9 @@
     const sums = mList.map((_, i) => mrows.reduce((t, r) => t + r.cats[i], 0));
     const grand = sums.reduce((a, b) => a + b, 0), grandUp = mrows.reduce((t, r) => t + r.up, 0);
     $('tcMonth').innerHTML =
-      `<thead><tr><th>Month</th>${mList.map(c => `<th>${esc(c)}</th>`).join('')}<th>Made</th>${hasUploads ? '<th>Uploaded</th>' : ''}<th>Submitted</th></tr></thead><tbody>` +
-      mrows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${fmtN(r.cats.reduce((a, b) => a + b, 0))}</td>${hasUploads ? `<td>${showNum(r.up)}</td>` : ''}<td>${r.c.submittedAt ? '✓ ' + esc(fmtDate(r.c.submittedAt)) : '—'}</td></tr>`).join('') +
-      `</tbody><tfoot><tr><td>${$('tcYear').value === 'all' ? 'All months' : esc($('tcYear').value)}</td>${sums.map(n => `<td>${fmtN(n)}</td>`).join('')}<td>${fmtN(grand)}</td>${hasUploads ? `<td>${fmtN(grandUp)}</td>` : ''}<td></td></tr></tfoot>`;
+      `<thead><tr><th>Month</th>${mList.map(c => `<th>${esc(c)}</th>`).join('')}<th>Made</th>${hasUploads ? '<th>Uploaded</th>' : ''}</tr></thead><tbody>` +
+      mrows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${fmtN(r.cats.reduce((a, b) => a + b, 0))}</td>${hasUploads ? `<td>${showNum(r.up)}</td>` : ''}</tr>`).join('') +
+      `</tbody><tfoot><tr><td>${$('tcYear').value === 'all' ? 'All months' : esc($('tcYear').value)}</td>${sums.map(n => `<td>${fmtN(n)}</td>`).join('')}<td>${fmtN(grand)}</td>${hasUploads ? `<td>${fmtN(grandUp)}</td>` : ''}</tr></tfoot>`;
   }
 
   $('tcYear').addEventListener('change', () => renderTotals());

@@ -32,9 +32,9 @@ Send me that URL (and confirm the `ADMIN_KEY` you set), and I'll paste it into [
 - Every form submission gets logged to the sheet automatically, in addition to opening WhatsApp.
 - Visit `https://ajmfamily.site/admin.html`, enter your `ADMIN_KEY`, and you'll see every registration in a searchable, filterable table.
 
-## 4. Media office — Monthly Work Chart
+## 4. Media office — shared Content Log
 
-`/media.html` is a private page for the media office: an online version of the paper Monthly Work Chart (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals), plus a content list and a stock summary. **The whole team works on one shared chart per month** — one key, no names, no separate roles. Everything is saved in the same Google Sheet, in its own tabs (**MediaWork**, **MediaStock**, **MediaItems**), completely separate from the registrations.
+`/media.html` is a private page for the media office: a shared **content log** (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals), plus a content list and a stock summary. Its only purpose is to see **how much content there is — made, uploaded and still left to upload**. It is not a performance or work-tracking chart. **The whole team works on one shared log per month** — one key, no names, no separate roles. Everything is saved in the same Google Sheet, in its own tabs (**MediaWork**, **MediaStock**, **MediaItems**), completely separate from the registrations.
 
 To turn it on (or to update it — for example to add the Content Stock tab), update the script once. Existing tabs are upgraded automatically and keep everything already in them; until you update, the page still works, just without the newer features (older script: no Uploaded chart; script before the content list: no Content Stock tab or stock adjustments):
 
@@ -49,20 +49,20 @@ To turn it on (or to update it — for example to add the Content Stock tab), up
 
 How it works:
 
-- **Everyone edits the same chart.** Pick the month, then type a number (or ✓ / P / R / O) in each day's box — changes save automatically and appear on everyone else's screen within a few seconds. If two people edit different boxes at the same moment, both are kept.
-- **Submit month** stamps the submission date (Submission Date on the printed form). The team can still add to the chart afterwards; **Reopen month** clears the date.
-- **Work done / Uploaded:** above the chart there are two views. *Work done* is the chart from the paper form. *Uploaded* is a second chart of the same shape — fill in how many of each type were uploaded (posted) on each day.
+- **Everyone edits the same log.** Pick the month, then type a number (or ✓ / P / R / O) in each day's box — changes save automatically and appear on everyone else's screen within a few seconds. If two people edit different boxes at the same moment, both are kept.
+- **Nobody is tracked.** The page and the script never store who typed or uploaded anything — only the counts, the time of the last change and an optional note. There are no names, no per-person totals, no approval or sign-off, and no submit step, so nothing can be used to compare colleagues. The log says so at the top of the page.
+- **Made / Uploaded:** above the log there are two views. *Made* is how many pieces were finished each day. *Uploaded* is a second log of the same shape — fill in how many of each type were uploaded (posted) on each day.
 - **Total** = the numbers plus 1 for every ✓ (P, R and O don't count).
 - **Today's column** is highlighted in gold, and under the chart it shows when the chart was **last updated**.
 - **Content Stock** tab: the list of individual pieces the team has made — add a title, a type and (optionally) a link. Mark each piece **Ready**, **Uploaded** (and where: YouTube / Instagram / Facebook / WhatsApp / Other) or **Not needed**. The **Ready** filter is your "still to upload" list. You can search, filter by type, edit or remove a piece, and export the whole list as CSV. Only `http(s)` links become clickable.
-- **Total Work** tab: your content stock across all months — for every work type, how many were **made**, how many **uploaded**, and how many are **left to upload**:
+- **Stock Summary** tab: your content stock across all months — for every work type, how many were **made**, how many **uploaded**, and how many are **left to upload**:
 
   ```
   Left to upload = Opening + Made − Uploaded − Not needed
   ```
 
   *Opening* is stock that existed before you started using the chart, and *Not needed* is content you decided not to post — both are editable boxes in the "Stock by type" table (they are saved right away in the **MediaStock** tab). If more was uploaded than recorded, the row shows 0 left with a warning. The last column compares "left to upload" with the pieces marked **Ready** in the Content Stock list, e.g. "3 to add", so you can see whether the list is complete. Below that, a month-by-month table you can filter by year. Export CSV gives one row per month and type.
-- **Print / Save as PDF** prints the chart in the same layout as the paper form, with blank signature lines to sign by hand.
+- **Print / Save as PDF** prints the month's log on one A4 landscape page. It has no signature or approval lines.
 - The month/year that opens by default comes from Google's clock, so a wrong computer date can't open the wrong month.
 - The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.
 
