@@ -140,13 +140,17 @@ function handleSetStatus_(id, status) {
 // letter — c = completed, p = in progress, r = under review, o = off / holiday.
 // Total = the numbers plus 1 for every "c".
 //
+// Each month also has an "Uploaded" chart of the same shape: how many of each
+// work type were uploaded (posted) on each day. Made minus uploaded = what is
+// left to upload.
+//
 // Several people edit the same chart at once, so a save only sends the cells
 // that person changed; they are merged into whatever is stored at that moment
 // (one save at a time), so nobody's work overwrites anybody else's.
 // ---------------------------------------------------------------------------
 const MEDIA_SHEET_NAME = 'MediaWork';
-const MEDIA_HEADERS = ['Month', 'Total', 'SubmittedAt', 'UpdatedAt', 'Note', 'Data'];
-const MEDIA_VERSION = 2;
+const MEDIA_HEADERS = ['Month', 'Total', 'SubmittedAt', 'UpdatedAt', 'Note', 'Data', 'Uploaded', 'UploadedTotal'];
+const MEDIA_VERSION = 3;
 
 function jsonOut_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
@@ -159,6 +163,10 @@ function getMediaSheet_() {
     sheet = ss.insertSheet(MEDIA_SHEET_NAME);
     sheet.appendRow(MEDIA_HEADERS);
     sheet.setFrozenRows(1);
+  } else if (sheet.getLastColumn() < MEDIA_HEADERS.length) {
+    // an earlier version had fewer columns — add the new ones, keep every existing row
+    const have = sheet.getLastColumn();
+    sheet.getRange(1, have + 1, 1, MEDIA_HEADERS.length - have).setValues([MEDIA_HEADERS.slice(have)]);
   }
   return sheet;
 }
@@ -247,7 +255,9 @@ function chartOut_(r) {
     submittedAt: String(r.SubmittedAt || ''),
     updatedAt: String(r.UpdatedAt || ''),
     note: String(r.Note || ''),
-    data: parseChartData_(r.Data)
+    data: parseChartData_(r.Data),
+    uploaded: parseChartData_(r.Uploaded),
+    uploadedTotal: Number(r.UploadedTotal) || 0
   };
 }
 
@@ -277,16 +287,35 @@ function mediaGet_(p) {
   return jsonOut_({ ok: true, chart: found ? chartOut_(found) : null });
 }
 
-// p.changes = {"Reel": {"3": "2", "5": ""}, ...}  (work type -> day -> new value, "" clears)
+// Applies {"Reel": {"3": "2", "5": ""}, ...} (work type -> day -> new value, "" clears) to data.
+function applyCellChanges_(data, changes) {
+  Object.keys(changes).slice(0, 20).forEach(function (cat) {
+    const name = cleanCat_(cat);
+    if (!name || typeof changes[cat] !== 'object' || !changes[cat]) return;
+    const cells = splitCells_(data[name]);
+    Object.keys(changes[cat]).forEach(function (d) {
+      const n = parseInt(d, 10);
+      if (n >= 1 && n <= 31) cells[n - 1] = cleanToken_(changes[cat][d]);
+    });
+    const joined = joinCells_(cells);
+    if (joined) data[name] = joined; else delete data[name];
+  });
+}
+
+// p.changes   = changes to the "work done" chart, as above
+// p.upChanges = changes to the "uploaded" chart, as above
 // p.note    = replaces the notes (only sent when it was edited)
 // p.submit  = "1" stamps the submission date, "0" clears it
 function mediaSave_(p) {
   const month = String(p.month || '');
   if (!validMonth_(month)) return jsonOut_({ error: 'invalid month' });
 
-  let changes = {};
-  if (p.changes) {
-    try { changes = JSON.parse(p.changes) || {}; } catch (err) { return jsonOut_({ error: 'invalid data' }); }
+  let changes = {}, upChanges = {};
+  try {
+    if (p.changes) changes = JSON.parse(p.changes) || {};
+    if (p.upChanges) upChanges = JSON.parse(p.upChanges) || {};
+  } catch (err) {
+    return jsonOut_({ error: 'invalid data' });
   }
 
   const lock = LockService.getScriptLock();
@@ -295,18 +324,9 @@ function mediaSave_(p) {
     const sheet = getMediaSheet_();
     const existing = findMediaMonth_(readMediaMonths_(sheet), month);
     const data = existing ? parseChartData_(existing.Data) : {};
-
-    Object.keys(changes).slice(0, 20).forEach(function (cat) {
-      const name = cleanCat_(cat);
-      if (!name || typeof changes[cat] !== 'object' || !changes[cat]) return;
-      const cells = splitCells_(data[name]);
-      Object.keys(changes[cat]).forEach(function (d) {
-        const n = parseInt(d, 10);
-        if (n >= 1 && n <= 31) cells[n - 1] = cleanToken_(changes[cat][d]);
-      });
-      const joined = joinCells_(cells);
-      if (joined) data[name] = joined; else delete data[name];
-    });
+    const uploaded = existing ? parseChartData_(existing.Uploaded) : {};
+    applyCellChanges_(data, changes);
+    applyCellChanges_(uploaded, upChanges);
 
     const now = new Date().toISOString();
     let submittedAt = existing ? String(existing.SubmittedAt || '') : '';
@@ -314,7 +334,7 @@ function mediaSave_(p) {
     else if (p.submit === '0') submittedAt = '';
     const note = p.note !== undefined ? String(p.note).slice(0, 300) : (existing ? String(existing.Note || '') : '');
 
-    const vals = [month, chartTotal_(data), submittedAt, now, note, JSON.stringify(data)];
+    const vals = [month, chartTotal_(data), submittedAt, now, note, JSON.stringify(data), JSON.stringify(uploaded), chartTotal_(uploaded)];
     writeMediaRow_(sheet, existing ? existing._row : 0, vals);
 
     const out = {};

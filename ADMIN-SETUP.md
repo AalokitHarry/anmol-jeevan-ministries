@@ -36,7 +36,7 @@ Send me that URL (and confirm the `ADMIN_KEY` you set), and I'll paste it into [
 
 `/media.html` is a private page for the media office: an online version of the paper Monthly Work Chart (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals). **The whole team works on one shared chart per month** — one key, no names, no separate roles. It is saved in a **MediaWork** tab of the same Google Sheet, completely separate from the registrations.
 
-To turn it on (or to update it), update the script once:
+To turn it on (or to update it — for example to add the Uploaded chart), update the script once. An existing MediaWork tab is upgraded automatically and keeps everything already in it; until you update, the page still works, just without the Uploaded chart:
 
 1. Open the sheet → **Extensions → Apps Script**, and paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
 2. At the top, set the two keys — the pasted file has sample keys, and **the script refuses the sample keys** until you change them:
@@ -51,8 +51,9 @@ How it works:
 
 - **Everyone edits the same chart.** Pick the month, then type a number (or ✓ / P / R / O) in each day's box — changes save automatically and appear on everyone else's screen within a few seconds. If two people edit different boxes at the same moment, both are kept.
 - **Submit month** stamps the submission date (Submission Date on the printed form). The team can still add to the chart afterwards; **Reopen month** clears the date.
+- **Work done / Uploaded:** above the chart there are two views. *Work done* is the chart from the paper form. *Uploaded* is a second chart of the same shape — fill in how many of each type were uploaded (posted) on each day.
 - **Total** = the numbers plus 1 for every ✓ (P, R and O don't count).
-- **Total Work** tab: everything produced across all months — a big total per work type (your content stock), and a month-by-month table. Filter by year; Export CSV.
+- **Total Work** tab: your content stock across all months — for every work type, how many were **made**, how many **uploaded**, and how many are **left to upload** (made minus uploaded; if more was uploaded than recorded as made, it shows 0 left with a warning). Below that, a month-by-month table you can filter by year. Export CSV gives one row per month and type.
 - **Print / Save as PDF** prints the chart in the same layout as the paper form, with blank signature lines to sign by hand.
 - The month/year that opens by default comes from Google's clock, so a wrong computer date can't open the wrong month.
 - The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.

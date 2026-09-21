@@ -93,6 +93,22 @@
   td.s-o{background:#eceff4!important} td.s-o input.cell{color:var(--muted)}
   td.s-n input.cell{color:var(--navy)}
 
+  .viewswitch{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+  .viewswitch button{padding:8px 16px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font:inherit;font-weight:700;font-size:.82rem;color:var(--muted);cursor:pointer}
+  .viewswitch button b{margin-left:6px;padding:1px 9px;border-radius:100px;background:var(--blue-soft);color:var(--navy);font-size:.75rem}
+  .viewswitch button.active{background:var(--navy);border-color:var(--navy);color:#fff}
+  .viewswitch button.active b{background:rgba(255,255,255,.22);color:#fff}
+  .viewswitch button[data-view="up"].active{background:#245c45;border-color:#245c45}
+  .gridtitle{font-weight:800;color:#245c45;font-size:.9rem;letter-spacing:.02em;margin:0 0 6px}
+  .gridhelp{font-size:.82rem;color:var(--muted);margin:0 0 10px}
+  table.grid.up thead th{background:#245c45}
+  table.grid.up thead th.sun{background:#2d7255}
+  table.grid.up thead th.tot{background:var(--ok)}
+  table.grid.up thead th.lbl{background:#245c45}
+  table.grid.up td.tot{background:#e4f3ea!important;color:#1f5c3c}
+  table.grid.up tfoot td.tot{background:var(--ok)!important;color:#fff}
+  table.grid.up tfoot th.lbl,table.grid.up tfoot td{color:#1f5c3c}
+
   .legend{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin-top:12px;padding:10px 16px;border:1.5px dashed #c9d6e8;border-radius:10px;background:#f7f9fc;font-size:.78rem;color:var(--muted)}
   .legend strong{color:#4a5a72}
   .legend b{color:var(--ink)}
@@ -118,7 +134,7 @@
 
   /* total work / content stock */
   .tc-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
-  .tc-bar select{padding:9px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;font-weight:600;background:#fff}
+  .tc-bar select,.tc-monthhead select{padding:9px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;font-weight:600;background:#fff}
   .tc-intro{color:var(--muted);font-size:.9rem;margin:-4px 0 18px}
   .tc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:26px}
   .tc-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
@@ -129,6 +145,12 @@
   .tc-card.grand{background:var(--navy);border-color:var(--navy)}
   .tc-card.grand .n{color:#fff}
   .tc-card.grand .l{color:#b9cbe4}
+  .tc-card .sub{font-size:.74rem;color:var(--muted);margin-top:6px}
+  .tc-card.grand .sub{color:#b9cbe4}
+  .tc-card .sub.warn{color:var(--warn);font-weight:600}
+  .tc-card .bar i.full{background:var(--ok)}
+  .tc-monthhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .tc-monthhead .tc-h{margin:0}
   .tc-h{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy);margin:0 0 10px}
   .tc-scroll{overflow-x:auto}
   .tc-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.85rem}
@@ -158,7 +180,7 @@
     @page{size:A4 landscape;margin:10mm}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     body{background:#fff;padding:0}
-    #gate,header.top,.tabs,.palette,.actions,#banner,#totalView,#toast,.no-print,.foot-note{display:none!important}
+    #gate,header.top,.tabs,.palette,.actions,#banner,#totalView,#toast,.no-print,.foot-note,.viewswitch,.gridhelp{display:none!important}
     #panel{display:block!important}
     #chartView{display:block!important}
     .wrap{max-width:none}
@@ -240,6 +262,13 @@
 
         <div id="banner">Everyone on the media team fills in this same chart. Changes save automatically and show up for the whole team within a few seconds.</div>
 
+        <div class="viewswitch no-print" id="viewSwitch" hidden>
+          <button type="button" data-view="made" class="active">Work done <b id="vsMade">0</b></button>
+          <button type="button" data-view="up">Uploaded <b id="vsUp">0</b></button>
+        </div>
+        <div class="gridtitle" id="gridTitle" hidden>UPLOADED — how many were posted each day</div>
+        <p class="gridhelp" id="gridHelp" hidden>Fill in how many of each type were <strong>uploaded</strong> (posted) on each day. Total Work then shows how many are still left to upload.</p>
+
         <div class="grid-wrap"><table class="grid" id="grid"></table></div>
 
         <div class="legend">
@@ -282,17 +311,21 @@
     <!-- ===== everything produced so far (content stock) ===== -->
     <div id="totalView" hidden>
       <div class="tc-bar">
-        <select id="tcYear" aria-label="Year"></select>
         <button class="btn" id="tcRefresh">Refresh</button>
         <button class="btn" id="tcExport">Export CSV</button>
       </div>
-      <p class="tc-intro">Everything the media team has produced, added up from all the monthly charts — your content stock at a glance.</p>
       <div id="tcLoading">Loading…</div>
       <p id="tcError" hidden></p>
       <div id="tcEmpty" hidden>Nothing has been filled in yet.</div>
       <div id="tcBody" hidden>
+        <h3 class="tc-h">Content stock — all time</h3>
+        <p class="tc-intro" id="tcIntro"></p>
         <div class="tc-cards" id="tcCards"></div>
-        <h3 class="tc-h">By month</h3>
+        <div id="tcTypeWrap" hidden>
+          <h3 class="tc-h">By type</h3>
+          <div class="tc-scroll"><table class="tc-table" id="tcType"></table></div>
+        </div>
+        <div class="tc-monthhead"><h3 class="tc-h">By month</h3><select id="tcYear" aria-label="Year"></select></div>
         <div class="tc-scroll"><table class="tc-table" id="tcMonth"></table></div>
       </div>
     </div>
@@ -311,19 +344,23 @@
   const POLL_MS = 15000; // how often to look for changes made by the rest of the team
 
   let mediaKey = null;   // kept in memory only — never persisted, re-enter on every page load
+  let hasUploads = false; // the Google script is new enough to keep the "uploaded" chart
   let activeTab = 'chart';
   let activeCell = null;
   let autosaveTimer = null;
   let pollTimer = null;
 
+  // Two charts per month share one shape: "made" (work done) and "up" (uploaded).
   // pending = the cells this screen has changed but not saved yet, e.g. {"Reel": {"3": "2"}}.
-  // Only these are sent on save, and the server merges them into the shared chart.
+  // Only those are sent on save, and the server merges them into the shared chart.
   const state = {
-    year: 0, month: 0,
-    cells: {}, extraCats: [], note: '', noteDirty: false,
+    year: 0, month: 0, view: 'made',
+    sets: { made: {cells: {}, pending: {}}, up: {cells: {}, pending: {}} },
+    extraCats: [], note: '', noteDirty: false,
     submittedAt: '', updatedAt: '',
-    pending: {}, ready: false, saving: false
+    ready: false, saving: false
   };
+  const cur = () => state.sets[state.view];
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -331,7 +368,8 @@
   const monthKey = () => state.year + '-' + pad(state.month);
   const daysInMonth = () => new Date(state.year, state.month, 0).getDate();
   const cats = () => CATEGORIES.concat(state.extraCats);
-  const hasPending = () => Object.keys(state.pending).length > 0;
+  const setPending = set => Object.keys(set.pending).length > 0;
+  const hasPending = () => setPending(state.sets.made) || setPending(state.sets.up);
   const hasUnsaved = () => hasPending() || state.noteDirty;
 
   function toast(msg){
@@ -368,18 +406,19 @@
     return s.replace(/\D/g, '').slice(0, 3).replace(/^0+(?=\d)/, '');
   }
 
-  function getCell(cat, d){ return (state.cells[cat] || [])[d - 1] || ''; }
-  function setCell(cat, d, v){
-    if(!state.cells[cat]) state.cells[cat] = [];
-    state.cells[cat][d - 1] = v;
+  function getCell(cat, d, set){ return ((set || cur()).cells[cat] || [])[d - 1] || ''; }
+  function setCell(cat, d, v, set){
+    const s = set || cur();
+    if(!s.cells[cat]) s.cells[cat] = [];
+    s.cells[cat][d - 1] = v;
   }
-  function rowTotal(cat){
+  function rowTotal(cat, set){
     let t = 0;
-    for(let d = 1; d <= daysInMonth(); d++) t += cellValue(getCell(cat, d));
+    for(let d = 1; d <= daysInMonth(); d++) t += cellValue(getCell(cat, d, set));
     return t;
   }
   function colTotal(d){ return cats().reduce((t, c) => t + cellValue(getCell(c, d)), 0); }
-  function grandTotal(){ return cats().reduce((t, c) => t + rowTotal(c), 0); }
+  function grandTotal(set){ return cats().reduce((t, c) => t + rowTotal(c, set), 0); }
   function catTotal(data, cat){
     let t = 0;
     String((data || {})[cat] || '').split('.').forEach(v => { t += cellValue(v); });
@@ -409,11 +448,12 @@
     gateBtn.disabled = true; gateBtn.textContent = 'Checking…'; gateError.textContent = '';
     try{
       const j = await api({action:'mediaLogin', key});
-      if(j.version !== 2){
+      if(!(j.version >= 2)){
         gateError.textContent = 'The Google Sheet script has not been updated to the latest version yet (see ADMIN-SETUP.md).';
         return;
       }
       mediaKey = key;
+      hasUploads = j.version >= 3; // older script: everything works except the "uploaded" chart
       // the real date comes from Google, so a wrong computer clock can't open the wrong month
       const today = new Date(j.now);
       state.year = today.getFullYear(); state.month = today.getMonth() + 1;
@@ -434,7 +474,7 @@
     clearTimeout(autosaveTimer);
     clearInterval(pollTimer);
     mediaKey = null;
-    state.pending = {}; state.noteDirty = false;
+    state.sets.made.pending = {}; state.sets.up.pending = {}; state.noteDirty = false;
     location.reload();
   }
   $('logoutBtn').addEventListener('click', async () => {
@@ -459,6 +499,7 @@
   }
 
   async function startSession(){
+    $('viewSwitch').hidden = !hasUploads;
     fillPeriodSelects();
     await loadChart();
     pollTimer = setInterval(poll, POLL_MS);
@@ -466,19 +507,26 @@
 
   /* ---------- loading / applying / merging the shared chart ---------- */
   function resetChart(){
-    state.cells = {}; state.extraCats = []; state.note = ''; state.noteDirty = false;
-    state.submittedAt = ''; state.updatedAt = ''; state.pending = {};
+    state.sets = { made: {cells: {}, pending: {}}, up: {cells: {}, pending: {}} };
+    state.extraCats = []; state.note = ''; state.noteDirty = false;
+    state.submittedAt = ''; state.updatedAt = '';
   }
 
-  function findExtraCats(data){
-    return Object.keys(data || {}).filter(k => !CATEGORIES.includes(k) && String(data[k]).replace(/\./g, '') !== '');
+  function findExtraCats(c){
+    const out = [];
+    [c.data, c.uploaded].forEach(d => Object.keys(d || {}).forEach(k => {
+      if(!CATEGORIES.includes(k) && !out.includes(k) && String(d[k]).replace(/\./g, '') !== '') out.push(k);
+    }));
+    return out;
   }
 
   function applyChart(c){
     resetChart();
     if(!c) return;
-    Object.keys(c.data || {}).forEach(cat => { state.cells[cat] = String(c.data[cat] || '').split('.'); });
-    state.extraCats = findExtraCats(c.data);
+    [['made', c.data], ['up', c.uploaded]].forEach(([key, data]) => {
+      Object.keys(data || {}).forEach(cat => { state.sets[key].cells[cat] = String(data[cat] || '').split('.'); });
+    });
+    state.extraCats = findExtraCats(c);
     state.note = c.note || '';
     state.submittedAt = c.submittedAt || '';
     state.updatedAt = c.updatedAt || '';
@@ -486,17 +534,19 @@
 
   // Bring in what the rest of the team saved, without touching cells this screen has changed but not saved yet.
   function mergeRemote(c){
-    const remote = {};
-    Object.keys(c.data || {}).forEach(cat => { remote[cat] = String(c.data[cat] || '').split('.'); });
-    const names = new Set(Object.keys(remote).concat(Object.keys(state.cells)));
-    names.forEach(cat => {
-      for(let d = 1; d <= 31; d++){
-        if(state.pending[cat] && state.pending[cat][d] !== undefined) continue;
-        setCell(cat, d, (remote[cat] || [])[d - 1] || '');
-      }
+    [['made', c.data], ['up', c.uploaded]].forEach(([key, data]) => {
+      const set = state.sets[key], remote = {};
+      Object.keys(data || {}).forEach(cat => { remote[cat] = String(data[cat] || '').split('.'); });
+      new Set(Object.keys(remote).concat(Object.keys(set.cells))).forEach(cat => {
+        for(let d = 1; d <= 31; d++){
+          if(set.pending[cat] && set.pending[cat][d] !== undefined) continue;
+          setCell(cat, d, (remote[cat] || [])[d - 1] || '', set);
+        }
+      });
     });
-    const remoteExtra = findExtraCats(c.data);
-    state.extraCats = remoteExtra.concat(state.extraCats.filter(k => !remoteExtra.includes(k) && state.pending[k]));
+    const remoteExtra = findExtraCats(c);
+    const pendingExtra = k => (state.sets.made.pending[k] || state.sets.up.pending[k]);
+    state.extraCats = remoteExtra.concat(state.extraCats.filter(k => !remoteExtra.includes(k) && pendingExtra(k)));
     if(!state.noteDirty) state.note = c.note || '';
     state.submittedAt = c.submittedAt || '';
     state.updatedAt = c.updatedAt || '';
@@ -537,6 +587,14 @@
   }
   ['monthSel','yearSel'].forEach(id => $(id).addEventListener('change', () => switchMonth({month:+$('monthSel').value, year:+$('yearSel').value})));
 
+  // Work done <-> Uploaded (the two charts share the same grid)
+  $('viewSwitch').addEventListener('click', e => {
+    const b = e.target.closest('button[data-view]');
+    if(!b || b.dataset.view === state.view) return;
+    state.view = b.dataset.view;
+    render();
+  });
+
   /* ---------- drawing the chart ---------- */
   function render(){
     renderGrid();
@@ -556,6 +614,11 @@
     $('submitBtn').classList.toggle('primary', !done);
     $('saveBtn').disabled = false;
     $('submitBtn').disabled = !state.ready;
+    const up = state.view === 'up';
+    document.querySelectorAll('#viewSwitch button').forEach(x => x.classList.toggle('active', x.dataset.view === state.view));
+    $('gridTitle').hidden = !up;
+    $('gridHelp').hidden = !up;
+    $('grid').classList.toggle('up', up);
   }
 
   function renderGrid(){
@@ -581,6 +644,12 @@
     h += `<td class="tot" id="gt">${grandTotal()}</td></tr></tfoot>`;
     $('grid').innerHTML = h;
     activeCell = null;
+    updateSwitchCounts();
+  }
+
+  function updateSwitchCounts(){
+    $('vsMade').textContent = grandTotal(state.sets.made);
+    $('vsUp').textContent = grandTotal(state.sets.up);
   }
 
   function updateTotals(){
@@ -588,6 +657,7 @@
     cats().forEach((c, ci) => { const el = $('rt-' + ci); if(el) el.textContent = rowTotal(c); });
     for(let d = 1; d <= n; d++){ const el = $('ct-' + d); if(el) el.textContent = colTotal(d) || ''; }
     $('gt').textContent = grandTotal();
+    updateSwitchCounts();
   }
 
   // Update the screen from state in place, so a teammate's changes appear without losing the cell being typed in.
@@ -624,10 +694,10 @@
   });
 
   function applyToCell(el, v){
-    const cat = cats()[+el.dataset.ci], d = +el.dataset.d;
+    const cat = cats()[+el.dataset.ci], d = +el.dataset.d, set = cur();
     el.value = display(v);
     setCell(cat, d, v);
-    (state.pending[cat] = state.pending[cat] || {})[d] = v;
+    (set.pending[cat] = set.pending[cat] || {})[d] = v;
     el.parentElement.className = tdClass(v, d);
     updateTotals();
     markDirty();
@@ -678,32 +748,38 @@
     return new Promise(res => { const t = setInterval(() => { if(!state.saving){ clearInterval(t); res(); } }, 120); });
   }
 
+  // remove from pending whatever was sent and hasn't been touched again since
+  function prunePending(set, sent){
+    Object.keys(sent).forEach(cat => Object.keys(sent[cat]).forEach(d => {
+      if(set.pending[cat] && set.pending[cat][d] === sent[cat][d]){
+        delete set.pending[cat][d];
+        if(!Object.keys(set.pending[cat]).length) delete set.pending[cat];
+      }
+    }));
+  }
+
   // submit: '1' = mark the month submitted, '0' = reopen it, undefined = just save.
   async function save(submit){
     if(!state.ready){ await loadChart(); return state.ready; } // "Save" after a failed load = try again
     if(state.saving) await waitWhileSaving();
-    const sent = JSON.parse(JSON.stringify(state.pending));
+    const sent = {made: JSON.parse(JSON.stringify(state.sets.made.pending)), up: JSON.parse(JSON.stringify(state.sets.up.pending))};
     const sentNote = state.noteDirty ? state.note : undefined;
-    if(!Object.keys(sent).length && sentNote === undefined && submit === undefined){
+    if(!Object.keys(sent.made).length && !Object.keys(sent.up).length && sentNote === undefined && submit === undefined){
       setSaveState('All changes saved', 'ok');
       return true;
     }
     clearTimeout(autosaveTimer);
     state.saving = true;
     setSaveState(submit === '1' ? 'Submitting…' : 'Saving…');
-    const params = {action:'mediaSave', key:mediaKey, month:monthKey(), changes:JSON.stringify(sent)};
+    const params = {action:'mediaSave', key:mediaKey, month:monthKey(), changes:JSON.stringify(sent.made)};
+    if(hasUploads) params.upChanges = JSON.stringify(sent.up);
     if(sentNote !== undefined) params.note = sentNote;
     if(submit !== undefined) params.submit = submit;
     try{
       const j = await api(params);
       state.saving = false;
-      // whatever was sent and not touched again since is now safely stored
-      Object.keys(sent).forEach(cat => Object.keys(sent[cat]).forEach(d => {
-        if(state.pending[cat] && state.pending[cat][d] === sent[cat][d]){
-          delete state.pending[cat][d];
-          if(!Object.keys(state.pending[cat]).length) delete state.pending[cat];
-        }
-      }));
+      prunePending(state.sets.made, sent.made);
+      prunePending(state.sets.up, sent.up);
       if(sentNote !== undefined && state.note === sentNote) state.noteDirty = false;
       mergeRemote(j.chart);
       refreshView();
@@ -744,10 +820,12 @@
     }catch(e){ /* try again next time */ }
   }
 
-  /* ---------- total work: everything produced so far ---------- */
+  /* ---------- total work: everything made, uploaded and left ---------- */
   let tcCharts = [];
   const monthLabel = m => MONTHS[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
   const showNum = n => n ? n.toLocaleString('en-IN') : '–';
+  const fmtN = n => n.toLocaleString('en-IN');
+  const hasData = c => Object.keys(c.data || {}).length || Object.keys(c.uploaded || {}).length;
 
   async function loadTotals(){
     $('tcLoading').hidden = false; $('tcError').hidden = true; $('tcEmpty').hidden = true; $('tcBody').hidden = true;
@@ -773,48 +851,84 @@
 
   function tcVisible(){
     const yr = $('tcYear').value;
-    return tcCharts.filter(c => (yr === 'all' || c.month.startsWith(yr + '-')) && (c.total > 0 || Object.keys(c.data || {}).length));
+    return tcCharts.filter(c => (yr === 'all' || c.month.startsWith(yr + '-')) && hasData(c));
   }
 
   function tcCatList(charts){
     const extra = [];
-    charts.forEach(c => Object.keys(c.data || {}).forEach(k => { if(!CATEGORIES.includes(k) && !extra.includes(k)) extra.push(k); }));
+    charts.forEach(c => [c.data, c.uploaded].forEach(d => Object.keys(d || {}).forEach(k => { if(!CATEGORIES.includes(k) && !extra.includes(k)) extra.push(k); })));
     return CATEGORIES.concat(extra);
   }
 
+  const progress = (part, whole) => {
+    const pct = whole ? Math.min(100, Math.round(part / whole * 100)) : 0;
+    return `<div class="bar"><i class="${pct === 100 ? 'full' : ''}" style="width:${pct}%"></i></div>`;
+  };
+
   function renderTotals(){
-    const charts = tcVisible();
-    if(!charts.length){ $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
+    // the stock cards always look at every month; the year filter only narrows the month table below
+    const all = tcCharts.filter(hasData);
+    if(!all.length){ $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
     $('tcEmpty').hidden = true; $('tcBody').hidden = false;
 
-    const list = tcCatList(charts);
-    const rows = charts.slice().sort((a, b) => a.month < b.month ? 1 : -1).map(c => ({c, cats: list.map(cat => catTotal(c.data, cat))}));
-    const sums = list.map((_, i) => rows.reduce((t, r) => t + r.cats[i], 0));
-    const grand = sums.reduce((a, b) => a + b, 0);
-    const max = Math.max(1, ...sums);
+    const list = tcCatList(all);
+    const made = list.map(cat => all.reduce((t, c) => t + catTotal(c.data, cat), 0));
+    const up = list.map(cat => all.reduce((t, c) => t + catTotal(c.uploaded, cat), 0));
+    const left = made.map((m, i) => Math.max(0, m - up[i]));
+    const tMade = made.reduce((a, b) => a + b, 0), tUp = up.reduce((a, b) => a + b, 0), tLeft = left.reduce((a, b) => a + b, 0);
 
-    $('tcCards').innerHTML =
-      `<div class="tc-card grand"><div class="n">${grand.toLocaleString('en-IN')}</div><div class="l">Total content</div></div>` +
-      list.map((cat, i) => `<div class="tc-card"><div class="n">${sums[i].toLocaleString('en-IN')}</div><div class="l">${esc(cat)}</div><div class="bar"><i style="width:${Math.round(sums[i] / max * 100)}%"></i></div></div>`).join('');
+    if(hasUploads){
+      $('tcIntro').textContent = 'Of everything the media team has made, how many are already uploaded and how many are still left to upload.';
+      $('tcCards').innerHTML =
+        `<div class="tc-card grand"><div class="n">${fmtN(tLeft)}</div><div class="l">Left to upload</div><div class="sub">Made ${fmtN(tMade)} · Uploaded ${fmtN(tUp)}</div>${progress(tUp, tMade)}</div>` +
+        list.map((cat, i) => `<div class="tc-card"><div class="n">${fmtN(left[i])}</div><div class="l">${esc(cat)}</div><div class="sub">Made ${fmtN(made[i])} · Uploaded ${fmtN(up[i])}</div>${up[i] > made[i] ? '<div class="sub warn">⚠ uploaded more than made</div>' : ''}${progress(up[i], made[i])}</div>`).join('');
+      $('tcTypeWrap').hidden = false;
+      $('tcType').innerHTML =
+        '<thead><tr><th>Type</th><th>Made</th><th>Uploaded</th><th>Left to upload</th><th>% uploaded</th></tr></thead><tbody>' +
+        list.map((cat, i) => `<tr><td><strong>${esc(cat)}</strong></td><td>${showNum(made[i])}</td><td>${showNum(up[i])}</td><td class="tot">${showNum(left[i])}</td><td>${made[i] ? Math.min(100, Math.round(up[i] / made[i] * 100)) + '%' : '–'}</td></tr>`).join('') +
+        `</tbody><tfoot><tr><td>Everything</td><td>${fmtN(tMade)}</td><td>${fmtN(tUp)}</td><td>${fmtN(tLeft)}</td><td>${tMade ? Math.min(100, Math.round(tUp / tMade * 100)) + '%' : '–'}</td></tr></tfoot>`;
+    }else{
+      $('tcIntro').textContent = 'Everything the media team has made, added up from all the monthly charts. (Tracking uploads needs the Google Sheet script to be updated — see ADMIN-SETUP.md.)';
+      const max = Math.max(1, ...made);
+      $('tcCards').innerHTML =
+        `<div class="tc-card grand"><div class="n">${fmtN(tMade)}</div><div class="l">Total content</div></div>` +
+        list.map((cat, i) => `<div class="tc-card"><div class="n">${fmtN(made[i])}</div><div class="l">${esc(cat)}</div><div class="bar"><i style="width:${Math.round(made[i] / max * 100)}%"></i></div></div>`).join('');
+      $('tcTypeWrap').hidden = true;
+    }
 
+    // month by month (respects the year filter)
+    const shown = tcVisible();
+    const mList = tcCatList(shown.length ? shown : all);
+    const rows = shown.slice().sort((a, b) => a.month < b.month ? 1 : -1).map(c => ({
+      c,
+      cats: mList.map(cat => catTotal(c.data, cat)),
+      up: mList.reduce((t, cat) => t + catTotal(c.uploaded, cat), 0)
+    }));
+    const sums = mList.map((_, i) => rows.reduce((t, r) => t + r.cats[i], 0));
+    const grand = sums.reduce((a, b) => a + b, 0), grandUp = rows.reduce((t, r) => t + r.up, 0);
     $('tcMonth').innerHTML =
-      `<thead><tr><th>Month</th>${list.map(c => `<th>${esc(c)}</th>`).join('')}<th>Total</th><th>Submitted</th></tr></thead><tbody>` +
-      rows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${r.cats.reduce((a, b) => a + b, 0).toLocaleString('en-IN')}</td><td>${r.c.submittedAt ? '✓ ' + esc(fmtDate(r.c.submittedAt)) : '—'}</td></tr>`).join('') +
-      `</tbody><tfoot><tr><td>All months</td>${sums.map(n => `<td>${n.toLocaleString('en-IN')}</td>`).join('')}<td>${grand.toLocaleString('en-IN')}</td><td></td></tr></tfoot>`;
+      `<thead><tr><th>Month</th>${mList.map(c => `<th>${esc(c)}</th>`).join('')}<th>Made</th>${hasUploads ? '<th>Uploaded</th>' : ''}<th>Submitted</th></tr></thead><tbody>` +
+      rows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${fmtN(r.cats.reduce((a, b) => a + b, 0))}</td>${hasUploads ? `<td>${showNum(r.up)}</td>` : ''}<td>${r.c.submittedAt ? '✓ ' + esc(fmtDate(r.c.submittedAt)) : '—'}</td></tr>`).join('') +
+      `</tbody><tfoot><tr><td>${$('tcYear').value === 'all' ? 'All months' : esc($('tcYear').value)}</td>${sums.map(n => `<td>${fmtN(n)}</td>`).join('')}<td>${fmtN(grand)}</td>${hasUploads ? `<td>${fmtN(grandUp)}</td>` : ''}<td></td></tr></tfoot>`;
   }
 
   $('tcYear').addEventListener('change', renderTotals);
   $('tcRefresh').addEventListener('click', loadTotals);
 
+  // one row per month and work type — easy to sort or pivot in Google Sheets
   $('tcExport').addEventListener('click', () => {
     const charts = tcVisible();
     if(!charts.length){ toast('Nothing to export'); return; }
     const list = tcCatList(charts);
     const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const lines = [['Month'].concat(list, ['Total','Submitted']).map(q).join(',')];
+    const head = ['Month','Type','Made'].concat(hasUploads ? ['Uploaded','Left to upload'] : []);
+    const lines = [head.map(q).join(',')];
     charts.slice().sort((a, b) => a.month < b.month ? 1 : -1).forEach(c => {
-      const totals = list.map(cat => catTotal(c.data, cat));
-      lines.push([monthLabel(c.month)].concat(totals, [totals.reduce((a, b) => a + b, 0), c.submittedAt ? fmtDate(c.submittedAt) : '']).map(q).join(','));
+      list.forEach(cat => {
+        const m = catTotal(c.data, cat), u = catTotal(c.uploaded, cat);
+        if(!m && !u) return;
+        lines.push([monthLabel(c.month), cat, m].concat(hasUploads ? [u, Math.max(0, m - u)] : []).map(q).join(','));
+      });
     });
     const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
     const a = document.createElement('a');
