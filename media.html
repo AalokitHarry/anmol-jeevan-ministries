@@ -145,8 +145,22 @@
   .ov-table .tot{font-weight:800;color:var(--navy)}
   .ov-table .rowbtn{padding:6px 12px;font-size:.75rem}
   .ov-scroll{overflow-x:auto}
-  #ovEmpty,#ovLoading,#ovError{text-align:center;padding:50px 20px;color:var(--muted)}
-  #ovError{color:var(--bad)}
+  #ovEmpty,#ovLoading,#ovError,#tcEmpty,#tcLoading,#tcError{text-align:center;padding:50px 20px;color:var(--muted)}
+  #ovError,#tcError{color:var(--bad)}
+
+  /* total work / content stock (supervisor) */
+  .tc-intro{color:var(--muted);font-size:.9rem;margin:-4px 0 18px}
+  .tc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:26px}
+  .tc-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .tc-card .n{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;line-height:1.1;color:var(--navy)}
+  .tc-card .l{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px;font-weight:600}
+  .tc-card .bar{height:6px;border-radius:100px;background:#e6ecf4;margin-top:12px;overflow:hidden}
+  .tc-card .bar i{display:block;height:100%;background:var(--blue);border-radius:100px}
+  .tc-card.grand{background:var(--navy);border-color:var(--navy)}
+  .tc-card.grand .n{color:#fff}
+  .tc-card.grand .l{color:#b9cbe4}
+  .tc-h{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy);margin:0 0 10px}
+  #tcBody .ov-scroll{margin-bottom:26px}
 
   #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -213,6 +227,7 @@
     <div class="tabs" id="tabs">
       <button class="tab active" data-tab="chart">My Chart</button>
       <button class="tab" data-tab="overview" id="overviewTab" hidden>Team Overview</button>
+      <button class="tab" data-tab="total" id="totalTab" hidden>Total Work</button>
     </div>
 
     <!-- ===== the chart ===== -->
@@ -307,6 +322,31 @@
       <p id="ovError" hidden></p>
       <div id="ovEmpty" hidden>No charts for this month yet.</div>
       <div class="ov-scroll"><table class="ov-table" id="ovTable" hidden></table></div>
+    </div>
+
+    <!-- ===== supervisor: everything produced so far (content stock) ===== -->
+    <div id="totalView" hidden>
+      <div class="ov-bar">
+        <select id="tcYear" aria-label="Year"></select>
+        <select id="tcMode" aria-label="Which charts to count">
+          <option value="all">Count all charts</option>
+          <option value="sub">Submitted &amp; approved only</option>
+          <option value="appr">Approved only</option>
+        </select>
+        <button class="btn" id="tcRefresh">Refresh</button>
+        <button class="btn" id="tcExport">Export CSV</button>
+      </div>
+      <p class="tc-intro">Everything the media team has produced, added up from all the monthly charts — your content stock at a glance.</p>
+      <div id="tcLoading">Loading…</div>
+      <p id="tcError" hidden></p>
+      <div id="tcEmpty" hidden>No charts saved yet.</div>
+      <div id="tcBody" hidden>
+        <div class="tc-cards" id="tcCards"></div>
+        <h3 class="tc-h">By month</h3>
+        <div class="ov-scroll"><table class="ov-table" id="tcMonth"></table></div>
+        <h3 class="tc-h">By person</h3>
+        <div class="ov-scroll"><table class="ov-table" id="tcPerson"></table></div>
+      </div>
     </div>
   </div>
 </div>
@@ -464,6 +504,7 @@
     $('roleBadge').textContent = role === 'supervisor' ? 'Supervisor' : 'Team';
     $('roleBadge').classList.toggle('sup', role === 'supervisor');
     $('overviewTab').hidden = role !== 'supervisor';
+    $('totalTab').hidden = role !== 'supervisor';
     $('supActions').hidden = role !== 'supervisor';
     fillPeriodSelects();
     try{ state.employee = cleanName(localStorage.getItem(REMEMBER_KEY)); }catch(e){}
@@ -880,20 +921,123 @@
     URL.revokeObjectURL(a.href);
   });
 
+  /* ---------- total work: everything produced so far (supervisor) ---------- */
+  let tcCharts = [];
+  const monthLabel = m => MONTHS[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
+  const showNum = n => n ? n.toLocaleString('en-IN') : '–';
+
+  async function loadTotals(){
+    $('tcLoading').hidden = false; $('tcError').hidden = true; $('tcEmpty').hidden = true; $('tcBody').hidden = true;
+    try{
+      const j = await api({action:'mediaList', key:mediaKey}); // no month = every month
+      tcCharts = j.charts || [];
+      $('tcLoading').hidden = true;
+      fillTcYears();
+      renderTotals();
+    }catch(e){
+      $('tcLoading').hidden = true;
+      $('tcError').hidden = false;
+      $('tcError').textContent = e.message === 'unauthorized' ? 'Session expired — please log in again.' : 'Could not reach the sheet — wait a few seconds and press Refresh.';
+    }
+  }
+
+  function fillTcYears(){
+    const sel = $('tcYear'), keep = sel.value || 'all';
+    const years = [...new Set(tcCharts.map(c => c.month.slice(0, 4)))].sort().reverse();
+    sel.innerHTML = '<option value="all">All time</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+    sel.value = keep === 'all' || years.includes(keep) ? keep : 'all';
+  }
+
+  function tcVisible(){
+    const yr = $('tcYear').value, mode = $('tcMode').value;
+    return tcCharts.filter(c =>
+      (yr === 'all' || c.month.startsWith(yr + '-')) &&
+      (mode === 'all' || (mode === 'sub' && c.status !== 'Draft') || (mode === 'appr' && c.status === 'Approved')));
+  }
+
+  function tcCatList(charts){
+    const extra = [];
+    charts.forEach(c => Object.keys(c.data || {}).forEach(k => { if(!CATEGORIES.includes(k) && !extra.includes(k)) extra.push(k); }));
+    return CATEGORIES.concat(extra);
+  }
+
+  function renderTotals(){
+    if(!tcCharts.length){ $('tcEmpty').textContent = 'No charts saved yet.'; $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
+    const charts = tcVisible();
+    if(!charts.length){ $('tcEmpty').textContent = 'No charts match this filter.'; $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
+    $('tcEmpty').hidden = true; $('tcBody').hidden = false;
+
+    const list = tcCatList(charts);
+    const per = charts.map(c => list.map(cat => catTotal(c.data, cat)));
+    const sums = list.map((_, i) => per.reduce((t, row) => t + row[i], 0));
+    const grand = sums.reduce((a, b) => a + b, 0);
+    const max = Math.max(1, ...sums);
+
+    $('tcCards').innerHTML =
+      `<div class="tc-card grand"><div class="n">${grand.toLocaleString('en-IN')}</div><div class="l">Total content</div></div>` +
+      list.map((cat, i) => `<div class="tc-card"><div class="n">${sums[i].toLocaleString('en-IN')}</div><div class="l">${esc(cat)}</div><div class="bar"><i style="width:${Math.round(sums[i] / max * 100)}%"></i></div></div>`).join('');
+
+    const byMonth = {}, byPerson = {};
+    charts.forEach((c, ci) => {
+      const m = byMonth[c.month] = byMonth[c.month] || {cats: list.map(() => 0), people: new Set()};
+      const p = byPerson[c.employee.toLowerCase()] = byPerson[c.employee.toLowerCase()] || {name: c.employee, cats: list.map(() => 0), months: new Set()};
+      list.forEach((_, i) => { m.cats[i] += per[ci][i]; p.cats[i] += per[ci][i]; });
+      m.people.add(c.employee.toLowerCase());
+      p.months.add(c.month);
+    });
+
+    const head = first => `<thead><tr><th>${first}</th>${list.map(c => `<th>${esc(c)}</th>`).join('')}<th>Total</th><th>`;
+    const tot = arr => arr.reduce((a, b) => a + b, 0);
+
+    const months = Object.keys(byMonth).sort().reverse();
+    $('tcMonth').innerHTML = head('Month') + 'People</th></tr></thead><tbody>' +
+      months.map(m => `<tr><td><strong>${esc(monthLabel(m))}</strong></td>${byMonth[m].cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${tot(byMonth[m].cats).toLocaleString('en-IN')}</td><td>${byMonth[m].people.size}</td></tr>`).join('') +
+      `</tbody><tfoot><tr><td>All months</td>${sums.map(n => `<td>${n.toLocaleString('en-IN')}</td>`).join('')}<td>${grand.toLocaleString('en-IN')}</td><td></td></tr></tfoot>`;
+
+    const people = Object.values(byPerson).sort((a, b) => tot(b.cats) - tot(a.cats));
+    $('tcPerson').innerHTML = head('Employee') + 'Months</th></tr></thead><tbody>' +
+      people.map(p => `<tr><td><strong>${esc(p.name)}</strong></td>${p.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${tot(p.cats).toLocaleString('en-IN')}</td><td>${p.months.size}</td></tr>`).join('') +
+      `</tbody><tfoot><tr><td>Everyone</td>${sums.map(n => `<td>${n.toLocaleString('en-IN')}</td>`).join('')}<td>${grand.toLocaleString('en-IN')}</td><td></td></tr></tfoot>`;
+  }
+
+  $('tcYear').addEventListener('change', renderTotals);
+  $('tcMode').addEventListener('change', renderTotals);
+  $('tcRefresh').addEventListener('click', loadTotals);
+
+  $('tcExport').addEventListener('click', () => {
+    const charts = tcVisible();
+    if(!charts.length){ toast('Nothing to export'); return; }
+    const list = tcCatList(charts);
+    const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const lines = [['Month','Employee','Status'].concat(list, ['Total']).map(q).join(',')];
+    charts.slice().sort((a, b) => a.month < b.month ? 1 : a.month > b.month ? -1 : a.employee.localeCompare(b.employee)).forEach(c => {
+      const totals = list.map(cat => catTotal(c.data, cat));
+      lines.push([monthLabel(c.month), c.employee, c.status].concat(totals, [totals.reduce((a, b) => a + b, 0)]).map(q).join(','));
+    });
+    const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'media-total-work.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
   /* ---------- tabs & print ---------- */
   async function showTab(tab, patch){
     if(tab === activeTab) return;
-    if(tab === 'overview' && state.dirty && state.employee && !isLocked()) await save(false);
+    if((tab === 'overview' || tab === 'total') && state.dirty && state.employee && !isLocked()) await save(false);
     activeTab = tab;
     document.querySelectorAll('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
     $('chartView').hidden = tab !== 'chart';
     $('overview').hidden = tab !== 'overview';
+    $('totalView').hidden = tab !== 'total';
     if(patch){
       Object.assign(state, patch);
       try{ localStorage.setItem(REMEMBER_KEY, state.employee); }catch(e){}
       syncControls();
     }
     if(tab === 'overview') await loadOverview();
+    else if(tab === 'total') await loadTotals();
     else { await loadChart(); refreshEmployees(); }
   }
   $('tabs').addEventListener('click', e => {

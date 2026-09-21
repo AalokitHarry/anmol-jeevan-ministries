@@ -51,6 +51,7 @@ How it works:
 
 - **Team:** type your name, fill in the numbers (or ✓ / P / R / O) for each day, and it saves automatically. Press **Submit for approval** when the month is done — you can keep editing until it's approved.
 - **Supervisor:** the **Team Overview** tab shows everyone's totals for the month. Type your name, then **Approve** a submitted chart. Approved charts are locked; **Unlock** puts one back to Submitted.
+- **Total Work** (supervisor tab): everything the team has produced, added up across all months — a big total per work type (your content stock), plus tables by month and by person. Filter by year, or count only submitted/approved charts. Export CSV gives one row per chart.
 - **Total** = the numbers plus 1 for every ✓ (P, R and O don't count).
 - **Print / Save as PDF** prints the chart in the same layout as the paper form, with the approval on the signature line. **Export CSV** (supervisor) gives the month's totals per person.
 - The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.
