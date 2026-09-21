@@ -21,13 +21,13 @@
     --grad-up:linear-gradient(135deg,#0f4d36 0%,#1c7a53 60%,#27a06a 100%);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;color:var(--ink);line-height:1.5;padding:26px;overflow-x:hidden;min-height:100vh;
+  body{font-family:'Inter',sans-serif;color:var(--ink);line-height:1.5;padding:26px clamp(18px,2.4vw,48px);overflow-x:hidden;min-height:100vh;
     background:
       radial-gradient(1100px 460px at 88% -8%,#dbe6ff 0%,transparent 62%),
       radial-gradient(800px 380px at -8% 4%,#ebe4ff 0%,transparent 58%),
       var(--bg)}
   h1,h2,h3{font-family:'Fraunces',serif;font-weight:500}
-  .wrap{max-width:1240px;margin:0 auto}
+  .wrap{width:100%} /* uses the whole screen — no empty bands on wide monitors */
   [hidden]{display:none!important}
   svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
