@@ -8,154 +8,253 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#0a0b22; --night-2:#14163f;
-    --gold:#e8a33d; --gold-soft:#f6c968; --gold-deep:#c9832f;
-    --cream:#faf6ee; --clay:#c96f5a;
-    --surface:#faf6ee; --surface-2:#f3ecdd; --on-surface:#2a2540; --on-surface-muted:#6b6580;
-    --hairline:#e7dfcd;
+    --navy:#16305a; --blue:#2f6df6; --blue-soft:#eaf1ff;
+    --ink:#141a2e; --muted:#69758c; --line:#e3e8f1; --line-2:#edf1f8; --bg:#f3f5fa;
+    --ok:#1f9d63; --ok-soft:#e3f6ec; --warn:#d98a0b; --warn-soft:#fdf1d8; --bad:#d64545; --bad-soft:#fde8e8;
+    --pink:#d9558a; --pink-soft:#fde9f1; --gold:#e8a33d;
+    --card:#fff; --radius:20px;
+    --shadow:0 1px 2px rgba(20,30,60,.05),0 14px 34px -18px rgba(20,40,90,.30);
+    --grad:linear-gradient(135deg,#16305a 0%,#26468a 58%,#3b6fd6 100%);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;background:var(--surface);color:var(--on-surface);line-height:1.5;padding:28px;overflow-x:hidden}
-  h1,h2{font-family:'Fraunces',serif}
-  .wrap{max-width:1100px;margin:0 auto}
+  body{font-family:'Inter',sans-serif;color:var(--ink);line-height:1.5;padding:26px;overflow-x:hidden;min-height:100vh;
+    background:
+      radial-gradient(1100px 460px at 88% -8%,#dbe6ff 0%,transparent 62%),
+      radial-gradient(800px 380px at -8% 4%,#ebe4ff 0%,transparent 58%),
+      var(--bg)}
+  h1,h2{font-family:'Fraunces',serif;font-weight:500}
+  .wrap{max-width:1240px;margin:0 auto}
+  [hidden]{display:none!important}
+  svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .fade{animation:fade .35s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* password gate */
-  #gate{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center}
-  #gate h1{font-size:1.8rem;font-weight:500}
-  #gate p{color:var(--on-surface-muted);max-width:420px;font-size:.9rem}
-  #gate input{padding:14px 18px;border-radius:12px;border:1.5px solid var(--hairline);font-size:1rem;width:280px;max-width:80vw}
-  #gate button{padding:14px 28px;border-radius:100px;background:var(--gold);color:var(--night);font-weight:600;border:0;cursor:pointer;font-size:1rem}
-  #gate button:hover{background:var(--gold-soft)}
-  #gateError{color:var(--clay);font-size:.85rem;min-height:1.2em}
+  /* ---------- password gate ---------- */
+  #gate{min-height:86vh;display:flex;align-items:center;justify-content:center}
+  .gate-card{width:min(420px,92vw);background:var(--card);border-radius:26px;padding:38px 34px 32px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line-2)}
+  .gate-card img{height:38px;margin-bottom:18px}
+  .gate-card h1{font-size:1.9rem;margin-bottom:6px}
+  .gate-card p.lead{color:var(--muted);font-size:.88rem;margin-bottom:22px}
+  .gate-field{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;background:#fafbfe;margin-bottom:14px;transition:border-color .2s,box-shadow .2s}
+  .gate-field:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.12)}
+  .gate-field svg{color:var(--muted)}
+  .gate-field input{flex:1;border:0;background:transparent;padding:14px 0;font:inherit;font-size:1rem;outline:none}
+  #gateBtn{width:100%;padding:14px;border-radius:14px;border:0;background:var(--grad);color:#fff;font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:transform .15s;box-shadow:0 10px 24px -10px rgba(38,70,138,.7)}
+  #gateBtn:hover{transform:translateY(-1px)}
+  #gateBtn:disabled{opacity:.6;cursor:default;transform:none}
+  #gateError{color:var(--bad);font-size:.84rem;min-height:1.3em;margin-top:12px}
 
-  /* panel */
+  /* ---------- shell ---------- */
   #panel{display:none}
-  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:28px}
-  header.top h1{font-size:1.7rem;font-weight:500}
-  header.top .sub{color:var(--on-surface-muted);font-size:.85rem;margin-top:4px}
-  .btn{padding:10px 18px;border-radius:100px;border:1.5px solid var(--hairline);background:var(--surface-2);
-    font-weight:600;font-size:.85rem;cursor:pointer;color:var(--on-surface)}
-  .btn:hover{background:var(--hairline)}
-  .btn.primary{background:var(--gold);border-color:var(--gold);color:var(--night)}
-  .btn.primary:hover{background:var(--gold-soft)}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand img{height:34px}
+  .brand h1{font-size:1.55rem;line-height:1.1}
+  .brand .sub{color:var(--muted);font-size:.82rem;margin-top:2px}
+  .top-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:inherit;transition:transform .15s,box-shadow .2s,background .2s,border-color .2s}
+  .btn:hover{border-color:#c9d4ea;box-shadow:0 6px 16px -10px rgba(20,40,90,.5);transform:translateY(-1px)}
+  .btn.primary{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 10px 22px -12px rgba(38,70,138,.8)}
+  .btn.primary:hover{box-shadow:0 14px 26px -12px rgba(38,70,138,.9)}
+  .btn.ghost{background:transparent}
+  .btn:disabled{opacity:.45;cursor:default;pointer-events:none}
+  .card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap}
-  .tab{padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);background:var(--surface);
-    font-size:.82rem;font-weight:600;cursor:pointer;color:var(--on-surface-muted)}
-  .tab.active{background:var(--night);color:var(--cream);border-color:var(--night)}
-  #search{flex:1;min-width:180px;padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);font-size:.85rem}
-  .sort-select{padding:9px 16px;border-radius:100px;border:1.5px solid var(--hairline);font-size:.85rem;
-    background:var(--surface);color:var(--on-surface);font-weight:600;cursor:pointer}
+  /* ---------- summary tiles ---------- */
+  .tiles{display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:14px;margin-bottom:18px}
+  .tile{padding:18px 20px;position:relative;overflow:hidden}
+  .tile .k{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tile .v{font-family:'Fraunces',serif;font-size:2.3rem;line-height:1.1;margin-top:6px;color:var(--navy);font-weight:600}
+  .tile .ico{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+  .ico.pink{background:var(--pink-soft);color:var(--pink)} .ico.blue{background:var(--blue-soft);color:var(--blue)}
+  .ico.gold{background:var(--warn-soft);color:var(--warn)} .ico.red{background:var(--bad-soft);color:var(--bad)}
+  .tile.hero{background:var(--grad);border:0;color:#fff}
+  .tile.hero .k{color:#c6d6f5}
+  .tile.hero .v{color:#fff;font-size:2.8rem}
+  .stackbar{display:flex;height:8px;border-radius:100px;overflow:hidden;background:rgba(255,255,255,.18);margin:14px 0 10px}
+  .stackbar i{display:block;height:100%;transition:width .6s ease}
+  .stackbar .s-conf{background:#4ade9a} .stackbar .s-cont{background:#8fb5ff} .stackbar .s-pend{background:rgba(255,255,255,.35)}
+  .legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:.74rem;color:#dbe6ff}
+  .legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--c)}
+  .legend b{color:#fff}
 
-  .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-  .stat{background:var(--surface-2);border-radius:14px;padding:14px 20px;min-width:120px}
-  .stat .num{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;display:block}
-  .stat .label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-surface-muted)}
+  /* ---------- toolbar ---------- */
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:12px 14px;margin-bottom:14px}
+  .tabs{display:flex;gap:4px;padding:4px;border-radius:100px;background:#eef2fa;flex-wrap:wrap}
+  .tab{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:100px;border:0;background:transparent;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;color:var(--muted);transition:background .2s,color .2s}
+  .tab b{padding:0 8px;border-radius:100px;background:#fff;color:var(--navy);font-size:.72rem;font-weight:700}
+  .tab:hover{color:var(--ink)}
+  .tab.active{background:var(--grad);color:#fff;box-shadow:0 8px 16px -10px rgba(38,70,138,.9)}
+  .tab.active b{background:rgba(255,255,255,.22);color:#fff}
+  .tab.dup-tab{color:var(--warn)}
+  .tab.dup-tab.active{background:linear-gradient(135deg,#c9832f,#e8a33d);color:#3b2a00}
+  .tab.dup-tab.active b{background:rgba(255,255,255,.4);color:#3b2a00}
+  .search{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;border:1.5px solid var(--line);border-radius:100px;padding:0 14px;background:#fff;transition:border-color .2s,box-shadow .2s}
+  .search:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .search svg{color:var(--muted)}
+  .search input{border:0;outline:none;background:transparent;padding:10px 0;font:inherit;font-size:.86rem;width:100%}
+  .sort-select{padding:10px 16px;border-radius:100px;border:1.5px solid var(--line);font:inherit;font-size:.84rem;background:#fff;color:var(--ink);font-weight:600;cursor:pointer}
+  .sort-select:focus{outline:none;border-color:var(--blue)}
+  .count-line{font-size:.78rem;color:var(--muted);margin:0 4px 8px}
 
-  table{width:100%;border-collapse:collapse;background:var(--surface-2);border-radius:16px;overflow:hidden}
-  th,td{text-align:left;padding:12px 16px;font-size:.86rem;border-bottom:1px solid var(--hairline)}
-  th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-surface-muted);background:rgba(0,0,0,.02)}
-  th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
-  th.sortable:hover{color:var(--on-surface)}
-  th.sortable .arrow{opacity:0;margin-left:3px}
-  th.sortable.active .arrow{opacity:1}
-  tr:last-child td{border-bottom:0}
-  .src-badge{display:inline-block;padding:4px 10px;border-radius:100px;font-size:.7rem;font-weight:700}
-  .src-womens{background:rgba(232,143,160,.2);color:#c65d75}
-  .src-event{background:rgba(123,148,184,.2);color:#4a6a94}
-  .src-invite{background:rgba(232,163,61,.2);color:var(--gold-deep)}
-  .details-cell{max-width:280px;color:var(--on-surface-muted);font-size:.8rem}
-  .phone-link{color:#2f8a4e;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
-  .phone-link:hover{text-decoration:underline}
-  .del-btn{background:none;border:1.5px solid var(--hairline);border-radius:100px;width:30px;height:30px;
-    cursor:pointer;color:var(--clay);font-size:1rem;line-height:1}
-  .del-btn:hover{background:rgba(201,111,90,.12);border-color:var(--clay)}
-  .status-select{border:1.5px solid var(--hairline);border-radius:100px;padding:6px 12px;font-size:.78rem;
-    font-weight:700;cursor:pointer;background:var(--surface)}
-  .status-select.st-pending{background:rgba(107,101,128,.12);color:var(--on-surface-muted);border-color:transparent}
-  .status-select.st-contacted{background:rgba(123,148,184,.2);color:#4a6a94;border-color:transparent}
-  .status-select.st-confirmed{background:rgba(76,153,102,.18);color:#2f8a4e;border-color:transparent}
-  tr.dup-row{background:rgba(232,163,61,.1)}
-  .dup-badge{display:inline-block;background:rgba(232,163,61,.22);color:var(--gold-deep);font-size:.68rem;
-    font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px;white-space:nowrap;cursor:help}
-  .tab.dup-tab{border-color:rgba(232,163,61,.5);color:var(--gold-deep)}
-  .tab.dup-tab.active{background:var(--gold-deep);border-color:var(--gold-deep);color:var(--night)}
-  #empty,#loading,#fetchError{text-align:center;padding:60px 20px;color:var(--on-surface-muted)}
-  #fetchError{color:var(--clay);display:none}
+  /* ---------- table ---------- */
+  .table-card{overflow:hidden}
   .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:13px 16px;font-size:.86rem;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  th{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:#f6f8fd;font-weight:700;white-space:nowrap}
+  th.sortable{cursor:pointer;user-select:none}
+  th.sortable:hover{color:var(--ink)}
+  th.sortable .arrow{opacity:0;margin-left:3px}
+  th.sortable.active{color:var(--blue)}
+  th.sortable.active .arrow{opacity:1}
+  tbody tr{transition:background .15s}
+  tbody tr:hover{background:#f8faff}
+  tr:last-child td{border-bottom:0}
+  tr.dup-row{background:#fffaf0}
+  tr.dup-row:hover{background:#fff5e0}
+  .when{white-space:nowrap;color:var(--muted);font-size:.8rem}
+  .person{display:flex;align-items:center;gap:11px;min-width:160px}
+  .avatar{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--c);background:color-mix(in srgb,var(--c) 14%,#fff)}
+  .pname{font-weight:700;line-height:1.25;word-break:break-word}
+  .src-badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:.7rem;font-weight:700;white-space:nowrap}
+  .src-womens{background:var(--pink-soft);color:var(--pink)}
+  .src-event{background:var(--blue-soft);color:var(--blue)}
+  .src-invite{background:var(--warn-soft);color:var(--warn)}
+  .details-cell{max-width:280px;color:var(--muted);font-size:.8rem;word-break:break-word}
+  .mail{color:var(--muted);font-size:.82rem;min-width:150px;overflow-wrap:anywhere}
+  .phone-link{color:var(--ok);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .phone-link:hover{text-decoration:underline}
+  .del-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+  .del-btn:hover{background:var(--bad-soft);color:var(--bad);border-color:#f5c2c2}
+  .status-select{appearance:none;-webkit-appearance:none;border:0;border-radius:100px;padding:7px 28px 7px 14px;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;
+    background-repeat:no-repeat;background-position:right 10px center;background-size:10px}
+  .status-select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .status-select:disabled{opacity:.6;cursor:wait}
+  .status-select.st-pending{background-color:#eceff5;color:#5b6a84;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6a84' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+  .status-select.st-contacted{background-color:var(--blue-soft);color:var(--blue);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%232f6df6' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+  .status-select.st-confirmed{background-color:var(--ok-soft);color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231f9d63' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+  .dup-badge{display:inline-block;background:var(--warn-soft);color:var(--warn);font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px;white-space:nowrap;cursor:help;vertical-align:middle}
+  #empty,#loading,#fetchError{text-align:center;padding:56px 20px;color:var(--muted)}
+  #fetchError{color:var(--bad)}
+  #empty .big{font-size:2.2rem;margin-bottom:6px}
 
-  /* bulk send modal */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(10,11,34,.55);display:none;
-    align-items:center;justify-content:center;z-index:100;padding:20px}
+  /* ---------- bulk send modal ---------- */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(14,22,45,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
   .modal-backdrop.open{display:flex}
-  .modal{background:var(--surface);border-radius:20px;max-width:560px;width:100%;max-height:88vh;
-    overflow-y:auto;padding:32px}
-  .modal h2{font-size:1.4rem;font-weight:500;margin-bottom:6px}
-  .modal .sub{color:var(--on-surface-muted);font-size:.86rem;margin-bottom:20px}
-  .modal label{display:block;font-weight:600;font-size:.82rem;margin-bottom:8px}
-  .modal textarea{width:100%;min-height:110px;padding:14px;border-radius:12px;border:1.5px solid var(--hairline);
-    font-family:inherit;font-size:.92rem;resize:vertical;margin-bottom:6px}
-  .modal .hint{font-size:.76rem;color:var(--on-surface-muted);margin-bottom:18px}
-  .recipient-list{max-height:220px;overflow-y:auto;border:1.5px solid var(--hairline);border-radius:12px;margin-bottom:22px}
-  .recipient-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--hairline);font-size:.86rem}
+  .modal{background:#fff;border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;padding:30px;box-shadow:0 30px 70px -20px rgba(10,20,50,.6);animation:fade .25s ease both}
+  .modal h2{font-size:1.45rem;margin-bottom:6px}
+  .modal .sub{color:var(--muted);font-size:.86rem;margin-bottom:20px}
+  .modal label.lab{display:block;font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:#5b6a84;margin-bottom:8px}
+  .modal textarea{width:100%;min-height:120px;padding:14px;border-radius:14px;border:1.5px solid var(--line);font-family:inherit;font-size:.92rem;resize:vertical;margin-bottom:6px;background:#fcfdff}
+  .modal textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .modal .hint{font-size:.76rem;color:var(--muted);margin-bottom:18px}
+  .recipient-list{max-height:220px;overflow-y:auto;border:1.5px solid var(--line);border-radius:14px;margin-bottom:22px}
+  .recipient-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line-2);font-size:.86rem;cursor:pointer}
   .recipient-row:last-child{border-bottom:0}
-  .recipient-row .rname{flex:1;font-weight:600}
-  .recipient-row .rphone{color:var(--on-surface-muted)}
+  .recipient-row:hover{background:#f8faff}
+  .recipient-row input{accent-color:var(--blue);width:16px;height:16px}
+  .recipient-row .rname{flex:1;font-weight:700}
+  .recipient-row .rphone{color:var(--muted)}
   .modal-actions{display:flex;gap:10px;justify-content:flex-end}
-  .modal-actions .btn.ghost{background:none}
-
   .queue-step{text-align:center;padding:10px 0}
-  .queue-progress{font-size:.78rem;color:var(--on-surface-muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
-  .queue-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;margin-bottom:4px}
-  .queue-phone{color:var(--on-surface-muted);margin-bottom:24px}
-  .queue-confirm{font-weight:600;margin:-14px 0 20px}
+  .queue-progress{font-size:.74rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;font-weight:700}
+  .queue-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;margin-bottom:4px;word-break:break-word}
+  .queue-phone{color:var(--muted);margin-bottom:24px}
+  .queue-confirm{font-weight:700;margin:-14px 0 20px}
   .queue-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .queue-done{text-align:center;padding:20px 0}
-  .queue-done .big{font-size:2.4rem;margin-bottom:10px}
+  .queue-done .big{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 14px}
+
+  /* ---------- small screens: each registration becomes a card ---------- */
+  @media(max-width:1000px){
+    .tiles{grid-template-columns:1fr 1fr 1fr}
+    .tile.hero{grid-column:1/-1}
+  }
+  @media(max-width:820px){
+    body{padding:14px}
+    .tabs{width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{flex:none;white-space:nowrap;padding:8px 13px}
+    .top-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+    .top-actions .btn{padding:10px 12px;white-space:nowrap}
+    .top-actions .btn.primary{grid-column:1/-1}
+    #table thead{display:none}
+    #table,#table tbody{display:block}
+    #table tr{display:flex;flex-direction:column;padding:14px 16px;border-bottom:1px solid var(--line-2)}
+    #table td:empty{display:none}
+    #table td{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:5px 0;border:0;text-align:right}
+    #table td::before{content:attr(data-label);color:var(--muted);font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-align:left;flex:none}
+    #table td.c-name{order:-1;padding-bottom:8px;justify-content:flex-start;text-align:left}
+    #table td.c-name::before{display:none}
+    #table td.c-name .person{min-width:0}
+    #table td.c-actions{justify-content:flex-end}
+    #table td.c-actions::before{display:none}
+    .details-cell{max-width:none}
+  }
+  @media(max-width:560px){
+    .brand img{height:28px}
+    .brand h1{font-size:1.3rem}
+    .tiles{grid-template-columns:1fr 1fr}
+    .tile .v{font-size:1.9rem}
+    .tile.hero .v{font-size:2.4rem}
+    .tile .ico{display:none}
+    .search{min-width:100%}
+    .sort-select{width:100%}
+    .modal{padding:22px}
+  }
 </style>
 </head>
 <body>
 
 <div id="gate">
-  <h1>Admin — Registrations</h1>
-  <p>This page is not indexed or linked from the site. Enter the admin key to view attendee registrations from Women's Meet, event bookings, and speaking invitations.</p>
-  <input type="password" id="keyInput" placeholder="Admin key" autocomplete="off">
-  <button id="gateBtn">Enter</button>
-  <p id="gateError"></p>
+  <div class="gate-card fade">
+    <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
+    <h1>Admin</h1>
+    <p class="lead">This page is not indexed or linked from the site. Enter the admin key to view registrations from Women's Meet, event bookings, and speaking invitations.</p>
+    <div class="gate-field">
+      <svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <input type="password" id="keyInput" placeholder="Admin key" autocomplete="off">
+    </div>
+    <button id="gateBtn">Enter</button>
+    <p id="gateError"></p>
+  </div>
 </div>
 
 <div id="panel">
   <div class="wrap">
     <header class="top">
-      <div>
-        <h1>Registrations</h1>
-        <div class="sub">Anmol Jeevan Ministries — attendee &amp; invitation log</div>
+      <div class="brand">
+        <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
+        <div>
+          <h1>Registrations</h1>
+          <div class="sub">Attendee &amp; invitation log</div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn primary" id="bulkSendBtn">Send Zoom Link</button>
-        <button class="btn" id="printBtn">Print List</button>
-        <button class="btn" id="exportBtn">Export CSV</button>
-        <button class="btn" id="refreshBtn">Refresh</button>
-        <button class="btn" id="logoutBtn">Log out</button>
+      <div class="top-actions">
+        <button class="btn primary" id="bulkSendBtn"><svg class="i" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-8-8-4 19-6z"/></svg>Send Zoom Link</button>
+        <button class="btn" id="printBtn"><svg class="i" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print List</button>
+        <button class="btn" id="exportBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></svg>Export CSV</button>
+        <button class="btn" id="refreshBtn"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Refresh</button>
+        <button class="btn" id="logoutBtn"><svg class="i" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
       </div>
     </header>
 
-    <div class="stats" id="stats"></div>
+    <div class="tiles" id="stats"></div>
 
-    <div class="toolbar">
+    <div class="card toolbar">
       <div class="tabs" id="tabs">
-        <button class="tab active" data-filter="all">All</button>
-        <button class="tab" data-filter="Women's Meet">Women's Meet</button>
-        <button class="tab" data-filter="Event Booking">Event Booking</button>
-        <button class="tab" data-filter="Speaking Invitation">Speaking Invitation</button>
-        <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates</button>
+        <button class="tab active" data-filter="all">All <b id="cnt-all">0</b></button>
+        <button class="tab" data-filter="Women's Meet">Women's Meet <b id="cnt-womens">0</b></button>
+        <button class="tab" data-filter="Event Booking">Event Booking <b id="cnt-event">0</b></button>
+        <button class="tab" data-filter="Speaking Invitation">Speaking Invitation <b id="cnt-invite">0</b></button>
+        <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates <b id="cnt-dup">0</b></button>
       </div>
-      <input type="text" id="search" placeholder="Search name, phone, email…">
-      <select id="sortSelect" class="sort-select">
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="search" placeholder="Search name, phone, email…"></label>
+      <select id="sortSelect" class="sort-select" aria-label="Sort">
         <option value="Timestamp:desc">Newest first</option>
         <option value="Timestamp:asc">Oldest first</option>
         <option value="Name:asc">Name (A–Z)</option>
@@ -165,25 +264,29 @@
       </select>
     </div>
 
-    <div id="loading">Loading…</div>
-    <p id="fetchError"></p>
-    <div id="empty" style="display:none">No registrations yet.</div>
-    <div class="table-wrap">
-      <table id="table" style="display:none">
-        <thead>
-          <tr>
-            <th class="sortable" data-sort="Timestamp">Date <span class="arrow">▾</span></th>
-            <th class="sortable" data-sort="Source">Source <span class="arrow">▾</span></th>
-            <th class="sortable" data-sort="Name">Name <span class="arrow">▾</span></th>
-            <th class="sortable" data-sort="Phone">Phone <span class="arrow">▾</span></th>
-            <th class="sortable" data-sort="Email">Email <span class="arrow">▾</span></th>
-            <th>Details</th>
-            <th class="sortable" data-sort="Status">Status <span class="arrow">▾</span></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <div class="count-line" id="countLine"></div>
+
+    <div class="card table-card">
+      <div id="loading">Loading…</div>
+      <p id="fetchError" hidden></p>
+      <div id="empty" hidden></div>
+      <div class="table-wrap" id="tableWrap" hidden>
+        <table id="table">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="Timestamp">Date <span class="arrow">▾</span></th>
+              <th class="sortable" data-sort="Source">Source <span class="arrow">▾</span></th>
+              <th class="sortable" data-sort="Name">Name <span class="arrow">▾</span></th>
+              <th class="sortable" data-sort="Phone">Phone <span class="arrow">▾</span></th>
+              <th class="sortable" data-sort="Email">Email <span class="arrow">▾</span></th>
+              <th>Details</th>
+              <th class="sortable" data-sort="Status">Status <span class="arrow">▾</span></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -193,12 +296,12 @@
     <div id="bulkSetup">
       <h2>Send Zoom Link</h2>
       <p class="sub">Goes to everyone marked <strong>Confirmed</strong> in the current tab (<span id="bulkFilterLabel">All</span>). Opens one WhatsApp chat at a time, pre-filled — you just hit send for each.</p>
-      <label for="bulkMessage">Message</label>
+      <label class="lab" for="bulkMessage">Message</label>
       <textarea id="bulkMessage">Hi {name}! 🙏 Thank you for confirming for Women's Meet. Here's your Zoom link: [PASTE ZOOM LINK HERE]
 
 See you there!</textarea>
       <p class="hint">{name} is replaced with each person's name automatically.</p>
-      <label>Recipients (<span id="bulkCount">0</span>)</label>
+      <label class="lab">Recipients (<span id="bulkCount">0</span>)</label>
       <div class="recipient-list" id="recipientList"></div>
       <div class="modal-actions">
         <button class="btn ghost" id="bulkCancelBtn">Cancel</button>
@@ -231,21 +334,38 @@ See you there!</textarea>
   let sortField = 'Timestamp';
   let sortDir = 'desc';
 
+  const $ = id => document.getElementById(id);
+
+  // Everything in this sheet was typed into a public form, so it is never trusted as HTML.
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const SOURCES = {
+    "Women's Meet":        {cls:'src-womens', color:'#d9558a', count:'cnt-womens'},
+    'Event Booking':       {cls:'src-event',  color:'#2f6df6', count:'cnt-event'},
+    'Speaking Invitation': {cls:'src-invite', color:'#d98a0b', count:'cnt-invite'}
+  };
+  const STATUSES = ['Pending','Contacted','Confirmed'];
+
   function waLink(phone){
     const digits = (phone||'').replace(/[^\d]/g,'');
     if(!digits) return '';
-    return `<a class="phone-link" href="https://wa.me/${digits}" target="_blank" rel="noopener" title="Open WhatsApp chat">${phone} ↗</a>`;
+    return `<a class="phone-link" href="https://wa.me/${digits}" target="_blank" rel="noopener" title="Open WhatsApp chat">${esc(phone)} ↗</a>`;
+  }
+
+  // A cell that starts with = + - @ can be run as a formula when the CSV is opened in a
+  // spreadsheet, so those get a leading apostrophe. Phone numbers ("+91 …") are left as they are.
+  function csvCell(col, v){
+    let s = String(v ?? '');
+    if(col !== 'Phone' && /^[=+\-@]/.test(s)) s = "'" + s;
+    return `"${s.replace(/"/g,'""')}"`;
   }
 
   function toCSV(rows){
     const cols = ['Timestamp','Source','Name','Phone','Email','Details','Status'];
-    const esc = v => `"${String(v??'').replace(/"/g,'""')}"`;
     const lines = [cols.join(',')];
-    rows.forEach(r=> lines.push(cols.map(c=>esc(r[c])).join(',')));
+    rows.forEach(r=> lines.push(cols.map(c=>csvCell(c, r[c])).join(',')));
     return lines.join('\n');
   }
-
-  const STATUSES = ['Pending','Contacted','Confirmed'];
 
   // Duplicate detection is display-only — it never removes or merges data,
   // it just flags rows that share a phone number so nothing gets missed
@@ -277,7 +397,7 @@ See you there!</textarea>
 
   function getFilteredRows(){
     markDuplicates();
-    const q = document.getElementById('search').value.trim().toLowerCase();
+    const q = $('search').value.trim().toLowerCase();
     let base = allRows;
     if(activeFilter === '__duplicates'){
       base = allRows.filter(r=>r._dupCount>1);
@@ -306,6 +426,7 @@ See you there!</textarea>
       if(row) row.Status = status;
       select.className = 'status-select st-' + status.toLowerCase();
       select.dataset.prev = status;
+      renderStats();
     }catch(err){
       alert('Could not update status: ' + err.message);
       select.value = select.dataset.prev;
@@ -315,7 +436,7 @@ See you there!</textarea>
 
   function printList(){
     const rows = getFilteredRows().slice().sort((a,b)=>(a.Name||'').localeCompare(b.Name||''));
-    const label = activeFilter==='all' ? 'All Registrations' : activeFilter;
+    const label = esc(activeFilter==='all' ? 'All Registrations' : activeFilter==='__duplicates' ? 'Duplicate Entries' : activeFilter);
     const w = window.open('', '_blank');
     if(!w){ alert('Your browser blocked the print window. Please allow pop-ups for this site and try again.'); return; }
     w.document.write(`
@@ -331,9 +452,9 @@ See you there!</textarea>
         @media print{ body{padding:0} }
       </style></head><body>
       <h1>Anmol Jeevan Ministries — ${label}</h1>
-      <div class="sub">Attendee list · ${rows.length} total · generated ${new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})}</div>
+      <div class="sub">Attendee list · ${rows.length} total · generated ${esc(new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}))}</div>
       <table><thead><tr><th style="width:36px">#</th><th style="width:36px"></th><th>Name</th><th>Phone</th></tr></thead><tbody>
-      ${rows.map((r,i)=>`<tr><td>${i+1}</td><td><span class="box"></span></td><td>${r.Name||''}</td><td>${r.Phone||''}</td></tr>`).join('')}
+      ${rows.map((r,i)=>`<tr><td>${i+1}</td><td><span class="box"></span></td><td>${esc(r.Name)}</td><td>${esc(r.Phone)}</td></tr>`).join('')}
       </tbody></table>
       </body></html>
     `);
@@ -346,22 +467,22 @@ See you there!</textarea>
   let bulkIndex = 0;
   let bulkSent = 0;
 
-  const bulkModal = document.getElementById('bulkModal');
-  const bulkSetup = document.getElementById('bulkSetup');
-  const bulkQueueEl = document.getElementById('bulkQueue');
-  const bulkDoneEl = document.getElementById('bulkDone');
+  const bulkModal = $('bulkModal');
+  const bulkSetup = $('bulkSetup');
+  const bulkQueueEl = $('bulkQueue');
+  const bulkDoneEl = $('bulkDone');
 
   function openBulkModal(){
     const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
-    document.getElementById('bulkFilterLabel').textContent = activeFilter==='all' ? 'All' : activeFilter;
-    document.getElementById('bulkCount').textContent = confirmed.length;
-    document.getElementById('recipientList').innerHTML = confirmed.length ? confirmed.map(r=>`
+    $('bulkFilterLabel').textContent = activeFilter==='all' ? 'All' : activeFilter==='__duplicates' ? 'Duplicates' : activeFilter;
+    $('bulkCount').textContent = confirmed.length;
+    $('recipientList').innerHTML = confirmed.length ? confirmed.map(r=>`
       <label class="recipient-row">
-        <input type="checkbox" class="rcheck" data-id="${r.ID}" checked>
-        <span class="rname">${r.Name||''}</span>
-        <span class="rphone">${r.Phone||''}</span>
+        <input type="checkbox" class="rcheck" data-id="${esc(r.ID)}" checked>
+        <span class="rname">${esc(r.Name)}</span>
+        <span class="rphone">${esc(r.Phone)}</span>
       </label>
-    `).join('') : '<div style="padding:16px;color:var(--on-surface-muted);font-size:.86rem">No Confirmed registrants in this view.</div>';
+    `).join('') : '<div style="padding:16px;color:var(--muted);font-size:.86rem">No Confirmed registrants in this view.</div>';
 
     bulkSetup.style.display = 'block';
     bulkQueueEl.style.display = 'none';
@@ -374,7 +495,7 @@ See you there!</textarea>
   }
 
   function openWhatsAppFor(person){
-    const template = document.getElementById('bulkMessage').value;
+    const template = $('bulkMessage').value;
     const message = template.replaceAll('{name}', person.Name||'there');
     const digits = (person.Phone||'').replace(/[^\d]/g,'');
     if(digits) window.open('https://wa.me/' + digits + '?text=' + encodeURIComponent(message), '_blank');
@@ -389,27 +510,27 @@ See you there!</textarea>
   }
 
   function renderQueueStep(person, opened){
-    const step = document.getElementById('queueStep');
+    const step = $('queueStep');
     if(!opened){
       step.innerHTML = `
         <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
-        <div class="queue-name">${person.Name||''}</div>
-        <div class="queue-phone">${person.Phone||''}</div>
+        <div class="queue-name">${esc(person.Name)}</div>
+        <div class="queue-phone">${esc(person.Phone)}</div>
         <div class="queue-actions">
           <button class="btn ghost" id="queueSkipBtn">Skip</button>
           <button class="btn primary" id="queueOpenBtn">Open WhatsApp →</button>
         </div>
       `;
-      document.getElementById('queueOpenBtn').addEventListener('click', ()=>{
+      $('queueOpenBtn').addEventListener('click', ()=>{
         openWhatsAppFor(person);
         renderQueueStep(person, true);
       });
-      document.getElementById('queueSkipBtn').addEventListener('click', advanceQueue);
+      $('queueSkipBtn').addEventListener('click', advanceQueue);
     } else {
       step.innerHTML = `
         <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
-        <div class="queue-name">${person.Name||''}</div>
-        <div class="queue-phone">${person.Phone||''}</div>
+        <div class="queue-name">${esc(person.Name)}</div>
+        <div class="queue-phone">${esc(person.Phone)}</div>
         <p class="queue-confirm">Did you hit send in WhatsApp?</p>
         <div class="queue-actions">
           <button class="btn ghost" id="queueReopenBtn">Reopen WhatsApp</button>
@@ -417,9 +538,9 @@ See you there!</textarea>
           <button class="btn primary" id="queueConfirmBtn">✓ Yes, sent — Next</button>
         </div>
       `;
-      document.getElementById('queueReopenBtn').addEventListener('click', ()=>openWhatsAppFor(person));
-      document.getElementById('queueSkipBtn').addEventListener('click', advanceQueue);
-      document.getElementById('queueConfirmBtn').addEventListener('click', ()=>{
+      $('queueReopenBtn').addEventListener('click', ()=>openWhatsAppFor(person));
+      $('queueSkipBtn').addEventListener('click', advanceQueue);
+      $('queueConfirmBtn').addEventListener('click', ()=>{
         bulkSent++;
         advanceQueue();
       });
@@ -431,21 +552,21 @@ See you there!</textarea>
     if(bulkIndex >= bulkQueue.length){
       bulkQueueEl.style.display = 'none';
       bulkDoneEl.style.display = 'block';
-      document.getElementById('bulkDoneSummary').textContent =
+      $('bulkDoneSummary').textContent =
         `Confirmed sent to ${bulkSent} of ${bulkQueue.length} recipient${bulkQueue.length===1?'':'s'}.`;
     } else {
       showQueueStep();
     }
   }
 
-  document.getElementById('bulkSendBtn').addEventListener('click', openBulkModal);
-  document.getElementById('bulkCancelBtn').addEventListener('click', closeBulkModal);
-  document.getElementById('bulkCloseBtn').addEventListener('click', closeBulkModal);
+  $('bulkSendBtn').addEventListener('click', openBulkModal);
+  $('bulkCancelBtn').addEventListener('click', closeBulkModal);
+  $('bulkCloseBtn').addEventListener('click', closeBulkModal);
 
-  document.getElementById('bulkStartBtn').addEventListener('click', ()=>{
+  $('bulkStartBtn').addEventListener('click', ()=>{
     const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
     const checkedIds = new Set([...document.querySelectorAll('.rcheck:checked')].map(c=>c.dataset.id));
-    bulkQueue = confirmed.filter(r=>checkedIds.has(r.ID));
+    bulkQueue = confirmed.filter(r=>checkedIds.has(String(r.ID)));
     if(!bulkQueue.length){ alert('Select at least one recipient.'); return; }
     bulkIndex = 0;
     bulkSent = 0;
@@ -457,7 +578,7 @@ See you there!</textarea>
   async function deleteEntry(id, btn){
     if(!id){ alert('This row has no ID (added before the delete feature) — delete it directly in the sheet.'); return; }
     if(!confirm('Delete this registration? This cannot be undone.')) return;
-    btn.disabled = true; btn.textContent = '…';
+    btn.disabled = true;
     try{
       const res = await fetch(ADMIN_URL + '?action=delete&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(adminKey));
       const json = await res.json();
@@ -466,21 +587,48 @@ See you there!</textarea>
       render();
     }catch(err){
       alert('Could not delete: ' + err.message);
-      btn.disabled = false; btn.textContent = '✕';
+      btn.disabled = false;
     }
   }
 
-  const gate = document.getElementById('gate');
-  const panel = document.getElementById('panel');
-  const keyInput = document.getElementById('keyInput');
-  const gateBtn = document.getElementById('gateBtn');
-  const gateError = document.getElementById('gateError');
+  const gate = $('gate');
+  const panel = $('panel');
+  const keyInput = $('keyInput');
+  const gateBtn = $('gateBtn');
+  const gateError = $('gateError');
 
-  function srcClass(src){
-    if(src==="Women's Meet") return 'src-womens';
-    if(src==='Event Booking') return 'src-event';
-    if(src==='Speaking Invitation') return 'src-invite';
-    return '';
+  function initials(name){
+    const parts = String(name||'').trim().split(/\s+/).filter(Boolean);
+    if(!parts.length) return '?';
+    return (parts[0][0] + (parts.length>1 ? parts[parts.length-1][0] : '')).toUpperCase();
+  }
+
+  const TRASH = '<svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>';
+
+  function renderStats(){
+    markDuplicates();
+    const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
+    const st = { Pending:0, Contacted:0, Confirmed:0 };
+    allRows.forEach(r=>{
+      if(counts[r.Source]!==undefined) counts[r.Source]++;
+      st[STATUSES.includes(r.Status) ? r.Status : 'Pending']++;
+    });
+    const dupCount = allRows.filter(r=>r._dupCount>1).length;
+    const total = allRows.length, pct = n => total ? (n/total*100).toFixed(1) : 0;
+    $('stats').innerHTML = `
+      <div class="card tile hero fade">
+        <div class="k">Total registrations</div><div class="v">${total}</div>
+        <div class="stackbar"><i class="s-conf" style="width:${pct(st.Confirmed)}%"></i><i class="s-cont" style="width:${pct(st.Contacted)}%"></i><i class="s-pend" style="width:${pct(st.Pending)}%"></i></div>
+        <div class="legend"><span style="--c:#4ade9a"><b>${st.Confirmed}</b> confirmed</span><span style="--c:#8fb5ff"><b>${st.Contacted}</b> contacted</span><span style="--c:rgba(255,255,255,.5)"><b>${st.Pending}</b> pending</span></div>
+      </div>
+      <div class="card tile fade"><div class="ico pink"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-8.6C1 9.2 2.6 5.5 6 5.5c2 0 3.3 1.1 4 2.3.7-1.2 2-2.3 4-2.3 3.4 0 5 3.7 3.3 6.9C19 16.6 12 21 12 21z"/></svg></div><div class="k">Women's Meet</div><div class="v">${counts["Women's Meet"]}</div></div>
+      <div class="card tile fade"><div class="ico blue"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div><div class="k">Event Booking</div><div class="v">${counts['Event Booking']}</div></div>
+      <div class="card tile fade"><div class="ico gold"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div class="k">Speaking Invitation</div><div class="v">${counts['Speaking Invitation']}</div></div>
+      <div class="card tile fade"><div class="ico red"><svg class="i" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></div><div class="k">Duplicate entries</div><div class="v">${dupCount}</div></div>
+    `;
+    $('cnt-all').textContent = total;
+    Object.keys(SOURCES).forEach(k => { $(SOURCES[k].count).textContent = counts[k]; });
+    $('cnt-dup').textContent = dupCount;
   }
 
   function render(){
@@ -497,45 +645,43 @@ See you there!</textarea>
       th.classList.toggle('active', active);
       th.querySelector('.arrow').textContent = active ? (sortDir==='asc' ? '▴' : '▾') : '▾';
     });
-    const sortSelect = document.getElementById('sortSelect');
+    const sortSelect = $('sortSelect');
     const sortValue = sortField + ':' + sortDir;
     if([...sortSelect.options].some(o=>o.value===sortValue)) sortSelect.value = sortValue;
 
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = rows.map(r=>`
+    $('tbody').innerHTML = rows.map(r=>{
+      const src = SOURCES[r.Source] || {cls:'', color:'#69758c'};
+      const status = STATUSES.includes(r.Status) ? r.Status : 'Pending';
+      return `
       <tr class="${r._dupCount>1 ? 'dup-row' : ''}">
-        <td>${r.Timestamp ? new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}) : ''}</td>
-        <td><span class="src-badge ${srcClass(r.Source)}">${r.Source||''}</span></td>
-        <td>${r.Name||''}${r._dupCount>1 ? `<span class="dup-badge" title="This phone number appears ${r._dupCount} times">⚠ ×${r._dupCount}</span>` : ''}</td>
-        <td>${waLink(r.Phone)}</td>
-        <td>${r.Email||''}</td>
-        <td class="details-cell">${r.Details||''}</td>
-        <td><select class="status-select st-${(r.Status||'Pending').toLowerCase()}" data-id="${r.ID||''}" data-prev="${r.Status||'Pending'}">${statusOptions(r.Status)}</select></td>
-        <td><button class="del-btn" data-id="${r.ID||''}" title="Delete">✕</button></td>
-      </tr>
-    `).join('');
+        <td class="when c-date" data-label="Date">${r.Timestamp ? esc(new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})) : ''}</td>
+        <td data-label="Source"><span class="src-badge ${src.cls}">${esc(r.Source)}</span></td>
+        <td class="c-name" data-label="Name"><div class="person"><span class="avatar" style="--c:${src.color}">${esc(initials(r.Name))}</span><span class="pname">${esc(r.Name)}${r._dupCount>1 ? `<span class="dup-badge" title="This phone number appears ${r._dupCount} times">⚠ ×${r._dupCount}</span>` : ''}</span></div></td>
+        <td data-label="Phone">${waLink(r.Phone)}</td>
+        <td class="mail" data-label="Email">${esc(r.Email)}</td>
+        <td class="details-cell" data-label="Details">${esc(r.Details)}</td>
+        <td data-label="Status"><select class="status-select st-${status.toLowerCase()}" data-id="${esc(r.ID)}" data-prev="${status}" aria-label="Status">${statusOptions(status)}</select></td>
+        <td class="c-actions"><button class="del-btn" data-id="${esc(r.ID)}" title="Delete" aria-label="Delete">${TRASH}</button></td>
+      </tr>`;
+    }).join('');
 
-    document.getElementById('table').style.display = rows.length ? 'table' : 'none';
-    document.getElementById('empty').style.display = rows.length ? 'none' : 'block';
-
-    const stats = document.getElementById('stats');
-    const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
-    allRows.forEach(r=>{ if(counts[r.Source]!==undefined) counts[r.Source]++; });
-    const dupCount = allRows.filter(r=>r._dupCount>1).length;
-    stats.innerHTML = `
-      <div class="stat"><span class="num">${allRows.length}</span><span class="label">Total</span></div>
-      <div class="stat"><span class="num">${counts["Women's Meet"]}</span><span class="label">Women's Meet</span></div>
-      <div class="stat"><span class="num">${counts['Event Booking']}</span><span class="label">Event Booking</span></div>
-      <div class="stat"><span class="num">${counts['Speaking Invitation']}</span><span class="label">Speaking Invitation</span></div>
-      <div class="stat"><span class="num">${dupCount}</span><span class="label">Duplicate Entries</span></div>
-    `;
+    $('tableWrap').hidden = !rows.length;
+    const empty = $('empty');
+    empty.hidden = !!rows.length;
+    if(!rows.length){
+      empty.innerHTML = allRows.length
+        ? '<div class="big">🔎</div>No registrations match this view.'
+        : '<div class="big">📭</div>No registrations yet.';
+    }
+    $('countLine').textContent = allRows.length ? `Showing ${rows.length} of ${allRows.length}` : '';
+    renderStats();
   }
 
   async function loadData(key){
-    document.getElementById('loading').style.display = 'block';
-    document.getElementById('fetchError').style.display = 'none';
-    document.getElementById('table').style.display = 'none';
-    document.getElementById('empty').style.display = 'none';
+    $('loading').hidden = false;
+    $('fetchError').hidden = true;
+    $('tableWrap').hidden = true;
+    $('empty').hidden = true;
     try{
       const res = await fetch(ADMIN_URL + '?key=' + encodeURIComponent(key));
       const json = await res.json();
@@ -543,17 +689,17 @@ See you there!</textarea>
         throw new Error(json.error === 'unauthorized' ? 'wrongkey' : json.error);
       }
       allRows = json.data || [];
-      document.getElementById('loading').style.display = 'none';
+      $('loading').hidden = true;
       render();
       return null; // no error
     }catch(err){
-      document.getElementById('loading').style.display = 'none';
+      $('loading').hidden = true;
       const msg = err.message === 'wrongkey'
         ? 'Wrong admin key.'
         : 'Could not reach the sheet — Google Apps Script can be slow to respond, especially on the first try. Wait a few seconds and try again.';
-      const el = document.getElementById('fetchError');
+      const el = $('fetchError');
       el.textContent = msg;
-      el.style.display = 'block';
+      el.hidden = false;
       return msg;
     }
   }
@@ -575,11 +721,11 @@ See you there!</textarea>
   });
   keyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') gateBtn.click(); });
 
-  document.getElementById('refreshBtn').addEventListener('click', ()=>{
+  $('refreshBtn').addEventListener('click', ()=>{
     if(adminKey) loadData(adminKey);
   });
 
-  document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  $('logoutBtn').addEventListener('click', ()=>{
     adminKey = null;
     allRows = [];
     keyInput.value = '';
@@ -588,7 +734,7 @@ See you there!</textarea>
     gate.style.display = 'flex';
   });
 
-  document.getElementById('tabs').addEventListener('click', e=>{
+  $('tabs').addEventListener('click', e=>{
     const btn = e.target.closest('.tab');
     if(!btn) return;
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -597,9 +743,9 @@ See you there!</textarea>
     render();
   });
 
-  document.getElementById('search').addEventListener('input', render);
+  $('search').addEventListener('input', render);
 
-  document.getElementById('sortSelect').addEventListener('change', e=>{
+  $('sortSelect').addEventListener('change', e=>{
     const [field, dir] = e.target.value.split(':');
     sortField = field;
     sortDir = dir;
@@ -615,21 +761,21 @@ See you there!</textarea>
     render();
   });
 
-  document.getElementById('tbody').addEventListener('click', e=>{
+  $('tbody').addEventListener('click', e=>{
     const btn = e.target.closest('.del-btn');
     if(!btn) return;
     deleteEntry(btn.dataset.id, btn);
   });
 
-  document.getElementById('tbody').addEventListener('change', e=>{
+  $('tbody').addEventListener('change', e=>{
     const sel = e.target.closest('.status-select');
     if(!sel) return;
     updateStatus(sel.dataset.id, sel.value, sel);
   });
 
-  document.getElementById('printBtn').addEventListener('click', printList);
+  $('printBtn').addEventListener('click', printList);
 
-  document.getElementById('exportBtn').addEventListener('click', ()=>{
+  $('exportBtn').addEventListener('click', ()=>{
     const rows = getFilteredRows();
     const blob = new Blob([toCSV(rows)], {type:'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
