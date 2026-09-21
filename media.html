@@ -833,8 +833,15 @@
   /* ---------- editing cells ---------- */
   const gridEl = $('grid');
 
+  // A box holds one value (a number or a mark), so the first thing you do in it replaces what is there.
+  // dataset.fresh = "nothing typed here yet since it was selected".
   gridEl.addEventListener('focusin', e => {
-    if(e.target.classList.contains('cell')){ activeCell = e.target; e.target.select(); }
+    if(e.target.classList.contains('cell')){ activeCell = e.target; e.target.dataset.fresh = '1'; e.target.select(); }
+  });
+  // the browser puts the cursor back when the mouse button is released, undoing the selection above
+  gridEl.addEventListener('mouseup', e => {
+    const el = e.target;
+    if(el.classList && el.classList.contains('cell') && el.dataset.fresh === '1'){ e.preventDefault(); el.select(); }
   });
   gridEl.addEventListener('focusout', e => {
     const el = e.target;
@@ -843,9 +850,19 @@
     if(el.value !== display(v)) el.value = display(v); // catch up on anything a teammate changed while this cell was selected
   });
 
+  // phone keyboards often don't send a plain Backspace key event, but every device announces a delete like this
+  gridEl.addEventListener('beforeinput', e => {
+    const el = e.target;
+    if(!el.classList || !el.classList.contains('cell') || el.readOnly || !String(e.inputType || '').startsWith('delete')) return;
+    e.preventDefault();
+    if(getCell(cats()[+el.dataset.ci], +el.dataset.d) !== '') applyToCell(el, '');
+    el.dataset.fresh = '1';
+  });
+
   gridEl.addEventListener('input', e => {
     const el = e.target;
     if(!el.classList.contains('cell') || el.readOnly) return;
+    el.dataset.fresh = '0'; // from now on further digits add to the number (so 1 then 2 gives 12)
     applyToCell(el, liveClean(el.value));
   });
 
@@ -862,6 +879,15 @@
   gridEl.addEventListener('keydown', e => {
     const el = e.target;
     if(!el.classList.contains('cell')) return;
+    if(!el.readOnly){
+      if(e.key === 'Backspace' || e.key === 'Delete'){
+        e.preventDefault();
+        if(getCell(cats()[+el.dataset.ci], +el.dataset.d) !== '') applyToCell(el, '');
+        el.dataset.fresh = '1';
+        return;
+      }
+      if(el.dataset.fresh === '1' && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) el.select(); // typing replaces
+    }
     const dRow = {ArrowUp:-1, ArrowDown:1, Enter:1}[e.key];
     const dCol = {ArrowLeft:-1, ArrowRight:1}[e.key];
     if(dRow === undefined && dCol === undefined) return;
