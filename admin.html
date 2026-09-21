@@ -169,6 +169,42 @@
   .queue-done{text-align:center;padding:20px 0}
   .queue-done .big{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 14px}
 
+  .btn.sm{padding:6px 13px;font-size:.76rem}
+  .modal input.text{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);font:inherit;font-size:.92rem;background:#fcfdff}
+  .modal input.text:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .field-row{margin-bottom:16px}
+  .notice{padding:10px 14px;border-radius:12px;background:var(--warn-soft);color:#8a5a06;font-size:.8rem;margin-bottom:16px}
+  .rec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .rec-head .lab{margin:0}
+  .rec-tools{display:flex;gap:6px;align-items:center}
+  .rec-count{font-size:.76rem;color:var(--muted);margin-right:4px;font-weight:600}
+  .sent-before{padding:2px 9px;border-radius:100px;background:var(--ok-soft);color:var(--ok);font-size:.68rem;font-weight:700;white-space:nowrap}
+  .hist-status{margin-top:16px;padding:9px 14px;border-radius:12px;background:var(--ok-soft);color:#166b45;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .hist-status.busy{background:var(--blue-soft);color:#28527f}
+  .hist-status.err{background:var(--bad-soft);color:var(--bad)}
+  .modal.wide{max-width:780px}
+  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+  .modal-head h2{margin-bottom:2px}
+  .modal-head .sub{margin-bottom:0}
+  .iconbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .iconbtn:hover{background:var(--blue-soft);color:var(--blue)}
+  .meeting{border:1px solid var(--line-2);border-radius:16px;padding:16px 18px;margin-bottom:12px;background:#fff;box-shadow:0 1px 2px rgba(20,30,60,.04)}
+  .m-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .m-name{font-weight:800;font-size:1rem;word-break:break-word}
+  .m-meta{font-size:.78rem;color:var(--muted);margin-top:3px;display:flex;gap:4px 12px;flex-wrap:wrap}
+  .m-meta .ok{color:var(--ok);font-weight:700}
+  .m-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .meeting details{margin-top:12px}
+  .meeting summary{cursor:pointer;font-size:.8rem;font-weight:700;color:var(--blue);user-select:none}
+  .m-msg{margin:10px 0;padding:10px 14px;border-radius:12px;background:#f6f8fd;color:#3a4a62;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
+  .m-scroll{overflow-x:auto}
+  table.m-table{border-collapse:collapse;width:100%}
+  .m-table th,.m-table td{padding:8px 10px;font-size:.8rem;border-bottom:1px solid var(--line-2);text-align:left}
+  .m-table th{background:none;font-size:.64rem}
+  .m-table tr:last-child td{border-bottom:0}
+  .res{display:inline-block;padding:2px 10px;border-radius:100px;font-size:.7rem;font-weight:700}
+  .res.sent{background:var(--ok-soft);color:var(--ok)} .res.skipped{background:#eceff5;color:#5b6a84}
+
   /* ---------- small screens: each registration becomes a card ---------- */
   @media(max-width:1000px){
     .tiles{grid-template-columns:1fr 1fr 1fr}
@@ -205,6 +241,10 @@
     .search{min-width:100%}
     .sort-select{width:100%}
     .modal{padding:22px}
+    .m-table th:nth-child(4),.m-table td:nth-child(4){display:none}
+    .m-table th,.m-table td{padding:7px 5px;font-size:.76rem}
+    .m-table .res{white-space:nowrap}
+    .meeting{padding:14px}
   }
 </style>
 </head>
@@ -236,6 +276,7 @@
       </div>
       <div class="top-actions">
         <button class="btn primary" id="bulkSendBtn"><svg class="i" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-8-8-4 19-6z"/></svg>Send Zoom Link</button>
+        <button class="btn" id="historyBtn"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History</button>
         <button class="btn" id="printBtn"><svg class="i" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print List</button>
         <button class="btn" id="exportBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></svg>Export CSV</button>
         <button class="btn" id="refreshBtn"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Refresh</button>
@@ -296,12 +337,25 @@
     <div id="bulkSetup">
       <h2>Send Zoom Link</h2>
       <p class="sub">Goes to everyone marked <strong>Confirmed</strong> in the current tab (<span id="bulkFilterLabel">All</span>). Opens one WhatsApp chat at a time, pre-filled — you just hit send for each.</p>
+      <div class="notice" id="historyNotice" hidden></div>
+      <div class="field-row" id="meetingField">
+        <label class="lab" for="meetingName">Meeting name <span style="text-transform:none;letter-spacing:0;font-weight:500">— this send is saved under it in History</span></label>
+        <input class="text" type="text" id="meetingName" maxlength="80" list="meetingNames" autocomplete="off" placeholder="e.g. Women's Meet — 28 Sep">
+        <datalist id="meetingNames"></datalist>
+      </div>
       <label class="lab" for="bulkMessage">Message</label>
       <textarea id="bulkMessage">Hi {name}! 🙏 Thank you for confirming for Women's Meet. Here's your Zoom link: [PASTE ZOOM LINK HERE]
 
 See you there!</textarea>
       <p class="hint">{name} is replaced with each person's name automatically.</p>
-      <label class="lab">Recipients (<span id="bulkCount">0</span>)</label>
+      <div class="rec-head">
+        <label class="lab">Recipients (<span id="bulkCount">0</span>)</label>
+        <div class="rec-tools">
+          <span class="rec-count" id="selCount"></span>
+          <button class="btn sm" type="button" id="selAllBtn">Select all</button>
+          <button class="btn sm" type="button" id="selNoneBtn">Clear</button>
+        </div>
+      </div>
       <div class="recipient-list" id="recipientList"></div>
       <div class="modal-actions">
         <button class="btn ghost" id="bulkCancelBtn">Cancel</button>
@@ -318,10 +372,25 @@ See you there!</textarea>
         <h2>All done</h2>
         <p class="sub" id="bulkDoneSummary"></p>
         <div class="modal-actions" style="justify-content:center;margin-top:10px">
+          <button class="btn ghost" id="bulkHistoryBtn">View history</button>
           <button class="btn primary" id="bulkCloseBtn">Close</button>
         </div>
       </div>
     </div>
+    <div class="hist-status" id="histStatus" hidden></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="historyModal">
+  <div class="modal wide">
+    <div class="modal-head">
+      <div>
+        <h2>Meeting history</h2>
+        <p class="sub">Every Zoom-link send, filed under its meeting name — who was sent it and who was skipped.</p>
+      </div>
+      <button class="iconbtn" id="historyCloseBtn" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div id="historyBody"></div>
   </div>
 </div>
 
@@ -463,34 +532,189 @@ See you there!</textarea>
     setTimeout(()=>w.print(), 300);
   }
 
+  // ---------- Meeting history ----------
+  // Each Zoom-link send is filed under a meeting name in the sheet ("Meetings" tab).
+  // Results are saved one person at a time as you go, so nothing is lost if the tab closes.
+  let meetings = [];             // saved meetings, newest first
+  let historyState = 'unknown';  // 'ok' | 'unsupported' (script not updated yet) | 'error' | 'unknown'
+
+  async function loadMeetings(){
+    if(!adminKey) return;
+    try{
+      const res = await fetch(ADMIN_URL + '?action=meetings&key=' + encodeURIComponent(adminKey));
+      const json = await res.json();
+      if(json.error) throw new Error(json.error);
+      if(Array.isArray(json.meetings)){ meetings = json.meetings; historyState = 'ok'; }
+      else { meetings = []; historyState = 'unsupported'; } // an older script answers with the plain registrations list
+    }catch(err){
+      historyState = 'error';
+    }
+  }
+
+  const normName = n => String(n||'').replace(/\s+/g,' ').trim().toLowerCase();
+  const findMeeting = name => meetings.find(m=>normName(m.name)===normName(name));
+
+  function upsertMeeting(m){
+    const at = meetings.findIndex(x=>x.id===m.id);
+    if(at>=0) meetings[at] = m; else meetings.push(m);
+    meetings.sort((a,b)=> a.updatedAt < b.updatedAt ? 1 : -1);
+  }
+
+  function sentSet(meeting){
+    const ids = new Set(), phones = new Set();
+    (meeting ? meeting.recipients : []).forEach(r=>{
+      if(r.result !== 'sent') return;
+      if(r.id) ids.add(r.id);
+      const k = phoneKey(r.phone); if(k) phones.add(k);
+    });
+    return {ids, phones};
+  }
+  const wasSent = (person, set) => !!((person.ID && set.ids.has(String(person.ID))) || (phoneKey(person.Phone) && set.phones.has(phoneKey(person.Phone))));
+
+  // Saving results: a queue of small requests, one at a time.
+  let markChain = Promise.resolve();
+  let markInFlight = 0;
+  let markFailed = [];
+
+  function enqueueMark(params){
+    markInFlight++;
+    updateHistStatus();
+    markChain = markChain.then(async ()=>{
+      try{
+        const qs = Object.keys(params).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(params[k])).join('&');
+        const res = await fetch(ADMIN_URL + '?' + qs);
+        const json = await res.json();
+        if(!json.ok) throw new Error(json.error || 'not saved');
+        upsertMeeting(json.meeting);
+      }catch(err){
+        markFailed.push(params);
+      }finally{
+        markInFlight--;
+        updateHistStatus();
+      }
+    });
+  }
+
+  function recordResult(person, result){
+    if(!bulkMeeting || historyState !== 'ok') return;
+    const params = {action:'meetingMark', key:adminKey, meeting:bulkMeeting, result, id:person.ID||'', name:person.Name||'', phone:person.Phone||''};
+    if(!bulkMessageSaved){ params.message = $('bulkMessage').value.slice(0,700); bulkMessageSaved = true; }
+    enqueueMark(params);
+  }
+
+  function retryMarks(){
+    const list = markFailed;
+    markFailed = [];
+    list.forEach(enqueueMark);
+    updateHistStatus();
+  }
+
+  function updateHistStatus(){
+    const el = $('histStatus');
+    if(!bulkMeeting || historyState !== 'ok' || bulkSetup.style.display !== 'none'){ el.hidden = true; return; }
+    el.hidden = false;
+    if(markFailed.length){
+      el.className = 'hist-status err';
+      el.innerHTML = `⚠ ${markFailed.length} result${markFailed.length===1?'':'s'} could not be saved to history <button class="btn sm" id="retryMarksBtn">Retry</button>`;
+    } else if(markInFlight){
+      el.className = 'hist-status busy';
+      el.innerHTML = `Saving to history — “${esc(bulkMeeting)}”…`;
+    } else {
+      el.className = 'hist-status';
+      el.innerHTML = `✓ Saved to history as “${esc(bulkMeeting)}”`;
+    }
+  }
+  $('histStatus').addEventListener('click', e=>{ if(e.target.id === 'retryMarksBtn') retryMarks(); });
+
+  window.addEventListener('beforeunload', e=>{
+    if(markInFlight || markFailed.length){ e.preventDefault(); e.returnValue = ''; }
+  });
+
+  // ---------- Send Zoom Link ----------
+  let bulkPool = [];      // Confirmed people the dialog was opened with
   let bulkQueue = [];
   let bulkIndex = 0;
   let bulkSent = 0;
+  let bulkMeeting = '';   // the meeting name this run is filed under ('' = not being saved)
+  let bulkMessageSaved = false;
+  let bulkSig = '';
 
   const bulkModal = $('bulkModal');
   const bulkSetup = $('bulkSetup');
   const bulkQueueEl = $('bulkQueue');
   const bulkDoneEl = $('bulkDone');
 
-  function openBulkModal(){
-    const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
-    $('bulkFilterLabel').textContent = activeFilter==='all' ? 'All' : activeFilter==='__duplicates' ? 'Duplicates' : activeFilter;
-    $('bulkCount').textContent = confirmed.length;
-    $('recipientList').innerHTML = confirmed.length ? confirmed.map(r=>`
+  function defaultMeetingName(label){
+    const d = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    return (label==='All' ? 'Zoom meeting' : label) + ' — ' + d;
+  }
+
+  function renderRecipients(){
+    const name = $('meetingName').value;
+    const set = historyState==='ok' && name.trim() ? sentSet(findMeeting(name)) : {ids:new Set(), phones:new Set()};
+    $('recipientList').innerHTML = bulkPool.length ? bulkPool.map((r,i)=>{
+      const before = wasSent(r, set);
+      return `
       <label class="recipient-row">
-        <input type="checkbox" class="rcheck" data-id="${esc(r.ID)}" checked>
+        <input type="checkbox" class="rcheck" data-i="${i}"${before ? '' : ' checked'}>
         <span class="rname">${esc(r.Name)}</span>
+        ${before ? '<span class="sent-before">✓ sent before</span>' : ''}
         <span class="rphone">${esc(r.Phone)}</span>
-      </label>
-    `).join('') : '<div style="padding:16px;color:var(--muted);font-size:.86rem">No Confirmed registrants in this view.</div>';
+      </label>`;
+    }).join('') : '<div style="padding:16px;color:var(--muted);font-size:.86rem">No Confirmed registrants in this view.</div>';
+    bulkSig = bulkPool.map(r=>wasSent(r,set)?'1':'0').join('');
+    updateSelCount();
+  }
+
+  function updateSelCount(){
+    const total = document.querySelectorAll('.rcheck').length;
+    const on = document.querySelectorAll('.rcheck:checked').length;
+    $('selCount').textContent = total ? `${on} of ${total} selected` : '';
+    $('selAllBtn').disabled = !total || on===total;
+    $('selNoneBtn').disabled = !on;
+  }
+
+  function setAllChecked(v){
+    document.querySelectorAll('.rcheck').forEach(c=>{ c.checked = v; });
+    updateSelCount();
+  }
+
+  // opts.all → look at every Confirmed registrant, not just the current tab (used by "Send to the rest")
+  async function openBulkModal(opts){
+    opts = opts || {};
+    if(historyState !== 'ok' && historyState !== 'unsupported') await loadMeetings(); // still loading, or worth another try
+    const rows = opts.all ? allRows : getFilteredRows();
+    bulkPool = dedupeByPhone(rows.filter(r=>r.Status==='Confirmed'));
+    const label = opts.all || activeFilter==='all' ? 'All' : activeFilter==='__duplicates' ? 'Duplicates' : activeFilter;
+    $('bulkFilterLabel').textContent = label;
+    $('bulkCount').textContent = bulkPool.length;
+    if(opts.message) $('bulkMessage').value = opts.message;
+
+    const notice = $('historyNotice');
+    $('meetingField').hidden = historyState !== 'ok';
+    if(historyState === 'unsupported'){
+      notice.hidden = false;
+      notice.textContent = 'Meeting history isn’t switched on yet — the Google Sheet script needs one update (see ADMIN-SETUP.md). You can still send; this send just won’t be saved.';
+    } else if(historyState === 'error' || historyState === 'unknown'){
+      notice.hidden = false;
+      notice.textContent = 'Couldn’t reach the meeting history right now, so this send won’t be saved. Close this window and try again in a moment.';
+    } else {
+      notice.hidden = true;
+    }
+
+    $('meetingNames').innerHTML = meetings.map(m=>`<option value="${esc(m.name)}"></option>`).join('');
+    $('meetingName').value = opts.meeting || defaultMeetingName(label);
+    renderRecipients();
 
     bulkSetup.style.display = 'block';
     bulkQueueEl.style.display = 'none';
     bulkDoneEl.style.display = 'none';
+    updateHistStatus();
     bulkModal.classList.add('open');
   }
 
   function closeBulkModal(){
+    if(markFailed.length && !confirm('Some results could not be saved to history yet. Close anyway?')) return;
     bulkModal.classList.remove('open');
   }
 
@@ -517,6 +741,7 @@ See you there!</textarea>
         <div class="queue-name">${esc(person.Name)}</div>
         <div class="queue-phone">${esc(person.Phone)}</div>
         <div class="queue-actions">
+          <button class="btn ghost" id="queueStopBtn">Stop</button>
           <button class="btn ghost" id="queueSkipBtn">Skip</button>
           <button class="btn primary" id="queueOpenBtn">Open WhatsApp →</button>
         </div>
@@ -525,7 +750,7 @@ See you there!</textarea>
         openWhatsAppFor(person);
         renderQueueStep(person, true);
       });
-      $('queueSkipBtn').addEventListener('click', advanceQueue);
+      $('queueSkipBtn').addEventListener('click', ()=>{ recordResult(person, 'skipped'); advanceQueue(); });
     } else {
       step.innerHTML = `
         <div class="queue-progress">${bulkIndex+1} of ${bulkQueue.length}</div>
@@ -533,46 +758,162 @@ See you there!</textarea>
         <div class="queue-phone">${esc(person.Phone)}</div>
         <p class="queue-confirm">Did you hit send in WhatsApp?</p>
         <div class="queue-actions">
+          <button class="btn ghost" id="queueStopBtn">Stop</button>
           <button class="btn ghost" id="queueReopenBtn">Reopen WhatsApp</button>
           <button class="btn ghost" id="queueSkipBtn">Skip (not sent)</button>
           <button class="btn primary" id="queueConfirmBtn">✓ Yes, sent — Next</button>
         </div>
       `;
       $('queueReopenBtn').addEventListener('click', ()=>openWhatsAppFor(person));
-      $('queueSkipBtn').addEventListener('click', advanceQueue);
+      $('queueSkipBtn').addEventListener('click', ()=>{ recordResult(person, 'skipped'); advanceQueue(); });
       $('queueConfirmBtn').addEventListener('click', ()=>{
         bulkSent++;
+        recordResult(person, 'sent');
         advanceQueue();
       });
     }
+    $('queueStopBtn').addEventListener('click', finishQueue);
+  }
+
+  function finishQueue(){
+    bulkQueueEl.style.display = 'none';
+    bulkDoneEl.style.display = 'block';
+    const stopped = bulkIndex < bulkQueue.length;
+    $('bulkDoneSummary').textContent =
+      `Confirmed sent to ${bulkSent} of ${bulkQueue.length} recipient${bulkQueue.length===1?'':'s'}${stopped ? ' (stopped early)' : ''}.`;
+    $('bulkHistoryBtn').hidden = historyState !== 'ok';
+    updateHistStatus();
   }
 
   function advanceQueue(){
     bulkIndex++;
-    if(bulkIndex >= bulkQueue.length){
-      bulkQueueEl.style.display = 'none';
-      bulkDoneEl.style.display = 'block';
-      $('bulkDoneSummary').textContent =
-        `Confirmed sent to ${bulkSent} of ${bulkQueue.length} recipient${bulkQueue.length===1?'':'s'}.`;
-    } else {
-      showQueueStep();
-    }
+    if(bulkIndex >= bulkQueue.length) finishQueue();
+    else showQueueStep();
   }
 
-  $('bulkSendBtn').addEventListener('click', openBulkModal);
+  $('bulkSendBtn').addEventListener('click', ()=>openBulkModal());
   $('bulkCancelBtn').addEventListener('click', closeBulkModal);
   $('bulkCloseBtn').addEventListener('click', closeBulkModal);
+  $('selAllBtn').addEventListener('click', ()=>setAllChecked(true));
+  $('selNoneBtn').addEventListener('click', ()=>setAllChecked(false));
+  $('recipientList').addEventListener('change', updateSelCount);
+
+  // choosing a meeting that already exists marks who was already sent it, and leaves them unticked
+  function refreshSentBefore(){
+    if(historyState !== 'ok') return;
+    const set = sentSet(findMeeting($('meetingName').value));
+    if(bulkPool.map(r=>wasSent(r,set)?'1':'0').join('') !== bulkSig) renderRecipients();
+  }
+  $('meetingName').addEventListener('input', refreshSentBefore);
+  $('meetingName').addEventListener('change', refreshSentBefore);
 
   $('bulkStartBtn').addEventListener('click', ()=>{
-    const confirmed = dedupeByPhone(getFilteredRows().filter(r=>r.Status==='Confirmed'));
-    const checkedIds = new Set([...document.querySelectorAll('.rcheck:checked')].map(c=>c.dataset.id));
-    bulkQueue = confirmed.filter(r=>checkedIds.has(String(r.ID)));
+    const checked = new Set([...document.querySelectorAll('.rcheck:checked')].map(c=>+c.dataset.i));
+    bulkQueue = bulkPool.filter((r,i)=>checked.has(i));
     if(!bulkQueue.length){ alert('Select at least one recipient.'); return; }
     bulkIndex = 0;
     bulkSent = 0;
+    bulkMessageSaved = false;
+    markFailed = [];
+    bulkMeeting = historyState === 'ok'
+      ? ($('meetingName').value.replace(/\s+/g,' ').trim() || defaultMeetingName($('bulkFilterLabel').textContent))
+      : '';
     bulkSetup.style.display = 'none';
     bulkQueueEl.style.display = 'block';
     showQueueStep();
+    updateHistStatus();
+  });
+
+  // ---------- History window ----------
+  const historyModal = $('historyModal');
+  const openMeetingIds = new Set();
+
+  function fmtWhen(iso){
+    const d = new Date(iso);
+    return isNaN(d) ? '' : d.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+  }
+
+  function meetingHtml(m){
+    const restCount = dedupeByPhone(allRows.filter(r=>r.Status==='Confirmed' && !wasSent(r, sentSet(m)))).length;
+    return `
+    <article class="meeting" data-id="${esc(m.id)}">
+      <div class="m-head">
+        <div>
+          <div class="m-name">${esc(m.name)}</div>
+          <div class="m-meta"><span>Last sent ${esc(fmtWhen(m.updatedAt))}</span><span class="ok">✓ ${m.sent} sent</span><span>– ${m.skipped} skipped</span></div>
+        </div>
+        <div class="m-actions">
+          ${restCount ? `<button class="btn sm primary" data-act="rest">Send to the rest (${restCount})</button>` : ''}
+          <button class="btn sm" data-act="export">Export CSV</button>
+        </div>
+      </div>
+      <details data-id="${esc(m.id)}"${openMeetingIds.has(m.id) ? ' open' : ''}>
+        <summary>Show people &amp; message</summary>
+        ${m.message ? `<div class="m-msg">${esc(m.message)}</div>` : ''}
+        <div class="m-scroll"><table class="m-table"><thead><tr><th>Name</th><th>Phone</th><th>Result</th><th>Time</th></tr></thead><tbody>
+          ${m.recipients.map(r=>`<tr><td>${esc(r.name)}</td><td>${waLink(r.phone)}</td><td><span class="res ${r.result}">${r.result==='sent' ? '✓ Sent' : 'Skipped'}</span></td><td>${esc(fmtWhen(r.at))}</td></tr>`).join('')}
+        </tbody></table></div>
+      </details>
+    </article>`;
+  }
+
+  function renderHistory(){
+    const body = $('historyBody');
+    if(historyState === 'unsupported'){
+      body.innerHTML = '<div class="notice">Meeting history isn’t switched on yet — the Google Sheet script needs one update. See <strong>ADMIN-SETUP.md</strong> (section “Meeting history”).</div>';
+    } else if(historyState === 'error' || historyState === 'unknown'){
+      body.innerHTML = '<div class="notice">Couldn’t reach the sheet right now — wait a few seconds and <button class="btn sm" data-act="reload">try again</button>.</div>';
+    } else if(!meetings.length){
+      body.innerHTML = '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>No meetings yet. Use <strong>Send Zoom Link</strong> — each send is saved here under its meeting name.</div>';
+    } else {
+      body.innerHTML = meetings.map(meetingHtml).join('');
+    }
+  }
+
+  async function openHistory(){
+    historyModal.classList.add('open');
+    renderHistory();
+    const before = JSON.stringify(meetings) + historyState;
+    await loadMeetings();
+    if(historyModal.classList.contains('open') && JSON.stringify(meetings) + historyState !== before) renderHistory();
+  }
+  function closeHistory(){ historyModal.classList.remove('open'); }
+
+  function exportMeeting(m){
+    const cols = ['Meeting','Name','Phone','Result','Time'];
+    const lines = [cols.join(',')];
+    m.recipients.forEach(r=> lines.push([m.name, r.name, r.phone, r.result, r.at].map((v,i)=>csvCell(cols[i], v)).join(',')));
+    const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'meeting-' + m.name.replace(/[^\w\-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  $('historyBtn').addEventListener('click', openHistory);
+  $('historyCloseBtn').addEventListener('click', closeHistory);
+  $('bulkHistoryBtn').addEventListener('click', ()=>{ bulkModal.classList.remove('open'); openHistory(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeHistory(); });
+
+  // <details> doesn't bubble "toggle", so listen in the capture phase to remember which are open
+  $('historyBody').addEventListener('toggle', e=>{
+    const d = e.target;
+    if(d.tagName !== 'DETAILS') return;
+    if(d.open) openMeetingIds.add(d.dataset.id); else openMeetingIds.delete(d.dataset.id);
+  }, true);
+
+  $('historyBody').addEventListener('click', async e=>{
+    const btn = e.target.closest('[data-act]');
+    if(!btn) return;
+    if(btn.dataset.act === 'reload'){ btn.disabled = true; await loadMeetings(); renderHistory(); return; }
+    const m = meetings.find(x=>x.id === btn.closest('.meeting').dataset.id);
+    if(!m) return;
+    if(btn.dataset.act === 'export') exportMeeting(m);
+    if(btn.dataset.act === 'rest'){ closeHistory(); openBulkModal({all:true, meeting:m.name, message:m.message}); }
   });
 
   async function deleteEntry(id, btn){
@@ -713,6 +1054,7 @@ See you there!</textarea>
     gateBtn.disabled = false; gateBtn.textContent = 'Enter';
     if(!errMsg){
       adminKey = key;
+      loadMeetings();
       gate.style.display = 'none';
       panel.style.display = 'block';
     } else {
@@ -722,12 +1064,16 @@ See you there!</textarea>
   keyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') gateBtn.click(); });
 
   $('refreshBtn').addEventListener('click', ()=>{
-    if(adminKey) loadData(adminKey);
+    if(adminKey){ loadData(adminKey); loadMeetings(); }
   });
 
   $('logoutBtn').addEventListener('click', ()=>{
     adminKey = null;
     allRows = [];
+    meetings = [];
+    historyState = 'unknown';
+    closeHistory();
+    bulkModal.classList.remove('open');
     keyInput.value = '';
     gateError.textContent = '';
     panel.style.display = 'none';

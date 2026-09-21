@@ -68,6 +68,29 @@ How it works:
 
 The media key doesn't open the registrations list, and the admin key doesn't open the media chart. If an earlier version left a **MediaCharts** tab in the sheet, you can delete it — the new version uses **MediaWork**.
 
+## 5. Meeting history — Send Zoom Link
+
+In the admin panel, **Send Zoom Link** walks you through everyone marked *Confirmed*, one WhatsApp chat at a time. With the meeting history turned on, every send is also filed under a **meeting name**, so you can look back at exactly who was sent a meeting's link and who was skipped.
+
+To turn it on, update the script once (an older script keeps working — sending still works, it just isn't saved, and the panel tells you so):
+
+1. Open the sheet → **Extensions → Apps Script**, and paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
+2. Retype your two keys at the top (the pasted file has sample keys, and **the script refuses the sample keys**):
+   ```
+   const ADMIN_KEY = '...';   // your existing admin key
+   const MEDIA_KEY = '...';   // your existing media key
+   ```
+3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy** (not "New deployment" — that changes the URL).
+
+How it works:
+
+- **Meeting name.** The Send Zoom Link window has a *Meeting name* box (it suggests one, e.g. "Women's Meet — 28 Sep 2026"). Type your own if you like, or pick an earlier one from the list to continue that meeting.
+- **Select all / Clear.** Above the recipient list, *Select all* ticks everyone and *Clear* unticks everyone; the count shows how many are selected. You can still tick or untick people one by one.
+- **Saved as you go.** Each time you press *Yes, sent* or *Skip*, that person's result is saved to the meeting straight away (in a **Meetings** tab of the sheet), so nothing is lost if you close the page half-way. *Stop* ends the run early. If a save fails, a **Retry** button appears.
+- **Continuing a meeting.** Using the same meeting name again adds to it. People who were already sent that meeting's link are marked **✓ sent before** and left unticked, so you don't message anyone twice. Someone marked *sent* is never changed back to *skipped*.
+- **History** (button at the top). Lists every meeting, newest first, with how many were sent and skipped. Open one to see the message and each person with their result and time. **Send to the rest** re-opens the send window for that meeting with the same message, for the confirmed people not yet sent it. **Export CSV** downloads that meeting's list.
+- History only records names and phone numbers already in the registrations; it never changes or removes a registration. There's no delete button for meetings — if you ever need to remove a test meeting, delete its row in the **Meetings** tab of the sheet.
+
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.

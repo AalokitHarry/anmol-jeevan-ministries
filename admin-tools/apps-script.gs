@@ -77,6 +77,9 @@ function doGet(e) {
   if (e.parameter.action === 'setStatus') {
     return handleSetStatus_(e.parameter.id, e.parameter.status);
   }
+  if (String(e.parameter.action || '').indexOf('meeting') === 0) {
+    return handleMeetings_(e.parameter);
+  }
 
   const sheet = getSheet_();
   const rows = sheet.getDataRange().getValues();
@@ -128,6 +131,114 @@ function handleSetStatus_(id, status) {
   sheet.getRange(row, STATUS_COL).setNumberFormat('@').setValue(status);
   return ContentService.createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ---------------------------------------------------------------------------
+// Meeting history (admin.html → "Send Zoom Link" and "History")
+//
+// Every time a Zoom link is sent from the admin panel, the send is filed under a
+// meeting name. One row per meeting in a "Meetings" tab; the people are stored in
+// the Recipients column as JSON: [{"i": id, "n": name, "p": phone, "s": "sent"|"skipped", "t": time}].
+// The page records each person as it goes, one small request at a time, so nothing
+// is lost if the tab is closed half-way. Using an existing meeting name adds to that
+// meeting. A person marked "sent" is never downgraded to "skipped".
+// This only ever reads names and phone numbers already in the registrations —
+// it never changes or removes a registration.
+// ---------------------------------------------------------------------------
+const MEETINGS_SHEET = 'Meetings';
+const MEETING_HEADERS = ['ID', 'Name', 'CreatedAt', 'UpdatedAt', 'Message', 'Recipients'];
+const MEETING_MAX_MEETINGS = 500;
+const MEETING_MAX_PEOPLE = 400;
+
+function meetingPhoneKey_(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  return digits.length >= 8 ? digits.slice(-10) : '';
+}
+
+function meetingPeople_(raw) {
+  try {
+    const list = JSON.parse(String(raw || '[]'));
+    return Array.isArray(list) ? list : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function meetingOut_(m) {
+  const people = meetingPeople_(m.Recipients).map(function (r) {
+    return { id: String(r.i || ''), name: String(r.n || ''), phone: String(r.p || ''), result: r.s === 'sent' ? 'sent' : 'skipped', at: String(r.t || '') };
+  });
+  return {
+    id: String(m.ID),
+    name: String(m.Name),
+    createdAt: String(m.CreatedAt || ''),
+    updatedAt: String(m.UpdatedAt || ''),
+    message: String(m.Message || ''),
+    recipients: people,
+    sent: people.filter(function (r) { return r.result === 'sent'; }).length,
+    skipped: people.filter(function (r) { return r.result !== 'sent'; }).length
+  };
+}
+
+function handleMeetings_(p) {
+  if (p.action === 'meetings') {
+    const list = readTab_(MEETINGS_SHEET, MEETING_HEADERS).map(meetingOut_);
+    list.sort(function (a, b) { return a.updatedAt < b.updatedAt ? 1 : -1; });
+    return jsonOut_({ ok: true, meetings: list });
+  }
+
+  if (p.action === 'meetingMark') {
+    const name = String(p.meeting || '').replace(/\s+/g, ' ').trim();
+    if (!name || name.length > 80) return jsonOut_({ error: 'invalid meeting name' });
+    const result = p.result === 'sent' ? 'sent' : p.result === 'skipped' ? 'skipped' : '';
+    if (!result) return jsonOut_({ error: 'invalid result' });
+    const pid = String(p.id || '').slice(0, 60);
+    const pname = String(p.name || '').slice(0, 120);
+    const pphone = String(p.phone || '').slice(0, 40);
+    if (!pid && !meetingPhoneKey_(pphone)) return jsonOut_({ error: 'missing person' });
+    const message = p.message === undefined ? undefined : String(p.message).slice(0, 1000);
+
+    const lock = LockService.getScriptLock();
+    lock.waitLock(15000);
+    try {
+      const sheet = getTab_(MEETINGS_SHEET, MEETING_HEADERS);
+      const rows = readTab_(MEETINGS_SHEET, MEETING_HEADERS);
+      const now = new Date().toISOString();
+      let m = null;
+      rows.forEach(function (r) { if (!m && String(r.Name).toLowerCase() === name.toLowerCase()) m = r; });
+      if (!m) {
+        if (rows.length >= MEETING_MAX_MEETINGS) return jsonOut_({ error: 'too many meetings' });
+        m = { _row: 0, ID: Utilities.getUuid(), Name: name, CreatedAt: now, UpdatedAt: now, Message: message || '', Recipients: '[]' };
+      }
+
+      const people = meetingPeople_(m.Recipients);
+      const key = meetingPhoneKey_(pphone);
+      let person = null;
+      people.forEach(function (r) {
+        if (person) return;
+        if ((pid && r.i === pid) || (key && meetingPhoneKey_(r.p) === key)) person = r;
+      });
+      if (person) {
+        if (!(person.s === 'sent' && result === 'skipped')) { person.s = result; person.t = now; }
+        person.n = pname || person.n;
+        person.p = pphone || person.p;
+        person.i = pid || person.i;
+      } else {
+        if (people.length >= MEETING_MAX_PEOPLE) return jsonOut_({ error: 'meeting is full' });
+        people.push({ i: pid, n: pname, p: pphone, s: result, t: now });
+      }
+
+      m.Recipients = JSON.stringify(people);
+      m.UpdatedAt = now;
+      if (message !== undefined) m.Message = message;
+      writeTabRow_(sheet, m._row, MEETING_HEADERS, MEETING_HEADERS.map(function (h) { return m[h]; }));
+      return jsonOut_({ ok: true, meeting: meetingOut_(m) });
+    } finally {
+      lock.releaseLock();
+    }
+  }
+
+  return jsonOut_({ error: 'unknown action' });
 }
 
 // ---------------------------------------------------------------------------
