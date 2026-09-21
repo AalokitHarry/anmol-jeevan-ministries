@@ -150,7 +150,19 @@ function handleSetStatus_(id, status) {
 // ---------------------------------------------------------------------------
 const MEDIA_SHEET_NAME = 'MediaWork';
 const MEDIA_HEADERS = ['Month', 'Total', 'SubmittedAt', 'UpdatedAt', 'Note', 'Data', 'Uploaded', 'UploadedTotal'];
-const MEDIA_VERSION = 3;
+const MEDIA_VERSION = 4;
+
+// Stock adjustments, one row per work type: what was already in stock before this
+// page was used (Opening) and what will never be uploaded (NotNeeded).
+//   Left to upload = Opening + Made - Uploaded - NotNeeded
+const MEDIA_STOCK_SHEET = 'MediaStock';
+const MEDIA_STOCK_HEADERS = ['Type', 'Opening', 'NotNeeded', 'UpdatedAt'];
+
+// The content list: one row per piece of content, so you can see WHICH ones are left.
+const MEDIA_ITEMS_SHEET = 'MediaItems';
+const MEDIA_ITEM_HEADERS = ['ID', 'Title', 'Type', 'Link', 'Status', 'Platform', 'AddedAt', 'UpdatedAt'];
+const ITEM_STATUSES = ['Ready', 'Uploaded', 'Not needed'];
+const ITEM_PLATFORMS = ['YouTube', 'Instagram', 'Facebook', 'WhatsApp', 'Other'];
 
 function jsonOut_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
@@ -270,7 +282,15 @@ function handleMedia_(p) {
       // the real date, so a wrong computer clock can't open the wrong month
       return jsonOut_({ ok: true, version: MEDIA_VERSION, now: new Date().toISOString() });
     case 'mediaList':
-      return jsonOut_({ ok: true, charts: readMediaMonths_(getMediaSheet_()).map(chartOut_) });
+      return jsonOut_({ ok: true, charts: readMediaMonths_(getMediaSheet_()).map(chartOut_), stock: readStock_() });
+    case 'mediaStockSet':
+      return mediaStockSet_(p);
+    case 'mediaItems':
+      return jsonOut_({ ok: true, items: readItems_().map(itemOut_) });
+    case 'mediaItemSave':
+      return mediaItemSave_(p);
+    case 'mediaItemDelete':
+      return mediaItemDelete_(p);
     case 'mediaGet':
       return mediaGet_(p);
     case 'mediaSave':
@@ -340,6 +360,140 @@ function mediaSave_(p) {
     const out = {};
     MEDIA_HEADERS.forEach(function (h, i) { out[h] = vals[i]; });
     return jsonOut_({ ok: true, chart: chartOut_(out) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ---- stock adjustments (opening stock / not needed) ----
+
+function getTab_(name, headers) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    sheet.appendRow(headers);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+function readTab_(name, headers) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+  if (!sheet || sheet.getLastRow() < 2) return [];
+  return sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).getValues().map(function (vals, i) {
+    const o = { _row: i + 2 };
+    headers.forEach(function (h, c) { o[h] = vals[c]; });
+    return o;
+  });
+}
+
+function writeTabRow_(sheet, rowNum, headers, vals) {
+  const r = rowNum || sheet.getLastRow() + 1;
+  sheet.getRange(r, 1, 1, headers.length).setNumberFormat('@').setValues([vals]);
+}
+
+function readStock_() {
+  const out = {};
+  readTab_(MEDIA_STOCK_SHEET, MEDIA_STOCK_HEADERS).forEach(function (r) {
+    out[String(r.Type)] = { opening: Number(r.Opening) || 0, notNeeded: Number(r.NotNeeded) || 0 };
+  });
+  return out;
+}
+
+// p.type, p.field = "opening" | "notNeeded", p.value = whole number 0..99999
+function mediaStockSet_(p) {
+  const type = cleanCat_(p.type);
+  const field = p.field === 'opening' ? 'Opening' : p.field === 'notNeeded' ? 'NotNeeded' : '';
+  const value = /^\d{1,5}$/.test(String(p.value)) ? parseInt(p.value, 10) : -1;
+  if (!type || !field || value < 0) return jsonOut_({ error: 'invalid stock value' });
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getTab_(MEDIA_STOCK_SHEET, MEDIA_STOCK_HEADERS);
+    const rows = readTab_(MEDIA_STOCK_SHEET, MEDIA_STOCK_HEADERS);
+    let row = null;
+    for (let i = 0; i < rows.length; i++) {
+      if (String(rows[i].Type).toLowerCase() === type.toLowerCase()) { row = rows[i]; break; }
+    }
+    const rec = row || { _row: 0, Type: type, Opening: 0, NotNeeded: 0 };
+    rec[field] = value;
+    writeTabRow_(sheet, rec._row, MEDIA_STOCK_HEADERS, [rec.Type, rec.Opening, rec.NotNeeded, new Date().toISOString()]);
+    return jsonOut_({ ok: true, stock: readStock_() });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ---- the content list ----
+
+function readItems_() {
+  return readTab_(MEDIA_ITEMS_SHEET, MEDIA_ITEM_HEADERS);
+}
+
+function itemOut_(r) {
+  return {
+    id: String(r.ID),
+    title: String(r.Title),
+    type: String(r.Type),
+    link: String(r.Link || ''),
+    status: String(r.Status),
+    platform: String(r.Platform || ''),
+    addedAt: String(r.AddedAt || ''),
+    updatedAt: String(r.UpdatedAt || '')
+  };
+}
+
+// Create (no p.id) or update (p.id) one piece of content. Only the fields that are sent change.
+function mediaItemSave_(p) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getTab_(MEDIA_ITEMS_SHEET, MEDIA_ITEM_HEADERS);
+    const rows = readItems_();
+    let rec = null;
+    if (p.id) {
+      for (let i = 0; i < rows.length; i++) { if (String(rows[i].ID) === String(p.id)) { rec = rows[i]; break; } }
+      if (!rec) return jsonOut_({ error: 'not found' });
+    } else {
+      if (rows.length >= 5000) return jsonOut_({ error: 'list is full' });
+      rec = { _row: 0, ID: Utilities.getUuid(), Title: '', Type: 'Other Work', Link: '', Status: 'Ready', Platform: '', AddedAt: new Date().toISOString(), UpdatedAt: '' };
+    }
+
+    if (p.title !== undefined) rec.Title = String(p.title).replace(/\s+/g, ' ').trim().slice(0, 120);
+    if (!rec.Title) return jsonOut_({ error: 'title required' });
+    if (p.type !== undefined) rec.Type = cleanCat_(p.type) || 'Other Work';
+    if (p.link !== undefined) rec.Link = String(p.link).trim().slice(0, 300);
+    if (p.status !== undefined) {
+      if (ITEM_STATUSES.indexOf(p.status) === -1) return jsonOut_({ error: 'invalid status' });
+      rec.Status = p.status;
+    }
+    if (p.platform !== undefined) rec.Platform = ITEM_PLATFORMS.indexOf(p.platform) === -1 ? '' : p.platform;
+    if (rec.Status !== 'Uploaded') rec.Platform = ''; // "uploaded to" only means something once it is uploaded
+    rec.UpdatedAt = new Date().toISOString();
+
+    writeTabRow_(sheet, rec._row, MEDIA_ITEM_HEADERS, MEDIA_ITEM_HEADERS.map(function (h) { return rec[h]; }));
+    return jsonOut_({ ok: true, item: itemOut_(rec) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function mediaItemDelete_(p) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(MEDIA_ITEMS_SHEET);
+    if (!sheet || !p.id) return jsonOut_({ error: 'not found' });
+    const rows = readItems_();
+    for (let i = 0; i < rows.length; i++) {
+      if (String(rows[i].ID) === String(p.id)) {
+        sheet.deleteRow(rows[i]._row);
+        return jsonOut_({ ok: true });
+      }
+    }
+    return jsonOut_({ error: 'not found' });
   } finally {
     lock.releaseLock();
   }
