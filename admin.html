@@ -205,6 +205,42 @@
   .res{display:inline-block;padding:2px 10px;border-radius:100px;font-size:.7rem;font-weight:700}
   .res.sent{background:var(--ok-soft);color:var(--ok)} .res.skipped{background:#eceff5;color:#5b6a84}
 
+  .btn.danger{color:var(--bad);border-color:#f5c2c2}
+  .btn.danger:hover{background:var(--bad-soft);border-color:var(--bad)}
+  .btn.danger.solid{background:var(--bad);border-color:var(--bad);color:#fff;box-shadow:0 10px 22px -12px rgba(214,69,69,.8)}
+  .btn.danger.solid:hover{background:#c23a3a}
+  .count-line{display:flex;align-items:center;gap:14px}
+  .selall-line{display:none;align-items:center;gap:7px;font-weight:600;color:var(--ink);cursor:pointer}
+  th.c-sel,td.c-sel{width:44px;padding-right:0}
+  input.rowcheck,input.selall-box{width:17px;height:17px;accent-color:var(--blue);cursor:pointer;vertical-align:middle}
+  input.rowcheck:disabled,input.selall-box:disabled{cursor:default;opacity:.4}
+  tr.sel-row{background:#eef4ff}
+  tr.sel-row:hover{background:#e6efff}
+  .hist-link{margin-top:12px;background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:100px;padding:5px 12px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer}
+  .hist-link:hover{background:rgba(255,255,255,.24)}
+  body.has-bar{padding-bottom:96px}
+  .bulkbar{position:fixed;left:0;right:0;margin:0 auto;width:max-content;bottom:22px;z-index:90;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;background:#101a33;color:#fff;padding:10px 12px 10px 18px;border-radius:100px;box-shadow:0 20px 44px -14px rgba(8,14,35,.7);max-width:calc(100vw - 24px);animation:rise .25s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .bulkbar .bb-count{font-weight:700;font-size:.84rem;margin-right:4px;white-space:nowrap}
+  .bulkbar .btn{background:rgba(255,255,255,.1);border-color:transparent;color:#fff;box-shadow:none;white-space:nowrap}
+  .bulkbar .btn:hover{background:rgba(255,255,255,.2);transform:none}
+  .bulkbar .btn.confirm{background:#1f9d63}
+  .bulkbar .btn.confirm:hover{background:#25b374}
+  .bulkbar .btn.danger{background:rgba(214,69,69,.28);color:#ffb3b3}
+  .bulkbar .btn.danger:hover{background:var(--bad);color:#fff}
+  .bulkbar .btn:disabled{opacity:.4}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s,bottom .25s;z-index:200;box-shadow:0 14px 30px -12px rgba(0,0,0,.5);max-width:calc(100vw - 24px);text-align:center}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  body.has-bar #toast{bottom:96px}
+  #actionAlt{margin-right:auto}
+  .people-list{margin:12px 0 0;padding-left:20px;font-size:.86rem;color:#3a4a62;max-height:160px;overflow-y:auto}
+  .seg{display:inline-flex;gap:4px;padding:4px;border-radius:100px;background:#eef2fa;margin-bottom:14px;flex-wrap:wrap}
+  .seg button{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;border:0;background:transparent;font:inherit;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer}
+  .seg button b{padding:0 8px;border-radius:100px;background:#fff;color:var(--navy);font-size:.72rem}
+  .seg button.active{background:var(--grad);color:#fff}
+  .seg button.active b{background:rgba(255,255,255,.22);color:#fff}
+  .m-table td .btn.sm{padding:4px 10px}
+
   /* ---------- small screens: each registration becomes a card ---------- */
   @media(max-width:1000px){
     .tiles{grid-template-columns:1fr 1fr 1fr}
@@ -228,6 +264,16 @@
     #table td.c-name::before{display:none}
     #table td.c-name .person{min-width:0}
     #table td.c-actions{justify-content:flex-end}
+    #table tr{position:relative}
+    #table td.c-sel{position:absolute;top:14px;right:14px;padding:0;width:auto}
+    #table td.c-sel::before{display:none}
+    #table td.c-name{padding-right:34px}
+    th.c-sel{display:none}
+    .selall-line{display:inline-flex}
+    .bulkbar{left:12px;right:12px;width:auto;bottom:12px;border-radius:20px;padding:12px}
+    .bulkbar .bb-count{width:100%;text-align:center;margin:0 0 2px}
+    body.has-bar{padding-bottom:150px}
+    body.has-bar #toast{bottom:160px}
     #table td.c-actions::before{display:none}
     .details-cell{max-width:none}
   }
@@ -241,7 +287,8 @@
     .search{min-width:100%}
     .sort-select{width:100%}
     .modal{padding:22px}
-    .m-table th:nth-child(4),.m-table td:nth-child(4){display:none}
+    .m-table.times th:nth-child(4),.m-table.times td:nth-child(4){display:none}
+    .m-table.past th:nth-child(3),.m-table.past td:nth-child(3){display:none}
     .m-table th,.m-table td{padding:7px 5px;font-size:.76rem}
     .m-table .res{white-space:nowrap}
     .meeting{padding:14px}
@@ -305,7 +352,7 @@
       </select>
     </div>
 
-    <div class="count-line" id="countLine"></div>
+    <div class="count-line"><label class="selall-line"><input type="checkbox" class="selall-box" aria-label="Select all"> Select all</label><span id="countLine"></span></div>
 
     <div class="card table-card">
       <div id="loading">Loading…</div>
@@ -315,6 +362,7 @@
         <table id="table">
           <thead>
             <tr>
+              <th class="c-sel"><input type="checkbox" class="selall-box" aria-label="Select all"></th>
               <th class="sortable" data-sort="Timestamp">Date <span class="arrow">▾</span></th>
               <th class="sortable" data-sort="Source">Source <span class="arrow">▾</span></th>
               <th class="sortable" data-sort="Name">Name <span class="arrow">▾</span></th>
@@ -385,14 +433,44 @@ See you there!</textarea>
   <div class="modal wide">
     <div class="modal-head">
       <div>
-        <h2>Meeting history</h2>
-        <p class="sub">Every Zoom-link send, filed under its meeting name — who was sent it and who was skipped.</p>
+        <h2>History</h2>
+        <p class="sub">Past events you’ve moved out of the main list, and every Zoom-link send.</p>
       </div>
       <button class="iconbtn" id="historyCloseBtn" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
+    <div class="seg" id="histTabs">
+      <button type="button" data-htab="meetings" class="active">Zoom sends <b id="hcMeet">0</b></button>
+      <button type="button" data-htab="past">Past events <b id="hcPast">0</b></button>
+    </div>
+    <label class="search" id="pastSearchWrap" hidden style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="pastSearch" placeholder="Search past events or people…"></label>
     <div id="historyBody"></div>
   </div>
 </div>
+
+<div class="modal-backdrop" id="actionModal">
+  <div class="modal">
+    <h2 id="actionTitle"></h2>
+    <div id="actionBody"></div>
+    <div class="hist-status busy" id="actionProgress" hidden></div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="btn ghost" id="actionAlt" hidden></button>
+      <button class="btn ghost" id="actionCancel">Cancel</button>
+      <button class="btn primary" id="actionOk">OK</button>
+    </div>
+  </div>
+</div>
+
+<div class="bulkbar" id="bulkBar" hidden>
+  <span class="bb-count" id="bbCount"></span>
+  <button class="btn sm confirm" data-bulk="Confirmed">✓ Confirm</button>
+  <button class="btn sm" data-bulk="Contacted">Contacted</button>
+  <button class="btn sm" data-bulk="Pending">Pending</button>
+  <button class="btn sm" data-bulk="archive">🗂 Move to history</button>
+  <button class="btn sm danger" data-bulk="delete">Delete</button>
+  <button class="btn sm" data-bulk="clear" aria-label="Clear selection">✕</button>
+</div>
+
+<div id="toast" role="status"></div>
 
 <script src="js/reglog.js"></script>
 <script>
@@ -444,10 +522,13 @@ See you there!</textarea>
     return digits.length >= 8 ? digits.slice(-10) : '';
   }
 
+  const isActive = r => !r.Archive;
+  const activeRows = () => allRows.filter(isActive);
+
   function markDuplicates(){
     const counts = new Map();
     allRows.forEach(r=>{
-      r._dupKey = phoneKey(r.Phone);
+      r._dupKey = r.Archive ? '' : phoneKey(r.Phone); // people already moved to History aren't duplicates of today's list
       if(r._dupKey) counts.set(r._dupKey, (counts.get(r._dupKey)||0)+1);
     });
     allRows.forEach(r=>{ r._dupCount = r._dupKey ? counts.get(r._dupKey) : 1; });
@@ -467,11 +548,11 @@ See you there!</textarea>
   function getFilteredRows(){
     markDuplicates();
     const q = $('search').value.trim().toLowerCase();
-    let base = allRows;
+    let base = activeRows();
     if(activeFilter === '__duplicates'){
-      base = allRows.filter(r=>r._dupCount>1);
+      base = base.filter(r=>r._dupCount>1);
     } else if(activeFilter !== 'all'){
-      base = allRows.filter(r=>r.Source===activeFilter);
+      base = base.filter(r=>r.Source===activeFilter);
     }
     return base.filter(r=>{
       if(!q) return true;
@@ -683,7 +764,7 @@ See you there!</textarea>
   async function openBulkModal(opts){
     opts = opts || {};
     if(historyState !== 'ok' && historyState !== 'unsupported') await loadMeetings(); // still loading, or worth another try
-    const rows = opts.all ? allRows : getFilteredRows();
+    const rows = opts.all ? activeRows() : getFilteredRows();
     bulkPool = dedupeByPhone(rows.filter(r=>r.Status==='Confirmed'));
     const label = opts.all || activeFilter==='all' ? 'All' : activeFilter==='__duplicates' ? 'Duplicates' : activeFilter;
     $('bulkFilterLabel').textContent = label;
@@ -834,7 +915,7 @@ See you there!</textarea>
   }
 
   function meetingHtml(m){
-    const restCount = dedupeByPhone(allRows.filter(r=>r.Status==='Confirmed' && !wasSent(r, sentSet(m)))).length;
+    const restCount = dedupeByPhone(activeRows().filter(r=>r.Status==='Confirmed' && !wasSent(r, sentSet(m)))).length;
     return `
     <article class="meeting" data-id="${esc(m.id)}">
       <div class="m-head">
@@ -850,27 +931,97 @@ See you there!</textarea>
       <details data-id="${esc(m.id)}"${openMeetingIds.has(m.id) ? ' open' : ''}>
         <summary>Show people &amp; message</summary>
         ${m.message ? `<div class="m-msg">${esc(m.message)}</div>` : ''}
-        <div class="m-scroll"><table class="m-table"><thead><tr><th>Name</th><th>Phone</th><th>Result</th><th>Time</th></tr></thead><tbody>
+        <div class="m-scroll"><table class="m-table times"><thead><tr><th>Name</th><th>Phone</th><th>Result</th><th>Time</th></tr></thead><tbody>
           ${m.recipients.map(r=>`<tr><td>${esc(r.name)}</td><td>${waLink(r.phone)}</td><td><span class="res ${r.result}">${r.result==='sent' ? '✓ Sent' : 'Skipped'}</span></td><td>${esc(fmtWhen(r.at))}</td></tr>`).join('')}
         </tbody></table></div>
       </details>
     </article>`;
   }
 
+  // ---------- Past events: registrations moved to History (kept in the sheet, out of the main list) ----------
+  let historyTab = 'meetings';    // 'meetings' (Zoom sends) | 'past' (moved-out registrations)
+  let archiveSupported = true;    // false while the Google script is older than this page
+
+  function pastGroups(){
+    const q = $('pastSearch').value.trim().toLowerCase();
+    const map = new Map();
+    allRows.filter(r=>r.Archive).forEach(r=>{
+      const name = String(r.Archive);
+      if(!map.has(name)) map.set(name, {name, rows:[], at:''});
+      const g = map.get(name);
+      g.rows.push(r);
+      if(String(r.ArchivedAt||'') > g.at) g.at = String(r.ArchivedAt||'');
+    });
+    let groups = [...map.values()];
+    if(q){
+      groups = groups.map(g=> g.name.toLowerCase().includes(q) ? g
+        : Object.assign({}, g, {rows: g.rows.filter(r=>[r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q))}))
+        .filter(g=>g.rows.length);
+    }
+    return groups.sort((a,b)=> a.at < b.at ? 1 : -1);
+  }
+
+  function pastHtml(g){
+    const all = allRows.filter(r=>r.Archive === g.name);
+    const conf = all.filter(r=>r.Status==='Confirmed').length;
+    const key = 'past:' + g.name;
+    return `
+    <article class="meeting" data-group="${esc(g.name)}">
+      <div class="m-head">
+        <div>
+          <div class="m-name">${esc(g.name)}</div>
+          <div class="m-meta"><span>Moved to history ${esc(fmtWhen(g.at))}</span><span>${all.length} ${all.length===1?'person':'people'}</span><span class="ok">✓ ${conf} confirmed</span></div>
+        </div>
+        <div class="m-actions">
+          <button class="btn sm" data-act="restore-group">Restore all</button>
+          <button class="btn sm" data-act="export-past">Export CSV</button>
+        </div>
+      </div>
+      <details data-key="${esc(key)}"${openMeetingIds.has(key) ? ' open' : ''}>
+        <summary>Show people</summary>
+        <div class="m-scroll"><table class="m-table past"><thead><tr><th>Name</th><th>Phone</th><th>Source</th><th>Status</th><th></th></tr></thead><tbody>
+          ${g.rows.map(r=>`<tr><td>${esc(r.Name)}</td><td>${waLink(r.Phone)}</td><td>${esc(r.Source)}</td><td><span class="res ${r.Status==='Confirmed'?'sent':'skipped'}">${esc(r.Status||'Pending')}</span></td><td><button class="btn sm" data-act="restore-one" data-id="${esc(r.ID)}">Restore</button></td></tr>`).join('')}
+        </tbody></table></div>
+      </details>
+    </article>`;
+  }
+
   function renderHistory(){
+    $('hcMeet').textContent = meetings.length;
+    $('hcPast').textContent = new Set(allRows.filter(r=>r.Archive).map(r=>r.Archive)).size;
+    document.querySelectorAll('#histTabs button').forEach(b=>b.classList.toggle('active', b.dataset.htab === historyTab));
+    $('pastSearchWrap').hidden = historyTab !== 'past';
     const body = $('historyBody');
+
+    if(historyTab === 'past'){
+      if(!archiveSupported){
+        body.innerHTML = '<div class="notice">Moving people to History isn’t switched on yet — the Google Sheet script needs one update. See <strong>ADMIN-SETUP.md</strong> (section “History &amp; bulk actions”).</div>';
+        return;
+      }
+      const groups = pastGroups();
+      if(!groups.length){
+        body.innerHTML = $('pastSearch').value.trim()
+          ? '<div style="text-align:center;padding:36px 10px;color:var(--muted)">No past events or people match.</div>'
+          : '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>Nothing here yet. Tick people in the list and choose <strong>Move to history</strong> — for example once an event has happened.</div>';
+      } else {
+        body.innerHTML = groups.map(pastHtml).join('');
+      }
+      return;
+    }
+
     if(historyState === 'unsupported'){
       body.innerHTML = '<div class="notice">Meeting history isn’t switched on yet — the Google Sheet script needs one update. See <strong>ADMIN-SETUP.md</strong> (section “Meeting history”).</div>';
     } else if(historyState === 'error' || historyState === 'unknown'){
       body.innerHTML = '<div class="notice">Couldn’t reach the sheet right now — wait a few seconds and <button class="btn sm" data-act="reload">try again</button>.</div>';
     } else if(!meetings.length){
-      body.innerHTML = '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>No meetings yet. Use <strong>Send Zoom Link</strong> — each send is saved here under its meeting name.</div>';
+      body.innerHTML = '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>No Zoom sends yet. Use <strong>Send Zoom Link</strong> — each send is saved here under its meeting name.</div>';
     } else {
       body.innerHTML = meetings.map(meetingHtml).join('');
     }
   }
 
-  async function openHistory(){
+  async function openHistory(tab){
+    if(tab === 'meetings' || tab === 'past') historyTab = tab;
     historyModal.classList.add('open');
     renderHistory();
     const before = JSON.stringify(meetings) + historyState;
@@ -879,41 +1030,323 @@ See you there!</textarea>
   }
   function closeHistory(){ historyModal.classList.remove('open'); }
 
-  function exportMeeting(m){
-    const cols = ['Meeting','Name','Phone','Result','Time'];
-    const lines = [cols.join(',')];
-    m.recipients.forEach(r=> lines.push([m.name, r.name, r.phone, r.result, r.at].map((v,i)=>csvCell(cols[i], v)).join(',')));
+  function downloadCsv(filename, lines){
     const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'meeting-' + m.name.replace(/[^\w\-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) + '.csv';
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
   }
+  const slug = s => String(s).replace(/[^\w\-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
 
-  $('historyBtn').addEventListener('click', openHistory);
+  function exportMeeting(m){
+    const cols = ['Meeting','Name','Phone','Result','Time'];
+    const lines = [cols.join(',')];
+    m.recipients.forEach(r=> lines.push([m.name, r.name, r.phone, r.result, r.at].map((v,i)=>csvCell(cols[i], v)).join(',')));
+    downloadCsv('meeting-' + slug(m.name) + '.csv', lines);
+  }
+
+  function exportPast(name){
+    const cols = ['Event','Timestamp','Source','Name','Phone','Email','Details','Status'];
+    const lines = [cols.join(',')];
+    allRows.filter(r=>r.Archive === name).forEach(r=> lines.push([name, r.Timestamp, r.Source, r.Name, r.Phone, r.Email, r.Details, r.Status].map((v,i)=>csvCell(cols[i], v)).join(',')));
+    downloadCsv('event-' + slug(name) + '.csv', lines);
+  }
+
+  $('historyBtn').addEventListener('click', ()=>openHistory());
   $('historyCloseBtn').addEventListener('click', closeHistory);
-  $('bulkHistoryBtn').addEventListener('click', ()=>{ bulkModal.classList.remove('open'); openHistory(); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeHistory(); });
+  $('bulkHistoryBtn').addEventListener('click', ()=>{ bulkModal.classList.remove('open'); openHistory('meetings'); });
+  $('histTabs').addEventListener('click', e=>{
+    const b = e.target.closest('button[data-htab]');
+    if(!b) return;
+    historyTab = b.dataset.htab;
+    renderHistory();
+  });
+  $('pastSearch').addEventListener('input', renderHistory);
+  $('stats').addEventListener('click', e=>{ if(e.target.closest('[data-open="past"]')) openHistory('past'); });
 
   // <details> doesn't bubble "toggle", so listen in the capture phase to remember which are open
   $('historyBody').addEventListener('toggle', e=>{
     const d = e.target;
     if(d.tagName !== 'DETAILS') return;
-    if(d.open) openMeetingIds.add(d.dataset.id); else openMeetingIds.delete(d.dataset.id);
+    const key = d.dataset.id || d.dataset.key;
+    if(d.open) openMeetingIds.add(key); else openMeetingIds.delete(key);
   }, true);
 
   $('historyBody').addEventListener('click', async e=>{
     const btn = e.target.closest('[data-act]');
     if(!btn) return;
-    if(btn.dataset.act === 'reload'){ btn.disabled = true; await loadMeetings(); renderHistory(); return; }
-    const m = meetings.find(x=>x.id === btn.closest('.meeting').dataset.id);
+    const act = btn.dataset.act;
+    if(act === 'reload'){ btn.disabled = true; await loadMeetings(); renderHistory(); return; }
+    const card = btn.closest('.meeting');
+    if(act === 'restore-one'){ restoreRows(allRows.filter(r=>r.ID && r.ID === btn.dataset.id)); return; }
+    if(act === 'restore-group'){ restoreRows(allRows.filter(r=>r.Archive === card.dataset.group)); return; }
+    if(act === 'export-past'){ exportPast(card.dataset.group); return; }
+    const m = meetings.find(x=>x.id === card.dataset.id);
     if(!m) return;
-    if(btn.dataset.act === 'export') exportMeeting(m);
-    if(btn.dataset.act === 'rest'){ closeHistory(); openBulkModal({all:true, meeting:m.name, message:m.message}); }
+    if(act === 'export') exportMeeting(m);
+    if(act === 'rest'){ closeHistory(); openBulkModal({all:true, meeting:m.name, message:m.message}); }
+  });
+
+  // ---------- Selecting rows, and acting on everything selected ----------
+  const selected = new Set();   // IDs of the ticked registrations
+  let currentRows = [];         // the rows on screen right now, in order
+  let lastPicked = null;        // for shift-click range selection
+  let barBusy = false;
+
+  function clearSelection(){ selected.clear(); lastPicked = null; }
+  const selectedRows = () => allRows.filter(r=>r.ID && selected.has(r.ID));
+
+  function toast(msg){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=>t.classList.remove('show'), 4200);
+  }
+
+  function refreshChecks(){
+    document.querySelectorAll('#tbody tr').forEach(tr=>{
+      const cb = tr.querySelector('.rowcheck');
+      if(!cb) return;
+      cb.checked = selected.has(cb.dataset.id);
+      tr.classList.toggle('sel-row', cb.checked);
+    });
+  }
+
+  function updateSelectionUI(){
+    const ids = currentRows.filter(r=>r.ID).map(r=>r.ID);
+    const n = ids.filter(id=>selected.has(id)).length;
+    document.querySelectorAll('.selall-box').forEach(b=>{
+      b.checked = ids.length > 0 && n === ids.length;
+      b.indeterminate = n > 0 && n < ids.length;
+      b.disabled = !ids.length;
+    });
+    $('bulkBar').hidden = !selected.size;
+    document.body.classList.toggle('has-bar', selected.size > 0);
+    if(!barBusy) $('bbCount').textContent = `${selected.size} selected`;
+    $('bulkBar').querySelectorAll('button').forEach(b=>{ b.disabled = barBusy; });
+  }
+
+  function setBarBusy(msg){
+    barBusy = true;
+    $('bbCount').textContent = msg;
+    $('bulkBar').querySelectorAll('button').forEach(b=>{ b.disabled = true; });
+  }
+
+  async function adminFetch(params){
+    const qs = Object.keys(params).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(params[k])).join('&');
+    const res = await fetch(ADMIN_URL + '?' + qs + '&key=' + encodeURIComponent(adminKey));
+    return res.json();
+  }
+
+  // Runs a bulk action in batches of 25 and reports which IDs were done. If the Google script is
+  // older (it answers with the plain list), Confirm / Contacted / Delete fall back to one request per
+  // person; moving to History has no such fallback and asks for the script update instead.
+  async function runBulk(action, ids, extra, onProgress){
+    const out = {doneIds:[], error:null, at:''};
+    const single = {bulkStatus:'setStatus', bulkDelete:'delete'}[action];
+    let useBulk = true;
+    let i = 0;
+    while(i < ids.length){
+      const chunk = useBulk ? ids.slice(i, i+25) : [ids[i]];
+      try{
+        if(useBulk){
+          const j = await adminFetch(Object.assign({action, ids: chunk.join(',')}, extra));
+          if(j.error) throw new Error(j.error);
+          if(typeof j.updated !== 'number'){
+            if(!single){ out.error = 'needs-update'; break; }
+            useBulk = false;
+            continue;
+          }
+          out.at = j.at || out.at;
+        } else {
+          const j = await adminFetch(Object.assign({action: single, id: chunk[0]}, extra.status ? {status: extra.status} : {}));
+          if(!j.ok) throw new Error(j.error || 'failed');
+        }
+        out.doneIds.push(...chunk);
+        i += chunk.length;
+        if(onProgress) onProgress(out.doneIds.length, ids.length);
+      }catch(err){
+        out.error = err.message === 'unauthorized' ? 'session expired — log in again' : (err.message || 'failed');
+        break;
+      }
+    }
+    return out;
+  }
+
+  function applyBulkResult(action, res, extra){
+    const done = new Set(res.doneIds);
+    if(action === 'bulkStatus') allRows.forEach(r=>{ if(done.has(r.ID)) r.Status = extra.status; });
+    else if(action === 'archive') allRows.forEach(r=>{ if(done.has(r.ID)){ r.Archive = extra.name; r.ArchivedAt = res.at || new Date().toISOString(); } });
+    else if(action === 'unarchive') allRows.forEach(r=>{ if(done.has(r.ID)){ r.Archive = ''; r.ArchivedAt = ''; } });
+    else if(action === 'bulkDelete') allRows = allRows.filter(r=>!done.has(r.ID));
+    done.forEach(id=>selected.delete(id));
+    barBusy = false;
+    render();
+    if(historyModal.classList.contains('open')) renderHistory();
+  }
+
+  function bulkMessage(action, res, total, extra){
+    const n = res.doneIds.length;
+    if(res.error === 'needs-update') return 'Moving people to History needs the Google Sheet script update — see ADMIN-SETUP.md.';
+    if(res.error) return `${n} of ${total} done, then it stopped (${res.error}). The rest are still selected.`;
+    if(action === 'bulkStatus') return `${n} marked ${extra.status}`;
+    if(action === 'archive') return `${n} moved to History — “${extra.name}”`;
+    if(action === 'unarchive') return `${n} restored to the main list`;
+    return `${n} deleted`;
+  }
+
+  // One small dialog for every "are you sure / what name" question
+  let actionCfg = null;
+  function showAction(cfg){
+    actionCfg = cfg;
+    $('actionTitle').textContent = cfg.title;
+    $('actionBody').innerHTML = cfg.html || '';
+    const ok = $('actionOk');
+    ok.textContent = cfg.ok;
+    ok.className = 'btn ' + (cfg.danger ? 'danger solid' : 'primary');
+    ok.disabled = false;
+    $('actionCancel').disabled = false;
+    $('actionAlt').disabled = false;
+    $('actionAlt').hidden = !cfg.alt;
+    if(cfg.alt) $('actionAlt').textContent = cfg.alt.label;
+    $('actionProgress').hidden = true;
+    $('actionModal').classList.add('open');
+    const field = $('actionBody').querySelector('input');
+    if(field){ field.focus(); field.select(); } else ok.focus();
+  }
+  function closeAction(){ $('actionModal').classList.remove('open'); actionCfg = null; }
+
+  async function confirmAction(){
+    const cfg = actionCfg;
+    if(!cfg || $('actionOk').disabled) return;
+    if(cfg.validate){
+      const problem = cfg.validate();
+      if(problem){ toast(problem); return; }
+    }
+    $('actionOk').disabled = true; $('actionCancel').disabled = true; $('actionAlt').disabled = true;
+    const pr = $('actionProgress');
+    pr.hidden = false;
+    pr.textContent = 'Working…';
+    try{ await cfg.run(t=>{ pr.textContent = t; }); }
+    catch(err){ toast('Something went wrong — ' + err.message); }
+    closeAction();
+  }
+  $('actionOk').addEventListener('click', confirmAction);
+  $('actionCancel').addEventListener('click', closeAction);
+  $('actionAlt').addEventListener('click', ()=>{ if(actionCfg && actionCfg.alt) actionCfg.alt.onClick(); });
+  $('actionBody').addEventListener('keydown', e=>{ if(e.key === 'Enter' && e.target.tagName === 'INPUT'){ e.preventDefault(); confirmAction(); } });
+
+  function namesPreview(rows){
+    const shown = rows.slice(0,6).map(r=>`<li>${esc(r.Name || '(no name)')}</li>`).join('');
+    const more = rows.length > 6 ? `<li>…and ${rows.length - 6} more</li>` : '';
+    return `<ul class="people-list">${shown}${more}</ul>`;
+  }
+
+  async function bulkSetStatus(status){
+    const ids = [...selected];
+    if(!ids.length) return;
+    setBarBusy(`Marking ${ids.length} ${status}…`);
+    const res = await runBulk('bulkStatus', ids, {status}, (d,t)=>setBarBusy(`Marking ${d} of ${t}…`));
+    toast(bulkMessage('bulkStatus', res, ids.length, {status}));
+    applyBulkResult('bulkStatus', res, {status});
+  }
+
+  function bulkDeleteDialog(){
+    const rows = selectedRows();
+    if(!rows.length) return;
+    const n = rows.length;
+    showAction({
+      title: `Delete ${n} registration${n===1?'':'s'}?`,
+      html: `<p class="sub">This permanently removes ${n===1?'it':'them'} from the sheet and can’t be undone.</p>${namesPreview(rows)}<p class="hint" style="margin:12px 0 0">Not sure? <strong>Move to history</strong> keeps them safely, out of the main list.</p>`,
+      ok: `Delete ${n}`,
+      danger: true,
+      alt: {label:'Move to history instead', onClick: ()=>{ closeAction(); bulkArchiveDialog(); }},
+      run: async setP=>{
+        const ids = rows.map(r=>r.ID);
+        const res = await runBulk('bulkDelete', ids, {}, (d,t)=>setP(`Deleting ${d} of ${t}…`));
+        toast(bulkMessage('bulkDelete', res, ids.length, {}));
+        applyBulkResult('bulkDelete', res, {});
+      }
+    });
+  }
+
+  function defaultArchiveName(rows){
+    const sources = [...new Set(rows.map(r=>r.Source).filter(Boolean))];
+    const when = new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+    return (sources.length === 1 ? sources[0] : 'Past registrations') + ' — ' + when;
+  }
+  const cleanName = v => String(v||'').replace(/\s+/g,' ').trim();
+
+  function bulkArchiveDialog(){
+    const rows = selectedRows();
+    if(!rows.length) return;
+    if(!archiveSupported){ toast('Moving people to History needs the Google Sheet script update — see ADMIN-SETUP.md.'); return; }
+    const n = rows.length;
+    const names = [...new Set(allRows.filter(r=>r.Archive).map(r=>String(r.Archive)))];
+    showAction({
+      title: `Move ${n} to History`,
+      html: `<p class="sub">${n===1?'This registration leaves':'These registrations leave'} the main list and ${n===1?'is':'are'} kept in <strong>History</strong> under the event name below. Nothing is deleted, and you can restore ${n===1?'it':'them'} any time.</p>
+        <label class="lab" for="archiveName">Event name</label>
+        <input class="text" id="archiveName" maxlength="80" list="archiveNames" autocomplete="off" value="${esc(defaultArchiveName(rows))}">
+        <datalist id="archiveNames">${names.map(x=>`<option value="${esc(x)}"></option>`).join('')}</datalist>
+        ${namesPreview(rows)}`,
+      ok: `Move ${n} to History`,
+      validate: ()=> cleanName($('archiveName').value) ? '' : 'Give the event a name',
+      run: async setP=>{
+        const name = cleanName($('archiveName').value);
+        const ids = rows.map(r=>r.ID);
+        const res = await runBulk('archive', ids, {name}, (d,t)=>setP(`Moving ${d} of ${t}…`));
+        toast(bulkMessage('archive', res, ids.length, {name}));
+        applyBulkResult('archive', res, {name});
+      }
+    });
+  }
+
+  function restoreRows(rows){
+    if(!rows.length) return;
+    const n = rows.length;
+    showAction({
+      title: n === 1 ? `Restore ${rows[0].Name || 'this person'}?` : `Restore ${n} people?`,
+      html: `<p class="sub">${n===1?'They move':'They all move'} back to the main list, with their status kept.</p>${namesPreview(rows)}`,
+      ok: 'Restore',
+      run: async setP=>{
+        const ids = rows.map(r=>r.ID).filter(Boolean);
+        const res = await runBulk('unarchive', ids, {}, (d,t)=>setP(`Restoring ${d} of ${t}…`));
+        toast(bulkMessage('unarchive', res, ids.length, {}));
+        applyBulkResult('unarchive', res, {});
+      }
+    });
+  }
+
+  $('bulkBar').addEventListener('click', e=>{
+    const b = e.target.closest('[data-bulk]');
+    if(!b || barBusy) return;
+    const a = b.dataset.bulk;
+    if(a === 'clear'){ clearSelection(); refreshChecks(); updateSelectionUI(); }
+    else if(a === 'archive') bulkArchiveDialog();
+    else if(a === 'delete') bulkDeleteDialog();
+    else bulkSetStatus(a);
+  });
+
+  document.querySelectorAll('.selall-box').forEach(box=>{
+    box.addEventListener('change', ()=>{
+      currentRows.forEach(r=>{ if(r.ID){ if(box.checked) selected.add(r.ID); else selected.delete(r.ID); } });
+      refreshChecks();
+      updateSelectionUI();
+    });
+  });
+
+  document.addEventListener('keydown', e=>{
+    if(e.key !== 'Escape') return;
+    if($('actionModal').classList.contains('open')){ if(!$('actionOk').disabled) closeAction(); }
+    else if(historyModal.classList.contains('open')) closeHistory();
+    else if(selected.size){ clearSelection(); refreshChecks(); updateSelectionUI(); }
   });
 
   async function deleteEntry(id, btn){
@@ -925,6 +1358,7 @@ See you there!</textarea>
       const json = await res.json();
       if(!json.ok) throw new Error(json.error || 'delete failed');
       allRows = allRows.filter(r=>r.ID!==id);
+      selected.delete(id);
       render();
     }catch(err){
       alert('Could not delete: ' + err.message);
@@ -948,19 +1382,22 @@ See you there!</textarea>
 
   function renderStats(){
     markDuplicates();
+    const rows = activeRows();
     const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
     const st = { Pending:0, Contacted:0, Confirmed:0 };
-    allRows.forEach(r=>{
+    rows.forEach(r=>{
       if(counts[r.Source]!==undefined) counts[r.Source]++;
       st[STATUSES.includes(r.Status) ? r.Status : 'Pending']++;
     });
-    const dupCount = allRows.filter(r=>r._dupCount>1).length;
-    const total = allRows.length, pct = n => total ? (n/total*100).toFixed(1) : 0;
+    const dupCount = rows.filter(r=>r._dupCount>1).length;
+    const inHistory = allRows.length - rows.length;
+    const total = rows.length, pct = n => total ? (n/total*100).toFixed(1) : 0;
     $('stats').innerHTML = `
       <div class="card tile hero fade">
         <div class="k">Total registrations</div><div class="v">${total}</div>
         <div class="stackbar"><i class="s-conf" style="width:${pct(st.Confirmed)}%"></i><i class="s-cont" style="width:${pct(st.Contacted)}%"></i><i class="s-pend" style="width:${pct(st.Pending)}%"></i></div>
         <div class="legend"><span style="--c:#4ade9a"><b>${st.Confirmed}</b> confirmed</span><span style="--c:#8fb5ff"><b>${st.Contacted}</b> contacted</span><span style="--c:rgba(255,255,255,.5)"><b>${st.Pending}</b> pending</span></div>
+        ${inHistory ? `<button class="hist-link" data-open="past">🗂 ${inHistory} in History →</button>` : ''}
       </div>
       <div class="card tile fade"><div class="ico pink"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-8.6C1 9.2 2.6 5.5 6 5.5c2 0 3.3 1.1 4 2.3.7-1.2 2-2.3 4-2.3 3.4 0 5 3.7 3.3 6.9C19 16.6 12 21 12 21z"/></svg></div><div class="k">Women's Meet</div><div class="v">${counts["Women's Meet"]}</div></div>
       <div class="card tile fade"><div class="ico blue"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div><div class="k">Event Booking</div><div class="v">${counts['Event Booking']}</div></div>
@@ -980,6 +1417,11 @@ See you there!</textarea>
       const cmp = String(av).localeCompare(String(bv), undefined, {numeric:true});
       return sortDir==='asc' ? cmp : -cmp;
     });
+    currentRows = rows;
+
+    // anyone ticked who has since been deleted / moved elsewhere is no longer selected
+    const known = new Set(allRows.filter(isActive).map(r=>r.ID));
+    [...selected].forEach(id=>{ if(!known.has(id)) selected.delete(id); });
 
     document.querySelectorAll('th.sortable').forEach(th=>{
       const active = th.dataset.sort===sortField;
@@ -990,11 +1432,13 @@ See you there!</textarea>
     const sortValue = sortField + ':' + sortDir;
     if([...sortSelect.options].some(o=>o.value===sortValue)) sortSelect.value = sortValue;
 
-    $('tbody').innerHTML = rows.map(r=>{
+    $('tbody').innerHTML = rows.map((r,i)=>{
       const src = SOURCES[r.Source] || {cls:'', color:'#69758c'};
       const status = STATUSES.includes(r.Status) ? r.Status : 'Pending';
+      const picked = !!r.ID && selected.has(r.ID);
       return `
-      <tr class="${r._dupCount>1 ? 'dup-row' : ''}">
+      <tr class="${(r._dupCount>1 ? 'dup-row ' : '') + (picked ? 'sel-row' : '')}">
+        <td class="c-sel"><input type="checkbox" class="rowcheck" data-id="${esc(r.ID)}" data-idx="${i}"${picked ? ' checked' : ''}${r.ID ? '' : ' disabled title="No ID — change this one directly in the sheet"'} aria-label="Select ${esc(r.Name)}"></td>
         <td class="when c-date" data-label="Date">${r.Timestamp ? esc(new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})) : ''}</td>
         <td data-label="Source"><span class="src-badge ${src.cls}">${esc(r.Source)}</span></td>
         <td class="c-name" data-label="Name"><div class="person"><span class="avatar" style="--c:${src.color}">${esc(initials(r.Name))}</span><span class="pname">${esc(r.Name)}${r._dupCount>1 ? `<span class="dup-badge" title="This phone number appears ${r._dupCount} times">⚠ ×${r._dupCount}</span>` : ''}</span></div></td>
@@ -1006,16 +1450,20 @@ See you there!</textarea>
       </tr>`;
     }).join('');
 
+    const activeCount = activeRows().length;
     $('tableWrap').hidden = !rows.length;
     const empty = $('empty');
     empty.hidden = !!rows.length;
     if(!rows.length){
-      empty.innerHTML = allRows.length
+      empty.innerHTML = activeCount
         ? '<div class="big">🔎</div>No registrations match this view.'
-        : '<div class="big">📭</div>No registrations yet.';
+        : allRows.length
+          ? '<div class="big">🗂️</div>Everyone has been moved to History.'
+          : '<div class="big">📭</div>No registrations yet.';
     }
-    $('countLine').textContent = allRows.length ? `Showing ${rows.length} of ${allRows.length}` : '';
+    $('countLine').textContent = activeCount ? `Showing ${rows.length} of ${activeCount}` : '';
     renderStats();
+    updateSelectionUI();
   }
 
   async function loadData(key){
@@ -1030,6 +1478,7 @@ See you there!</textarea>
         throw new Error(json.error === 'unauthorized' ? 'wrongkey' : json.error);
       }
       allRows = json.data || [];
+      archiveSupported = !allRows.length || ('Archive' in allRows[0]); // an older script has no Archive column
       $('loading').hidden = true;
       render();
       return null; // no error
@@ -1072,7 +1521,10 @@ See you there!</textarea>
     allRows = [];
     meetings = [];
     historyState = 'unknown';
+    clearSelection();
+    barBusy = false;
     closeHistory();
+    closeAction();
     bulkModal.classList.remove('open');
     keyInput.value = '';
     gateError.textContent = '';
@@ -1086,10 +1538,11 @@ See you there!</textarea>
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
+    clearSelection();
     render();
   });
 
-  $('search').addEventListener('input', render);
+  $('search').addEventListener('input', ()=>{ clearSelection(); render(); });
 
   $('sortSelect').addEventListener('change', e=>{
     const [field, dir] = e.target.value.split(':');
@@ -1108,6 +1561,24 @@ See you there!</textarea>
   });
 
   $('tbody').addEventListener('click', e=>{
+    const cb = e.target.closest('.rowcheck');
+    if(cb){
+      const idx = +cb.dataset.idx;
+      if(e.shiftKey && lastPicked !== null){
+        const lo = Math.min(lastPicked, idx), hi = Math.max(lastPicked, idx);
+        for(let i = lo; i <= hi; i++){
+          const r = currentRows[i];
+          if(r && r.ID){ if(cb.checked) selected.add(r.ID); else selected.delete(r.ID); }
+        }
+        refreshChecks();
+      } else {
+        if(cb.checked) selected.add(cb.dataset.id); else selected.delete(cb.dataset.id);
+        cb.closest('tr').classList.toggle('sel-row', cb.checked);
+      }
+      lastPicked = idx;
+      updateSelectionUI();
+      return;
+    }
     const btn = e.target.closest('.del-btn');
     if(!btn) return;
     deleteEntry(btn.dataset.id, btn);

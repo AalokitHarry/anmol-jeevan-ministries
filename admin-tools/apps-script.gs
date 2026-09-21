@@ -12,9 +12,11 @@ const ADMIN_KEY = 'ajm-2026-change-me';
 const MEDIA_KEY = 'media-2026-change-me';
 
 const SHEET_NAME = 'Registrations';
-const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status'];
+const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status', 'Archive', 'ArchivedAt'];
 const ID_COL = 7;
 const STATUS_COL = 8;
+const ARCHIVE_COL = 9;      // name of the past event a registration was moved to (empty = still in the main list)
+const ARCHIVED_AT_COL = 10;
 const STATUSES = ['Pending', 'Contacted', 'Confirmed'];
 
 function getSheet_() {
@@ -80,6 +82,9 @@ function doGet(e) {
   if (String(e.parameter.action || '').indexOf('meeting') === 0) {
     return handleMeetings_(e.parameter);
   }
+  if (['bulkStatus', 'bulkDelete', 'archive', 'unarchive'].indexOf(e.parameter.action) !== -1) {
+    return handleBulk_(e.parameter);
+  }
 
   const sheet = getSheet_();
   const rows = sheet.getDataRange().getValues();
@@ -131,6 +136,68 @@ function handleSetStatus_(id, status) {
   sheet.getRange(row, STATUS_COL).setNumberFormat('@').setValue(status);
   return ContentService.createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ---------------------------------------------------------------------------
+// Bulk actions on registrations (admin.html — select rows, then act on all of them)
+//
+//   bulkStatus  ids=…&status=Confirmed   set the status of every listed registration
+//   archive     ids=…&name=…             move them to History under a past-event name
+//                                        (nothing is deleted — they only leave the main list)
+//   unarchive   ids=…                    bring them back to the main list
+//   bulkDelete  ids=…                    delete them for good
+//
+// ids is a comma-separated list of registration IDs (at most BULK_MAX_IDS per request;
+// the page sends bigger selections in several requests). Unknown IDs are ignored, and the
+// reply says how many rows were actually changed.
+// ---------------------------------------------------------------------------
+const BULK_MAX_IDS = 60;
+
+function handleBulk_(p) {
+  const ids = String(p.ids || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  if (!ids.length) return jsonOut_({ error: 'missing ids' });
+  if (ids.length > BULK_MAX_IDS) return jsonOut_({ error: 'too many ids' });
+
+  let status = '';
+  let name = '';
+  if (p.action === 'bulkStatus') {
+    status = p.status;
+    if (STATUSES.indexOf(status) === -1) return jsonOut_({ error: 'invalid status' });
+  }
+  if (p.action === 'archive') {
+    name = String(p.name || '').replace(/\s+/g, ' ').trim();
+    if (!name || name.length > 80) return jsonOut_({ error: 'invalid name' });
+  }
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getSheet_();
+    const last = sheet.getLastRow();
+    const now = new Date().toISOString();
+    if (last < 2) return jsonOut_({ ok: true, updated: 0, at: now });
+
+    const want = {};
+    ids.forEach(function (id) { want[id] = true; });
+    const rows = [];
+    sheet.getRange(2, ID_COL, last - 1, 1).getValues().forEach(function (v, i) {
+      if (want[String(v[0])]) rows.push(i + 2); // +2: 1-indexed, plus the header row
+    });
+
+    if (p.action === 'bulkStatus') {
+      rows.forEach(function (r) { sheet.getRange(r, STATUS_COL).setNumberFormat('@').setValue(status); });
+    } else if (p.action === 'archive') {
+      rows.forEach(function (r) { sheet.getRange(r, ARCHIVE_COL, 1, 2).setNumberFormat('@').setValues([[name, now]]); });
+    } else if (p.action === 'unarchive') {
+      rows.forEach(function (r) { sheet.getRange(r, ARCHIVE_COL, 1, 2).setNumberFormat('@').setValues([['', '']]); });
+    } else if (p.action === 'bulkDelete') {
+      // bottom-up, so deleting one row never moves the ones still to be deleted
+      rows.sort(function (a, b) { return b - a; }).forEach(function (r) { sheet.deleteRow(r); });
+    }
+    return jsonOut_({ ok: true, updated: rows.length, at: now });
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 // ---------------------------------------------------------------------------

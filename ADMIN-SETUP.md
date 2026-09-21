@@ -91,6 +91,30 @@ How it works:
 - **History** (button at the top). Lists every meeting, newest first, with how many were sent and skipped. Open one to see the message and each person with their result and time. **Send to the rest** re-opens the send window for that meeting with the same message, for the confirmed people not yet sent it. **Export CSV** downloads that meeting's list.
 - History only records names and phone numbers already in the registrations; it never changes or removes a registration. There's no delete button for meetings — if you ever need to remove a test meeting, delete its row in the **Meetings** tab of the sheet.
 
+## 6. History & bulk actions — select, confirm, move to History, delete
+
+The registrations list has a **checkbox on every row** (and a *Select all* box at the top of the list, or above the cards on a phone). Tick some people and a bar appears at the bottom with what you can do to all of them at once:
+
+- **✓ Confirm / Contacted / Pending** — change everyone's status in one go. No pop-up; it just does it and tells you how many changed.
+- **🗂 Move to history** — for an event that has happened. Pick a name (it suggests one, e.g. "Women's Meet — September 2026") and those people leave the main list, the counts and the duplicate check. **Nothing is deleted** — they stay in the sheet, and you can bring them back any time.
+- **Delete** — permanently removes them. It first shows who is about to be deleted and asks you to confirm, and offers "Move to history instead". Deleted registrations can't be brought back.
+- **✕** clears the selection.
+
+Handy: tick the first row and **shift-click** another to select everyone in between. Changing the tab or searching clears the selection, so you never act on rows you can't see. Ticking *Select all* in the **Women's Meet** tab, then **Move to history**, is the quickest way to put a finished Women's Meet away.
+
+**History** (button at the top, or the "N in History" link on the total tile) now has two parts:
+
+- **Past events** — every event you moved out of the main list, newest first, with how many people it had. Open one to see everyone, **Restore** a single person or **Restore all**, or **Export CSV**. There's a search box for finding a person in a past event.
+- **Zoom sends** — the meeting history from section 5.
+
+To turn this on, update the script once (an older script keeps working — Confirm / Contacted / Delete still work, just one person at a time, and *Move to history* asks for the update instead):
+
+1. Open the sheet → **Extensions → Apps Script**, paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
+2. Retype `ADMIN_KEY` and `MEDIA_KEY` at the top (the sample keys are refused).
+3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy**.
+
+The first time the page loads after that, two columns — **Archive** and **ArchivedAt** — are added to the right of the Registrations tab. They stay empty for everyone still in the main list; for people you moved to History, **Archive** holds the event name. Please don't rename these headers. Big selections are sent in batches of 25 (a progress count shows), and if a batch fails, the ones already done are kept and the rest stay selected so you can try again.
+
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.
