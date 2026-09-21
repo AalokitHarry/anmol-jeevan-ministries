@@ -12,7 +12,7 @@
 <style>
   :root{
     --navy:#1b365d; --blue:#2f6db5; --blue-soft:#eaf2fb; --line:#cdd7e5; --bg:#f3f6fa;
-    --ink:#1f2a3a; --muted:#66758a; --ok:#2f8a4e; --warn:#b7791f; --bad:#c0392b; --white:#fff;
+    --ink:#1f2a3a; --muted:#66758a; --ok:#2f8a4e; --warn:#b7791f; --bad:#c0392b;
     --row-a:#fff; --row-b:#f7f9fc; --lbl-a:#eef2f8; --lbl-b:#e2e8f1;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -35,14 +35,10 @@
   header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px}
   header.top h1{font-size:1.7rem;font-weight:500}
   header.top .sub{color:var(--muted);font-size:.85rem;margin-top:4px}
-  .role-badge{display:inline-block;margin-left:8px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;background:var(--blue-soft);color:var(--blue)}
-  .role-badge.sup{background:#e6f4ea;color:var(--ok)}
   .btn{padding:10px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:inherit}
   .btn:hover{background:var(--blue-soft)}
   .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
   .btn.primary:hover{background:var(--blue);border-color:var(--blue)}
-  .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
-  .btn.ok:hover{filter:brightness(1.08)}
   .btn:disabled{opacity:.45;cursor:default;pointer-events:none}
 
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
@@ -56,25 +52,17 @@
   .sheet-head .mwc{font-weight:600;color:var(--muted);font-size:1rem}
   .pill{display:inline-block;padding:6px 16px;border-radius:100px;background:var(--blue-soft);border:1px solid #b9d3f0;color:var(--blue);font-weight:700;font-size:.72rem;letter-spacing:.06em}
 
-  .fields{display:grid;grid-template-columns:1.3fr 1.2fr 1fr 1fr;gap:18px;background:#f6f8fc;border:1px solid #e3e9f2;border-radius:8px;padding:14px 18px;margin-bottom:14px}
-  .field label,.field .lab{display:block;font-size:.72rem;font-weight:700;color:#4a5a72;letter-spacing:.02em;margin-bottom:4px}
-  .field input,.field select{width:100%;padding:6px 2px;border:0;border-bottom:1.5px solid #b8c6da;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--ink);border-radius:0}
-  .field input:focus,.field select:focus{outline:none;border-bottom-color:var(--blue)}
+  .fields{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr;gap:18px;background:#f6f8fc;border:1px solid #e3e9f2;border-radius:8px;padding:14px 18px;margin-bottom:14px}
+  .field .lab{display:block;font-size:.72rem;font-weight:700;color:#4a5a72;letter-spacing:.02em;margin-bottom:4px}
+  .field select{width:100%;padding:6px 2px;border:0;border-bottom:1.5px solid #b8c6da;background:transparent;font:inherit;font-size:.95rem;font-weight:500;color:var(--ink);border-radius:0}
+  .field select:focus{outline:none;border-bottom-color:var(--blue)}
   .field .pair{display:flex;gap:8px}
   .field .static{padding:6px 2px;border-bottom:1.5px solid #b8c6da;font-size:.95rem;font-weight:500;min-height:2rem}
   .status{display:inline-block;padding:3px 12px;border-radius:100px;font-size:.78rem;font-weight:700}
-  .st-draft{background:#eceff4;color:var(--muted)}
-  .st-submitted{background:#fdf0d5;color:var(--warn)}
-  .st-approved{background:#e2f3e8;color:var(--ok)}
+  .st-draft{background:#fdf0d5;color:var(--warn)}
+  .st-done{background:#e2f3e8;color:var(--ok)}
 
-  .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;font-size:.78rem;color:var(--muted)}
-  .chip{padding:5px 13px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--ink);font-family:inherit}
-  .chip:hover{background:var(--blue-soft)}
-  .chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
-
-  #banner{border-radius:10px;padding:10px 16px;font-size:.86rem;font-weight:500;margin-bottom:12px}
-  #banner.info{background:var(--blue-soft);color:#28527f}
-  #banner.warn{background:#fdf0d5;color:#8a5a0b}
+  #banner{border-radius:10px;padding:10px 16px;font-size:.86rem;font-weight:500;margin-bottom:12px;background:var(--blue-soft);color:#28527f}
   #banner.ok{background:#e2f3e8;color:#226b3b}
 
   .grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
@@ -116,39 +104,21 @@
   .notes label{display:block;font-size:.72rem;font-weight:700;color:#4a5a72;margin-bottom:4px}
   .notes textarea{width:100%;min-height:64px;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font:inherit;font-size:.88rem;resize:vertical}
   .notes textarea:focus{outline:none;border-color:var(--blue)}
-  .notes textarea[readonly]{background:#f7f9fc}
 
   .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
   #saveState{font-size:.82rem;color:var(--muted);margin-right:auto;min-width:160px}
   #saveState.err{color:var(--bad);font-weight:600}
   #saveState.ok{color:var(--ok)}
-  .sup-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;border:1.5px solid #cfe5d6;border-radius:100px;background:#f2faf5}
-  .sup-actions input{padding:7px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.82rem;width:190px}
 
   .signatures{display:flex;justify-content:space-between;gap:40px;margin-top:34px;font-size:.82rem;font-weight:700;color:#3a4a62}
   .signatures .sig{flex:1;border-top:1px solid var(--navy);padding-top:6px}
   .signatures .sig.r{text-align:right}
-  .signatures .sig small{display:block;font-weight:500;color:var(--muted);margin-top:2px;min-height:1.2em}
   .print-only{display:none}
   .foot-note{margin-top:18px;text-align:right;font-size:.72rem;color:#8a97ab}
 
-  /* team overview (supervisor) */
-  .ov-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
-  .ov-bar select{padding:9px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;font-weight:600;background:#fff}
-  .ov-bar input{padding:9px 16px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;width:220px}
-  .ov-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.85rem}
-  .ov-table th,.ov-table td{text-align:center;padding:11px 12px;border-bottom:1px solid #e6ecf4}
-  .ov-table th{background:var(--navy);color:#fff;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
-  .ov-table td:first-child,.ov-table th:first-child{text-align:left}
-  .ov-table tfoot td{font-weight:700;background:var(--blue-soft);color:var(--navy)}
-  .ov-table tr:last-child td{border-bottom:0}
-  .ov-table .tot{font-weight:800;color:var(--navy)}
-  .ov-table .rowbtn{padding:6px 12px;font-size:.75rem}
-  .ov-scroll{overflow-x:auto}
-  #ovEmpty,#ovLoading,#ovError,#tcEmpty,#tcLoading,#tcError{text-align:center;padding:50px 20px;color:var(--muted)}
-  #ovError,#tcError{color:var(--bad)}
-
-  /* total work / content stock (supervisor) */
+  /* total work / content stock */
+  .tc-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+  .tc-bar select{padding:9px 14px;border:1.5px solid var(--line);border-radius:100px;font:inherit;font-size:.85rem;font-weight:600;background:#fff}
   .tc-intro{color:var(--muted);font-size:.9rem;margin:-4px 0 18px}
   .tc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:26px}
   .tc-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
@@ -160,7 +130,16 @@
   .tc-card.grand .n{color:#fff}
   .tc-card.grand .l{color:#b9cbe4}
   .tc-h{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy);margin:0 0 10px}
-  #tcBody .ov-scroll{margin-bottom:26px}
+  .tc-scroll{overflow-x:auto}
+  .tc-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.85rem}
+  .tc-table th,.tc-table td{text-align:center;padding:11px 12px;border-bottom:1px solid #e6ecf4}
+  .tc-table th{background:var(--navy);color:#fff;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
+  .tc-table td:first-child,.tc-table th:first-child{text-align:left}
+  .tc-table tfoot td{font-weight:700;background:var(--blue-soft);color:var(--navy)}
+  .tc-table tr:last-child td{border-bottom:0}
+  .tc-table .tot{font-weight:800;color:var(--navy)}
+  #tcEmpty,#tcLoading,#tcError{text-align:center;padding:50px 20px;color:var(--muted)}
+  #tcError{color:var(--bad)}
 
   #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -179,7 +158,7 @@
     @page{size:A4 landscape;margin:10mm}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     body{background:#fff;padding:0}
-    #gate,header.top,.tabs,.chips,.palette,.actions,#banner,#overview,#toast,.no-print,.foot-note{display:none!important}
+    #gate,header.top,.tabs,.palette,.actions,#banner,#totalView,#toast,.no-print,.foot-note{display:none!important}
     #panel{display:block!important}
     #chartView{display:block!important}
     .wrap{max-width:none}
@@ -190,8 +169,7 @@
     table.grid thead th{padding:4px 0}
     input.cell{min-width:0;height:22px;font-size:.66rem}
     td.s-c input.cell{font-size:.78rem}
-    .field input,.field select{border-bottom:1.5px solid #8fa3bf}
-    select{appearance:none;-webkit-appearance:none}
+    .field select{border-bottom:1.5px solid #8fa3bf;appearance:none;-webkit-appearance:none}
     .fields{padding:8px 12px}
     .print-only{display:block}
     .notes textarea{border:1px solid var(--line);min-height:40px;resize:none}
@@ -205,7 +183,7 @@
 
 <div id="gate">
   <h1>Media Office</h1>
-  <p>This page is not indexed or linked from the site. Enter the media office key to fill in or review the Monthly Work Chart.</p>
+  <p>This page is not indexed or linked from the site. Enter the media office key to fill in the Monthly Work Chart together with your team.</p>
   <input type="password" id="keyInput" placeholder="Media key" autocomplete="off">
   <button id="gateBtn">Enter</button>
   <p id="gateError"></p>
@@ -215,7 +193,7 @@
   <div class="wrap">
     <header class="top">
       <div>
-        <h1>Media Office <span class="role-badge" id="roleBadge">Team</span></h1>
+        <h1>Media Office</h1>
         <div class="sub">Anmol Jeevan Ministries — Monthly Work Chart</div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -225,14 +203,13 @@
     </header>
 
     <div class="tabs" id="tabs">
-      <button class="tab active" data-tab="chart">My Chart</button>
-      <button class="tab" data-tab="overview" id="overviewTab" hidden>Team Overview</button>
-      <button class="tab" data-tab="total" id="totalTab" hidden>Total Work</button>
+      <button class="tab active" data-tab="chart">Monthly Chart</button>
+      <button class="tab" data-tab="total">Total Work</button>
     </div>
 
-    <!-- ===== the chart ===== -->
+    <!-- ===== the shared chart ===== -->
     <div id="chartView">
-      <div class="sheet" id="sheet">
+      <div class="sheet">
         <div class="sheet-head">
           <div>
             <h2>ANMOL JEEVAN MINISTRIES</h2>
@@ -243,9 +220,8 @@
 
         <div class="fields">
           <div class="field">
-            <label for="employee">Employee Name</label>
-            <input type="text" id="employee" list="employeeList" placeholder="Type or pick your name" autocomplete="off" maxlength="60">
-            <datalist id="employeeList"></datalist>
+            <span class="lab">Team</span>
+            <div class="static">Media &amp; Content Team</div>
           </div>
           <div class="field">
             <span class="lab">Month / Year</span>
@@ -257,13 +233,12 @@
           </div>
           <div class="field">
             <span class="lab no-print">Status</span>
-            <div class="static no-print" style="border-bottom:0"><span class="status st-draft" id="statusPill">Draft</span></div>
-            <div class="print-only"><span class="lab">Employee Signature</span><div class="static"></div></div>
+            <div class="static no-print" style="border-bottom:0"><span class="status st-draft" id="statusPill">In progress</span></div>
+            <div class="print-only"><span class="lab">Signature</span><div class="static"></div></div>
           </div>
         </div>
 
-        <div class="chips" id="chips"></div>
-        <div id="banner" class="info">Type your name above to open or start your chart.</div>
+        <div id="banner">Everyone on the media team fills in this same chart. Changes save automatically and show up for the whole team within a few seconds.</div>
 
         <div class="grid-wrap"><table class="grid" id="grid"></table></div>
 
@@ -291,61 +266,34 @@
         </div>
 
         <div class="actions no-print">
-          <span id="saveState" role="status" aria-live="polite">Enter your name to start</span>
-          <div class="sup-actions" id="supActions" hidden>
-            <input type="text" id="approverName" placeholder="Approver name" maxlength="60" autocomplete="off">
-            <button class="btn ok" id="approveBtn">Approve</button>
-            <button class="btn" id="unlockBtn">Unlock</button>
-          </div>
+          <span id="saveState" role="status" aria-live="polite">Loading…</span>
           <button class="btn" id="saveBtn">Save</button>
-          <button class="btn primary" id="submitBtn">Submit for approval</button>
+          <button class="btn primary" id="submitBtn">Submit month</button>
         </div>
 
         <div class="signatures">
-          <div class="sig">Employee Signature &amp; Date<small id="sigEmployee"></small></div>
-          <div class="sig r">Supervisor / Manager Approval<small id="sigSupervisor"></small></div>
+          <div class="sig">Signature &amp; Date</div>
+          <div class="sig r">Supervisor / Manager Approval</div>
         </div>
         <div class="foot-note">Anmol Jeevan Ministries • Internal Monthly Tracking</div>
       </div>
     </div>
 
-    <!-- ===== supervisor: everyone's month at a glance ===== -->
-    <div id="overview" hidden>
-      <div class="ov-bar">
-        <select id="ovMonthSel" aria-label="Month"></select>
-        <select id="ovYearSel" aria-label="Year"></select>
-        <input type="text" id="ovApprover" placeholder="Approver name" maxlength="60" autocomplete="off">
-        <button class="btn" id="ovRefresh">Refresh</button>
-        <button class="btn" id="ovExport">Export CSV</button>
-      </div>
-      <div id="ovLoading">Loading…</div>
-      <p id="ovError" hidden></p>
-      <div id="ovEmpty" hidden>No charts for this month yet.</div>
-      <div class="ov-scroll"><table class="ov-table" id="ovTable" hidden></table></div>
-    </div>
-
-    <!-- ===== supervisor: everything produced so far (content stock) ===== -->
+    <!-- ===== everything produced so far (content stock) ===== -->
     <div id="totalView" hidden>
-      <div class="ov-bar">
+      <div class="tc-bar">
         <select id="tcYear" aria-label="Year"></select>
-        <select id="tcMode" aria-label="Which charts to count">
-          <option value="all">Count all charts</option>
-          <option value="sub">Submitted &amp; approved only</option>
-          <option value="appr">Approved only</option>
-        </select>
         <button class="btn" id="tcRefresh">Refresh</button>
         <button class="btn" id="tcExport">Export CSV</button>
       </div>
       <p class="tc-intro">Everything the media team has produced, added up from all the monthly charts — your content stock at a glance.</p>
       <div id="tcLoading">Loading…</div>
       <p id="tcError" hidden></p>
-      <div id="tcEmpty" hidden>No charts saved yet.</div>
+      <div id="tcEmpty" hidden>Nothing has been filled in yet.</div>
       <div id="tcBody" hidden>
         <div class="tc-cards" id="tcCards"></div>
         <h3 class="tc-h">By month</h3>
-        <div class="ov-scroll"><table class="ov-table" id="tcMonth"></table></div>
-        <h3 class="tc-h">By person</h3>
-        <div class="ov-scroll"><table class="ov-table" id="tcPerson"></table></div>
+        <div class="tc-scroll"><table class="tc-table" id="tcMonth"></table></div>
       </div>
     </div>
   </div>
@@ -360,23 +308,21 @@
   const CATEGORIES = ['Reel','Long Content','Sunday Flyer','Monday Flyer','Video Promo','T-Shirt Work','Other Work'];
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const DAY_LETTERS = ['S','M','T','W','T','F','S'];
-  const REMEMBER_KEY = 'ajm-media-employee'; // just the employee's name, never the access key
+  const POLL_MS = 15000; // how often to look for changes made by the rest of the team
 
   let mediaKey = null;   // kept in memory only — never persisted, re-enter on every page load
-  let role = null;       // 'team' | 'supervisor'
-  let employees = [];
   let activeTab = 'chart';
   let activeCell = null;
-  let editSeq = 0;
   let autosaveTimer = null;
-  let ovCharts = [];
+  let pollTimer = null;
 
-  const now = new Date();
+  // pending = the cells this screen has changed but not saved yet, e.g. {"Reel": {"3": "2"}}.
+  // Only these are sent on save, and the server merges them into the shared chart.
   const state = {
-    year: now.getFullYear(), month: now.getMonth() + 1, employee: '',
-    cells: {}, extraCats: [], note: '', status: 'Draft',
-    submittedAt: '', approvedBy: '', approvedAt: '',
-    dirty: false, saving: false
+    year: 0, month: 0,
+    cells: {}, extraCats: [], note: '', noteDirty: false,
+    submittedAt: '', updatedAt: '',
+    pending: {}, ready: false, saving: false
   };
 
   const $ = id => document.getElementById(id);
@@ -384,9 +330,9 @@
   const pad = n => String(n).padStart(2, '0');
   const monthKey = () => state.year + '-' + pad(state.month);
   const daysInMonth = () => new Date(state.year, state.month, 0).getDate();
-  const isLocked = () => state.status === 'Approved';
   const cats = () => CATEGORIES.concat(state.extraCats);
-  const cleanName = s => String(s || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+  const hasPending = () => Object.keys(state.pending).length > 0;
+  const hasUnsaved = () => hasPending() || state.noteDirty;
 
   function toast(msg){
     const t = $('toast');
@@ -408,6 +354,10 @@
   function display(v){ return v === 'c' ? '✓' : (/^[pro]$/.test(v) ? v.toUpperCase() : v); }
   function cellClass(v){ return v === 'c' ? 's-c' : v === 'p' ? 's-p' : v === 'r' ? 's-r' : v === 'o' ? 's-o' : v !== '' ? 's-n' : ''; }
   function cellValue(v){ return /^\d+$/.test(v) ? parseInt(v, 10) : v === 'c' ? 1 : 0; }
+  function tdClass(v, d){
+    const dow = new Date(state.year, state.month - 1, d).getDay();
+    return (cellClass(v) + (dow === 0 ? ' sun' : '')).trim();
+  }
 
   function liveClean(raw){
     const s = String(raw || '').toLowerCase().trim();
@@ -415,8 +365,7 @@
     if(/^\d+$/.test(s)) return s.slice(0, 3).replace(/^0+(?=\d)/, '');
     const last = s[s.length - 1];
     if('cpro✓✔'.includes(last)) return last === '✓' || last === '✔' ? 'c' : last;
-    const digits = s.replace(/\D/g, '').slice(0, 3).replace(/^0+(?=\d)/, '');
-    return digits;
+    return s.replace(/\D/g, '').slice(0, 3).replace(/^0+(?=\d)/, '');
   }
 
   function getCell(cat, d){ return (state.cells[cat] || [])[d - 1] || ''; }
@@ -426,11 +375,15 @@
   }
   function rowTotal(cat){
     let t = 0;
-    (state.cells[cat] || []).slice(0, daysInMonth()).forEach(v => { t += cellValue(v || ''); });
+    for(let d = 1; d <= daysInMonth(); d++) t += cellValue(getCell(cat, d));
     return t;
   }
-  function colTotal(d){
-    return cats().reduce((t, c) => t + cellValue(getCell(c, d)), 0);
+  function colTotal(d){ return cats().reduce((t, c) => t + cellValue(getCell(c, d)), 0); }
+  function grandTotal(){ return cats().reduce((t, c) => t + rowTotal(c), 0); }
+  function catTotal(data, cat){
+    let t = 0;
+    String((data || {})[cat] || '').split('.').forEach(v => { t += cellValue(v); });
+    return t;
   }
 
   /* ---------- talking to the Apps Script ---------- */
@@ -456,13 +409,20 @@
     gateBtn.disabled = true; gateBtn.textContent = 'Checking…'; gateError.textContent = '';
     try{
       const j = await api({action:'mediaLogin', key});
-      mediaKey = key; role = j.role;
+      if(j.version !== 2){
+        gateError.textContent = 'The Google Sheet script has not been updated to the latest version yet (see ADMIN-SETUP.md).';
+        return;
+      }
+      mediaKey = key;
+      // the real date comes from Google, so a wrong computer clock can't open the wrong month
+      const today = new Date(j.now);
+      state.year = today.getFullYear(); state.month = today.getMonth() + 1;
       $('gate').style.display = 'none';
       $('panel').style.display = 'block';
       startSession();
     }catch(e){
       gateError.textContent = e.message === 'unauthorized'
-        ? 'Wrong key — or the media chart has not been added to the Google Sheet script yet (see ADMIN-SETUP.md).'
+        ? 'Wrong key — or the media key has not been set in the Google Sheet script yet (see ADMIN-SETUP.md).'
         : 'Could not reach the sheet — Google Apps Script can be slow to respond, especially on the first try. Wait a few seconds and try again.';
     }finally{
       gateBtn.disabled = false; gateBtn.textContent = 'Enter';
@@ -472,13 +432,14 @@
 
   function logout(){
     clearTimeout(autosaveTimer);
-    mediaKey = null; role = null;
-    state.dirty = false;
+    clearInterval(pollTimer);
+    mediaKey = null;
+    state.pending = {}; state.noteDirty = false;
     location.reload();
   }
   $('logoutBtn').addEventListener('click', async () => {
-    if(state.dirty && state.employee && !isLocked()){
-      const ok = await save(false);
+    if(hasUnsaved()){
+      const ok = await save();
       if(!ok && !confirm('Your latest changes could not be saved. Log out anyway?')) return;
     }
     logout();
@@ -486,90 +447,74 @@
 
   /* ---------- session start ---------- */
   function fillPeriodSelects(){
-    const y = now.getFullYear();
-    [['monthSel','yearSel'], ['ovMonthSel','ovYearSel']].forEach(([m, yr]) => {
-      $(m).innerHTML = MONTHS.map((n, i) => `<option value="${i + 1}">${n}</option>`).join('');
-      let opts = '';
-      for(let v = y - 2; v <= y + 1; v++) opts += `<option value="${v}">${v}</option>`;
-      $(yr).innerHTML = opts;
-    });
+    $('monthSel').innerHTML = MONTHS.map((n, i) => `<option value="${i + 1}">${n}</option>`).join('');
+    let opts = '';
+    for(let v = state.year - 2; v <= state.year + 1; v++) opts += `<option value="${v}">${v}</option>`;
+    $('yearSel').innerHTML = opts;
     syncPeriodControls();
   }
   function syncPeriodControls(){
-    ['monthSel','ovMonthSel'].forEach(id => $(id).value = String(state.month));
-    ['yearSel','ovYearSel'].forEach(id => $(id).value = String(state.year));
+    $('monthSel').value = String(state.month);
+    $('yearSel').value = String(state.year);
   }
 
   async function startSession(){
-    $('roleBadge').textContent = role === 'supervisor' ? 'Supervisor' : 'Team';
-    $('roleBadge').classList.toggle('sup', role === 'supervisor');
-    $('overviewTab').hidden = role !== 'supervisor';
-    $('totalTab').hidden = role !== 'supervisor';
-    $('supActions').hidden = role !== 'supervisor';
     fillPeriodSelects();
-    try{ state.employee = cleanName(localStorage.getItem(REMEMBER_KEY)); }catch(e){}
-    $('employee').value = state.employee;
-    await Promise.all([refreshEmployees(), loadChart()]);
+    await loadChart();
+    pollTimer = setInterval(poll, POLL_MS);
   }
 
-  async function refreshEmployees(){
-    try{
-      const j = await api({action:'mediaList', key:mediaKey, month:monthKey()});
-      employees = j.employees || [];
-      if(role === 'supervisor') ovCharts = j.charts || [];
-    }catch(e){ /* names are just a convenience */ }
-    renderEmployeeHelpers();
-  }
-
-  function renderEmployeeHelpers(){
-    $('employeeList').innerHTML = employees.map(n => `<option value="${esc(n)}"></option>`).join('');
-    const me = state.employee.toLowerCase();
-    $('chips').innerHTML = employees.length
-      ? '<span>Team:</span>' + employees.map(n => `<button class="chip${n.toLowerCase() === me ? ' active' : ''}" data-name="${esc(n)}">${esc(n)}</button>`).join('')
-      : '';
-  }
-  $('chips').addEventListener('click', e => {
-    const b = e.target.closest('.chip');
-    if(b) switchTo({employee: b.dataset.name});
-  });
-
-  /* ---------- loading / applying a chart ---------- */
+  /* ---------- loading / applying / merging the shared chart ---------- */
   function resetChart(){
-    state.cells = {}; state.extraCats = []; state.note = '';
-    state.status = 'Draft'; state.submittedAt = ''; state.approvedBy = ''; state.approvedAt = '';
-    state.dirty = false;
+    state.cells = {}; state.extraCats = []; state.note = ''; state.noteDirty = false;
+    state.submittedAt = ''; state.updatedAt = ''; state.pending = {};
+  }
+
+  function findExtraCats(data){
+    return Object.keys(data || {}).filter(k => !CATEGORIES.includes(k) && String(data[k]).replace(/\./g, '') !== '');
   }
 
   function applyChart(c){
     resetChart();
     if(!c) return;
-    Object.keys(c.data || {}).forEach(cat => {
-      state.cells[cat] = String(c.data[cat] || '').split('.');
-      if(!CATEGORIES.includes(cat) && state.cells[cat].some(v => v !== '')) state.extraCats.push(cat);
-    });
+    Object.keys(c.data || {}).forEach(cat => { state.cells[cat] = String(c.data[cat] || '').split('.'); });
+    state.extraCats = findExtraCats(c.data);
     state.note = c.note || '';
-    state.status = c.status || 'Draft';
     state.submittedAt = c.submittedAt || '';
-    state.approvedBy = c.approvedBy || '';
-    state.approvedAt = c.approvedAt || '';
+    state.updatedAt = c.updatedAt || '';
+  }
+
+  // Bring in what the rest of the team saved, without touching cells this screen has changed but not saved yet.
+  function mergeRemote(c){
+    const remote = {};
+    Object.keys(c.data || {}).forEach(cat => { remote[cat] = String(c.data[cat] || '').split('.'); });
+    const names = new Set(Object.keys(remote).concat(Object.keys(state.cells)));
+    names.forEach(cat => {
+      for(let d = 1; d <= 31; d++){
+        if(state.pending[cat] && state.pending[cat][d] !== undefined) continue;
+        setCell(cat, d, (remote[cat] || [])[d - 1] || '');
+      }
+    });
+    const remoteExtra = findExtraCats(c.data);
+    state.extraCats = remoteExtra.concat(state.extraCats.filter(k => !remoteExtra.includes(k) && state.pending[k]));
+    if(!state.noteDirty) state.note = c.note || '';
+    state.submittedAt = c.submittedAt || '';
+    state.updatedAt = c.updatedAt || '';
   }
 
   async function loadChart(){
     clearTimeout(autosaveTimer);
-    if(!state.employee){
-      resetChart(); render();
-      setSaveState('Enter your name to start');
-      return;
-    }
+    state.ready = false;
     resetChart(); render();
     setSaveState('Loading…');
     try{
-      const j = await api({action:'mediaGet', key:mediaKey, month:monthKey(), employee:state.employee});
+      const j = await api({action:'mediaGet', key:mediaKey, month:monthKey()});
       applyChart(j.chart);
+      state.ready = true;
       render();
-      setSaveState(j.chart ? 'All changes saved' : 'New chart — not saved yet', j.chart ? 'ok' : '');
+      setSaveState(j.chart ? 'All changes saved' : 'New month — nothing filled in yet', j.chart ? 'ok' : '');
     }catch(e){
-      handleApiError(e, 'Could not load this chart — check your connection and try again');
+      handleApiError(e, 'Could not load this month — press Save to try again');
     }
   }
 
@@ -578,81 +523,43 @@
     setSaveState(msg, 'err');
   }
 
-  /* ---------- switching person / month ---------- */
-  async function switchTo(patch){
-    if(state.dirty && state.employee && !isLocked()){
-      const ok = await save(false);
+  async function switchMonth(patch){
+    if(hasUnsaved()){
+      const ok = await save();
       if(!ok && !confirm('Your latest changes could not be saved. Discard them and continue?')){
-        syncControls();
+        syncPeriodControls();
         return;
       }
     }
     Object.assign(state, patch);
-    try{ localStorage.setItem(REMEMBER_KEY, state.employee); }catch(e){}
-    syncControls();
-    if(activeTab === 'overview') await loadOverview();
-    else { await loadChart(); refreshEmployees(); }
-  }
-  function syncControls(){
-    $('employee').value = state.employee;
     syncPeriodControls();
-    renderEmployeeHelpers();
+    await loadChart();
   }
-
-  $('employee').addEventListener('change', () => {
-    const name = cleanName($('employee').value);
-    if(name.toLowerCase() === state.employee.toLowerCase() && name === state.employee) return;
-    switchTo({employee: name});
-  });
-  $('employee').addEventListener('keydown', e => { if(e.key === 'Enter') e.target.blur(); });
-  [['monthSel','yearSel'], ['ovMonthSel','ovYearSel']].forEach(([m, y]) => {
-    [m, y].forEach(id => $(id).addEventListener('change', () => switchTo({month: +$(m).value, year: +$(y).value})));
-  });
+  ['monthSel','yearSel'].forEach(id => $(id).addEventListener('change', () => switchMonth({month:+$('monthSel').value, year:+$('yearSel').value})));
 
   /* ---------- drawing the chart ---------- */
   function render(){
     renderGrid();
     $('note').value = state.note;
-    const locked = isLocked();
-    $('note').readOnly = locked;
-    $('statusPill').textContent = state.status;
-    $('statusPill').className = 'status st-' + state.status.toLowerCase();
+    renderMeta();
+  }
+
+  function renderMeta(){
+    const done = !!state.submittedAt;
     $('submittedOn').textContent = fmtDate(state.submittedAt);
-    $('sigEmployee').textContent = state.submittedAt ? state.employee + ' — ' + fmtDate(state.submittedAt) : '';
-    $('sigSupervisor').textContent = state.approvedAt ? state.approvedBy + ' — ' + fmtDate(state.approvedAt) : '';
-    renderBanner();
-    renderButtons();
-    renderEmployeeHelpers();
-  }
-
-  function renderBanner(){
+    $('statusPill').textContent = done ? 'Submitted' : 'In progress';
+    $('statusPill').className = 'status ' + (done ? 'st-done' : 'st-draft');
     const b = $('banner');
-    if(!state.employee){ b.className = 'info'; b.textContent = 'Type your name above to open or start your chart.'; b.hidden = false; return; }
-    if(isLocked()){
-      b.className = 'ok';
-      b.textContent = `✓ Approved by ${state.approvedBy} on ${fmtDate(state.approvedAt)}. This chart is locked` + (role === 'supervisor' ? ' — use Unlock to change it.' : '.');
-      b.hidden = false; return;
-    }
-    if(state.status === 'Submitted'){
-      b.className = 'warn';
-      b.textContent = `Submitted on ${fmtDate(state.submittedAt)} — waiting for supervisor approval. You can still make changes until it is approved.`;
-      b.hidden = false; return;
-    }
-    b.hidden = true;
-  }
-
-  function renderButtons(){
-    const locked = isLocked(), has = !!state.employee;
-    $('saveBtn').disabled = !has || locked;
-    $('submitBtn').disabled = !has || locked;
-    $('submitBtn').textContent = state.status === 'Submitted' ? 'Re-submit' : 'Submit for approval';
-    $('approveBtn').disabled = !(has && state.status === 'Submitted');
-    $('unlockBtn').disabled = !(has && locked);
-    $('approverName').value = approverName;
+    if(done){ b.className = 'ok'; b.textContent = `Submitted on ${fmtDate(state.submittedAt)}. You can still add to the chart if something was missed.`; }
+    else { b.className = ''; b.textContent = 'Everyone on the media team fills in this same chart. Changes save automatically and show up for the whole team within a few seconds.'; }
+    $('submitBtn').textContent = done ? 'Reopen month' : 'Submit month';
+    $('submitBtn').classList.toggle('primary', !done);
+    $('saveBtn').disabled = false;
+    $('submitBtn').disabled = !state.ready;
   }
 
   function renderGrid(){
-    const n = daysInMonth(), list = cats(), locked = isLocked() || !state.employee;
+    const n = daysInMonth(), list = cats(), locked = !state.ready;
     let h = '<thead><tr><th class="lbl">Date</th>';
     for(let d = 1; d <= 31; d++){
       if(d > n){ h += '<th class="na"></th>'; continue; }
@@ -665,8 +572,7 @@
       for(let d = 1; d <= 31; d++){
         if(d > n){ h += '<td class="na"></td>'; continue; }
         const v = getCell(c, d);
-        const dow = new Date(state.year, state.month - 1, d).getDay();
-        h += `<td class="${(cellClass(v) + (dow === 0 ? ' sun' : '')).trim()}"><input class="cell" data-ci="${ci}" data-d="${d}" value="${esc(display(v))}" maxlength="3" autocomplete="off" inputmode="text" aria-label="${esc(c)}, day ${d}"${locked ? ' readonly' : ''}></td>`;
+        h += `<td class="${tdClass(v, d)}"><input class="cell" data-ci="${ci}" data-d="${d}" value="${esc(display(v))}" maxlength="3" autocomplete="off" inputmode="text" aria-label="${esc(c)}, day ${d}"${locked ? ' readonly' : ''}></td>`;
       }
       h += `<td class="tot" id="rt-${ci}">${rowTotal(c)}</td></tr>`;
     });
@@ -677,8 +583,6 @@
     activeCell = null;
   }
 
-  function grandTotal(){ return cats().reduce((t, c) => t + rowTotal(c), 0); }
-
   function updateTotals(){
     const n = daysInMonth();
     cats().forEach((c, ci) => { const el = $('rt-' + ci); if(el) el.textContent = rowTotal(c); });
@@ -686,11 +590,31 @@
     $('gt').textContent = grandTotal();
   }
 
+  // Update the screen from state in place, so a teammate's changes appear without losing the cell being typed in.
+  function refreshView(){
+    if($('grid').querySelectorAll('tbody tr').length !== cats().length && !(activeCell && document.body.contains(activeCell))) renderGrid();
+    document.querySelectorAll('input.cell').forEach(el => {
+      if(el === document.activeElement) return;
+      const v = getCell(cats()[+el.dataset.ci], +el.dataset.d);
+      if(el.value !== display(v)) el.value = display(v);
+      el.parentElement.className = tdClass(v, +el.dataset.d);
+    });
+    updateTotals();
+    if(!state.noteDirty && document.activeElement !== $('note')) $('note').value = state.note;
+    renderMeta();
+  }
+
   /* ---------- editing cells ---------- */
   const gridEl = $('grid');
 
   gridEl.addEventListener('focusin', e => {
     if(e.target.classList.contains('cell')){ activeCell = e.target; e.target.select(); }
+  });
+  gridEl.addEventListener('focusout', e => {
+    const el = e.target;
+    if(!el.classList.contains('cell') || !cats()[+el.dataset.ci]) return;
+    const v = getCell(cats()[+el.dataset.ci], +el.dataset.d);
+    if(el.value !== display(v)) el.value = display(v); // catch up on anything a teammate changed while this cell was selected
   });
 
   gridEl.addEventListener('input', e => {
@@ -703,8 +627,8 @@
     const cat = cats()[+el.dataset.ci], d = +el.dataset.d;
     el.value = display(v);
     setCell(cat, d, v);
-    const dow = new Date(state.year, state.month - 1, d).getDay();
-    el.parentElement.className = (cellClass(v) + (dow === 0 ? ' sun' : '')).trim();
+    (state.pending[cat] = state.pending[cat] || {})[d] = v;
+    el.parentElement.className = tdClass(v, d);
     updateTotals();
     markDirty();
   }
@@ -716,8 +640,7 @@
     const dCol = {ArrowLeft:-1, ArrowRight:1}[e.key];
     if(dRow === undefined && dCol === undefined) return;
     e.preventDefault();
-    const ci = +el.dataset.ci + (dRow || 0), d = +el.dataset.d + (dCol || 0);
-    const next = gridEl.querySelector(`.cell[data-ci="${ci}"][data-d="${d}"]`);
+    const next = gridEl.querySelector(`.cell[data-ci="${+el.dataset.ci + (dRow || 0)}"][data-d="${+el.dataset.d + (dCol || 0)}"]`);
     if(next) next.focus();
   });
 
@@ -725,13 +648,18 @@
     b.addEventListener('mousedown', e => e.preventDefault()); // keep the selected cell focused
     b.addEventListener('click', () => {
       if(!activeCell || !document.body.contains(activeCell)){ toast('Click a cell first'); return; }
-      if(activeCell.readOnly){ toast(state.employee ? 'This chart is locked' : 'Enter your name first'); return; }
+      if(activeCell.readOnly){ toast('Please wait — the chart is still loading'); return; }
       applyToCell(activeCell, b.dataset.fill);
       activeCell.focus();
     });
   });
 
-  $('note').addEventListener('input', () => { state.note = $('note').value; markDirty(); });
+  $('note').addEventListener('input', () => {
+    if(!state.ready) return;
+    state.note = $('note').value;
+    state.noteDirty = true;
+    markDirty();
+  });
 
   /* ---------- saving ---------- */
   function setSaveState(text, kind){
@@ -741,187 +669,82 @@
   }
 
   function markDirty(){
-    if(!state.employee || isLocked()) return;
-    state.dirty = true;
-    editSeq++;
     setSaveState('Unsaved changes…');
     clearTimeout(autosaveTimer);
-    autosaveTimer = setTimeout(() => save(false), 2000);
+    autosaveTimer = setTimeout(() => save(), 1500);
   }
 
-  function toData(){
-    const n = daysInMonth(), out = {};
-    cats().forEach(c => {
-      const s = (state.cells[c] || []).slice(0, n).map(v => v || '').join('.').replace(/\.+$/, '');
-      if(s) out[c] = s;
-    });
-    return out;
+  function waitWhileSaving(){
+    return new Promise(res => { const t = setInterval(() => { if(!state.saving){ clearInterval(t); res(); } }, 120); });
   }
 
+  // submit: '1' = mark the month submitted, '0' = reopen it, undefined = just save.
   async function save(submit){
-    if(!state.employee){ toast('Enter the employee name first'); return false; }
-    if(isLocked()) return false;
-    if(state.saving) { await waitWhileSaving(); if(!state.dirty && !submit) return true; }
+    if(!state.ready){ await loadChart(); return state.ready; } // "Save" after a failed load = try again
+    if(state.saving) await waitWhileSaving();
+    const sent = JSON.parse(JSON.stringify(state.pending));
+    const sentNote = state.noteDirty ? state.note : undefined;
+    if(!Object.keys(sent).length && sentNote === undefined && submit === undefined){
+      setSaveState('All changes saved', 'ok');
+      return true;
+    }
     clearTimeout(autosaveTimer);
     state.saving = true;
-    const seq = editSeq;
-    setSaveState(submit ? 'Submitting…' : 'Saving…');
+    setSaveState(submit === '1' ? 'Submitting…' : 'Saving…');
+    const params = {action:'mediaSave', key:mediaKey, month:monthKey(), changes:JSON.stringify(sent)};
+    if(sentNote !== undefined) params.note = sentNote;
+    if(submit !== undefined) params.submit = submit;
     try{
-      const j = await api({action:'mediaSave', key:mediaKey, month:monthKey(), employee:state.employee, data:JSON.stringify(toData()), note:state.note, submit:submit ? '1' : '0'});
-      state.status = j.chart.status;
-      state.submittedAt = j.chart.submittedAt;
-      state.approvedBy = j.chart.approvedBy;
-      state.approvedAt = j.chart.approvedAt;
+      const j = await api(params);
       state.saving = false;
-      if(seq === editSeq){ state.dirty = false; setSaveState(submit ? 'Submitted ✓' : 'All changes saved', 'ok'); }
-      else { setSaveState('Unsaved changes…'); autosaveTimer = setTimeout(() => save(false), 500); }
-      $('statusPill').textContent = state.status;
-      $('statusPill').className = 'status st-' + state.status.toLowerCase();
-      $('submittedOn').textContent = fmtDate(state.submittedAt);
-      renderBanner(); renderButtons();
-      if(!employees.some(n => n.toLowerCase() === state.employee.toLowerCase())){ employees.push(state.employee); employees.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1); renderEmployeeHelpers(); }
+      // whatever was sent and not touched again since is now safely stored
+      Object.keys(sent).forEach(cat => Object.keys(sent[cat]).forEach(d => {
+        if(state.pending[cat] && state.pending[cat][d] === sent[cat][d]){
+          delete state.pending[cat][d];
+          if(!Object.keys(state.pending[cat]).length) delete state.pending[cat];
+        }
+      }));
+      if(sentNote !== undefined && state.note === sentNote) state.noteDirty = false;
+      mergeRemote(j.chart);
+      refreshView();
+      if(hasUnsaved()){ setSaveState('Unsaved changes…'); autosaveTimer = setTimeout(() => save(), 500); }
+      else setSaveState(submit === '1' ? 'Submitted ✓' : 'All changes saved', 'ok');
       return true;
     }catch(e){
       state.saving = false;
-      if(e.message === 'locked'){
-        toast('This chart was approved — it can no longer be changed');
-        await loadChart();
-        return false;
-      }
       handleApiError(e, 'Not saved — check your connection and press Save');
       return false;
     }
   }
-  function waitWhileSaving(){
-    return new Promise(res => { const t = setInterval(() => { if(!state.saving){ clearInterval(t); res(); } }, 150); });
-  }
 
   $('saveBtn').addEventListener('click', async () => {
-    const ok = await save(false);
-    if(ok) toast('Saved');
+    if(await save()) toast('Saved');
   });
   $('submitBtn').addEventListener('click', async () => {
-    if(!state.employee) return;
-    if(!confirm('Submit this chart for approval?\nYou can still make changes until it is approved.')) return;
-    const ok = await save(true);
-    if(ok){ render(); toast('Submitted for approval'); }
+    const reopening = !!state.submittedAt;
+    if(!confirm(reopening ? 'Reopen this month? The submission date will be cleared.' : 'Mark this month as submitted?\nThe team can still add to the chart if something was missed.')) return;
+    if(await save(reopening ? '0' : '1')) toast(reopening ? 'Month reopened' : 'Month submitted');
   });
 
   window.addEventListener('beforeunload', e => {
-    if(state.dirty && state.employee && !isLocked()){ e.preventDefault(); e.returnValue = ''; }
+    if(hasUnsaved()){ e.preventDefault(); e.returnValue = ''; }
   });
 
-  /* ---------- supervisor: approve / unlock ---------- */
-  let approverName = '';
-  [['approverName'], ['ovApprover']].forEach(([id]) => {
-    $(id).addEventListener('input', () => {
-      approverName = cleanName($(id).value);
-      $('approverName').value = $('ovApprover').value = $(id).value;
-    });
-  });
-
-  async function setApproval(employee, approve){
-    if(approve && !approverName){ toast('Enter the approver name first'); return false; }
+  /* ---------- keeping in step with the rest of the team ---------- */
+  async function poll(){
+    if(!mediaKey || activeTab !== 'chart' || document.hidden || state.saving || !state.ready || hasUnsaved()) return;
+    const mk = monthKey();
     try{
-      const j = await api({action:'mediaApprove', key:mediaKey, month:monthKey(), employee, approve:approve ? '1' : '0', by:approverName});
-      toast(approve ? 'Approved ✓' : 'Chart unlocked');
-      if(employee.toLowerCase() === state.employee.toLowerCase()){
-        state.status = j.chart.status; state.approvedBy = j.chart.approvedBy; state.approvedAt = j.chart.approvedAt;
-      }
-      return true;
-    }catch(e){
-      if(e.message === 'not submitted') toast('Only a submitted chart can be approved');
-      else if(e.message === 'unauthorized' || e.message === 'forbidden'){ toast('Session expired — please log in again'); setTimeout(logout, 900); }
-      else toast('Could not update — try again');
-      return false;
-    }
+      const j = await api({action:'mediaGet', key:mediaKey, month:mk});
+      if(!j.chart || mk !== monthKey() || hasUnsaved() || state.saving) return;
+      if(j.chart.updatedAt === state.updatedAt) return;
+      mergeRemote(j.chart);
+      refreshView();
+      toast('Updated with your team’s latest changes');
+    }catch(e){ /* try again next time */ }
   }
 
-  $('approveBtn').addEventListener('click', async () => {
-    if(state.dirty) await save(false);
-    if(await setApproval(state.employee, true)){ render(); }
-  });
-  $('unlockBtn').addEventListener('click', async () => {
-    if(await setApproval(state.employee, false)){ render(); }
-  });
-
-  /* ---------- team overview (supervisor) ---------- */
-  function ovCats(){
-    const extra = [];
-    ovCharts.forEach(c => Object.keys(c.data || {}).forEach(k => { if(!CATEGORIES.includes(k) && !extra.includes(k)) extra.push(k); }));
-    return CATEGORIES.concat(extra);
-  }
-  function catTotal(data, cat){
-    let t = 0;
-    String((data || {})[cat] || '').split('.').forEach(v => { t += cellValue(v); });
-    return t;
-  }
-
-  async function loadOverview(){
-    $('ovLoading').hidden = false; $('ovError').hidden = true; $('ovEmpty').hidden = true; $('ovTable').hidden = true;
-    try{
-      const j = await api({action:'mediaList', key:mediaKey, month:monthKey()});
-      employees = j.employees || []; ovCharts = j.charts || [];
-      $('ovLoading').hidden = true;
-      renderOverview();
-    }catch(e){
-      $('ovLoading').hidden = true;
-      $('ovError').hidden = false;
-      $('ovError').textContent = e.message === 'unauthorized' ? 'Session expired — please log in again.' : 'Could not reach the sheet — wait a few seconds and press Refresh.';
-    }
-  }
-
-  function renderOverview(){
-    if(!ovCharts.length){ $('ovEmpty').hidden = false; $('ovTable').hidden = true; return; }
-    const list = ovCats();
-    let h = '<thead><tr><th>Employee</th><th>Status</th>' + list.map(c => `<th>${esc(c)}</th>`).join('') + '<th>Total</th><th>Submitted</th><th></th></tr></thead><tbody>';
-    const sums = list.map(() => 0); let grand = 0;
-    ovCharts.forEach(c => {
-      const totals = list.map(cat => catTotal(c.data, cat));
-      totals.forEach((t, i) => sums[i] += t);
-      const tot = totals.reduce((a, b) => a + b, 0); grand += tot;
-      const btn = c.status === 'Approved'
-        ? `<button class="btn rowbtn" data-act="unlock" data-name="${esc(c.employee)}">Unlock</button>`
-        : c.status === 'Submitted' ? `<button class="btn ok rowbtn" data-act="approve" data-name="${esc(c.employee)}">Approve</button>` : '';
-      h += `<tr><td><strong>${esc(c.employee)}</strong></td><td><span class="status st-${esc(c.status.toLowerCase())}">${esc(c.status)}</span></td>`
-        + totals.map(t => `<td>${t || '–'}</td>`).join('')
-        + `<td class="tot">${tot}</td><td>${c.submittedAt ? fmtDate(c.submittedAt) : '—'}</td>`
-        + `<td style="white-space:nowrap"><button class="btn rowbtn" data-act="open" data-name="${esc(c.employee)}">Open</button> ${btn}</td></tr>`;
-    });
-    h += '</tbody><tfoot><tr><td>All employees</td><td></td>' + sums.map(t => `<td>${t}</td>`).join('') + `<td>${grand}</td><td></td><td></td></tr></tfoot>`;
-    $('ovTable').innerHTML = h;
-    $('ovTable').hidden = false; $('ovEmpty').hidden = true;
-  }
-
-  $('ovTable').addEventListener('click', async e => {
-    const b = e.target.closest('button[data-act]');
-    if(!b) return;
-    const name = b.dataset.name;
-    if(b.dataset.act === 'open'){ await showTab('chart', {employee: name}); return; }
-    b.disabled = true;
-    if(await setApproval(name, b.dataset.act === 'approve')) await loadOverview();
-    else b.disabled = false;
-  });
-  $('ovRefresh').addEventListener('click', loadOverview);
-
-  $('ovExport').addEventListener('click', () => {
-    if(!ovCharts.length){ toast('Nothing to export for this month'); return; }
-    const list = ovCats();
-    const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const lines = [['Employee','Month','Status'].concat(list, ['Total','Submitted','Approved by','Approved on','Note']).map(q).join(',')];
-    ovCharts.forEach(c => {
-      const totals = list.map(cat => catTotal(c.data, cat));
-      lines.push([c.employee, MONTHS[state.month - 1] + ' ' + state.year, c.status].concat(totals, [totals.reduce((a, b) => a + b, 0), c.submittedAt ? fmtDate(c.submittedAt) : '', c.approvedBy, c.approvedAt ? fmtDate(c.approvedAt) : '', c.note]).map(q).join(','));
-    });
-    const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `media-work-chart-${monthKey()}.csv`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  /* ---------- total work: everything produced so far (supervisor) ---------- */
+  /* ---------- total work: everything produced so far ---------- */
   let tcCharts = [];
   const monthLabel = m => MONTHS[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
   const showNum = n => n ? n.toLocaleString('en-IN') : '–';
@@ -929,7 +752,7 @@
   async function loadTotals(){
     $('tcLoading').hidden = false; $('tcError').hidden = true; $('tcEmpty').hidden = true; $('tcBody').hidden = true;
     try{
-      const j = await api({action:'mediaList', key:mediaKey}); // no month = every month
+      const j = await api({action:'mediaList', key:mediaKey});
       tcCharts = j.charts || [];
       $('tcLoading').hidden = true;
       fillTcYears();
@@ -949,10 +772,8 @@
   }
 
   function tcVisible(){
-    const yr = $('tcYear').value, mode = $('tcMode').value;
-    return tcCharts.filter(c =>
-      (yr === 'all' || c.month.startsWith(yr + '-')) &&
-      (mode === 'all' || (mode === 'sub' && c.status !== 'Draft') || (mode === 'appr' && c.status === 'Approved')));
+    const yr = $('tcYear').value;
+    return tcCharts.filter(c => (yr === 'all' || c.month.startsWith(yr + '-')) && (c.total > 0 || Object.keys(c.data || {}).length));
   }
 
   function tcCatList(charts){
@@ -962,14 +783,13 @@
   }
 
   function renderTotals(){
-    if(!tcCharts.length){ $('tcEmpty').textContent = 'No charts saved yet.'; $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
     const charts = tcVisible();
-    if(!charts.length){ $('tcEmpty').textContent = 'No charts match this filter.'; $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
+    if(!charts.length){ $('tcEmpty').hidden = false; $('tcBody').hidden = true; return; }
     $('tcEmpty').hidden = true; $('tcBody').hidden = false;
 
     const list = tcCatList(charts);
-    const per = charts.map(c => list.map(cat => catTotal(c.data, cat)));
-    const sums = list.map((_, i) => per.reduce((t, row) => t + row[i], 0));
+    const rows = charts.slice().sort((a, b) => a.month < b.month ? 1 : -1).map(c => ({c, cats: list.map(cat => catTotal(c.data, cat))}));
+    const sums = list.map((_, i) => rows.reduce((t, r) => t + r.cats[i], 0));
     const grand = sums.reduce((a, b) => a + b, 0);
     const max = Math.max(1, ...sums);
 
@@ -977,31 +797,13 @@
       `<div class="tc-card grand"><div class="n">${grand.toLocaleString('en-IN')}</div><div class="l">Total content</div></div>` +
       list.map((cat, i) => `<div class="tc-card"><div class="n">${sums[i].toLocaleString('en-IN')}</div><div class="l">${esc(cat)}</div><div class="bar"><i style="width:${Math.round(sums[i] / max * 100)}%"></i></div></div>`).join('');
 
-    const byMonth = {}, byPerson = {};
-    charts.forEach((c, ci) => {
-      const m = byMonth[c.month] = byMonth[c.month] || {cats: list.map(() => 0), people: new Set()};
-      const p = byPerson[c.employee.toLowerCase()] = byPerson[c.employee.toLowerCase()] || {name: c.employee, cats: list.map(() => 0), months: new Set()};
-      list.forEach((_, i) => { m.cats[i] += per[ci][i]; p.cats[i] += per[ci][i]; });
-      m.people.add(c.employee.toLowerCase());
-      p.months.add(c.month);
-    });
-
-    const head = first => `<thead><tr><th>${first}</th>${list.map(c => `<th>${esc(c)}</th>`).join('')}<th>Total</th><th>`;
-    const tot = arr => arr.reduce((a, b) => a + b, 0);
-
-    const months = Object.keys(byMonth).sort().reverse();
-    $('tcMonth').innerHTML = head('Month') + 'People</th></tr></thead><tbody>' +
-      months.map(m => `<tr><td><strong>${esc(monthLabel(m))}</strong></td>${byMonth[m].cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${tot(byMonth[m].cats).toLocaleString('en-IN')}</td><td>${byMonth[m].people.size}</td></tr>`).join('') +
+    $('tcMonth').innerHTML =
+      `<thead><tr><th>Month</th>${list.map(c => `<th>${esc(c)}</th>`).join('')}<th>Total</th><th>Submitted</th></tr></thead><tbody>` +
+      rows.map(r => `<tr><td><strong>${esc(monthLabel(r.c.month))}</strong></td>${r.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${r.cats.reduce((a, b) => a + b, 0).toLocaleString('en-IN')}</td><td>${r.c.submittedAt ? '✓ ' + esc(fmtDate(r.c.submittedAt)) : '—'}</td></tr>`).join('') +
       `</tbody><tfoot><tr><td>All months</td>${sums.map(n => `<td>${n.toLocaleString('en-IN')}</td>`).join('')}<td>${grand.toLocaleString('en-IN')}</td><td></td></tr></tfoot>`;
-
-    const people = Object.values(byPerson).sort((a, b) => tot(b.cats) - tot(a.cats));
-    $('tcPerson').innerHTML = head('Employee') + 'Months</th></tr></thead><tbody>' +
-      people.map(p => `<tr><td><strong>${esc(p.name)}</strong></td>${p.cats.map(n => `<td>${showNum(n)}</td>`).join('')}<td class="tot">${tot(p.cats).toLocaleString('en-IN')}</td><td>${p.months.size}</td></tr>`).join('') +
-      `</tbody><tfoot><tr><td>Everyone</td>${sums.map(n => `<td>${n.toLocaleString('en-IN')}</td>`).join('')}<td>${grand.toLocaleString('en-IN')}</td><td></td></tr></tfoot>`;
   }
 
   $('tcYear').addEventListener('change', renderTotals);
-  $('tcMode').addEventListener('change', renderTotals);
   $('tcRefresh').addEventListener('click', loadTotals);
 
   $('tcExport').addEventListener('click', () => {
@@ -1009,10 +811,10 @@
     if(!charts.length){ toast('Nothing to export'); return; }
     const list = tcCatList(charts);
     const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const lines = [['Month','Employee','Status'].concat(list, ['Total']).map(q).join(',')];
-    charts.slice().sort((a, b) => a.month < b.month ? 1 : a.month > b.month ? -1 : a.employee.localeCompare(b.employee)).forEach(c => {
+    const lines = [['Month'].concat(list, ['Total','Submitted']).map(q).join(',')];
+    charts.slice().sort((a, b) => a.month < b.month ? 1 : -1).forEach(c => {
       const totals = list.map(cat => catTotal(c.data, cat));
-      lines.push([monthLabel(c.month), c.employee, c.status].concat(totals, [totals.reduce((a, b) => a + b, 0)]).map(q).join(','));
+      lines.push([monthLabel(c.month)].concat(totals, [totals.reduce((a, b) => a + b, 0), c.submittedAt ? fmtDate(c.submittedAt) : '']).map(q).join(','));
     });
     const blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
     const a = document.createElement('a');
@@ -1023,22 +825,15 @@
   });
 
   /* ---------- tabs & print ---------- */
-  async function showTab(tab, patch){
+  async function showTab(tab){
     if(tab === activeTab) return;
-    if((tab === 'overview' || tab === 'total') && state.dirty && state.employee && !isLocked()) await save(false);
+    if(tab === 'total' && hasUnsaved()) await save();
     activeTab = tab;
     document.querySelectorAll('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
     $('chartView').hidden = tab !== 'chart';
-    $('overview').hidden = tab !== 'overview';
     $('totalView').hidden = tab !== 'total';
-    if(patch){
-      Object.assign(state, patch);
-      try{ localStorage.setItem(REMEMBER_KEY, state.employee); }catch(e){}
-      syncControls();
-    }
-    if(tab === 'overview') await loadOverview();
-    else if(tab === 'total') await loadTotals();
-    else { await loadChart(); refreshEmployees(); }
+    if(tab === 'total') await loadTotals();
+    else await loadChart();
   }
   $('tabs').addEventListener('click', e => {
     const t = e.target.closest('.tab');
@@ -1047,7 +842,7 @@
 
   $('printBtn').addEventListener('click', async () => {
     if(activeTab !== 'chart') await showTab('chart');
-    if(state.dirty && state.employee && !isLocked()) await save(false);
+    if(hasUnsaved()) await save();
     window.print();
   });
 </script>

@@ -34,29 +34,30 @@ Send me that URL (and confirm the `ADMIN_KEY` you set), and I'll paste it into [
 
 ## 4. Media office — Monthly Work Chart
 
-`/media.html` is a private page for the media office: an online version of the paper Monthly Work Chart (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals). It is saved in a new **MediaCharts** tab of the same Google Sheet, completely separate from the registrations.
+`/media.html` is a private page for the media office: an online version of the paper Monthly Work Chart (Reel, Long Content, Sunday/Monday Flyer, Video Promo, T-Shirt Work, Other Work × days 1–31, with totals). **The whole team works on one shared chart per month** — one key, no names, no separate roles. It is saved in a **MediaWork** tab of the same Google Sheet, completely separate from the registrations.
 
-To turn it on, update the script once:
+To turn it on (or to update it), update the script once:
 
-1. Open the sheet → **Extensions → Apps Script**, and paste in the entire new contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
-2. At the top, put your **existing** `ADMIN_KEY` back (the pasted file has a placeholder), and set the two new keys to secrets of your own:
+1. Open the sheet → **Extensions → Apps Script**, and paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
+2. At the top, set the two keys — the pasted file has sample keys, and **the script refuses the sample keys** until you change them:
    ```
-   const MEDIA_KEY = '...';        // the whole media team uses this one
-   const SUPERVISOR_KEY = '...';   // supervisor only: sees everyone's charts and approves them
+   const ADMIN_KEY = '...';   // your existing admin key — the one you already use for admin.html
+   const MEDIA_KEY = '...';   // the one key the whole media team uses on media.html
    ```
 3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy**. (Don't use "New deployment" — it issues a different URL.)
-4. Visit `https://ajmfamily.site/media.html` and log in with the media key (team) or the supervisor key.
+4. Visit `https://ajmfamily.site/media.html` and log in with the media key.
 
 How it works:
 
-- **Team:** type your name, fill in the numbers (or ✓ / P / R / O) for each day, and it saves automatically. Press **Submit for approval** when the month is done — you can keep editing until it's approved.
-- **Supervisor:** the **Team Overview** tab shows everyone's totals for the month. Type your name, then **Approve** a submitted chart. Approved charts are locked; **Unlock** puts one back to Submitted.
-- **Total Work** (supervisor tab): everything the team has produced, added up across all months — a big total per work type (your content stock), plus tables by month and by person. Filter by year, or count only submitted/approved charts. Export CSV gives one row per chart.
+- **Everyone edits the same chart.** Pick the month, then type a number (or ✓ / P / R / O) in each day's box — changes save automatically and appear on everyone else's screen within a few seconds. If two people edit different boxes at the same moment, both are kept.
+- **Submit month** stamps the submission date (Submission Date on the printed form). The team can still add to the chart afterwards; **Reopen month** clears the date.
 - **Total** = the numbers plus 1 for every ✓ (P, R and O don't count).
-- **Print / Save as PDF** prints the chart in the same layout as the paper form, with the approval on the signature line. **Export CSV** (supervisor) gives the month's totals per person.
+- **Total Work** tab: everything produced across all months — a big total per work type (your content stock), and a month-by-month table. Filter by year; Export CSV.
+- **Print / Save as PDF** prints the chart in the same layout as the paper form, with blank signature lines to sign by hand.
+- The month/year that opens by default comes from Google's clock, so a wrong computer date can't open the wrong month.
 - The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.
 
-The media key and supervisor key don't open the registrations list, and the admin key doesn't open the media charts.
+The media key doesn't open the registrations list, and the admin key doesn't open the media chart. If an earlier version left a **MediaCharts** tab in the sheet, you can delete it — the new version uses **MediaWork**.
 
 ## Important limitations — please read
 
