@@ -246,6 +246,12 @@
   table.tt input.num:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
   .mlink{color:inherit;text-decoration:underline dotted #9fb0cf;text-underline-offset:4px;cursor:pointer}
   .mlink:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  .howto{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;background:#fff;border:1px solid var(--line-2);border-left:5px solid var(--blue);border-radius:16px;padding:12px 16px 12px 18px;margin-bottom:16px;font-size:.9rem;line-height:1.4;color:#28527f;box-shadow:var(--shadow)}
+  .howto strong{color:var(--navy);font-weight:800}
+  .howto span b{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--blue);color:#fff;font-size:.72rem;margin-right:8px}
+  .howto .ht-note{color:var(--muted)}
+  .howto button{margin-left:auto;padding:6px 16px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;color:var(--ink)}
+  .howto button:hover{background:var(--blue-soft);border-color:#c5d6fb}
   .bar{display:inline-block;width:110px;height:8px;border-radius:100px;background:#e8edf6;overflow:hidden;vertical-align:middle;margin-right:8px}
   .bar i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#3b6fd6,#27a06a)}
   .ttype{display:inline-flex;align-items:center;gap:8px;font-weight:700}
@@ -280,7 +286,8 @@
     .brand img{height:28px}
     .brand h1{font-size:1.3rem}
     .top-actions{width:100%}
-    .top-actions .btn{flex:1}
+    .top-actions .btn{flex:1;padding:10px 8px;font-size:.8rem;white-space:nowrap}
+    .top-actions .btn svg{display:none}
   }
   @media(max-width:520px){ .periodbar .field{min-width:0;width:100%} .tiles{grid-template-columns:1fr} .tile .v{font-size:2.1rem} .tile.hero .v{font-size:2.6rem} }
 
@@ -288,7 +295,7 @@
     @page{size:A4 landscape;margin:10mm}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     html,body{background:#fff;padding:0;min-height:0;height:auto}
-    #gate,header.top,.tabs,.palette,.actions,#banner,#stockView,#totalView,#toast,.no-print,.foot-note,.viewswitch,.gridhelp{display:none!important}
+    #gate,header.top,.howto,.tabs,.palette,.actions,#banner,#stockView,#totalView,#toast,.no-print,.foot-note,.viewswitch,.gridhelp{display:none!important}
     #panel{display:block!important}
     #chartView{display:block!important}
     .wrap{max-width:none}
@@ -341,10 +348,20 @@
         </div>
       </div>
       <div class="top-actions">
+        <button class="btn" id="howtoBtn"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>How to use</button>
         <button class="btn" id="printBtn"><svg class="i" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print / PDF</button>
         <button class="btn" id="logoutBtn"><svg class="i" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
       </div>
     </header>
+
+    <div class="howto" id="howto" hidden>
+      <strong>New here?</strong>
+      <span><b>1</b>Content Log — type how many pieces were made each day</span>
+      <span id="howtoStock"><b>2</b>Content Stock — list each piece, tap “Uploaded” once it is posted</span>
+      <span><b>3</b>Stock Summary — see how much is left</span>
+      <span class="ht-note">Everything saves by itself.</span>
+      <button type="button" id="howtoHide">Got it</button>
+    </div>
 
     <nav class="tabs" id="tabs">
       <button class="tab active" data-tab="chart"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Content Log</button>
@@ -667,9 +684,28 @@
     $('yearSel').value = String(state.year);
   }
 
+  // "How to use" strip: shown until someone dismisses it on their own device (a harmless per-device preference)
+  function initHowto(){
+    $('howtoStock').hidden = !hasStock; // an older script has no Content Stock tab
+    let dismissed = false;
+    try{ dismissed = localStorage.getItem('media-howto') === 'hidden'; }catch(e){}
+    $('howto').hidden = dismissed;
+  }
+  $('howtoHide').addEventListener('click', () => {
+    $('howto').hidden = true;
+    try{ localStorage.setItem('media-howto', 'hidden'); }catch(e){}
+  });
+  $('howtoBtn').addEventListener('click', () => {
+    const show = $('howto').hidden;
+    $('howto').hidden = !show;
+    try{ if(show) localStorage.removeItem('media-howto'); else localStorage.setItem('media-howto', 'hidden'); }catch(e){}
+    if(show) $('howto').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  });
+
   async function startSession(){
     $('viewSwitch').hidden = !hasUploads;
     $('stockTab').hidden = !hasStock;
+    initHowto();
     fillTypeSelects();
     fillPeriodSelects();
     await loadChart();
