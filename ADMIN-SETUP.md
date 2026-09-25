@@ -115,16 +115,6 @@ To turn this on, update the script once (an older script keeps working — Confi
 
 The first time the page loads after that, two columns — **Archive** and **ArchivedAt** — are added to the right of the Registrations tab. They stay empty for everyone still in the main list; for people you moved to History, **Archive** holds the event name. Please don't rename these headers. Big selections are sent in batches of 25 (a progress count shows), and if a batch fails, the ones already done are kept and the rest stay selected so you can try again.
 
-## 7. Insights — the charts on the admin page
-
-Under the summary tiles the admin page shows a few charts built from **every** registration, including everyone you've moved to History — so the page still has something to show when the main list is empty. Nothing needs updating in Google for this; it uses the data already in the sheet.
-
-- **Registrations over time** — columns per day, week or month, stacked by source (Women's Meet, Event Booking, Speaking Invitation). Hover (or tab to) a column to see the numbers; the biggest column is labelled. **View as table** shows the same numbers as a table.
-- **Where everyone stands** — how many are Pending, Contacted and Confirmed, the confirmed percentage, and the confirmed rate for each source.
-- **Past events** — one card per event you moved to History, with how many people it had and how many confirmed. Click a card to open History.
-- The **30 days / 12 weeks / All time** buttons change the period for the charts, and **Hide** folds the whole Insights section away (remembered on that device).
-- When everyone has been moved to History, the main list shows an "All caught up!" message with a button to open History.
-
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.
