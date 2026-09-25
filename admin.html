@@ -241,6 +241,97 @@
   .seg button.active b{background:rgba(255,255,255,.22);color:#fff}
   .m-table td .btn.sm{padding:4px 10px}
 
+  /* ---------- insights ---------- */
+  .insights{--s-w:#d9558a;--s-e:#2f6df6;--s-i:#d98a0b;--s-o:#69758c;--grid:#e6ebf4;margin-bottom:18px}
+  .ins-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .ins-head h2{font-size:1.3rem;line-height:1.1}
+  .ins-sub{color:var(--muted);font-size:.84rem;margin-top:2px}
+  .ins-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .ins-controls .seg{margin-bottom:0}
+  .ins-grid{display:grid;grid-template-columns:1.9fr 1fr;gap:14px}
+  .ins-card{padding:18px 20px 16px;min-width:0}
+  .ins-card-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .ins-card-head h3{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy)}
+  .linkish{background:none;border:0;color:var(--blue);font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;padding:2px 0}
+  .linkish:hover{text-decoration:underline}
+  .ins-none{padding:56px 10px;text-align:center;color:var(--muted);font-size:.9rem}
+  svg.chart{display:block;width:100%;height:auto;overflow:visible}
+  .chart .gl{stroke:var(--grid);stroke-width:1}
+  .chart text{font-family:'Inter',sans-serif;fill:#69758c;font-size:11px}
+  .chart text.peak{fill:var(--ink);font-weight:700;font-size:12px}
+  .chart .seg-w{fill:var(--s-w)} .chart .seg-e{fill:var(--s-e)} .chart .seg-i{fill:var(--s-i)} .chart .seg-o{fill:var(--s-o)}
+  .chart g.bar{transform-box:fill-box;transform-origin:50% 100%;animation:colrise .7s cubic-bezier(.2,.8,.2,1) both;transition:filter .15s}
+  .chart g.bar.hot{filter:brightness(1.12) saturate(1.1)}
+  @keyframes colrise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .chart .hit{fill:transparent;cursor:crosshair}
+  .chart .hit:hover,.chart .hit:focus{fill:rgba(47,109,246,.07);outline:none}
+  .ins-legend{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:10px;font-size:.8rem;color:#3a4a62}
+  .ins-legend span{display:inline-flex;align-items:center;gap:7px}
+  .ins-legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+  .ins-legend b{font-weight:800;color:var(--ink)}
+  .ins-tablewrap{max-height:260px;overflow:auto;margin-top:4px}
+  table.ins-table{width:100%;border-collapse:collapse;font-size:.82rem}
+  .ins-table th,.ins-table td{padding:7px 10px;border-bottom:1px solid var(--line-2);text-align:right;font-variant-numeric:tabular-nums}
+  .ins-table th:first-child,.ins-table td:first-child{text-align:left}
+  .ins-table th{background:#f6f8fd;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);position:sticky;top:0}
+  .fn-hero{display:flex;align-items:center;gap:12px;margin:2px 0 14px}
+  .fn-hero b{font-family:'Inter',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;color:var(--navy)}
+  .fn-hero span{font-size:.86rem;color:#3a4a62;font-weight:600;line-height:1.3}
+  .fn-hero small{color:var(--muted);font-weight:500}
+  .fn-row{display:grid;grid-template-columns:78px 1fr auto;align-items:center;gap:10px;padding:7px 0}
+  .fn-label{font-size:.8rem;font-weight:600;color:#3a4a62}
+  .fn-track{height:22px;background:#eef2fb;border-radius:0 6px 6px 0;overflow:hidden}
+  .fn-bar{height:100%;min-width:2px;border-radius:0 4px 4px 0;transform-origin:left;animation:growx .8s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .fn-val{display:inline-flex;align-items:baseline;gap:6px;min-width:64px;justify-content:flex-end;font-size:.82rem}
+  .fn-val b{font-weight:800;color:var(--ink)}
+  .fn-val em{font-style:normal;color:var(--muted);font-size:.74rem}
+  .fn-sub{margin:16px 0 4px;padding-top:14px;border-top:1px solid var(--line-2);font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .src-row{display:grid;grid-template-columns:1fr 84px 40px;align-items:center;gap:10px;padding:5px 0;font-size:.82rem}
+  .src-key{display:inline-flex;align-items:center;gap:8px;color:#3a4a62;font-weight:600;min-width:0}
+  .src-key i{width:10px;height:10px;border-radius:3px;flex:none}
+  .src-key em{font-style:normal;font-weight:500;color:var(--muted);font-size:.74rem}
+  .src-meter{height:8px;border-radius:100px;background:#e3ebfb;overflow:hidden}
+  .src-meter i{display:block;height:100%;background:#2a5ed4;border-radius:100px;transform-origin:left;animation:growx .8s cubic-bezier(.2,.8,.2,1) both}
+  .src-pct{font-weight:800;text-align:right;color:var(--ink)}
+  .past-strip{margin-top:14px}
+  .past-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .past-head h3{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy)}
+  .past-row{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 14px;scroll-snap-type:x proximity}
+  .pcard{flex:0 0 250px;scroll-snap-align:start;display:flex;flex-direction:column;gap:2px;text-align:left;background:#fff;border:1px solid var(--line-2);border-radius:18px;padding:18px 18px 14px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;font:inherit;color:inherit;transition:transform .2s,box-shadow .2s}
+  .pcard::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--pc)}
+  .pcard:hover{transform:translateY(-3px);box-shadow:0 18px 36px -18px rgba(20,40,90,.4)}
+  .pcard .pn{font-weight:700;font-size:.9rem;line-height:1.3;word-break:break-word;min-height:2.6em}
+  .pcard .pbig{font-family:'Inter',sans-serif;font-size:2.1rem;font-weight:800;color:var(--navy);line-height:1.1;margin-top:6px}
+  .pcard .pbig small{font-size:.8rem;font-weight:600;color:var(--muted);margin-left:6px}
+  .pcard .pmeter{display:block;height:8px;border-radius:100px;background:#e3ebfb;margin:10px 0 6px;overflow:hidden}
+  .pcard .pmeter i{display:block;height:100%;background:#2a5ed4;border-radius:100px;transform-origin:left;animation:growx .9s cubic-bezier(.2,.8,.2,1) both}
+  .pcard .pmeta{font-size:.74rem;color:var(--muted)}
+  .ins-tip{position:fixed;z-index:120;pointer-events:none;background:#101a33;color:#fff;border-radius:12px;padding:10px 13px 9px;font-size:.8rem;min-width:160px;box-shadow:0 16px 34px -14px rgba(8,14,35,.7)}
+  .ins-tip .tv{font-weight:800;font-size:1.02rem}
+  .ins-tip .tp{color:#b9c6e6;font-size:.72rem;margin-bottom:6px}
+  .ins-tip .tr{display:flex;align-items:center;gap:9px;padding:2px 0}
+  .ins-tip .tk{width:14px;height:3px;border-radius:2px;flex:none}
+  .ins-tip .tn{flex:1;color:#c9d4ef}
+  .ins-tip b{font-weight:800}
+  /* the "all caught up" state */
+  .empty-art{display:block;width:132px;height:132px;margin:0 auto 14px}
+  .empty-art .ring{fill:none;stroke:url(#eaGrad);stroke-width:7;stroke-linecap:round;stroke-dasharray:352;stroke-dashoffset:352;animation:drawline 1.1s .1s ease forwards}
+  .empty-art .tick{fill:none;stroke:#1f9d63;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:90;stroke-dashoffset:90;animation:drawline .6s 1s ease forwards}
+  .empty-art .spark{fill:var(--gold);opacity:0;animation:sparkle 2.6s 1.3s infinite}
+  @keyframes drawline{to{stroke-dashoffset:0}}
+  @keyframes sparkle{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1)}}
+  .empty-title{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:500;color:var(--ink);margin-bottom:6px}
+  .empty-text{max-width:420px;margin:0 auto;color:var(--muted)}
+  .empty-actions{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  @media(max-width:1000px){ .ins-grid{grid-template-columns:1fr} }
+  @media(max-width:560px){ .pcard{flex-basis:220px} .fn-row{grid-template-columns:70px 1fr auto} }
+  @media(prefers-reduced-motion:reduce){
+    .chart g.bar,.fn-bar,.src-meter i,.pcard .pmeter i,.empty-art .spark{animation:none!important}
+    .empty-art .ring,.empty-art .tick{animation:none!important;stroke-dashoffset:0!important}
+  }
+
   /* ---------- small screens: each registration becomes a card ---------- */
   @media(max-width:1000px){
     .tiles{grid-template-columns:1fr 1fr 1fr}
@@ -332,6 +423,38 @@
     </header>
 
     <div class="tiles" id="stats"></div>
+
+    <section class="insights" id="insights" aria-label="Insights" hidden>
+      <div class="ins-head">
+        <div>
+          <h2>Insights</h2>
+          <p class="ins-sub">Every registration, including everyone in History</p>
+        </div>
+        <div class="ins-controls">
+          <div class="seg" id="insRange" role="group" aria-label="Time range">
+            <button type="button" data-range="30d">30 days</button>
+            <button type="button" data-range="12w">12 weeks</button>
+            <button type="button" data-range="all" class="active">All time</button>
+          </div>
+          <button type="button" class="btn sm" id="insToggle" aria-expanded="true">Hide</button>
+        </div>
+      </div>
+      <div class="ins-body" id="insBody">
+        <div class="ins-grid">
+          <article class="card ins-card">
+            <div class="ins-card-head"><h3>Registrations over time</h3><button type="button" class="linkish" id="insTableBtn">View as table</button></div>
+            <div id="insTimeline"></div>
+            <div class="ins-legend" id="insLegend"></div>
+          </article>
+          <article class="card ins-card">
+            <div class="ins-card-head"><h3>Where everyone stands</h3></div>
+            <div id="insFunnel"></div>
+          </article>
+        </div>
+        <div class="past-strip" id="insPast" hidden></div>
+      </div>
+    </section>
+    <div class="ins-tip" id="insTip" role="status" hidden></div>
 
     <div class="card toolbar">
       <div class="tabs" id="tabs">
@@ -577,6 +700,7 @@ See you there!</textarea>
       select.className = 'status-select st-' + status.toLowerCase();
       select.dataset.prev = status;
       renderStats();
+      renderInsights();
     }catch(err){
       alert('Could not update status: ' + err.message);
       select.value = select.dataset.prev;
@@ -1380,6 +1504,312 @@ See you there!</textarea>
 
   const TRASH = '<svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>';
 
+  // ---------- Insights: charts drawn from every registration (History included) ----------
+  // Colours are the site's existing source colours (validated for colour-blind separation);
+  // the follow-up bars use one blue ramp, light -> dark, in process order.
+  const SRC_SERIES = [
+    {name:"Women's Meet",        cls:'seg-w', color:'#d9558a'},
+    {name:'Event Booking',       cls:'seg-e', color:'#2f6df6'},
+    {name:'Speaking Invitation', cls:'seg-i', color:'#d98a0b'},
+    {name:'Other',               cls:'seg-o', color:'#69758c'}
+  ];
+  const STATUS_RAMP = {Pending:'#8ba9ef', Contacted:'#5a86e6', Confirmed:'#2a5ed4'};
+  let insRange = 'all';
+  let insSig = '';
+  let insTable = false;
+  let insW = 0; // width the chart was last drawn at
+  let animateCounts = true; // count-up only on the first paint after loading, not on every re-render
+
+  const DAY = 864e5;
+  const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const startOfWeek = d => { const x = startOfDay(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }; // Monday
+  const startOfMonth = d => new Date(d.getFullYear(), d.getMonth(), 1);
+  const fmtDayMonth = d => d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+  const rowDate = r => { const d = new Date(r.Timestamp); return isNaN(d) ? null : d; };
+  const reducedMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function insBuckets(range){
+    const dated = allRows.map(r=>({r, d:rowDate(r)})).filter(x=>x.d);
+    // "now" can't be earlier than the newest registration, so a wrong computer clock can't empty the charts
+    const now = new Date(Math.max(Date.now(), ...dated.map(x=>+x.d)));
+    let kind, starts = [];
+    if(range === '30d'){
+      kind = 'day';
+      const s0 = startOfDay(new Date(+now - 29*DAY));
+      for(let i=0;i<30;i++){ const d = new Date(s0); d.setDate(d.getDate()+i); starts.push(d); }
+    } else if(range === '12w'){
+      kind = 'week';
+      const w0 = startOfWeek(now);
+      for(let i=11;i>=0;i--){ const d = new Date(w0); d.setDate(d.getDate()-7*i); starts.push(d); }
+    } else {
+      const first = dated.length ? new Date(Math.min(...dated.map(x=>+x.d))) : now;
+      const weeks = Math.round((startOfWeek(now) - startOfWeek(first)) / (7*DAY)) + 1;
+      if(weeks <= 26){
+        kind = 'week';
+        for(let d = startOfWeek(first); d <= now; d = new Date(d.getFullYear(), d.getMonth(), d.getDate()+7)) starts.push(d);
+      } else {
+        kind = 'month';
+        for(let d = startOfMonth(first); d <= now; d = new Date(d.getFullYear(), d.getMonth()+1, 1)) starts.push(d);
+      }
+    }
+    const next = d => kind==='day' ? new Date(d.getFullYear(), d.getMonth(), d.getDate()+1)
+                    : kind==='week' ? new Date(d.getFullYear(), d.getMonth(), d.getDate()+7)
+                    : new Date(d.getFullYear(), d.getMonth()+1, 1);
+    const buckets = starts.map(s=>{
+      const e = next(s), last = new Date(+e - DAY);
+      return {
+        start:s, end:e, counts:[0,0,0,0], total:0,
+        short: kind==='month' ? s.toLocaleDateString('en-GB',{month:'short'}) : fmtDayMonth(s),
+        long:  kind==='day' ? s.toLocaleDateString('en-GB',{weekday:'short', day:'numeric', month:'short', year:'numeric'})
+             : kind==='week' ? fmtDayMonth(s) + ' – ' + fmtDayMonth(last) + ' ' + last.getFullYear()
+             : s.toLocaleDateString('en-GB',{month:'long', year:'numeric'})
+      };
+    });
+    const scoped = [];
+    dated.forEach(({r,d})=>{
+      const b = buckets.find(b => d >= b.start && d < b.end);
+      if(!b) return;
+      const i = SRC_SERIES.findIndex(s => s.name === r.Source);
+      b.counts[i < 0 ? 3 : i]++; b.total++; scoped.push(r);
+    });
+    return {kind, buckets, scoped, rangeRows: range === 'all' ? allRows : scoped};
+  }
+
+  function niceMax(v){
+    if(v <= 4) return 4;
+    const p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p;
+    return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+  }
+
+  // ----- the tooltip (built with textContent: names are data, never markup) -----
+  const tipEl = $('insTip');
+  function fillTip(b){
+    tipEl.textContent = '';
+    const v = document.createElement('div'); v.className = 'tv'; v.textContent = `${b.total} registration${b.total===1?'':'s'}`;
+    const p = document.createElement('div'); p.className = 'tp'; p.textContent = b.long;
+    tipEl.append(v, p);
+    SRC_SERIES.forEach((s,k)=>{
+      if(!b.counts[k]) return;
+      const row = document.createElement('div'); row.className = 'tr';
+      const key = document.createElement('span'); key.className = 'tk'; key.style.background = s.color;
+      const nm = document.createElement('span'); nm.className = 'tn'; nm.textContent = s.name;
+      const n = document.createElement('b'); n.textContent = b.counts[k];
+      row.append(key, nm, n); tipEl.append(row);
+    });
+  }
+  function placeTip(x, y){
+    tipEl.hidden = false;
+    const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+    let left = x + 14, top = y - h - 12;
+    if(left + w > innerWidth - 8) left = x - w - 14;
+    if(top < 8) top = y + 18;
+    tipEl.style.left = Math.max(8, left) + 'px'; tipEl.style.top = top + 'px';
+  }
+  function hideTip(){ tipEl.hidden = true; document.querySelectorAll('#insTimeline g.bar.hot').forEach(g=>g.classList.remove('hot')); }
+
+  function renderTimeline(data){
+    const box = $('insTimeline'), {buckets, kind} = data;
+    const totalAll = buckets.reduce((t,b)=>t+b.total, 0);
+
+    // legend: which colour is which source, with the count in this period
+    const totals = SRC_SERIES.map((s,k)=>buckets.reduce((t,b)=>t+b.counts[k], 0));
+    $('insLegend').innerHTML = SRC_SERIES.map((s,k)=> (k<3 || totals[k]) ? `<span><i style="--c:${s.color}"></i>${esc(s.name)} <b>${totals[k]}</b></span>` : '').join('');
+
+    if(!totalAll){ box.innerHTML = '<div class="ins-none">No registrations in this period.</div>'; return; }
+
+    if(insTable){
+      box.innerHTML = `<div class="ins-tablewrap"><table class="ins-table"><thead><tr><th>${kind==='day'?'Day':kind==='week'?'Week':'Month'}</th>${SRC_SERIES.map((s,k)=> (k<3 || totals[k]) ? `<th>${esc(s.name)}</th>` : '').join('')}<th>Total</th></tr></thead><tbody>`
+        + buckets.filter(b=>b.total).reverse().map(b=>`<tr><td>${esc(b.long)}</td>${SRC_SERIES.map((s,k)=> (k<3 || totals[k]) ? `<td>${b.counts[k] || '–'}</td>` : '').join('')}<td><b>${b.total}</b></td></tr>`).join('')
+        + '</tbody></table></div>';
+      return;
+    }
+
+    const W = Math.max(300, Math.round(box.clientWidth || 640)), H = 260, L = 34, R = 6, T = 24, B = 30, pw = W - L - R, ph = H - T - B;
+    insW = W;
+    const maxV = Math.max(...buckets.map(b=>b.total)), top = niceMax(maxV);
+    const y = v => T + ph - (v / top) * ph;
+    const slot = pw / buckets.length, bw = Math.min(24, slot * 0.68);
+    const ticks = [...new Set([0, Math.round(top/2), top])];
+    const step = Math.ceil(buckets.length / 7);
+    let svg = `<svg class="chart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Registrations over time, stacked by source. A table view is available.">`;
+    ticks.forEach(t=>{
+      svg += `<line class="gl" x1="${L}" x2="${W-R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/><text x="${L-8}" y="${(y(t)+4).toFixed(1)}" text-anchor="end">${t}</text>`;
+    });
+    let peakDone = false;
+    buckets.forEach((b,i)=>{
+      const cx = L + slot*i + slot/2, x = cx - bw/2;
+      let acc = 0, segs = '';
+      const live = SRC_SERIES.map((s,k)=>k).filter(k=>b.counts[k]);
+      live.forEach((k,j)=>{
+        const y1 = y(acc + b.counts[k]), y0 = y(acc), gap = j ? 2 : 0; // 2px of background between stacked segments
+        const h = Math.max(1, y0 - y1 - gap);
+        if(j === live.length - 1){
+          const r = Math.min(4, h/2); // rounded data-end, square at the baseline
+          segs += `<path class="${SRC_SERIES[k].cls}" d="M${x.toFixed(1)},${(y1+h).toFixed(1)}V${(y1+r).toFixed(1)}Q${x.toFixed(1)},${y1.toFixed(1)} ${(x+r).toFixed(1)},${y1.toFixed(1)}H${(x+bw-r).toFixed(1)}Q${(x+bw).toFixed(1)},${y1.toFixed(1)} ${(x+bw).toFixed(1)},${(y1+r).toFixed(1)}V${(y1+h).toFixed(1)}Z"/>`;
+        } else {
+          segs += `<rect class="${SRC_SERIES[k].cls}" x="${x.toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}"/>`;
+        }
+        acc += b.counts[k];
+      });
+      svg += `<g class="bar" data-i="${i}" style="animation-delay:${Math.min(i*25, 500)}ms">${segs}</g>`;
+      if(b.total === maxV && !peakDone){ peakDone = true; svg += `<text class="peak" x="${cx.toFixed(1)}" y="${(y(b.total)-7).toFixed(1)}" text-anchor="middle">${b.total}</text>`; } // label only the peak
+      if((buckets.length - 1 - i) % step === 0) svg += `<text x="${cx.toFixed(1)}" y="${H-9}" text-anchor="middle">${esc(b.short)}</text>`;
+    });
+    // hit areas: a whole column wide, well beyond the painted mark
+    buckets.forEach((b,i)=>{
+      svg += `<rect class="hit" data-i="${i}" x="${(L + slot*i).toFixed(1)}" y="${T-8}" width="${slot.toFixed(1)}" height="${ph + 8 + B}" tabindex="0" aria-label="${esc(b.long)}: ${b.total} registration${b.total===1?'':'s'}"/>`;
+    });
+    svg += '</svg>';
+    box.innerHTML = svg;
+
+    box.querySelectorAll('.hit').forEach(h=>{
+      const i = +h.dataset.i, bar = box.querySelector(`g.bar[data-i="${i}"]`);
+      const show = (x, y) => { hideTip(); if(bar) bar.classList.add('hot'); fillTip(buckets[i]); placeTip(x, y); };
+      h.addEventListener('pointermove', e => show(e.clientX, e.clientY));
+      h.addEventListener('pointerleave', hideTip);
+      h.addEventListener('focus', () => { const r = h.getBoundingClientRect(); show(r.left + r.width/2, r.top + 30); });
+      h.addEventListener('blur', hideTip);
+    });
+  }
+
+  function renderFunnel(rows){
+    const st = {Pending:0, Contacted:0, Confirmed:0};
+    rows.forEach(r=>{ st[STATUSES.includes(r.Status) ? r.Status : 'Pending']++; });
+    const total = st.Pending + st.Contacted + st.Confirmed;
+    if(!total){ $('insFunnel').innerHTML = '<div class="ins-none">No registrations in this period.</div>'; return; }
+    const pct = n => Math.round(n / total * 100);
+    const bySrc = SRC_SERIES.map(s=>({s, n:0, c:0}));
+    rows.forEach(r=>{
+      const i = SRC_SERIES.findIndex(s => s.name === r.Source), x = bySrc[i < 0 ? 3 : i];
+      x.n++; if(r.Status === 'Confirmed') x.c++;
+    });
+    const srcRows = '<div class="fn-sub">Confirmed by source</div>' + bySrc.filter(x=>x.n).map(x=>{
+      const pc = Math.round(x.c / x.n * 100);
+      return `<div class="src-row"><span class="src-key"><i style="background:${x.s.color}"></i>${esc(x.s.name)} <em>${x.n}</em></span><span class="src-meter"><i style="width:${pc}%"></i></span><span class="src-pct">${pc}%</span></div>`;
+    }).join('');
+    $('insFunnel').innerHTML =
+      `<div class="fn-hero"><b>${pct(st.Confirmed)}%</b><span>confirmed<br><small>${st.Confirmed} of ${total}</small></span></div>` +
+      ['Pending','Contacted','Confirmed'].map(k=>`
+        <div class="fn-row">
+          <span class="fn-label">${k}</span>
+          <div class="fn-track"><div class="fn-bar" style="width:${(st[k]/total*100).toFixed(1)}%;background:${STATUS_RAMP[k]}"></div></div>
+          <span class="fn-val"><b>${st[k]}</b><em>${pct(st[k])}%</em></span>
+        </div>`).join('') + srcRows;
+  }
+
+  // one card per event you moved to History
+  function renderPastStrip(){
+    const map = new Map();
+    allRows.filter(r=>r.Archive).forEach(r=>{
+      const name = String(r.Archive);
+      if(!map.has(name)) map.set(name, {name, n:0, conf:0, at:'', src:{}});
+      const g = map.get(name); g.n++; if(r.Status === 'Confirmed') g.conf++;
+      g.src[r.Source] = (g.src[r.Source]||0) + 1;
+      if(String(r.ArchivedAt||'') > g.at) g.at = String(r.ArchivedAt||'');
+    });
+    const groups = [...map.values()].sort((a,b)=> a.at < b.at ? 1 : -1).slice(0, 10);
+    const el = $('insPast');
+    el.hidden = !groups.length;
+    if(!groups.length) return;
+    el.innerHTML = `<div class="past-head"><h3>Past events</h3><button type="button" class="linkish" data-open="past">Open History →</button></div><div class="past-row">` +
+      groups.map(g=>{
+        const top = Object.keys(g.src).sort((a,b)=>g.src[b]-g.src[a])[0];
+        const color = (SRC_SERIES.find(s=>s.name===top) || SRC_SERIES[3]).color;
+        const pc = g.n ? Math.round(g.conf / g.n * 100) : 0;
+        return `<button type="button" class="pcard" data-open="past" style="--pc:${color}" title="Open this event in History">
+          <span class="pn">${esc(g.name)}</span>
+          <span class="pbig">${g.n}<small>${g.n===1?'person':'people'}</small></span>
+          <span class="pmeter"><i style="width:${pc}%"></i></span>
+          <span class="pmeta">${pc}% confirmed · moved ${esc(g.at ? fmtDayMonth(new Date(g.at)) : '')}</span>
+        </button>`;
+      }).join('') + '</div>';
+  }
+
+  function insHash(){
+    let h = 0;
+    allRows.forEach(r=>{
+      const t = String(r.ID||'') + (r.Status||'') + (r.Archive||'') + (r.Timestamp||'');
+      for(let i=0;i<t.length;i++) h = (h*31 + t.charCodeAt(i)) | 0;
+    });
+    return allRows.length + ':' + h;
+  }
+
+  function renderInsights(force){
+    const sec = $('insights');
+    if(!allRows.length){ sec.hidden = true; return; }
+    sec.hidden = false;
+    const sig = insRange + '|' + insTable + '|' + insHash();
+    if(sig === insSig && !force) return; // typing in the search box shouldn't redraw (and re-animate) the charts
+    insSig = sig;
+    const data = insBuckets(insRange);
+    renderTimeline(data);
+    renderFunnel(data.rangeRows);
+    renderPastStrip();
+    $('insTableBtn').textContent = insTable ? 'View as chart' : 'View as table';
+  }
+
+  $('insRange').addEventListener('click', e=>{
+    const b = e.target.closest('button[data-range]');
+    if(!b) return;
+    insRange = b.dataset.range;
+    document.querySelectorAll('#insRange button').forEach(x=>x.classList.toggle('active', x === b));
+    renderInsights(true);
+  });
+  $('insTableBtn').addEventListener('click', ()=>{ insTable = !insTable; hideTip(); renderInsights(true); });
+  let insResizeT;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(insResizeT);
+    insResizeT = setTimeout(()=>{
+      const w = $('insTimeline').clientWidth;
+      if(w && !insTable && Math.abs(w - insW) > 8) renderInsights(true);
+    }, 180);
+  });
+  $('insToggle').addEventListener('click', ()=>{
+    const hide = !$('insBody').hidden;
+    $('insBody').hidden = hide;
+    $('insToggle').textContent = hide ? 'Show' : 'Hide';
+    $('insToggle').setAttribute('aria-expanded', String(!hide));
+    hideTip();
+    if(!hide) renderInsights(true);
+    try{ localStorage.setItem('admin-insights', hide ? 'hidden' : 'shown'); }catch(e){}
+  });
+  (function(){ // remember (per device) whether the charts were folded away
+    let hidden = false;
+    try{ hidden = localStorage.getItem('admin-insights') === 'hidden'; }catch(e){}
+    if(hidden){ $('insBody').hidden = true; $('insToggle').textContent = 'Show'; $('insToggle').setAttribute('aria-expanded','false'); }
+  })();
+  document.addEventListener('click', e=>{
+    if(e.target.closest('#insPast [data-open="past"], #empty [data-open="past"]')) openHistory('past');
+  });
+
+  // numbers on the tiles count up once when the page first fills in
+  function runCountUp(root){
+    if(reducedMotion()) return;
+    root.querySelectorAll('.v').forEach(el=>{
+      const n = parseInt(el.textContent, 10);
+      if(!(n > 0)) return;
+      const dur = Math.min(900, 350 + n*6), t0 = performance.now();
+      el.textContent = '0';
+      setTimeout(()=>{ el.textContent = n; }, dur + 250); // whatever happens to the animation, the true number always lands
+      (function step(t){
+        const p = Math.max(0, Math.min(1, (t - t0) / dur));
+        el.textContent = Math.round(n * (1 - Math.pow(1 - p, 3)));
+        if(p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }
+
+  const EMPTY_ART = `<svg class="empty-art" viewBox="0 0 132 132" aria-hidden="true">
+      <defs><linearGradient id="eaGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b6fd6"/><stop offset="1" stop-color="#27a06a"/></linearGradient></defs>
+      <circle cx="66" cy="66" r="56" fill="#eef4ff"/>
+      <circle class="ring" cx="66" cy="66" r="56" transform="rotate(-90 66 66)"/>
+      <path class="tick" d="M42 68l17 17 31-37"/>
+      <circle class="spark" cx="114" cy="18" r="4" style="transform-origin:114px 18px"/>
+      <circle class="spark" cx="16" cy="32" r="3" style="transform-origin:16px 32px;animation-delay:1.9s"/>
+      <circle class="spark" cx="122" cy="98" r="3" style="transform-origin:122px 98px;animation-delay:2.3s"/>
+      <circle class="spark" cx="26" cy="112" r="4" style="transform-origin:26px 112px;animation-delay:2.7s"/>
+    </svg>`;
+
   function renderStats(){
     markDuplicates();
     const rows = activeRows();
@@ -1404,6 +1834,7 @@ See you there!</textarea>
       <div class="card tile fade"><div class="ico gold"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div class="k">Speaking Invitation</div><div class="v">${counts['Speaking Invitation']}</div></div>
       <div class="card tile fade"><div class="ico red"><svg class="i" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></div><div class="k">Duplicate entries</div><div class="v">${dupCount}</div></div>
     `;
+    if(animateCounts){ animateCounts = false; runCountUp($('stats')); }
     $('cnt-all').textContent = total;
     Object.keys(SOURCES).forEach(k => { $(SOURCES[k].count).textContent = counts[k]; });
     $('cnt-dup').textContent = dupCount;
@@ -1458,11 +1889,12 @@ See you there!</textarea>
       empty.innerHTML = activeCount
         ? '<div class="big">🔎</div>No registrations match this view.'
         : allRows.length
-          ? '<div class="big">🗂️</div>Everyone has been moved to History.'
+          ? EMPTY_ART + '<div class="empty-title">All caught up!</div><p class="empty-text">Everyone has been moved to History. New registrations will appear here.</p><div class="empty-actions"><button type="button" class="btn primary" data-open="past">Open History</button></div>'
           : '<div class="big">📭</div>No registrations yet.';
     }
     $('countLine').textContent = activeCount ? `Showing ${rows.length} of ${activeCount}` : '';
     renderStats();
+    renderInsights();
     updateSelectionUI();
   }
 
@@ -1478,6 +1910,7 @@ See you there!</textarea>
         throw new Error(json.error === 'unauthorized' ? 'wrongkey' : json.error);
       }
       allRows = json.data || [];
+      animateCounts = true; insSig = '';
       archiveSupported = !allRows.length || ('Archive' in allRows[0]); // an older script has no Archive column
       $('loading').hidden = true;
       render();
@@ -1523,6 +1956,7 @@ See you there!</textarea>
     historyState = 'unknown';
     clearSelection();
     barBusy = false;
+    insSig = ''; hideTip();
     closeHistory();
     closeAction();
     bulkModal.classList.remove('open');
