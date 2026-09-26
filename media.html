@@ -265,6 +265,122 @@
   .flag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:.72rem;font-weight:700}
   .flag.ok{background:var(--ok-soft);color:#166b45} .flag.add{background:var(--warn-soft);color:var(--warn)} .flag.extra{background:var(--blue-soft);color:var(--blue)} .flag.warn{background:#fde8e8;color:var(--bad)}
 
+  /* ---------- weekly plan ---------- */
+  .pl-top{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;margin-bottom:16px}
+  .pl-ic{width:30px;height:30px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;flex:none;background:color-mix(in srgb,var(--c,#69758c) 16%,#fff);color:var(--c,#69758c)}
+  .pl-ic svg.i{width:17px;height:17px}
+  .pl-k{display:flex;align-items:center;gap:8px;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+
+  /* today + tomorrow */
+  .pl-now{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);padding:24px 28px;border-radius:var(--radius);background:var(--grad);color:#fff;box-shadow:var(--shadow)}
+  .pl-now::before{content:"";position:absolute;right:-80px;top:-100px;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.38),transparent 68%);pointer-events:none}
+  .pl-day{position:relative;min-width:0}
+  .pl-day + .pl-day{border-left:1px solid rgba(255,255,255,.16);padding-left:26px;margin-left:26px}
+  .pl-now .pl-k{color:#c6d6f5}
+  .pl-k .live{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:plpulse 1.8s infinite}
+  @keyframes plpulse{0%{box-shadow:0 0 0 0 rgba(232,163,61,.7)}70%,100%{box-shadow:0 0 0 9px rgba(232,163,61,0)}}
+  .pl-dn{font-family:'Fraunces',serif;font-size:2.3rem;line-height:1.1;font-weight:600;margin-top:6px}
+  .pl-dt{font-size:.85rem;color:#c6d6f5;margin:2px 0 16px}
+  .pl-day.tm .pl-dn{font-size:1.55rem}
+  .pl-pills{display:grid;gap:8px}
+  .pl-pill{display:flex;align-items:center;gap:11px;padding:8px 14px 8px 8px;border-radius:14px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16)}
+  .pl-pill .pl-ic{background:var(--c);color:#fff}
+  .pl-pill b{display:block;font-size:.92rem;line-height:1.25}
+  .pl-pill small{display:block;font-size:.72rem;color:#c6d6f5}
+  .pl-pill.evt{background:rgba(232,163,61,.2);border-color:rgba(232,163,61,.5)}
+  .pl-none{padding:10px 0;font-size:.9rem;color:#c6d6f5}
+
+  /* the youth meet */
+  .pl-event{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:18px;padding:22px 26px;border-radius:var(--radius);color:#fff;background:linear-gradient(140deg,#1d1b4d 0%,#38359f 58%,#5b4bf0 100%);box-shadow:var(--shadow)}
+  .pl-event .wm{position:absolute;right:-6px;top:-44px;font-family:'Fraunces',serif;font-weight:800;font-size:15rem;line-height:1;color:rgba(255,255,255,.07);pointer-events:none;user-select:none}
+  .pl-ev-top{position:relative;display:flex;align-items:center;gap:16px}
+  .pl-datebox{flex:none;width:74px;padding:8px 0 9px;border-radius:18px;background:#fff;color:var(--navy);text-align:center;box-shadow:0 12px 24px -12px rgba(0,0,0,.6)}
+  .pl-datebox small{display:block;font-size:.66rem;font-weight:800;letter-spacing:.1em;color:#5b4bf0}
+  .pl-datebox b{display:block;font-family:'Fraunces',serif;font-size:2.15rem;line-height:1.05;font-weight:700}
+  .pl-event .pl-k{color:#c9cdf5}
+  .pl-ev-tt{min-width:0}
+  .pl-ev-tt h3{font-size:1.5rem;line-height:1.15;font-weight:600;margin-top:4px}
+  .pl-theme{font-size:.84rem;color:#d3d6ff;margin-top:3px}
+  .pl-count{flex:none;margin-left:auto;text-align:center;padding:8px 14px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}
+  .pl-count b{display:block;font-family:'Fraunces',serif;font-size:1.9rem;line-height:1.05;color:var(--gold)}
+  .pl-count span{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#d3d6ff}
+  .pl-quote{position:relative;font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:1.75rem;line-height:1.2;background:linear-gradient(90deg,#ffe2a6,#e8a33d);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content;max-width:100%;padding:0 .14em 0 .06em}
+  .pl-weeks{position:relative;display:flex;gap:6px}
+  .pl-wk{flex:1;min-width:0;text-align:center}
+  .pl-wk i{display:block;height:8px;border-radius:100px;background:rgba(255,255,255,.2)}
+  .pl-wk small{display:block;margin-top:6px;font-size:.66rem;font-weight:700;color:#c9cdf5;white-space:nowrap}
+  .pl-wk.now i{background:var(--gold)}
+  .pl-wk.ev i{background:#fff}
+  .pl-wk.ev small{color:#fff}
+
+  /* the week */
+  .pl-nav{display:flex;align-items:center;gap:8px}
+  .pl-nav .iconbtn:disabled{opacity:.4;cursor:default;pointer-events:none}
+  .pl-board{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));padding:6px 20px 20px}
+  .pl-ribbon{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:10px 34px 10px 12px;color:#3b2a00;background:linear-gradient(90deg,#f7cd7a,#e8a33d);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);border-radius:12px 0 0 12px}
+  .pl-ribbon .pl-ic{background:rgba(255,255,255,.55);color:#3b2a00}
+  .pl-ribbon .rt{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 14px;min-width:0}
+  .pl-ribbon b{font-size:.95rem}
+  .pl-ribbon small{font-size:.8rem;font-weight:600;opacity:.8}
+  .pl-col{border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--line-2)}
+  .pl-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:var(--navy);color:#fff}
+  .pl-col.sun .pl-h{background:#284a7c}
+  .pl-h .dn{font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+  .pl-h .dd{font-size:.78rem;font-weight:600;opacity:.75;margin-left:4px}
+  .pl-h .tag{padding:1px 9px;border-radius:100px;background:#3b2a00;color:#ffe2a6;font-size:.62rem;font-weight:800;letter-spacing:.08em}
+  .pl-col.today .pl-h{background:var(--gold);color:#3b2a00}
+  .pl-col.today .pl-h .dd{opacity:.8}
+  .pl-b{display:grid;gap:8px;align-content:start;min-height:64px;padding:10px}
+  .pl-col.today .pl-b{background:#fffaf0}
+  .pl-chip{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 8px;border-radius:14px;background:color-mix(in srgb,var(--c) 9%,#fff);border:1px solid color-mix(in srgb,var(--c) 26%,#fff)}
+  .pl-chip .pl-tx{min-width:0}
+  .pl-chip b{display:block;font-size:.84rem;line-height:1.25;color:var(--ink)}
+  .pl-chip small{display:block;font-size:.7rem;color:var(--muted);line-height:1.3}
+  .pl-chip.evt{background:linear-gradient(135deg,#fff4d8,#ffe6ac);border-color:#e8a33d}
+  .pl-chip.evt .pl-ic{background:#e8a33d;color:#fff}
+  .pl-empty{padding:6px 2px;font-size:.76rem;font-style:italic;color:#9aa6bb}
+
+  /* the plan, type by type */
+  .pl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:12px;padding:6px 20px 20px}
+  .pl-row{display:flex;flex-direction:column;gap:12px;padding:14px 16px 16px;border:1px solid var(--line-2);border-top:5px solid var(--c,#69758c);border-radius:16px;background:#fff}
+  .pl-rh{display:flex;align-items:center;gap:10px}
+  .pl-row.people{grid-column:1/-1;flex-direction:row;align-items:center;flex-wrap:wrap;gap:14px 28px}
+  .pl-num{width:28px;height:28px;border-radius:50%;background:#eef2fa;color:var(--navy);font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+  .pl-nm{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--navy);min-width:0}
+  .pl-lines{display:grid;gap:8px;min-width:0}
+  .pl-ln{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding-top:8px;border-top:1px dashed var(--line)}
+  .pl-lines .pl-ln:first-child{border-top:0;padding-top:0}
+  .pl-q{font-size:.9rem;font-weight:600}
+  .pl-strip{display:inline-flex;gap:3px}
+  .pl-strip i{width:24px;height:24px;border-radius:7px;background:#eef1f7;color:#9aa6bb;font-style:normal;font-size:.68rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+  .pl-strip i.on{background:var(--c);color:#fff}
+  .pl-strip i.td{box-shadow:0 0 0 2px var(--gold)}
+  .pl-ppl{display:flex;flex-wrap:wrap;gap:8px}
+  .pl-av{display:inline-flex;align-items:center;gap:9px;padding:4px 16px 4px 4px;border-radius:100px;background:#eef2fa;font-weight:700;color:var(--navy)}
+  .pl-av i{width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-style:normal;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center}
+
+  @media(min-width:1100px),print{ /* seven day columns; a printed A4 page counts as "wide" too */
+    .pl-board{grid-template-columns:repeat(7,minmax(0,1fr));column-gap:10px;row-gap:0}
+    .pl-ribbon{grid-column:var(--a) / var(--b);margin-bottom:12px}
+    .pl-col{display:contents}
+    .pl-h{grid-column:var(--col);grid-row:calc(var(--rr) + 1);border-radius:14px 14px 0 0}
+    .pl-b{grid-column:var(--col);grid-row:calc(var(--rr) + 2);min-height:170px;background:#fff;border-radius:0 0 14px 14px;box-shadow:0 0 0 1px var(--line-2)}
+    .pl-col.today .pl-b{background:#fffaf0;box-shadow:0 0 0 2px var(--gold)}
+  }
+  @media(max-width:1099px){ .pl-top{grid-template-columns:1fr} }
+  @media(max-width:600px){
+    .pl-now{grid-template-columns:1fr;padding:20px 18px}
+    .pl-day + .pl-day{border-left:0;margin-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.16);margin-top:18px;padding-top:16px}
+    .pl-dn{font-size:1.9rem}
+    .pl-event{padding:20px 18px}
+    .pl-ev-top{flex-wrap:wrap}
+    .pl-count{margin-left:0}
+    .pl-quote{font-size:1.45rem}
+    .pl-board{padding:6px 14px 16px}
+    .pl-list{padding:6px 14px 16px}
+  }
+  @media(prefers-reduced-motion:reduce){ .pl-k .live{animation:none} }
+
   #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200;box-shadow:0 14px 30px -12px rgba(0,0,0,.5)}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -287,7 +403,7 @@
   }
   @media(max-width:560px){
     .tabs{display:flex;width:100%;gap:2px;padding:4px}
-    .tab{flex:1;justify-content:center;padding:9px 4px;font-size:.76rem;white-space:nowrap;gap:0}
+    .tab{flex:1;justify-content:center;padding:9px 2px;font-size:.72rem;white-space:nowrap;gap:0}
     .tab svg{display:none}
     .brand img{height:28px}
     .brand h1{font-size:1.3rem}
@@ -295,13 +411,14 @@
     .top-actions .btn{flex:1;padding:10px 8px;font-size:.8rem;white-space:nowrap}
     .top-actions .btn svg{display:none}
   }
+  @media(max-width:380px){ .tab{font-size:.66rem} }
   @media(max-width:520px){ .periodbar .field{min-width:0;width:100%} .tiles{grid-template-columns:1fr} .tile .v{font-size:2.1rem} .tile.hero .v{font-size:2.6rem} }
 
   @media print{
     @page{size:A4 landscape;margin:10mm}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     html,body{background:#fff;padding:0;min-height:0;height:auto}
-    #gate,header.top,.howto,.tabs,.palette,.actions,#banner,#stockView,#totalView,#toast,.no-print,.foot-note,.viewswitch,.gridhelp{display:none!important}
+    #gate,header.top,.howto,.tabs,.palette,.actions,#banner,#stockView,#totalView,#planView,#toast,.no-print,.foot-note,.viewswitch,.gridhelp{display:none!important}
     #panel{display:block!important}
     #chartView{display:block!important}
     .wrap{max-width:none}
@@ -324,6 +441,48 @@
     .notes textarea{border:1px solid var(--line);min-height:40px;resize:none}
     .notes textarea::placeholder{color:transparent}
     .legend{margin-top:8px;padding:6px 12px}
+    /* printing the weekly plan: the plan only, on one page */
+    body.print-plan #chartView,body.print-plan .pl-now{display:none!important}
+    body.print-plan #planView{display:block!important}
+    body.print-plan .panel-head{margin-bottom:4px}
+    body.print-plan .panel-head h2{font-size:1.3rem}
+    body.print-plan .panel-head p{display:none}
+    body.print-plan .card{box-shadow:none}
+    body.print-plan .pl-top{display:block;margin-bottom:8px}
+    body.print-plan .pl-event{padding:8px 16px;flex-direction:row;align-items:center;gap:22px}
+    body.print-plan .pl-event .wm{display:none}
+    body.print-plan .pl-datebox{width:54px;padding:5px 0 6px;border-radius:12px}
+    body.print-plan .pl-datebox b{font-size:1.5rem}
+    body.print-plan .pl-ev-tt h3{font-size:1.2rem;margin-top:1px}
+    body.print-plan .pl-count{padding:5px 12px}
+    body.print-plan .pl-count b{font-size:1.4rem}
+    body.print-plan .pl-quote{font-size:1.15rem;flex:none}
+    body.print-plan .pl-weeks{flex:1}
+    body.print-plan .tcard{margin-bottom:8px;break-inside:avoid}
+    body.print-plan .tcard-head{padding:8px 14px 2px}
+    body.print-plan .pl-board{padding:4px 14px 10px}
+    body.print-plan .pl-ribbon{padding:6px 28px 6px 10px;margin-bottom:8px}
+    body.print-plan .pl-ribbon .pl-ic{width:24px;height:24px}
+    body.print-plan .pl-h{padding:5px 8px}
+    body.print-plan .pl-b{min-height:0!important;gap:5px;padding:6px}
+    body.print-plan .pl-chip{padding:4px 7px;border-radius:9px;border-left:4px solid var(--c)}
+    body.print-plan .pl-chip .pl-ic,body.print-plan .pl-rh .pl-ic{display:none}
+    body.print-plan .pl-chip b{font-size:.68rem}
+    body.print-plan .pl-chip small{font-size:.58rem}
+    body.print-plan .pl-empty{font-size:.66rem}
+    body.print-plan .pl-list{grid-template-columns:repeat(4,minmax(0,1fr));padding:2px 14px 8px;gap:6px}
+    body.print-plan .pl-row{padding:5px 9px 7px;gap:5px;border-top-width:4px;break-inside:avoid}
+    body.print-plan .pl-row.people{grid-column:auto;flex-direction:column;align-items:flex-start;flex-wrap:nowrap}
+    body.print-plan .pl-q{font-size:.68rem;min-width:0}
+    body.print-plan .pl-ln{flex-wrap:nowrap;gap:8px;padding-top:6px}
+    body.print-plan .pl-strip{flex:none}
+    body.print-plan .pl-strip i.td{box-shadow:none}
+    body.print-plan .pl-col.today .pl-h{background:var(--navy);color:#fff}
+    body.print-plan .pl-col.today .pl-b{background:#fff;box-shadow:0 0 0 1px var(--line-2)}
+    body.print-plan .pl-h .tag{display:none}
+    body.print-plan .pl-strip i{width:17px;height:17px;font-size:.55rem;border-radius:5px}
+    body.print-plan .pl-av{padding:2px 12px 2px 2px;font-size:.75rem}
+    body.print-plan .pl-av i{width:22px;height:22px;font-size:.7rem}
   }
 </style>
 </head>
@@ -351,7 +510,7 @@
         <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
         <div>
           <h1>Media Office</h1>
-          <div class="sub">Shared content log &amp; stock</div>
+          <div class="sub">Shared content log, plan &amp; stock</div>
         </div>
       </div>
       <div class="top-actions">
@@ -372,6 +531,7 @@
 
     <nav class="tabs" id="tabs">
       <button class="tab active" data-tab="chart"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Content Log</button>
+      <button class="tab" data-tab="plan"><svg class="i" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.8 6l1.1 1.1L7 5M3.8 12l1.1 1.1L7 11M3.8 18l1.1 1.1L7 17"/></svg>Weekly Plan</button>
       <button class="tab" data-tab="stock" id="stockTab" hidden><svg class="i" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg>Content Stock</button>
       <button class="tab" data-tab="total"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Stock Summary</button>
     </nav>
@@ -439,6 +599,38 @@
           <div class="foot-note">Anmol Jeevan Ministries · Media content log — one shared team log, no individual records</div>
         </div>
       </div>
+    </div>
+
+    <!-- ===== the weekly plan ===== -->
+    <div id="planView" hidden>
+      <div class="panel-head">
+        <div>
+          <h2>Weekly Content Plan</h2>
+          <p>What the media team makes on which day. The same plan repeats every week.</p>
+        </div>
+      </div>
+
+      <div class="pl-top">
+        <section class="pl-now" id="plNow" aria-label="Today and tomorrow"></section>
+        <section class="pl-event" id="plEvent" aria-label="Next event" hidden></section>
+      </div>
+
+      <section class="card tcard">
+        <div class="tcard-head">
+          <div><h3>The week</h3><span class="hint" id="plRange"></span></div>
+          <div class="pl-nav no-print">
+            <button type="button" class="iconbtn" id="plPrev" aria-label="Previous week"><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button type="button" class="btn sm" id="plNowBtn">This week</button>
+            <button type="button" class="iconbtn" id="plNext" aria-label="Next week"><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="pl-board" id="plBoard"></div>
+      </section>
+
+      <section class="card tcard">
+        <div class="tcard-head"><h3>The plan, type by type</h3><span class="hint">Coloured boxes are the days it is made</span></div>
+        <div class="pl-list" id="plList"></div>
+      </section>
     </div>
 
     <!-- ===== content list: which pieces are left ===== -->
@@ -1040,6 +1232,7 @@
   async function tick(){
     if(!mediaKey || document.hidden) return;
     if(activeTab === 'chart') return poll();
+    if(activeTab === 'plan'){ if(planDayKey !== dayKey(midnight(serverNow()))) renderPlan(); return; } // a new day has started
     if(activeTab === 'stock' && hasStock && !editingId && !document.activeElement.closest('#stockView')) return pollItems();
   }
 
@@ -1424,17 +1617,163 @@
     download('media-total-work.csv', lines);
   });
 
+  /* ================= weekly plan ================= */
+  // To change the plan, edit PLAN_ROWS. days: 0 = Sunday … 6 = Saturday. span: made over a stretch of days (from, to).
+  const PLAN_ROWS = [
+    {n: 1, cat: 'Reels', color: TYPE_COLORS['Reel'], icon: 'reel', parts: [
+      {what: 'Reel from Sermon', qty: '2 Reels from Sermon / Week', sub: 'Reels · 2 a week', days: [2, 4]},
+      {what: 'Live Reel', qty: '1 Live Reel / Week', sub: 'Reels · 1 a week', days: [6], icon: 'live'}]},
+    {n: 2, cat: 'Long Content', color: TYPE_COLORS['Long Content'], icon: 'long', parts: [
+      {what: 'Long Content', qty: '3 Long Content / Week', sub: '3 a week', days: [1, 3, 5]}]},
+    {n: 3, cat: 'Short Story Video', color: '#f0733c', icon: 'story', parts: [
+      {what: 'Short Story Video', qty: '1 Video / Week', sub: '1 a week', days: [4]}]},
+    {n: 4, cat: 'Promo Creative', color: '#e8a33d', icon: 'promo', parts: [
+      {what: 'Promo Creative', qty: '1 Promo Creative', sub: 'Sunday → Friday', span: [0, 5]}]},
+    {n: 5, cat: 'Promo with Pic & Video', color: '#e0567a', icon: 'promovid', parts: [
+      {what: 'Promo with Picture & Video', qty: 'Promo with Picture & Video', sub: 'Promo', days: [2, 3]}]},
+    {n: 6, cat: 'Songs', color: '#1ba39c', icon: 'song', parts: [
+      {what: 'Live Worship Video / Practice Time', qty: 'Live Worship Video / Practice Time', sub: 'Songs', days: [2]}]}
+  ];
+  const PLAN_PEOPLE = ['Lucky', 'Babu']; // content selection
+  const PLAN_EVENT = {date: [2026, 10, 20], name: 'One Day Youth Meet', theme: 'Zen Z / Gen Z', quote: 'Zen for Jesus'};
+  const FULL_DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const SHORT_DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const PLAN_ICONS = {
+    reel: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.6 9.4l3.8 2.6-3.8 2.6z"/>',
+    live: '<circle cx="12" cy="12" r="2"/><path d="M8 8a5.7 5.7 0 0 0 0 8M16 8a5.7 5.7 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/>',
+    long: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.4l5 2.6-5 2.6z"/>',
+    story: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
+    promo: '<path d="M3 10v4h3.5l7.5 4.5v-13L6.5 10z"/><path d="M17.5 9.5a4 4 0 0 1 0 5"/>',
+    promovid: '<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 16l-5-4.5L8 20"/>',
+    song: '<path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    people: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 14.2A6 6 0 0 1 21 20"/>'
+  };
+  let planOffset = 0;  // weeks away from this one (‹ ›)
+  let planDayKey = ''; // the day the plan was last drawn for, so it can redraw itself after midnight
+
+  const planIcon = k => `<svg class="i" viewBox="0 0 24 24">${PLAN_ICONS[k] || ''}</svg>`;
+  const midnight = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const sameDay = (a, b) => a.getTime() === b.getTime();
+  const daysBetween = (a, b) => Math.round((b - a) / 864e5);
+  const dayKey = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const fmtDM = d => d.getDate() + ' ' + MONTHS[d.getMonth()].slice(0, 3);
+  const eventDate = () => new Date(PLAN_EVENT.date[0], PLAN_EVENT.date[1] - 1, PLAN_EVENT.date[2]);
+
+  // the made-on-one-day pieces for a date (plus the event itself, when it falls on that date)
+  function planChips(date){
+    const dow = date.getDay(), out = [];
+    PLAN_ROWS.forEach(r => r.parts.forEach(p => {
+      if(p.days && p.days.includes(dow)) out.push({c: r.color, icon: p.icon || r.icon, title: p.what, sub: p.sub});
+    }));
+    if(sameDay(date, eventDate())) out.unshift({c: '#e8a33d', icon: 'star', title: PLAN_EVENT.name, sub: 'Youth Meet day', evt: true});
+    return out;
+  }
+  // the pieces made over a stretch of days that includes this weekday
+  function planSpans(dow){
+    const out = [];
+    PLAN_ROWS.forEach(r => r.parts.forEach(p => {
+      if(p.span && dow >= p.span[0] && dow <= p.span[1]) out.push({c: r.color, icon: p.icon || r.icon, title: p.what, sub: p.sub});
+    }));
+    return out;
+  }
+  const chipHtml = (it, cls) => `<div class="${cls}${it.evt ? ' evt' : ''}" style="--c:${it.c}"><span class="pl-ic">${planIcon(it.icon)}</span><span class="pl-tx"><b>${esc(it.title)}</b>${it.sub ? `<small>${esc(it.sub)}</small>` : ''}</span></div>`;
+
+  function planNowDay(date, label, cls){
+    const items = planSpans(date.getDay()).concat(planChips(date));
+    return `<div class="pl-day ${cls}"><div class="pl-k">${cls === 'td' ? '<span class="live"></span>' : ''}${label}</div>`
+      + `<div class="pl-dn">${FULL_DAYS[date.getDay()]}</div>`
+      + `<div class="pl-dt">${date.toLocaleDateString('en-GB', {day: 'numeric', month: 'long'})}</div>`
+      + `<div class="pl-pills">${items.length ? items.map(it => chipHtml(it, 'pl-pill')).join('') : '<div class="pl-none">Nothing planned</div>'}</div></div>`;
+  }
+
+  function renderPlanEvent(today){
+    const box = $('plEvent'), ev = eventDate(), left = daysBetween(today, ev);
+    if(left < 0){ box.hidden = true; return; } // the day has passed — the card goes away by itself
+    box.hidden = false;
+    const count = left === 0 ? '<b>Today</b><span>is the day</span>' : left === 1 ? '<b>Tomorrow</b><span>is the day</span>' : `<b>${left}</b><span>days to go</span>`;
+    // one bar per week, from this week to the week of the event
+    const thisWeek = addDays(today, -today.getDay()), evWeek = addDays(ev, -ev.getDay());
+    const gap = daysBetween(thisWeek, evWeek) / 7;
+    let weeks = '';
+    if(gap <= 11){
+      for(let i = 0; i <= gap; i++){
+        const cls = i === gap ? 'ev' : i === 0 ? 'now' : '';
+        const label = i === gap ? 'Meet week' : i === 0 ? 'This week' : fmtDM(addDays(thisWeek, i * 7));
+        weeks += `<div class="pl-wk ${cls}"><i></i><small>${label}</small></div>`;
+      }
+    }
+    box.innerHTML = `<span class="wm" aria-hidden="true">Z</span>`
+      + `<div class="pl-ev-top"><div class="pl-datebox"><small>${MONTHS[ev.getMonth()].slice(0, 3).toUpperCase()}</small><b>${ev.getDate()}</b><small>${SHORT_DAYS[ev.getDay()].toUpperCase()}</small></div>`
+      + `<div class="pl-ev-tt"><div class="pl-k">Coming up</div><h3>${esc(PLAN_EVENT.name)}</h3><div class="pl-theme">Theme · ${esc(PLAN_EVENT.theme)}</div></div>`
+      + `<div class="pl-count">${count}</div></div>`
+      + `<div class="pl-quote">“${esc(PLAN_EVENT.quote)}”</div>`
+      + (weeks ? `<div class="pl-weeks" aria-label="Weeks until the event">${weeks}</div>` : '');
+  }
+
+  function renderPlanBoard(today){
+    planOffset = Math.max(-4, Math.min(12, planOffset));
+    const start = addDays(today, -today.getDay() + planOffset * 7), end = addDays(start, 6);
+    $('plRange').textContent = `Sun ${fmtDM(start)} – Sat ${fmtDM(end)} ${end.getFullYear()}` + (planOffset === 0 ? ' · this week' : '');
+    $('plPrev').disabled = planOffset <= -4;
+    $('plNext').disabled = planOffset >= 12;
+    $('plNowBtn').hidden = planOffset === 0;
+    const spans = [];
+    PLAN_ROWS.forEach(r => r.parts.forEach(p => { if(p.span) spans.push({c: r.color, icon: p.icon || r.icon, title: p.what, sub: p.sub, a: p.span[0] + 1, b: p.span[1] + 2}); }));
+    let html = spans.map(s => `<div class="pl-ribbon" style="--c:${s.c};--a:${s.a};--b:${s.b}"><span class="pl-ic">${planIcon(s.icon)}</span><span class="rt"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></span></div>`).join('');
+    for(let i = 0; i < 7; i++){
+      const d = addDays(start, i), items = planChips(d), isToday = sameDay(d, today);
+      html += `<div class="pl-col${i === 0 ? ' sun' : ''}${isToday ? ' today' : ''}" style="--col:${i + 1}">`
+        + `<div class="pl-h"><span><span class="dn">${SHORT_DAYS[i]}</span><span class="dd">${fmtDM(d)}</span></span>${isToday ? '<span class="tag">TODAY</span>' : ''}</div>`
+        + `<div class="pl-b">${items.length ? items.map(it => chipHtml(it, 'pl-chip')).join('') : '<div class="pl-empty">Nothing else planned</div>'}</div></div>`;
+    }
+    $('plBoard').style.setProperty('--rr', spans.length);
+    $('plBoard').innerHTML = html;
+  }
+
+  function renderPlanList(today){
+    const td = today.getDay();
+    const rows = PLAN_ROWS.map(r => {
+      const lines = r.parts.map(p => {
+        const days = p.span ? DAY_LETTERS.map((_, i) => i).filter(i => i >= p.span[0] && i <= p.span[1]) : p.days;
+        const names = days.map(i => FULL_DAYS[i]).join(', ');
+        const strip = DAY_LETTERS.map((L, i) => `<i class="${days.includes(i) ? 'on' : ''}${i === td ? ' td' : ''}">${L}</i>`).join('');
+        return `<div class="pl-ln"><span class="pl-q">${esc(p.qty)}</span><span class="pl-strip" role="img" aria-label="${esc(names)}">${strip}</span></div>`;
+      }).join('');
+      return `<div class="pl-row" style="--c:${r.color}"><div class="pl-rh"><span class="pl-num">${r.n}</span><span class="pl-nm"><span class="pl-ic">${planIcon(r.icon)}</span>${esc(r.cat)}</span></div><div class="pl-lines">${lines}</div></div>`;
+    }).join('');
+    const people = `<div class="pl-row people" style="--c:#4b5cf0"><div class="pl-rh"><span class="pl-num">${PLAN_ROWS.length + 1}</span><span class="pl-nm"><span class="pl-ic">${planIcon('people')}</span>Content Selection</span></div>`
+      + `<div class="pl-lines"><div class="pl-ppl">${PLAN_PEOPLE.map(n => `<span class="pl-av"><i>${esc(n.charAt(0).toUpperCase())}</i>${esc(n)}</span>`).join('')}</div></div></div>`;
+    $('plList').innerHTML = rows + people;
+  }
+
+  function renderPlan(){
+    const today = midnight(serverNow());
+    planDayKey = dayKey(today);
+    $('plNow').innerHTML = planNowDay(today, 'Today', 'td') + planNowDay(addDays(today, 1), 'Tomorrow', 'tm');
+    renderPlanEvent(today);
+    renderPlanBoard(today);
+    renderPlanList(today);
+  }
+  $('plPrev').addEventListener('click', () => { planOffset--; renderPlanBoard(midnight(serverNow())); });
+  $('plNext').addEventListener('click', () => { planOffset++; renderPlanBoard(midnight(serverNow())); });
+  $('plNowBtn').addEventListener('click', () => { planOffset = 0; renderPlanBoard(midnight(serverNow())); });
+
   /* ---------- tabs & print ---------- */
   async function showTab(tab){
     if(tab === activeTab) return;
     if(tab !== 'chart' && hasUnsaved()) await save();
     activeTab = tab;
+    document.body.classList.remove('print-plan');
     document.querySelectorAll('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
     $('chartView').hidden = tab !== 'chart';
+    $('planView').hidden = tab !== 'plan';
     $('stockView').hidden = tab !== 'stock';
     $('totalView').hidden = tab !== 'total';
     if(tab === 'total') await loadTotals();
     else if(tab === 'stock'){ fillTypeSelects(); renderItems(); await loadItems(); }
+    else if(tab === 'plan'){ planOffset = 0; renderPlan(); }
     else await loadChart();
   }
   $('tabs').addEventListener('click', e => {
@@ -1443,6 +1782,13 @@
   });
 
   $('printBtn').addEventListener('click', async () => {
+    if(activeTab === 'plan'){ // print the plan itself, ready to pin up
+      renderPlan();
+      document.body.classList.add('print-plan');
+      window.addEventListener('afterprint', () => document.body.classList.remove('print-plan'), {once: true});
+      window.print();
+      return;
+    }
     if(activeTab !== 'chart') await showTab('chart');
     if(hasUnsaved()) await save();
     window.print();

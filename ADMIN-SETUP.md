@@ -62,6 +62,7 @@ How it works:
   ```
 
   *Opening* is stock that existed before you started using the chart, and *Not needed* is content you decided not to post — both are editable boxes in the "Stock by type" table (they are saved right away in the **MediaStock** tab). If more was uploaded than recorded, the row shows 0 left with a warning. The last column compares "left to upload" with the pieces marked **Ready** in the Content Stock list, e.g. "3 to add", so you can see whether the list is complete. Below that, a month-by-month table you can filter by year. Export CSV gives one row per month and type.
+- **Weekly Plan** tab: the media team's weekly content plan as a picture — a **Today / Tomorrow** card, a Sunday-to-Saturday board (today in gold; ‹ › to look at other weeks), the plan type by type, who does the content selection, and a countdown card for the next event (it disappears the day after the event). It is fixed text inside `media.html` (`PLAN_ROWS`, `PLAN_PEOPLE`, `PLAN_EVENT`), so it needs **no script update**; ask to have it changed when the plan or the event changes. On this tab **Print / PDF** prints the plan on one A4 landscape page.
 - **Print / Save as PDF** prints the month's log on one A4 landscape page. It has no signature or approval lines.
 - The month/year that opens by default comes from Google's clock, so a wrong computer date can't open the wrong month.
 - The work types are listed in one line near the top of the script in `media.html` (`CATEGORIES`) if you ever want to add or rename one.
