@@ -144,6 +144,13 @@ How it works:
 
 Limits: 3,000 songs, 20,000 characters of lyrics per song, 40 songs per service.
 
+## 8. Events and Invite in the AJM Office app (no key)
+
+The app's login screen has two tiles anyone can use, without a key:
+
+- **Events** — reads [`events.json`](events.json) from the website: the special events (with flyer, *Register*, *Zoom link* on WhatsApp, *Add to calendar*) and the weekly gatherings, as a "coming up in the next 7 days" list in India time, with a LIVE badge while a gathering is on. A special event disappears by itself the day after its date. When events change, update **events.json** together with **events.html** — every phone picks it up the next time Events is opened (no app update). The app keeps the last list it downloaded, so it also works offline.
+- **Invite** — the same questions as [`invite.html`](invite.html). Sending it opens WhatsApp with the full invitation (as the website does) and adds a row to the sheet with source **Speaking Invitation** (details end with "Sent from the app"), so it shows in Admin like a website invitation.
+
 ## Important limitations — please read
 
 - **This is not bank-grade security.** The admin key is a simple shared password, not a real login system. Anyone who guesses or obtains the key can read the sheet's data through the Web App URL. Don't use this for anything more sensitive than names/phone numbers/RSVPs.

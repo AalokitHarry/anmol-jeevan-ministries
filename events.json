@@ -1,0 +1,67 @@
+{
+  "_note": "Public list of gatherings, read by the AJM Office app (Events, no login). Keep it in step with events.html. Times are in India time (IST). A special event disappears from the app the day after its date.",
+  "updated": "2026-09-29",
+  "whatsapp": "917999929550",
+  "special": [
+    {
+      "id": "womens-meet-2026-09-29",
+      "title": "Women's Meet",
+      "date": "2026-09-29",
+      "time": "20:30",
+      "durationMinutes": 90,
+      "where": "Online via Zoom",
+      "online": true,
+      "text": "“Rooted in Christ. Rising in purpose.” — with Pastor Juhi Vishal. No registration fee.",
+      "image": "img/womens-meet-flyer-sep29-v2.jpg",
+      "link": "womens-meet.html",
+      "linkLabel": "Register"
+    }
+  ],
+  "weekly": [
+    {
+      "title": "Sunday Worship Service",
+      "days": ["SUN"],
+      "time": "15:00",
+      "durationMinutes": 120,
+      "where": "Indore, Madhya Pradesh",
+      "online": false,
+      "text": "Praise, the Word & prayer together — come as you are."
+    },
+    {
+      "title": "90 Minutes with Jesus",
+      "days": ["WED"],
+      "time": "19:00",
+      "durationMinutes": 90,
+      "where": "Indore, Madhya Pradesh",
+      "online": false,
+      "text": "A focused time in His presence — worship, the Word & prayer."
+    },
+    {
+      "title": "Youth Fellowship",
+      "days": ["THU"],
+      "time": "20:30",
+      "durationMinutes": 60,
+      "where": "Online via Zoom",
+      "online": true,
+      "text": "Worship & the Word for our youth."
+    },
+    {
+      "title": "Morning Devotion",
+      "days": ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      "time": "07:30",
+      "durationMinutes": 30,
+      "where": "Online via Zoom",
+      "online": true,
+      "text": "Start the day in prayer & the Word."
+    },
+    {
+      "title": "Night Prayer",
+      "days": ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      "time": "22:00",
+      "durationMinutes": 30,
+      "where": "Online via Zoom",
+      "online": true,
+      "text": "Join us in prayer together."
+    }
+  ]
+}
