@@ -111,10 +111,38 @@ Handy: tick the first row and **shift-click** another to select everyone in betw
 To turn this on, update the script once (an older script keeps working — Confirm / Contacted / Delete still work, just one person at a time, and *Move to history* asks for the update instead):
 
 1. Open the sheet → **Extensions → Apps Script**, paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
-2. Retype `ADMIN_KEY` and `MEDIA_KEY` at the top (the sample keys are refused).
+2. Retype `ADMIN_KEY` and `MEDIA_KEY` (and `WORSHIP_KEY`, section 7) at the top (the sample keys are refused).
 3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy**.
 
 The first time the page loads after that, two columns — **Archive** and **ArchivedAt** — are added to the right of the Registrations tab. They stay empty for everyone still in the main list; for people you moved to History, **Archive** holds the event name. Please don't rename these headers. Big selections are sent in batches of 25 (a progress count shows), and if a batch fails, the ones already done are kept and the rest stay selected so you can try again.
+
+## 7. Worship team — songs, lyrics and the Sunday list
+
+`/worship.html` is a private page for the worship team, in the same style as the admin and media pages, with **its own key** (the worship key doesn't open registrations or the media office, and the other keys don't open this). Songs are kept in two new tabs of the same Google Sheet — **WorshipSongs** and **WorshipSets** — apart from everything else.
+
+To turn it on, update the script once:
+
+1. Open the sheet → **Extensions → Apps Script**, paste in the entire contents of [`admin-tools/apps-script.gs`](admin-tools/apps-script.gs) (replace everything).
+2. Retype your keys at the top, and pick a new one for the worship team (**the sample keys are refused**):
+   ```
+   const ADMIN_KEY = '...';     // your existing admin key
+   const MEDIA_KEY = '...';     // your existing media key
+   const WORSHIP_KEY = '...';   // new — the one key the whole worship team uses on worship.html
+   ```
+3. Save, then **Deploy → Manage deployments → pencil icon → New version → Deploy**.
+4. Visit `https://ajmfamily.site/worship.html` and log in with the worship key.
+
+Until the script is updated the worship page just says the key is wrong — nothing else changes.
+
+How it works:
+
+- **Song Library** — *Add a song*: a title, the key it's sung in (optional), a YouTube link to learn it (optional), and the lyrics — just paste them. Leave an empty line between verses. A line that only says **Chorus**, **Verse 2**, **Bridge**, **कोरस** or **अंतरा 1** (or anything short in `[square brackets]`) becomes a label, and choruses are shown in gold. The preview beside the lyrics shows exactly how it will look on Sunday. Hindi and English both work. Search finds titles *and* words in the lyrics. Each card shows how many times the song has been sung and when it's planned next.
+- **Sunday** — opens on the coming Sunday (‹ › for other Sundays, *Other date* for a special service on any day). **Add songs** lists the whole library: tap songs to put them in the list — as many as you like, up to 40 — and ▲ ▼ to change the order. There's a note for the team (e.g. "Communion Sunday"), *Saved lists* to jump to other dates, and a one-tap **Use last Sunday's list** when a date is empty. Everything saves by itself and appears on everyone's phone within about 20 seconds.
+- **Start singing** — the lyrics fill the screen, big and easy to read: swipe left/right or tap **Next / Previous** for the next song, **A− / A+** for text size and 🌙 for a dark or light screen (both remembered on that phone). The screen stays on while the lyrics are open. The phone's **Back** button closes the lyrics. A Bluetooth page-turner pedal works too: *Page Down* scrolls and moves to the next song at the end.
+- **Send the list** shares the song titles for that date (to WhatsApp etc.), and **Print lyrics** prints all the songs for that date, two columns per page.
+- Deleting a song (in *Edit*) removes it for everyone; past lists that had it show "a song that was deleted".
+
+Limits: 3,000 songs, 20,000 characters of lyrics per song, 40 songs per service.
 
 ## Important limitations — please read
 

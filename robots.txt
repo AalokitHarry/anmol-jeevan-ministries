@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /media.html
+Disallow: /worship.html
 
 Sitemap: https://ajmfamily.site/sitemap.xml

@@ -11,6 +11,9 @@ const ADMIN_KEY = 'ajm-2026-change-me';
 // The one key the whole media team uses on media.html. Pick your own.
 const MEDIA_KEY = 'media-2026-change-me';
 
+// The one key the whole worship team uses on worship.html. Pick your own.
+const WORSHIP_KEY = 'worship-2026-change-me';
+
 const SHEET_NAME = 'Registrations';
 const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status', 'Archive', 'ArchivedAt'];
 const ID_COL = 7;
@@ -35,8 +38,14 @@ function getSheet_() {
 }
 
 function doPost(e) {
-  const sheet = getSheet_();
   const data = JSON.parse(e.postData.contents);
+  // worship.html saves song lyrics this way (they are too long for a web address);
+  // everything else posted here is a form registration
+  if (String(data.action || '').indexOf('worship') === 0) {
+    return handleWorship_(data);
+  }
+
+  const sheet = getSheet_();
   const row = sheet.getLastRow() + 1;
 
   sheet.getRange(row, 1).setValue(new Date());
@@ -65,6 +74,10 @@ function doGet(e) {
   // Media office monthly work chart — has its own keys, separate from ADMIN_KEY.
   if (String(e.parameter.action || '').indexOf('media') === 0) {
     return handleMedia_(e.parameter);
+  }
+  // Worship team songs and Sunday sets — their own key too.
+  if (String(e.parameter.action || '').indexOf('worship') === 0) {
+    return handleWorship_(e.parameter);
   }
 
   // (the sample key is refused, so a forgotten "change me" can never expose the list)
@@ -672,6 +685,211 @@ function mediaItemDelete_(p) {
       }
     }
     return jsonOut_({ error: 'not found' });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ================= Worship team: the song library and each Sunday's songs =================
+// worship.html keeps the songs (title, musical key, lyrics) and, for every service date, which
+// songs are sung and in what order. Each lives in its own tab, apart from everything else.
+
+const WORSHIP_VERSION = 1;
+const WORSHIP_SONGS_SHEET = 'WorshipSongs';
+const WORSHIP_SONG_HEADERS = ['ID', 'Title', 'SongKey', 'Link', 'Lyrics', 'AddedAt', 'UpdatedAt', 'Rev'];
+const WORSHIP_SETS_SHEET = 'WorshipSets';
+const WORSHIP_SET_HEADERS = ['Date', 'Songs', 'Note', 'UpdatedAt'];
+const WORSHIP_MAX_SONGS = 3000;
+const WORSHIP_MAX_LYRICS = 20000; // one Google Sheets cell holds up to 50,000 characters
+const WORSHIP_MAX_SET = 40;
+
+// Refuses the sample key, so a forgotten "change me" can never open the songs.
+function worshipAuthorized_(key) {
+  return !!key && key === WORSHIP_KEY && WORSHIP_KEY !== 'worship-2026-change-me';
+}
+
+function validWorshipId_(id) {
+  return /^[A-Za-z0-9-]{6,40}$/.test(String(id || ''));
+}
+
+function validDay_(d) {
+  return /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(String(d || ''));
+}
+
+// a date cell may come back as a Date if someone typed into the sheet by hand
+function dayText_(v) {
+  if (v instanceof Date) {
+    return v.getFullYear() + '-' + ('0' + (v.getMonth() + 1)).slice(-2) + '-' + ('0' + v.getDate()).slice(-2);
+  }
+  return String(v || '');
+}
+
+// line breaks kept, trailing spaces and runs of empty lines tidied
+function cleanLyrics_(s) {
+  return String(s || '').replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n')
+    .replace(/^\n+|\n+$/g, '').slice(0, WORSHIP_MAX_LYRICS);
+}
+
+function songOut_(r) {
+  return {
+    id: String(r.ID),
+    title: String(r.Title),
+    songKey: String(r.SongKey || ''),
+    link: String(r.Link || ''),
+    lyrics: String(r.Lyrics || ''),
+    addedAt: String(r.AddedAt || ''),
+    updatedAt: String(r.UpdatedAt || ''),
+    rev: String(r.Rev || '')
+  };
+}
+
+function setOut_(r) {
+  return {
+    date: dayText_(r.Date),
+    songs: String(r.Songs || '').split(',').filter(function (x) { return !!x; }),
+    note: String(r.Note || ''),
+    updatedAt: String(r.UpdatedAt || '')
+  };
+}
+
+// Changes whenever a song or a service date is added, changed or removed — lets the page ask "anything new?" cheaply.
+function worshipStamp_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const parts = [];
+  let latest = '';
+  [[WORSHIP_SONGS_SHEET, 7], [WORSHIP_SETS_SHEET, 4]].forEach(function (x) {
+    const sh = ss.getSheetByName(x[0]);
+    const n = sh ? Math.max(sh.getLastRow() - 1, 0) : 0;
+    parts.push(n);
+    if (n) {
+      sh.getRange(2, x[1], n, 1).getValues().forEach(function (v) {
+        const t = String(v[0] || '');
+        if (t > latest) latest = t;
+      });
+    }
+  });
+  return latest + '|' + parts.join('|');
+}
+
+function handleWorship_(p) {
+  if (!worshipAuthorized_(p.key)) return jsonOut_({ error: 'unauthorized' });
+
+  switch (p.action) {
+    case 'worshipLogin':
+      return jsonOut_({ ok: true, version: WORSHIP_VERSION, now: new Date().toISOString() });
+    case 'worshipData':
+      return worshipData_(p);
+    case 'worshipSongSave':
+      return worshipSongSave_(p);
+    case 'worshipSongDelete':
+      return worshipSongDelete_(p);
+    case 'worshipSetSave':
+      return worshipSetSave_(p);
+    default:
+      return jsonOut_({ error: 'unknown action' });
+  }
+}
+
+// Every song and every service date. With p.since (the stamp from last time) it answers
+// {unchanged: true} when nothing has changed, so the page can check often without downloading everything.
+function worshipData_(p) {
+  const stamp = worshipStamp_();
+  if (p.since && String(p.since) === stamp) return jsonOut_({ ok: true, unchanged: true, stamp: stamp });
+  const sets = readTab_(WORSHIP_SETS_SHEET, WORSHIP_SET_HEADERS).map(setOut_)
+    .filter(function (x) { return validDay_(x.date); })
+    .sort(function (a, b) { return a.date < b.date ? 1 : -1; })
+    .slice(0, 600);
+  return jsonOut_({
+    ok: true,
+    stamp: stamp,
+    songs: readTab_(WORSHIP_SONGS_SHEET, WORSHIP_SONG_HEADERS).map(songOut_),
+    sets: sets
+  });
+}
+
+// Create or update one song. The page picks the id for a new song, so sending the same save twice
+// never makes two copies. p.rev is a random tag the page uses to confirm its save arrived.
+function worshipSongSave_(p) {
+  const id = String(p.id || '');
+  if (!validWorshipId_(id)) return jsonOut_({ error: 'invalid id' });
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getTab_(WORSHIP_SONGS_SHEET, WORSHIP_SONG_HEADERS);
+    const rows = readTab_(WORSHIP_SONGS_SHEET, WORSHIP_SONG_HEADERS);
+    let rec = null;
+    for (let i = 0; i < rows.length; i++) { if (String(rows[i].ID) === id) { rec = rows[i]; break; } }
+    if (!rec) {
+      if (rows.length >= WORSHIP_MAX_SONGS) return jsonOut_({ error: 'library is full' });
+      rec = { _row: 0, ID: id, Title: '', SongKey: '', Link: '', Lyrics: '', AddedAt: new Date().toISOString(), UpdatedAt: '', Rev: '' };
+    }
+
+    if (p.title !== undefined) rec.Title = String(p.title).replace(/\s+/g, ' ').trim().slice(0, 120);
+    if (!rec.Title) return jsonOut_({ error: 'title required' });
+    if (p.songKey !== undefined) rec.SongKey = String(p.songKey).replace(/\s+/g, ' ').trim().slice(0, 12);
+    if (p.link !== undefined) rec.Link = String(p.link).trim().slice(0, 300);
+    if (p.lyrics !== undefined) rec.Lyrics = cleanLyrics_(p.lyrics);
+    rec.Rev = String(p.rev || '').slice(0, 40);
+    rec.UpdatedAt = new Date().toISOString();
+
+    writeTabRow_(sheet, rec._row, WORSHIP_SONG_HEADERS, WORSHIP_SONG_HEADERS.map(function (h) { return rec[h]; }));
+    return jsonOut_({ ok: true, song: songOut_(rec) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function worshipSongDelete_(p) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(WORSHIP_SONGS_SHEET);
+    if (!sheet || !p.id) return jsonOut_({ error: 'not found' });
+    const rows = readTab_(WORSHIP_SONGS_SHEET, WORSHIP_SONG_HEADERS);
+    for (let i = 0; i < rows.length; i++) {
+      if (String(rows[i].ID) === String(p.id)) {
+        sheet.deleteRow(rows[i]._row);
+        return jsonOut_({ ok: true });
+      }
+    }
+    return jsonOut_({ error: 'not found' });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// The songs for one service date, in order: p.date = YYYY-MM-DD, p.songs = ids separated by commas,
+// p.note = an optional line for the team. Saving an empty list with no note removes that date.
+function worshipSetSave_(p) {
+  const date = String(p.date || '');
+  if (!validDay_(date)) return jsonOut_({ error: 'invalid date' });
+  const ids = [];
+  String(p.songs || '').split(',').forEach(function (x) {
+    x = x.trim();
+    if (validWorshipId_(x) && ids.indexOf(x) === -1) ids.push(x);
+  });
+  if (ids.length > WORSHIP_MAX_SET) return jsonOut_({ error: 'too many songs' });
+  const note = String(p.note || '').replace(/\r\n?/g, '\n').trim().slice(0, 500);
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getTab_(WORSHIP_SETS_SHEET, WORSHIP_SET_HEADERS);
+    const rows = readTab_(WORSHIP_SETS_SHEET, WORSHIP_SET_HEADERS);
+    let rec = null;
+    for (let i = 0; i < rows.length; i++) { if (dayText_(rows[i].Date) === date) { rec = rows[i]; break; } }
+    const now = new Date().toISOString();
+    if (!ids.length && !note) {
+      if (rec) sheet.deleteRow(rec._row);
+      return jsonOut_({ ok: true, set: { date: date, songs: [], note: '', updatedAt: now } });
+    }
+    rec = rec || { _row: 0 };
+    rec.Date = date;
+    rec.Songs = ids.join(',');
+    rec.Note = note;
+    rec.UpdatedAt = now;
+    writeTabRow_(sheet, rec._row, WORSHIP_SET_HEADERS, WORSHIP_SET_HEADERS.map(function (h) { return rec[h]; }));
+    return jsonOut_({ ok: true, set: setOut_(rec) });
   } finally {
     lock.releaseLock();
   }

@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Worship Team — Sunday Songs</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#16305a">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16305a; --blue:#2f6df6; --blue-soft:#eaf1ff; --indigo:#4b5cf0;
+    --ink:#141a2e; --muted:#69758c; --line:#e3e8f1; --line-2:#edf1f8; --bg:#f3f5fa;
+    --ok:#1f9d63; --ok-soft:#e3f6ec; --warn:#d98a0b; --warn-soft:#fdf1d8; --bad:#d64545;
+    --gold:#e8a33d; --gold-soft:#fff6e2;
+    --card:#fff; --radius:20px;
+    --shadow:0 1px 2px rgba(20,30,60,.05),0 14px 34px -18px rgba(20,40,90,.30);
+    --grad:linear-gradient(135deg,#16305a 0%,#26468a 58%,#3b6fd6 100%);
+    --gold-grad:linear-gradient(135deg,#f7cd7a 0%,#e8a33d 100%);
+    --lyrics-font:'Inter','Noto Sans Devanagari',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter','Noto Sans Devanagari',sans-serif;color:var(--ink);line-height:1.5;padding:26px clamp(18px,2.4vw,48px);overflow-x:hidden;min-height:100vh;
+    background:
+      radial-gradient(1100px 460px at 88% -8%,#dbe6ff 0%,transparent 62%),
+      radial-gradient(800px 380px at -8% 4%,#fbeede 0%,transparent 58%),
+      var(--bg)}
+  body.singing{overflow:hidden}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500}
+  .wrap{width:100%}
+  [hidden]{display:none!important}
+  svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  button{font-family:inherit}
+
+  /* ---------- login ---------- */
+  #gate{min-height:86vh;display:flex;align-items:center;justify-content:center}
+  .gate-card{width:min(420px,92vw);background:var(--card);border-radius:26px;padding:38px 34px 32px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line-2)}
+  .gate-card img{height:38px;margin-bottom:18px}
+  .gate-card h1{font-size:1.9rem;margin-bottom:6px}
+  .gate-card p{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+  .gate-field{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;background:#fafbfe;margin-bottom:14px;transition:border-color .2s,box-shadow .2s}
+  .gate-field:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.12)}
+  .gate-field svg{color:var(--muted)}
+  .gate-field input{flex:1;border:0;background:transparent;padding:14px 0;font:inherit;font-size:1rem;outline:none;min-width:0}
+  .gate-field .eye{flex:none;width:36px;height:36px;margin-right:-6px;border-radius:50%;border:0;background:transparent;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,color .15s}
+  .gate-field .eye:hover{background:var(--blue-soft);color:var(--blue)}
+  .gate-field .eye:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .gate-field .eye .eye-off{display:none}
+  .gate-field .eye.on .eye-on{display:none}
+  .gate-field .eye.on .eye-off{display:block}
+  #gateBtn{width:100%;padding:14px;border-radius:14px;border:0;background:var(--grad);color:#fff;font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 10px 24px -10px rgba(38,70,138,.7)}
+  #gateBtn:hover{transform:translateY(-1px)}
+  #gateBtn:disabled{opacity:.6;cursor:default;transform:none}
+  #gateError{color:var(--bad);font-size:.84rem;min-height:1.3em;margin-top:12px}
+
+  /* ---------- app shell ---------- */
+  #panel{display:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand img{height:34px}
+  .brand h1{font-size:1.55rem;line-height:1.1}
+  .brand .sub{color:var(--muted);font-size:.82rem;margin-top:2px}
+  .top-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:inherit;transition:transform .15s,box-shadow .2s,background .2s,border-color .2s;white-space:nowrap}
+  .btn:hover{border-color:#c9d4ea;box-shadow:0 6px 16px -10px rgba(20,40,90,.5);transform:translateY(-1px)}
+  .btn.primary{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 10px 22px -12px rgba(38,70,138,.8)}
+  .btn.danger{color:var(--bad);border-color:#f5c2c2}
+  .btn.danger:hover{background:#fde8e8}
+  .btn.sm{padding:7px 14px;font-size:.78rem}
+  .btn:disabled{opacity:.45;cursor:default;pointer-events:none}
+  .iconbtn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;transition:background .15s,color .15s,border-color .15s}
+  .iconbtn:hover{background:var(--blue-soft);color:var(--blue)}
+  .iconbtn.danger:hover{background:#fde8e8;color:var(--bad);border-color:#f5c2c2}
+  .iconbtn:disabled{opacity:.35;cursor:default;pointer-events:none}
+
+  .tabs{display:inline-flex;gap:4px;padding:5px;border-radius:100px;background:rgba(255,255,255,.75);border:1px solid var(--line);backdrop-filter:blur(8px);margin-bottom:20px;flex-wrap:wrap;box-shadow:0 8px 20px -16px rgba(20,40,90,.5)}
+  .tab{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:100px;border:0;background:transparent;font:inherit;font-size:.84rem;font-weight:600;cursor:pointer;color:var(--muted);transition:background .2s,color .2s}
+  .tab:hover{color:var(--ink)}
+  .tab b{padding:0 8px;border-radius:100px;background:#e8edf7;color:var(--navy);font-size:.72rem}
+  .tab.active{background:var(--grad);color:#fff;box-shadow:0 8px 18px -10px rgba(38,70,138,.9)}
+  .tab.active b{background:rgba(255,255,255,.22);color:#fff}
+
+  .card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .muted{color:var(--muted)}
+  .fade{animation:fade .35s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .howto{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;background:#fff;border:1px solid var(--line-2);border-left:5px solid var(--gold);border-radius:16px;padding:12px 16px 12px 18px;margin-bottom:16px;font-size:.9rem;line-height:1.4;color:#28527f;box-shadow:var(--shadow)}
+  .howto strong{color:var(--navy);font-weight:800}
+  .howto span b{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--gold);color:#3b2a00;font-size:.72rem;margin-right:8px}
+  .howto .ht-note{color:var(--muted)}
+  .howto button{margin-left:auto;padding:6px 16px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;color:var(--ink)}
+
+  .savechip{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+  .savechip::before{content:"";width:8px;height:8px;border-radius:50%;background:#b6c0d4;flex:none}
+  .savechip.ok{color:var(--ok)} .savechip.ok::before{background:var(--ok)}
+  .savechip.busy{color:var(--warn)} .savechip.busy::before{background:var(--warn);animation:pulse 1s infinite}
+  .savechip.err{color:var(--bad);font-weight:600} .savechip.err::before{background:var(--bad)}
+  .savechip:empty{display:none}
+  @keyframes pulse{50%{opacity:.35}}
+  a.btn{text-decoration:none}
+
+  .keychip{display:inline-flex;align-items:center;padding:1px 9px;border-radius:100px;background:var(--gold-soft);color:#8a5a00;font-weight:800;font-size:.7rem;letter-spacing:.02em;white-space:nowrap;border:1px solid #f3dcae}
+  .loading{text-align:center;padding:60px 20px;color:var(--muted)}
+
+  /* ---------- Sunday ---------- */
+  .sun-hero{position:relative;overflow:hidden;border-radius:26px;background:var(--grad);color:#fff;padding:22px 26px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 26px;margin-bottom:16px}
+  .sun-hero::before{content:"";position:absolute;right:-90px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.42),transparent 68%);pointer-events:none}
+  .sun-date{position:relative;display:flex;align-items:center;gap:12px;min-width:0}
+  .sun-date .iconbtn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);color:#fff}
+  .sun-date .iconbtn:hover{background:rgba(255,255,255,.22)}
+  .sun-when{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#f7cd7a;display:flex;align-items:center;gap:8px}
+  .sun-when .live{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:glow 1.8s infinite}
+  @keyframes glow{0%{box-shadow:0 0 0 0 rgba(232,163,61,.7)}70%,100%{box-shadow:0 0 0 9px rgba(232,163,61,0)}}
+  .sun-date h2{font-size:clamp(1.5rem,3.2vw,2.3rem);line-height:1.1;font-weight:600;margin-top:2px}
+  .sun-date .yr{font-size:.85rem;color:#c6d6f5;margin-top:2px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .sun-date .yr button{background:none;border:0;color:#fff;font:inherit;font-size:.8rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;opacity:.85}
+  .datepick{position:relative;display:inline-flex}
+  .datepick input{position:absolute;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
+  .sun-side{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .sun-count{text-align:center;padding:8px 16px;border-radius:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
+  .sun-count b{display:block;font-family:'Fraunces',serif;font-size:2rem;line-height:1.05;color:var(--gold)}
+  .sun-count span{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#d3def7}
+  .singbtn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:100px;border:0;background:var(--gold-grad);color:#3b2a00;font:inherit;font-weight:800;font-size:1.02rem;cursor:pointer;box-shadow:0 14px 28px -12px rgba(232,163,61,.9);transition:transform .15s}
+  .singbtn:hover{transform:translateY(-1px) scale(1.02)}
+  .singbtn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+  .singbtn svg.i{width:20px;height:20px;fill:currentColor;stroke:none}
+
+  .sun-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;align-items:start}
+  .pane{padding:18px 20px 20px}
+  .pane-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .pane-head h3{font-family:'Inter',sans-serif;font-size:1rem;font-weight:800;color:var(--navy)}
+  .pane-head .hint{font-size:.78rem;color:var(--muted)}
+  .setlist{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+  .set-item{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 12px;border:1px solid var(--line-2);border-radius:16px;background:#fff;transition:box-shadow .2s,border-color .2s}
+  .set-item:hover{border-color:#cfdaf0;box-shadow:0 8px 20px -14px rgba(20,40,90,.45)}
+  .set-item .num{width:34px;height:34px;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:.95rem}
+  .set-item .si-main{flex:1;min-width:0;background:none;border:0;text-align:left;cursor:pointer;padding:2px 0;color:inherit}
+  .set-item .si-main b{display:flex;align-items:center;gap:8px;font-size:1rem;line-height:1.3;flex-wrap:wrap}
+  .set-item .si-main small{display:block;color:var(--muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+  .set-item .si-tools{display:flex;gap:4px;flex:none}
+  .set-item .si-tools .iconbtn{width:32px;height:32px}
+  .set-item.gone{opacity:.7;border-style:dashed}
+  .set-item.gone .num{background:#b6c0d4}
+  .set-empty{text-align:center;padding:34px 14px;border:1.5px dashed #cdd8ec;border-radius:18px;background:#f8faff;color:var(--muted)}
+  .set-empty .big{font-size:2.2rem;margin-bottom:6px}
+  .set-empty p{margin-bottom:14px}
+  .set-empty .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .set-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .side{display:grid;gap:16px}
+  .note-box textarea{width:100%;min-height:92px;padding:11px 14px;border:1.5px solid var(--line);border-radius:14px;font:inherit;font-size:.92rem;resize:vertical;background:#fcfdff}
+  .note-box textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .dates{display:flex;flex-wrap:wrap;gap:8px}
+  .datechip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink);cursor:pointer}
+  .datechip small{font-weight:600;color:var(--muted)}
+  .datechip.on{border-color:var(--navy);background:var(--navy);color:#fff}
+  .datechip.on small{color:#c6d6f5}
+  .datechip.future{border-color:#f3dcae;background:var(--gold-soft)}
+  .side .actions{display:flex;gap:8px;flex-wrap:wrap}
+
+  /* ---------- library ---------- */
+  .lib-tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .search{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;max-width:420px;border:1.5px solid var(--line);border-radius:100px;padding:0 14px;background:#fff}
+  .search svg{color:var(--muted)}
+  .search input{border:0;outline:none;background:transparent;padding:10px 0;font:inherit;font-size:.9rem;width:100%}
+  .seg{display:inline-flex;gap:4px;padding:4px;border-radius:100px;background:#eaeff9;flex-wrap:wrap}
+  .seg button{padding:7px 14px;border-radius:100px;border:0;background:transparent;font:inherit;font-weight:700;font-size:.8rem;color:var(--muted);cursor:pointer}
+  .seg button.active{background:#fff;color:var(--navy);box-shadow:0 4px 12px -6px rgba(20,40,90,.5)}
+  .lib-tools .grow{flex:1}
+  .songs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .song-card{display:flex;flex-direction:column;gap:10px;padding:16px 16px 14px;position:relative;overflow:hidden}
+  .song-card::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,#16305a,#3b6fd6 60%,var(--gold))}
+  .song-card.inset{border-color:#f3dcae;background:linear-gradient(180deg,#fffaf0,#fff 60%)}
+  .sc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .sc-top h3{font-family:'Inter','Noto Sans Devanagari',sans-serif;font-weight:800;font-size:1.02rem;line-height:1.3;color:var(--navy);word-break:break-word}
+  .sc-first{font-size:.86rem;color:#4a5670;line-height:1.5;min-height:2.6em;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .sc-first.none{color:#9aa6bb;font-style:italic}
+  .sc-meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.74rem;color:var(--muted)}
+  .sc-meta .planned{color:#8a5a00;font-weight:700}
+  .sc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .sc-actions .btn{padding:7px 13px;font-size:.78rem}
+  .sc-actions .btn.added{background:var(--ok-soft);border-color:#bfe6d0;color:#166b45}
+  .lib-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+  .lib-empty .big{font-size:2.6rem;margin-bottom:8px}
+  .lib-empty p{margin-bottom:16px}
+
+  /* ---------- lyrics (library preview, editor preview, sing mode, print) ---------- */
+  .lyr{font-family:var(--lyrics-font)}
+  .lyr .stanza{margin:0 0 1em}
+  .lyr .stanza:last-child{margin-bottom:0}
+  .lyr .ln{min-height:1.2em}
+  .lyr .lab{display:inline-block;font-size:.62em;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#b36b00;border:1.5px solid currentColor;border-radius:100px;padding:.1em .8em;margin:0 0 .4em}
+  .lyr .stanza.chorus{color:#6a3f00}
+
+  /* ---------- dialogs ---------- */
+  .modal{position:fixed;inset:0;z-index:200;background:rgba(12,18,40,.5);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:18px;animation:fadein .2s ease}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .sheet{width:min(560px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;background:#fff;border-radius:24px;box-shadow:0 30px 70px -20px rgba(10,20,50,.55);overflow:hidden;animation:pop .25s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes pop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  .sheet.wide{width:min(1100px,100%)}
+  .sheet.small{width:min(420px,100%)}
+  .sheet > header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 12px}
+  .sheet > header h3{font-size:1.3rem;line-height:1.2}
+  .sheet > header small{display:block;font-family:'Inter',sans-serif;font-size:.8rem;color:var(--muted);font-weight:500}
+  .sheet .body{padding:0 20px 14px;overflow-y:auto;flex:1;min-height:0}
+  .sheet > footer{display:flex;align-items:center;gap:10px;padding:14px 20px 18px;border-top:1px solid var(--line-2);flex-wrap:wrap}
+  .sheet > footer .grow{flex:1}
+  .sheet p.msg{padding:0 20px 8px;color:#4a5670}
+
+  .pk-search{margin:0 20px 10px;max-width:none}
+  .pk-list{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding-bottom:4px}
+  .pk-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;cursor:pointer;color:inherit;font:inherit;transition:border-color .15s,background .15s}
+  .pk-row:hover{border-color:#cfdaf0}
+  .pk-row .tick{width:30px;height:30px;border-radius:10px;border:2px solid #cdd8ec;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;transition:background .15s,border-color .15s}
+  .pk-row.on{border-color:var(--blue);background:var(--blue-soft)}
+  .pk-row.on .tick{background:var(--blue);border-color:var(--blue)}
+  .pk-row .pk-main{flex:1;min-width:0}
+  .pk-row .pk-main b{display:flex;align-items:center;gap:8px;font-size:.95rem;flex-wrap:wrap}
+  .pk-row .pk-main small{display:block;color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pk-row .pk-meta{font-size:.72rem;color:var(--muted);text-align:right;flex:none;max-width:110px}
+  .pk-none{text-align:center;color:var(--muted);padding:26px 10px}
+
+  .ed-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+  .ed-fields{display:grid;gap:12px;align-content:start}
+  .fld{display:grid;gap:5px}
+  .fld > span{font-size:.7rem;font-weight:800;color:#5b6a84;letter-spacing:.06em;text-transform:uppercase}
+  .fld input,.fld textarea{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.95rem;background:#fcfdff}
+  .fld textarea{font-family:var(--lyrics-font);min-height:320px;resize:vertical;line-height:1.55}
+  .fld input:focus,.fld textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,109,246,.1)}
+  .row2{display:grid;grid-template-columns:120px 1fr;gap:12px}
+  .ed-hint{font-size:.78rem;color:var(--muted);line-height:1.5}
+  .ed-hint b{color:#4a5670}
+  .dup{font-size:.8rem;color:#8a5a00;background:var(--gold-soft);border:1px solid #f3dcae;border-radius:10px;padding:7px 12px}
+  .ed-preview{border:1.5px dashed #cdd8ec;border-radius:16px;background:#fbfcff;padding:14px 16px;overflow:auto;max-height:560px}
+  .ed-preview .lyr{font-size:1rem;line-height:1.55;text-align:center}
+  .ed-preview .ph{color:#9aa6bb;font-style:italic;text-align:center;padding:30px 0}
+  .ed-preview > .cap{font-size:.7rem;font-weight:800;color:#5b6a84;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+  .ed-switch{display:none;margin-bottom:12px}
+
+  /* ---------- sing mode ---------- */
+  .sing{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;background:var(--sg-bg);color:var(--sg-ink);--scale:1}
+  .sing[data-theme="dark"]{--sg-bg:radial-gradient(900px 500px at 50% -10%,#1d2b58 0%,transparent 70%),#0b1024;--sg-ink:#f6f2e8;--sg-muted:#95a1c2;--sg-lab:#f0b95a;--sg-chorus:#ffe2a6;--sg-bar:rgba(255,255,255,.07);--sg-line:rgba(255,255,255,.14);--sg-btn:rgba(255,255,255,.1)}
+  .sing[data-theme="light"]{--sg-bg:#fffdf8;--sg-ink:#141a2e;--sg-muted:#6b7488;--sg-lab:#b36b00;--sg-chorus:#7a4a00;--sg-bar:#f4efe3;--sg-line:#e7dfcc;--sg-btn:#fff}
+  .sg-top{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));border-bottom:1px solid var(--sg-line)}
+  .sg-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:40px;height:40px;padding:0 10px;border-radius:100px;border:1px solid var(--sg-line);background:var(--sg-btn);color:var(--sg-ink);font:inherit;font-weight:700;font-size:.85rem;cursor:pointer;flex:none}
+  .sg-btn:disabled{opacity:.3;cursor:default}
+  .sg-pos{flex:1;min-width:0;text-align:center;line-height:1.2}
+  .sg-pos b{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sg-lab)}
+  .sg-pos small{display:block;font-size:.78rem;color:var(--sg-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sg-tools{display:flex;gap:6px}
+  .sg-dots{display:flex;justify-content:center;gap:6px;padding:8px 12px 0;flex-wrap:wrap}
+  .sg-dots button{width:26px;height:6px;border-radius:100px;border:0;background:var(--sg-line);cursor:pointer;padding:0}
+  .sg-dots button.on{background:var(--sg-lab)}
+  .sg-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:22px 18px 48px;text-align:center;scroll-behavior:smooth}
+  .sg-title{font-family:'Fraunces','Noto Sans Devanagari',serif;font-weight:600;font-size:calc(var(--scale) * clamp(24px,5.2vw,46px));line-height:1.15;margin-bottom:6px}
+  .sg-sub{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:22px;font-size:.85rem;color:var(--sg-muted)}
+  .sg-sub .keychip{background:transparent;color:var(--sg-lab);border-color:var(--sg-lab);font-size:.78rem}
+  .sg-lyrics{max-width:36em;margin:0 auto;font-size:calc(var(--scale) * clamp(20px,4.5vw,38px));line-height:1.48;font-weight:500}
+  .sing .lyr .lab{color:var(--sg-lab);font-size:.46em}
+  .sing .lyr .stanza.chorus{color:var(--sg-chorus)}
+  .sg-end{margin:34px auto 0;max-width:30em;display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--sg-muted);font-size:.9rem}
+  .sg-end .rule{width:80px;height:2px;border-radius:2px;background:var(--sg-line)}
+  .sg-next{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:100px;border:0;background:var(--gold-grad);color:#3b2a00;font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;max-width:100%}
+  .sg-next span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sg-missing{padding:60px 10px;color:var(--sg-muted);font-size:1.05rem}
+  .sg-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));border-top:1px solid var(--sg-line);background:var(--sg-bar)}
+  .sg-nav button{display:flex;align-items:center;gap:8px;min-width:0;padding:12px 14px;border-radius:16px;border:1px solid var(--sg-line);background:var(--sg-btn);color:var(--sg-ink);font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;text-align:left}
+  .sg-nav button#sgNext{justify-content:flex-end;text-align:right}
+  .sg-nav button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sg-nav button small{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sg-muted);font-weight:800}
+  .sg-nav button:disabled{opacity:.35;cursor:default}
+  .sg-anim{animation:sgin .28s ease both}
+  .sg-anim.back{animation-name:sgback}
+  @keyframes sgin{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+  @keyframes sgback{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:400;box-shadow:0 14px 30px -12px rgba(0,0,0,.5);max-width:calc(100vw - 32px);text-align:center}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #printArea{display:none}
+
+  @media(max-width:980px){
+    .sun-grid{grid-template-columns:minmax(0,1fr)} /* minmax(0,…): long lyric lines must not widen the column */
+    .ed-grid{grid-template-columns:minmax(0,1fr)}
+    .ed-switch{display:inline-flex}
+    .ed-grid .ed-preview{display:none;max-height:none}
+    .ed-grid.preview .ed-preview{display:block}
+    .ed-grid.preview .ed-fields{display:none}
+  }
+  @media(max-width:860px){ body{padding:14px} }
+  @media(max-width:560px){
+    .tabs{display:flex;width:100%;gap:2px;padding:4px}
+    .tab{flex:1;justify-content:center;padding:9px 4px;font-size:.8rem;white-space:nowrap}
+    .tab svg{display:none}
+    .brand img{height:28px}
+    .brand h1{font-size:1.3rem}
+    .top-actions{width:100%}
+    .top-actions .btn{flex:1;padding:10px 8px;font-size:.8rem}
+    .top-actions .btn svg{display:none}
+    .sun-hero{padding:18px 16px;border-radius:22px}
+    .sun-side{width:100%;justify-content:space-between}
+    .singbtn{flex:1;justify-content:center;padding:14px 18px}
+    .pane{padding:14px}
+    .set-item .si-tools .iconbtn{width:30px;height:30px}
+    .modal{padding:0;align-items:flex-end}
+    .sheet{border-radius:22px 22px 0 0;max-height:94vh;width:100%}
+    .row2{grid-template-columns:1fr}
+    .sheet > footer{gap:8px;padding:12px 14px 16px}
+    .sheet > footer .btn{padding:10px 14px}
+    .ed-switch{margin-top:2px}
+    .pk-row .pk-meta{display:none}
+    .sg-tools .hide-sm{display:none}
+    .sg-nav button{padding:11px 12px;font-size:.85rem}
+  }
+
+  @media print{
+    @page{size:A4;margin:14mm}
+    html,body{background:#fff;padding:0}
+    body > *:not(#printArea){display:none!important}
+    #printArea{display:block!important;color:#000;font-family:var(--lyrics-font)}
+    #printArea h1{font-family:'Fraunces',serif;font-size:20pt;font-weight:600;margin-bottom:2pt}
+    #printArea .p-sub{font-size:10pt;color:#555;margin-bottom:12pt;padding-bottom:8pt;border-bottom:1.5pt solid #16305a}
+    #printArea .p-song{margin-bottom:14pt;padding-bottom:10pt;border-bottom:.6pt solid #ccc}
+    #printArea .p-song h2{font-family:'Inter','Noto Sans Devanagari',sans-serif;font-size:13pt;font-weight:800;margin-bottom:6pt;break-after:avoid}
+    #printArea .p-song h2 .keychip{font-size:8pt;margin-left:6pt;vertical-align:middle}
+    #printArea .lyr{font-size:11pt;line-height:1.45;columns:2;column-gap:22pt}
+    #printArea .lyr .stanza{break-inside:avoid}
+    #printArea .lyr .lab{font-size:7pt}
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card fade">
+    <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
+    <h1>Worship Team</h1>
+    <p>Enter the worship key to open the team’s songs and Sunday list.</p>
+    <div class="gate-field">
+      <svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <input type="password" id="keyInput" placeholder="Worship key" autocomplete="off">
+      <button type="button" class="eye" id="keyEye" aria-label="Show key" aria-pressed="false" title="Show key"><svg class="i eye-on" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="i eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7c1.6 0 3-.4 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button>
+    </div>
+    <button id="gateBtn">Enter</button>
+    <div id="gateError"></div>
+  </div>
+</div>
+
+<div id="panel">
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
+        <div>
+          <h1>Worship Team</h1>
+          <div class="sub">Songs, lyrics &amp; the Sunday list</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="howtoBtn"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>How to use</button>
+        <button class="btn" id="logoutBtn"><svg class="i" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
+      </div>
+    </header>
+
+    <div class="howto" id="howto" hidden>
+      <strong>New here?</strong>
+      <span><b>1</b>Song Library — add each song once and paste its lyrics</span>
+      <span><b>2</b>Sunday — pick the songs for the service and put them in order</span>
+      <span><b>3</b>Start singing — the lyrics open full screen; swipe or tap Next</span>
+      <span class="ht-note">Everything saves by itself.</span>
+      <button type="button" id="howtoHide">Got it</button>
+    </div>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="sunday"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Sunday <b id="tabSetCount">0</b></button>
+      <button class="tab" data-tab="library"><svg class="i" viewBox="0 0 24 24"><path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>Song Library <b id="tabLibCount">0</b></button>
+    </nav>
+
+    <div id="loading" class="loading">Loading the songs…</div>
+
+    <!-- ===== the songs for one service ===== -->
+    <div id="sundayView" hidden>
+      <section class="sun-hero fade" aria-label="Service date">
+        <div class="sun-date">
+          <button type="button" class="iconbtn" id="prevSun" aria-label="Previous Sunday"><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div>
+            <div class="sun-when" id="sunWhen"></div>
+            <h2 id="sunTitle"></h2>
+            <div class="yr"><span id="sunYear"></span>
+              <span class="datepick"><button type="button" id="otherDate">Other date</button><input type="date" id="datePick" tabindex="-1" aria-label="Pick another date"></span>
+              <button type="button" id="backToSun" hidden>Back to this Sunday</button>
+            </div>
+          </div>
+          <button type="button" class="iconbtn" id="nextSun" aria-label="Next Sunday"><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+        <div class="sun-side">
+          <div class="sun-count"><b id="sunCount">0</b><span>songs</span></div>
+          <button type="button" class="singbtn" id="singBtn"><svg class="i" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>Start singing</button>
+        </div>
+      </section>
+
+      <div class="sun-grid">
+        <section class="card pane">
+          <div class="pane-head">
+            <h3>Songs, in order</h3>
+            <button type="button" class="btn primary sm" id="pickBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add songs</button>
+          </div>
+          <div class="setlist" id="setList"></div>
+          <div class="set-foot">
+            <span class="savechip" id="saveState" role="status" aria-live="polite"></span>
+            <span class="muted" style="font-size:.78rem">Tap a song to read its lyrics · ▲ ▼ to change the order</span>
+          </div>
+        </section>
+        <aside class="side">
+          <section class="card pane note-box">
+            <div class="pane-head"><h3>Note for the team</h3><span class="hint">optional</span></div>
+            <textarea id="note" maxlength="500" placeholder="e.g. Communion Sunday — keep the last song slow"></textarea>
+          </section>
+          <section class="card pane">
+            <div class="pane-head"><h3>Saved lists</h3><span class="hint">tap a date to open it</span></div>
+            <div class="dates" id="dateChips"></div>
+          </section>
+          <section class="card pane">
+            <div class="pane-head"><h3>Share</h3></div>
+            <div class="actions">
+              <button type="button" class="btn sm" id="shareBtn"><svg class="i" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>Send the list</button>
+              <button type="button" class="btn sm" id="printBtn"><svg class="i" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print lyrics</button>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ===== every song the team knows ===== -->
+    <div id="libraryView" hidden>
+      <div class="lib-tools">
+        <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="libSearch" placeholder="Search titles and lyrics…"></label>
+        <div class="seg" id="libSort">
+          <button type="button" data-sort="az" class="active">A–Z</button>
+          <button type="button" data-sort="new">Newest</button>
+          <button type="button" data-sort="sung">Most sung</button>
+        </div>
+        <span class="grow"></span>
+        <button type="button" class="btn primary" id="addSongBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add a song</button>
+      </div>
+      <div class="songs" id="songGrid"></div>
+      <div class="lib-empty" id="libEmpty" hidden></div>
+    </div>
+  </div>
+</div>
+
+<!-- pick songs for the service -->
+<div class="modal" id="picker" hidden role="dialog" aria-modal="true" aria-labelledby="pkTitle">
+  <div class="sheet">
+    <header>
+      <h3 id="pkTitle">Pick songs<small id="pkDate"></small></h3>
+      <button type="button" class="iconbtn" data-close aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </header>
+    <label class="search pk-search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="pkSearch" placeholder="Search songs…"></label>
+    <div class="body"><div class="pk-list" id="pkList"></div></div>
+    <footer>
+      <span class="muted" id="pkCount" style="font-size:.85rem"></span>
+      <span class="grow"></span>
+      <button type="button" class="btn" id="pkNew">New song</button>
+      <button type="button" class="btn primary" data-close>Done</button>
+    </footer>
+  </div>
+</div>
+
+<!-- add / edit a song -->
+<div class="modal" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="edHead">
+  <form class="sheet wide" id="edForm" autocomplete="off">
+    <header>
+      <h3 id="edHead">Add a song</h3>
+      <button type="button" class="iconbtn" id="edX" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </header>
+    <div class="body">
+      <div class="seg ed-switch" id="edSwitch"><button type="button" data-v="write" class="active">Write</button><button type="button" data-v="preview">Preview</button></div>
+      <div class="ed-grid" id="edGrid">
+        <div class="ed-fields">
+          <label class="fld"><span>Song title</span><input id="edName" maxlength="120" required placeholder="e.g. Yeshu Tera Naam"></label>
+          <div class="dup" id="edDup" hidden></div>
+          <div class="row2">
+            <label class="fld"><span>Key (optional)</span><input id="edKey" maxlength="12" placeholder="e.g. G"></label>
+            <label class="fld"><span>Link (optional)</span><input id="edLink" maxlength="300" placeholder="YouTube link, to learn the tune"></label>
+          </div>
+          <label class="fld"><span>Lyrics</span><textarea id="edLyrics" maxlength="20000" spellcheck="false" placeholder="Paste the lyrics here.
+
+Leave an empty line between verses.
+
+Chorus
+Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea></label>
+          <div class="ed-hint"><b>Tip:</b> leave an empty line between verses · a line that just says <b>Chorus</b>, <b>Verse 2</b>, <b>Bridge</b> or <b>कोरस</b> becomes a label · <span id="edCount"></span></div>
+        </div>
+        <div class="ed-preview"><div class="cap">How it will look on Sunday</div><div id="edPreview"></div></div>
+      </div>
+    </div>
+    <footer>
+      <button type="button" class="btn danger" id="edDelete" hidden>Delete song</button>
+      <span class="grow"></span>
+      <span class="savechip" id="edState"></span>
+      <button type="button" class="btn" id="edCancel">Cancel</button>
+      <button type="submit" class="btn primary" id="edSave">Save song</button>
+    </footer>
+  </form>
+</div>
+
+<!-- yes / no -->
+<div class="modal" id="confirm" hidden role="alertdialog" aria-modal="true" aria-labelledby="cfTitle">
+  <div class="sheet small">
+    <header><h3 id="cfTitle"></h3></header>
+    <p class="msg" id="cfText"></p>
+    <footer><span class="grow"></span><button type="button" class="btn" id="cfNo">Cancel</button><button type="button" class="btn danger" id="cfYes">OK</button></footer>
+  </div>
+</div>
+
+<!-- full-screen lyrics for singing -->
+<div class="sing" id="sing" hidden data-theme="dark" role="dialog" aria-modal="true" aria-label="Lyrics">
+  <div class="sg-top">
+    <button type="button" class="sg-btn" id="sgClose" aria-label="Close lyrics"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="sg-pos"><b id="sgPos"></b><small id="sgLabel"></small></div>
+    <div class="sg-tools">
+      <button type="button" class="sg-btn" id="sgSmaller" aria-label="Smaller text">A−</button>
+      <button type="button" class="sg-btn" id="sgBigger" aria-label="Bigger text">A+</button>
+      <button type="button" class="sg-btn" id="sgTheme" aria-label="Light or dark"><svg class="i" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button type="button" class="sg-btn hide-sm" id="sgFull" aria-label="Full screen" hidden><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </div>
+  <div class="sg-dots" id="sgDots"></div>
+  <div class="sg-body" id="sgBody"></div>
+  <div class="sg-nav">
+    <button type="button" id="sgPrev"><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg><span><small>Previous</small><span id="sgPrevName"></span></span></button>
+    <button type="button" id="sgNext"><span><small>Next</small><span id="sgNextName"></span></span><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+<div id="toast" role="status"></div>
+
+<script src="js/reglog.js"></script>
+<script>
+  const WORSHIP_URL = REG_LOG_URL; // same Apps Script Web App as the admin and media pages
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const POLL_MS = 20000;   // how often to look for changes made by the rest of the team
+  const MAX_SET = 40;      // the script accepts up to 40 songs for one service
+  const MAX_LYRICS = 20000;
+
+  let wKey = null;         // kept in memory only — never saved, re-enter on every page load
+  let serverOffset = 0;    // Google's clock minus this computer's clock
+  let stamp = '';          // the script's "last change" marker, for cheap polling
+  let songs = [];          // [{id, title, songKey, link, lyrics, addedAt, updatedAt, rev}]
+  let byId = new Map();
+  let sets = {};           // "YYYY-MM-DD" -> {date, songs: [ids], note, updatedAt}
+  let curDate = '';
+  let activeTab = 'sunday';
+  let libSort = 'az';
+  let pollTimer = null;
+
+  // the list being edited: saved a moment after each change
+  let setDirty = false, setEdit = 0, setTimer = null, savePromise = null;
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const pad = n => String(n).padStart(2, '0');
+  const serverNow = () => new Date(Date.now() + serverOffset);
+  const dayKey = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const parseDay = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const addDays = (s, n) => { const d = parseDay(s); d.setDate(d.getDate() + n); return dayKey(d); };
+  const todayKey = () => dayKey(serverNow());
+  const fmtShort = s => { const d = parseDay(s); return d.getDate() + ' ' + MONTHS[d.getMonth()].slice(0, 3); };
+  const fmtDay = s => { const d = parseDay(s); return DAYS[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; };
+  const fmtLong = s => fmtDay(s) + ' ' + parseDay(s).getFullYear();
+  const timeNow = () => new Date().toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
+  // the Sunday coming up (today, when today is a Sunday)
+  const thisSunday = () => { const t = todayKey(), dow = parseDay(t).getDay(); return dow === 0 ? t : addDays(t, 7 - dow); };
+  const rid = () => { const a = new Uint8Array(12); crypto.getRandomValues(a); return Array.from(a, b => 'abcdefghijklmnopqrstuvwxyz0123456789'[b % 36]).join(''); };
+  const safeUrl = u => /^https?:\/\//i.test(String(u || '').trim()) ? String(u).trim() : '';
+
+  function toast(msg){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ---------- lyrics: plain text in, verses and labels out ---------- */
+  const LABEL_RE = /^\s*[\[(]?\s*(?:pre[\s-]?)?(chorus|verse|bridge|tag|intro|outro|refrain|interlude|ending|coda|vamp|coro|कोरस|अंतरा|अन्तरा|मुखड़ा|मुखडा|स्थायी)\s*[-–]?\s*(\d+|[ivx]+)?\s*[\])]?\s*[:.\-–]?\s*(\(?\s*(x\s?\d+|\d+\s?x)\s*\)?)?\s*$/i;
+  const CHORUS_RE = /chorus|refrain|coro|कोरस|मुखड़ा|मुखडा|स्थायी/i;
+  function labelOf(line){
+    const s = line.trim();
+    if(!s) return null;
+    if(/^\[[^\]]{1,30}\]$/.test(s)) return s.slice(1, -1).trim();                  // [Anything short]
+    if(/^\([^)]{1,30}\)$/.test(s) && LABEL_RE.test(s)) return s.slice(1, -1).trim(); // (Chorus)
+    if(LABEL_RE.test(s)) return s.replace(/\s*[:.]$/, '');                            // Chorus:  Verse 2 (x2)
+    return null;
+  }
+  function cleanLyrics(s){
+    return String(s || '').replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n').replace(/^\n+|\n+$/g, '');
+  }
+  function lyricsHtml(text){
+    const t = cleanLyrics(text);
+    if(!t) return '';
+    return t.split(/\n\s*\n/).map(block => {
+      let chorus = false, html = '';
+      block.split('\n').forEach(line => {
+        const lab = labelOf(line);
+        if(lab){ if(CHORUS_RE.test(lab)) chorus = true; html += `<div class="lab">${esc(lab)}</div>`; }
+        else html += `<div class="ln">${esc(line) || '&nbsp;'}</div>`;
+      });
+      return `<div class="stanza${chorus ? ' chorus' : ''}">${html}</div>`;
+    }).join('');
+  }
+  // the first two sung lines, for cards and lists
+  function firstLines(text, n){
+    return cleanLyrics(text).split('\n').filter(l => l.trim() && !labelOf(l)).slice(0, n || 2);
+  }
+
+  /* ---------- how often each song has been sung ---------- */
+  function usage(){
+    const today = todayKey(), out = new Map();
+    Object.values(sets).forEach(s => s.songs.forEach(id => {
+      const u = out.get(id) || {count: 0, last: '', next: ''};
+      if(s.date <= today){ u.count++; if(s.date > u.last) u.last = s.date; }
+      else if(!u.next || s.date < u.next) u.next = s.date;
+      out.set(id, u);
+    }));
+    return out;
+  }
+
+  /* ---------- talking to the Apps Script ---------- */
+  async function api(params){
+    const qs = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
+    let json;
+    try{
+      const res = await fetch(WORSHIP_URL + '?' + qs);
+      json = await res.json();
+    }catch(e){
+      throw new Error('network');
+    }
+    if(json.error) throw new Error(json.error);
+    return json;
+  }
+  const call = (action, extra) => api(Object.assign({action, key: wKey}, extra || {}));
+  // Lyrics are too long for a web address, so a song is sent in the body of a POST.
+  async function post(action, body){
+    let json;
+    try{
+      const res = await fetch(WORSHIP_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({action, key: wKey}, body))});
+      json = await res.json();
+    }catch(e){
+      throw new Error('network');
+    }
+    if(json.error) throw new Error(json.error);
+    return json;
+  }
+  const errText = e => e.message === 'unauthorized' ? 'Session expired — log out and enter the key again'
+    : e.message === 'network' ? 'No connection to the sheet — check the internet and try again'
+    : 'Could not save (' + e.message + ')';
+
+  /* ---------- login ---------- */
+  const gateBtn = $('gateBtn'), keyInput = $('keyInput'), gateError = $('gateError');
+  gateBtn.addEventListener('click', async () => {
+    const key = keyInput.value.trim();
+    if(!key){ gateError.textContent = 'Enter the worship key.'; return; }
+    gateBtn.disabled = true; gateBtn.textContent = 'Checking…'; gateError.textContent = '';
+    try{
+      const j = await api({action: 'worshipLogin', key});
+      if(!(j.version >= 1)){
+        gateError.textContent = 'The Google Sheet script has not been updated for the worship page yet (see ADMIN-SETUP.md).';
+        return;
+      }
+      wKey = key;
+      serverOffset = new Date(j.now).getTime() - Date.now(); // the real date comes from Google
+      $('gate').style.display = 'none';
+      $('panel').style.display = 'block';
+      await startSession();
+    }catch(e){
+      gateError.textContent = e.message === 'unauthorized'
+        ? 'Wrong key — or the worship key has not been set in the Google Sheet script yet (see ADMIN-SETUP.md).'
+        : 'Could not reach the sheet — Google Apps Script can be slow to respond, especially on the first try. Wait a few seconds and try again.';
+    }finally{
+      gateBtn.disabled = false; gateBtn.textContent = 'Enter';
+    }
+  });
+  keyInput.addEventListener('keydown', e => { if(e.key === 'Enter') gateBtn.click(); });
+  // eye button: show / hide what you typed (the key is still never stored anywhere)
+  const eyeBtn = $('keyEye');
+  function setKeyVisible(show){
+    keyInput.type = show ? 'text' : 'password';
+    eyeBtn.classList.toggle('on', show);
+    eyeBtn.setAttribute('aria-pressed', String(show));
+    eyeBtn.setAttribute('aria-label', show ? 'Hide key' : 'Show key');
+    eyeBtn.title = show ? 'Hide key' : 'Show key';
+  }
+  eyeBtn.addEventListener('mousedown', e => e.preventDefault()); // keep typing in the field
+  eyeBtn.addEventListener('click', () => { setKeyVisible(keyInput.type === 'password'); keyInput.focus(); });
+
+  $('logoutBtn').addEventListener('click', async () => {
+    if(setDirty){
+      const ok = await saveSet();
+      if(!ok && !confirm('The latest change to the list could not be saved. Log out anyway?')) return;
+    }
+    clearInterval(pollTimer);
+    wKey = null;
+    setDirty = false;
+    location.reload();
+  });
+  window.addEventListener('beforeunload', e => { if(setDirty){ e.preventDefault(); e.returnValue = ''; } });
+
+  // "How to use" strip: shown until someone dismisses it on their own device (a harmless per-device preference)
+  function initHowto(){
+    let dismissed = false;
+    try{ dismissed = localStorage.getItem('worship-howto') === 'hidden'; }catch(e){}
+    $('howto').hidden = dismissed;
+  }
+  $('howtoHide').addEventListener('click', () => {
+    $('howto').hidden = true;
+    try{ localStorage.setItem('worship-howto', 'hidden'); }catch(e){}
+  });
+  $('howtoBtn').addEventListener('click', () => {
+    const show = $('howto').hidden;
+    $('howto').hidden = !show;
+    try{ if(show) localStorage.removeItem('worship-howto'); else localStorage.setItem('worship-howto', 'hidden'); }catch(e){}
+    if(show) $('howto').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  });
+
+  async function startSession(){
+    initHowto();
+    curDate = thisSunday();
+    try{
+      applyData(await call('worshipData'));
+    }catch(e){
+      $('loading').textContent = e.message === 'network' ? 'Could not load the songs — check the internet and reload the page.' : 'Could not load the songs (' + e.message + ').';
+      return;
+    }
+    $('loading').hidden = true;
+    showTab('sunday');
+    pollTimer = setInterval(poll, POLL_MS);
+  }
+
+  /* ---------- the data, and keeping in step with the team ---------- */
+  function applyData(d){
+    stamp = d.stamp || '';
+    if(d.unchanged) return;
+    songs = d.songs || [];
+    byId = new Map(songs.map(s => [s.id, s]));
+    const mine = (setDirty || savePromise) ? sets[curDate] : null; // an unsaved change here beats the copy from the sheet
+    sets = {};
+    (d.sets || []).forEach(s => { sets[s.date] = s; });
+    if(mine) sets[curDate] = mine;
+  }
+  const signature = () => songs.map(s => s.id + s.updatedAt).join() + '|' + Object.values(sets).map(s => s.date + s.songs.join() + s.note).sort().join();
+
+  async function poll(){
+    if(!wKey || document.hidden || setDirty || savePromise || !$('editor').hidden) return;
+    try{
+      const d = await call('worshipData', {since: stamp});
+      if(d.unchanged){ stamp = d.stamp || stamp; return; }
+      if(setDirty || savePromise) return; // look again once the list is saved
+      const before = signature();
+      applyData(d);
+      if(signature() === before) return; // only our own saves came back
+      renderAll();
+      toast('Updated with the team’s latest changes');
+    }catch(e){ /* try again next time */ }
+  }
+  document.addEventListener('visibilitychange', () => { if(!document.hidden) poll(); });
+
+  function renderAll(){
+    renderSunday();
+    renderLibrary();
+    if(!$('picker').hidden) renderPicker();
+    if(!$('sing').hidden) renderSing(0);
+  }
+
+  /* ---------- tabs ---------- */
+  function showTab(tab){
+    activeTab = tab;
+    document.querySelectorAll('#tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    $('sundayView').hidden = tab !== 'sunday';
+    $('libraryView').hidden = tab !== 'library';
+    renderAll();
+  }
+  $('tabs').addEventListener('click', e => {
+    const t = e.target.closest('.tab');
+    if(t) showTab(t.dataset.tab);
+  });
+
+  /* ================= the songs for one service ================= */
+  const curSet = () => sets[curDate] || {date: curDate, songs: [], note: '', updatedAt: ''};
+
+  function renderSunday(){
+    const set = curSet(), today = todayKey(), sun = thisSunday();
+    const d = parseDay(curDate);
+    $('sunWhen').innerHTML = curDate === today ? '<span class="live"></span>Today'
+      : curDate === sun ? 'This Sunday'
+      : curDate > today ? (d.getDay() === 0 ? 'Coming Sunday' : 'Coming up')
+      : (d.getDay() === 0 ? 'Past Sunday' : 'Past service');
+    $('sunTitle').textContent = fmtDay(curDate);
+    $('sunYear').textContent = d.getFullYear();
+    $('backToSun').hidden = curDate === sun;
+    $('datePick').value = curDate;
+    $('sunCount').textContent = set.songs.length;
+    $('tabSetCount').textContent = set.songs.length;
+    $('tabLibCount').textContent = songs.length;
+    $('singBtn').disabled = !set.songs.some(id => byId.has(id));
+
+    const list = $('setList');
+    if(!set.songs.length){
+      const prev = Object.values(sets).filter(s => s.date < curDate && s.songs.some(id => byId.has(id))).sort((a, b) => a.date < b.date ? 1 : -1)[0];
+      list.innerHTML = `<div class="set-empty"><div class="big">🎵</div><p>No songs picked for ${esc(fmtDay(curDate))} yet.</p><div class="row">`
+        + (songs.length ? `<button type="button" class="btn primary" data-act="pick">Pick songs</button>` : `<button type="button" class="btn primary" data-act="newsong">Add the first song</button>`)
+        + (prev ? `<button type="button" class="btn" data-act="copy" data-from="${prev.date}">Use ${esc(fmtShort(prev.date))}’s list (${prev.songs.length})</button>` : '')
+        + `</div></div>`;
+    }else{
+      list.innerHTML = set.songs.map((id, i) => {
+        const s = byId.get(id);
+        const tools = `<div class="si-tools">
+            <button type="button" class="iconbtn" data-act="up" data-i="${i}" aria-label="Move up" ${i === 0 ? 'disabled' : ''}><svg class="i" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
+            <button type="button" class="iconbtn" data-act="down" data-i="${i}" aria-label="Move down" ${i === set.songs.length - 1 ? 'disabled' : ''}><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button type="button" class="iconbtn danger" data-act="remove" data-i="${i}" aria-label="Take out of the list"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </div>`;
+        if(!s) return `<div class="set-item gone"><span class="num">${i + 1}</span><div class="si-main"><b>A song that was deleted from the library</b><small>Take it out of the list</small></div>${tools}</div>`;
+        const first = firstLines(s.lyrics, 1)[0];
+        return `<div class="set-item"><span class="num">${i + 1}</span>
+          <button type="button" class="si-main" data-act="sing" data-i="${i}"><b>${esc(s.title)}${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></button>${tools}</div>`;
+      }).join('');
+    }
+    if(document.activeElement !== $('note')) $('note').value = set.note || '';
+
+    // other dates that have a list: the coming ones and the last few
+    const all = Object.values(sets).filter(s => s.songs.length).map(s => s.date);
+    if(!all.includes(curDate)) all.push(curDate);
+    if(!all.includes(sun)) all.push(sun);
+    const future = all.filter(x => x >= today).sort(), past = all.filter(x => x < today).sort().reverse().slice(0, 6);
+    $('dateChips').innerHTML = future.concat(past).map(x => {
+      const n = (sets[x] || {songs: []}).songs.length;
+      return `<button type="button" class="datechip${x === curDate ? ' on' : ''}${x >= today && x !== curDate ? ' future' : ''}" data-date="${x}">${esc(DAYS[parseDay(x).getDay()].slice(0, 3) + ' ' + fmtShort(x))}<small>${n} song${n === 1 ? '' : 's'}</small></button>`;
+    }).join('');
+  }
+
+  function changeSet(fn){
+    const s = curSet();
+    const next = {date: curDate, songs: s.songs.slice(), note: s.note || '', updatedAt: s.updatedAt};
+    fn(next);
+    sets[curDate] = next;
+    setDirty = true; setEdit++;
+    setSaveState('Saving…', 'busy');
+    clearTimeout(setTimer);
+    setTimer = setTimeout(saveSet, 700);
+    renderSunday();
+    if(activeTab === 'library') renderLibrary();
+    if(!$('picker').hidden) renderPicker();
+  }
+  function setSaveState(text, cls){
+    const el = $('saveState');
+    el.textContent = text;
+    el.className = 'savechip' + (cls ? ' ' + cls : '');
+  }
+  // Saves the list for curDate. Resolves true once everything typed so far is in the sheet.
+  function saveSet(){
+    clearTimeout(setTimer);
+    if(savePromise) return savePromise.then(() => setDirty ? saveSet() : true);
+    if(!setDirty) return Promise.resolve(true);
+    const date = curDate, s = curSet(), edit = setEdit;
+    setSaveState('Saving…', 'busy');
+    savePromise = call('worshipSetSave', {date, songs: s.songs.join(','), note: s.note || ''})
+      .then(j => {
+        if(setEdit === edit){ setDirty = false; sets[date] = j.set; }
+        setSaveState('Saved · ' + timeNow(), 'ok');
+        return true;
+      })
+      .catch(e => {
+        setSaveState(errText(e) + ' — trying again…', 'err');
+        setTimer = setTimeout(saveSet, 8000);
+        return false;
+      })
+      .finally(() => { savePromise = null; });
+    return savePromise;
+  }
+
+  async function goDate(date){
+    if(!date || date === curDate) return;
+    if(setDirty || savePromise){
+      const ok = await saveSet();
+      if(!ok){ toast('The last change is not saved yet — check the internet'); return; }
+    }
+    curDate = date;
+    setSaveState('', '');
+    renderSunday();
+  }
+  $('prevSun').addEventListener('click', () => { const d = parseDay(curDate).getDay(); goDate(addDays(curDate, -(d || 7))); });
+  $('nextSun').addEventListener('click', () => { const d = parseDay(curDate).getDay(); goDate(addDays(curDate, 7 - d)); });
+  $('backToSun').addEventListener('click', () => goDate(thisSunday()));
+  $('otherDate').addEventListener('click', () => {
+    const inp = $('datePick');
+    try{ if(inp.showPicker){ inp.showPicker(); return; } }catch(e){}
+    inp.focus(); inp.click();
+  });
+  $('datePick').addEventListener('change', e => { if(/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)) goDate(e.target.value); });
+  $('dateChips').addEventListener('click', e => { const b = e.target.closest('[data-date]'); if(b) goDate(b.dataset.date); });
+
+  $('setList').addEventListener('click', e => {
+    const b = e.target.closest('[data-act]');
+    if(!b) return;
+    const i = Number(b.dataset.i);
+    switch(b.dataset.act){
+      case 'up': changeSet(s => { [s.songs[i - 1], s.songs[i]] = [s.songs[i], s.songs[i - 1]]; }); break;
+      case 'down': changeSet(s => { [s.songs[i + 1], s.songs[i]] = [s.songs[i], s.songs[i + 1]]; }); break;
+      case 'remove': changeSet(s => { s.songs.splice(i, 1); }); break;
+      case 'sing': startSinging(i); break;
+      case 'pick': openPicker(); break;
+      case 'newsong': openEditor(null); break;
+      case 'copy': {
+        const from = sets[b.dataset.from];
+        if(from) changeSet(s => { s.songs = from.songs.filter(id => byId.has(id)); });
+        break;
+      }
+    }
+  });
+  $('note').addEventListener('input', e => changeSet(s => { s.note = e.target.value.slice(0, 500); }));
+  $('pickBtn').addEventListener('click', openPicker);
+  $('singBtn').addEventListener('click', () => startSinging(0));
+
+  function startSinging(i){
+    const ids = curSet().songs.filter(id => byId.has(id));
+    if(!ids.length) return;
+    const want = curSet().songs[i];
+    openSing(ids, Math.max(0, ids.indexOf(want)), fmtDay(curDate));
+  }
+
+  function listText(){
+    const s = curSet();
+    const lines = s.songs.filter(id => byId.has(id)).map((id, i) => { const x = byId.get(id); return (i + 1) + '. ' + x.title + (x.songKey ? ' (' + x.songKey + ')' : ''); });
+    return 'Songs for ' + fmtLong(curDate) + '\n\n' + lines.join('\n') + (s.note ? '\n\n' + s.note : '');
+  }
+  $('shareBtn').addEventListener('click', async () => {
+    if(!curSet().songs.length){ toast('Pick some songs first'); return; }
+    const text = listText();
+    try{
+      if(navigator.share){ await navigator.share({title: 'Songs for ' + fmtDay(curDate), text}); return; }
+    }catch(e){ if(e.name === 'AbortError') return; }
+    try{ await navigator.clipboard.writeText(text); toast('List copied — paste it in the WhatsApp group'); }
+    catch(e){ window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener'); }
+  });
+
+  $('printBtn').addEventListener('click', () => {
+    const s = curSet(), list = s.songs.filter(id => byId.has(id)).map(id => byId.get(id));
+    if(!list.length){ toast('Pick some songs first'); return; }
+    $('printArea').innerHTML = `<h1>Worship songs</h1><div class="p-sub">${esc(fmtLong(curDate))} · ${list.length} song${list.length === 1 ? '' : 's'}${s.note ? ' · ' + esc(s.note) : ''}</div>`
+      + list.map((x, i) => `<section class="p-song"><h2>${i + 1}. ${esc(x.title)}${x.songKey ? `<span class="keychip">${esc(x.songKey)}</span>` : ''}</h2><div class="lyr">${lyricsHtml(x.lyrics) || '<em>No lyrics yet</em>'}</div></section>`).join('');
+    window.print();
+  });
+
+  /* ---------- picking songs ---------- */
+  function openPicker(){
+    if(!songs.length){ openEditor(null); return; }
+    $('pkSearch').value = '';
+    $('picker').hidden = false;
+    renderPicker();
+    setTimeout(() => { if(matchMedia('(pointer:fine)').matches) $('pkSearch').focus(); }, 60);
+  }
+  function renderPicker(){
+    const set = curSet(), q = $('pkSearch').value.trim().toLowerCase(), use = usage();
+    $('pkDate').textContent = fmtLong(curDate);
+    $('pkCount').textContent = set.songs.length + ' song' + (set.songs.length === 1 ? '' : 's') + ' in the list';
+    const list = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q))
+      .sort((a, b) => a.title.localeCompare(b.title));
+    $('pkList').innerHTML = list.length ? list.map(s => {
+      const pos = set.songs.indexOf(s.id), u = use.get(s.id), first = firstLines(s.lyrics, 1)[0];
+      const meta = u && u.count ? `Sung ${u.count}× · last ${fmtShort(u.last)}` : 'Not sung yet';
+      return `<button type="button" class="pk-row${pos >= 0 ? ' on' : ''}" data-id="${esc(s.id)}" aria-pressed="${pos >= 0}">
+        <span class="tick">${pos >= 0 ? pos + 1 : ''}</span>
+        <span class="pk-main"><b>${esc(s.title)}${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></span>
+        <span class="pk-meta">${esc(meta)}</span></button>`;
+    }).join('') : `<div class="pk-none">No song matches “${esc(q)}”.</div>`;
+  }
+  $('pkSearch').addEventListener('input', renderPicker);
+  $('pkList').addEventListener('click', e => {
+    const row = e.target.closest('.pk-row');
+    if(!row) return;
+    const id = row.dataset.id;
+    if(!curSet().songs.includes(id) && curSet().songs.length >= MAX_SET){ toast('A list can have up to ' + MAX_SET + ' songs'); return; }
+    changeSet(s => { const i = s.songs.indexOf(id); if(i >= 0) s.songs.splice(i, 1); else s.songs.push(id); });
+  });
+  $('pkNew').addEventListener('click', () => { $('picker').hidden = true; openEditor(null, {addToSet: true}); });
+
+  /* ================= the song library ================= */
+  function renderLibrary(){
+    $('tabLibCount').textContent = songs.length;
+    const q = $('libSearch').value.trim().toLowerCase(), use = usage(), inSet = new Set(curSet().songs);
+    let list = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q));
+    if(libSort === 'new') list.sort((a, b) => a.addedAt < b.addedAt ? 1 : -1);
+    else if(libSort === 'sung') list.sort((a, b) => ((use.get(b.id) || {}).count || 0) - ((use.get(a.id) || {}).count || 0) || a.title.localeCompare(b.title));
+    else list.sort((a, b) => a.title.localeCompare(b.title));
+
+    const empty = $('libEmpty');
+    if(!songs.length){
+      $('songGrid').innerHTML = '';
+      empty.hidden = false;
+      empty.innerHTML = `<div class="big">🎶</div><p>No songs yet. Add the songs the team sings and paste their lyrics — once per song.</p><button type="button" class="btn primary" data-act="add">Add the first song</button>`;
+      return;
+    }
+    if(!list.length){
+      $('songGrid').innerHTML = '';
+      empty.hidden = false;
+      empty.innerHTML = `<div class="big">🔍</div><p>No song matches “${esc(q)}”.</p>`;
+      return;
+    }
+    empty.hidden = true;
+    const target = fmtShort(curDate);
+    $('songGrid').innerHTML = list.map(s => {
+      const u = use.get(s.id), lines = firstLines(s.lyrics, 2), here = inSet.has(s.id);
+      const meta = [u && u.count ? `Sung ${u.count}× · last ${fmtShort(u.last)}` : 'Not sung yet'];
+      if(u && u.next) meta.push(`<span class="planned">Planned ${esc(fmtShort(u.next))}</span>`);
+      return `<article class="card song-card${here ? ' inset' : ''}">
+        <div class="sc-top"><h3>${esc(s.title)}</h3>${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</div>
+        <p class="sc-first lyr${lines.length ? '' : ' none'}">${lines.length ? esc(lines.join('\n')) : 'No lyrics yet'}</p>
+        <div class="sc-meta">${meta.join('<span>·</span>')}</div>
+        <div class="sc-actions">
+          <button type="button" class="btn" data-act="view" data-id="${esc(s.id)}">Lyrics</button>
+          <button type="button" class="btn" data-act="edit" data-id="${esc(s.id)}">Edit</button>
+          <button type="button" class="btn${here ? ' added' : ''}" data-act="toggle" data-id="${esc(s.id)}">${here ? '✓ In ' + esc(target) + ' list' : '+ Add to ' + esc(target)}</button>
+          ${safeUrl(s.link) ? `<a class="btn" href="${esc(safeUrl(s.link))}" target="_blank" rel="noopener">Listen</a>` : ''}
+        </div></article>`;
+    }).join('');
+  }
+  $('libSearch').addEventListener('input', renderLibrary);
+  $('libSort').addEventListener('click', e => {
+    const b = e.target.closest('[data-sort]');
+    if(!b) return;
+    libSort = b.dataset.sort;
+    document.querySelectorAll('#libSort button').forEach(x => x.classList.toggle('active', x === b));
+    renderLibrary();
+  });
+  $('addSongBtn').addEventListener('click', () => openEditor(null));
+  $('libEmpty').addEventListener('click', e => { if(e.target.closest('[data-act="add"]')) openEditor(null); });
+  $('songGrid').addEventListener('click', e => {
+    const b = e.target.closest('[data-act]');
+    if(!b) return;
+    const s = byId.get(b.dataset.id);
+    if(!s) return;
+    if(b.dataset.act === 'view') openSing([s.id], 0, 'Song Library');
+    else if(b.dataset.act === 'edit') openEditor(s);
+    else if(b.dataset.act === 'toggle'){
+      const here = curSet().songs.includes(s.id);
+      if(!here && curSet().songs.length >= MAX_SET){ toast('A list can have up to ' + MAX_SET + ' songs'); return; }
+      changeSet(x => { if(here) x.songs = x.songs.filter(id => id !== s.id); else x.songs.push(s.id); });
+      toast(here ? 'Taken out of the ' + fmtShort(curDate) + ' list' : 'Added to the ' + fmtShort(curDate) + ' list');
+    }
+  });
+
+  /* ---------- add / edit a song ---------- */
+  let editing = null; // {id, isNew, addToSet, original}
+  function openEditor(song, opts){
+    editing = {id: song ? song.id : rid(), isNew: !song, addToSet: !!(opts && opts.addToSet)};
+    $('edHead').textContent = song ? 'Edit song' : 'Add a song';
+    $('edName').value = song ? song.title : '';
+    $('edKey').value = song ? song.songKey : '';
+    $('edLink').value = song ? song.link : '';
+    $('edLyrics').value = song ? song.lyrics : '';
+    $('edDelete').hidden = !song;
+    $('edState').textContent = ''; $('edState').className = 'savechip';
+    $('edSave').disabled = false;
+    editing.original = draftText();
+    setEdView('write');
+    $('editor').hidden = false;
+    updateEditor();
+    if(matchMedia('(pointer:fine)').matches) setTimeout(() => (song ? $('edLyrics') : $('edName')).focus(), 60); // no surprise keyboard on phones
+  }
+  const draftText = () => [$('edName').value, $('edKey').value, $('edLink').value, $('edLyrics').value].join('\u0000');
+  function updateEditor(){
+    const html = lyricsHtml($('edLyrics').value);
+    $('edPreview').innerHTML = html ? `<div class="lyr">${html}</div>` : '<div class="ph">The lyrics will show here</div>';
+    const n = $('edLyrics').value.length;
+    $('edCount').textContent = n.toLocaleString('en-IN') + ' / ' + MAX_LYRICS.toLocaleString('en-IN') + ' characters';
+    const name = $('edName').value.trim().toLowerCase();
+    const dup = name && songs.find(s => s.id !== editing.id && s.title.trim().toLowerCase() === name);
+    $('edDup').hidden = !dup;
+    if(dup) $('edDup').textContent = 'A song called “' + dup.title + '” is already in the library. You can still save this one.';
+  }
+  ['edName', 'edLyrics'].forEach(id => $(id).addEventListener('input', updateEditor));
+  function setEdView(v){
+    $('edGrid').classList.toggle('preview', v === 'preview');
+    document.querySelectorAll('#edSwitch button').forEach(b => b.classList.toggle('active', b.dataset.v === v));
+  }
+  $('edSwitch').addEventListener('click', e => { const b = e.target.closest('[data-v]'); if(b) setEdView(b.dataset.v); });
+
+  async function closeEditor(){
+    if(!editing) return;
+    if(draftText() !== editing.original && !(await ask('Close without saving?', 'The changes to this song will be lost.', 'Close'))) return;
+    $('editor').hidden = true;
+    editing = null;
+  }
+  $('edX').addEventListener('click', closeEditor);
+  $('edCancel').addEventListener('click', closeEditor);
+
+  $('edForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const title = $('edName').value.replace(/\s+/g, ' ').trim();
+    if(!title){ $('edName').focus(); toast('Give the song a title'); return; }
+    const draft = {id: editing.id, title, songKey: $('edKey').value.trim(), link: $('edLink').value.trim(), lyrics: cleanLyrics($('edLyrics').value), rev: rid()};
+    $('edSave').disabled = true;
+    $('edState').textContent = 'Saving…'; $('edState').className = 'savechip busy';
+    try{
+      const saved = await saveSong(draft);
+      songs = songs.filter(s => s.id !== saved.id).concat([saved]);
+      byId.set(saved.id, saved);
+      const addToSet = editing.addToSet;
+      $('editor').hidden = true;
+      editing = null;
+      if(addToSet && !curSet().songs.includes(saved.id)) changeSet(s => { s.songs.push(saved.id); });
+      renderAll();
+      toast(addToSet ? 'Saved and added to the ' + fmtShort(curDate) + ' list' : 'Song saved');
+    }catch(err){
+      $('edState').textContent = errText(err); $('edState').className = 'savechip err';
+      $('edSave').disabled = false;
+    }
+  });
+
+  // Sends the song; if the answer can't be read (a hiccup on the way back), checks the sheet
+  // for this exact save before calling it a failure — the page picks the id, so a retry never doubles it.
+  async function saveSong(draft){
+    try{
+      return (await post('worshipSongSave', draft)).song;
+    }catch(e){
+      if(e.message !== 'network') throw e;
+      const d = await call('worshipData');
+      const s = (d.songs || []).find(x => x.id === draft.id);
+      if(s && s.rev === draft.rev){ applyData(d); return s; }
+      throw e;
+    }
+  }
+
+  $('edDelete').addEventListener('click', async () => {
+    const s = byId.get(editing.id);
+    if(!s) return;
+    const planned = Object.values(sets).filter(x => x.date >= todayKey() && x.songs.includes(s.id)).map(x => fmtShort(x.date));
+    const ok = await ask('Delete “' + s.title + '”?', 'It is removed from the library for the whole team.' + (planned.length ? ' It is in the list for ' + planned.join(', ') + ' — take it out there too.' : ''), 'Delete');
+    if(!ok) return;
+    try{
+      await call('worshipSongDelete', {id: s.id});
+      songs = songs.filter(x => x.id !== s.id);
+      byId.delete(s.id);
+      $('editor').hidden = true;
+      editing = null;
+      renderAll();
+      toast('Song deleted');
+    }catch(err){ toast(errText(err)); }
+  });
+
+  /* ---------- a small yes / no dialog ---------- */
+  function ask(title, text, yes){
+    return new Promise(resolve => {
+      $('cfTitle').textContent = title;
+      $('cfText').textContent = text;
+      $('cfYes').textContent = yes || 'OK';
+      $('confirm').hidden = false;
+      const done = v => { $('confirm').hidden = true; $('cfYes').onclick = $('cfNo').onclick = null; resolve(v); };
+      $('cfYes').onclick = () => done(true);
+      $('cfNo').onclick = () => done(false);
+      ask.cancel = () => done(false);
+      $('cfYes').focus();
+    });
+  }
+
+  // closing dialogs: the × / Done buttons, a tap outside, or Esc
+  document.addEventListener('click', e => {
+    if(e.target.closest('#picker [data-close]') || e.target === $('picker')) $('picker').hidden = true;
+    if(e.target === $('editor')) closeEditor();
+    if(e.target === $('confirm') && ask.cancel) ask.cancel();
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key !== 'Escape' || !$('sing').hidden) return;
+    if(!$('confirm').hidden){ ask.cancel && ask.cancel(); return; }
+    if(!$('editor').hidden){ closeEditor(); return; }
+    if(!$('picker').hidden) $('picker').hidden = true;
+  });
+
+  /* ================= sing mode: the lyrics, full screen ================= */
+  let sing = null; // {ids, i, label}
+  let prefs = {scale: 1, theme: 'dark'};
+  try{ prefs = Object.assign(prefs, JSON.parse(localStorage.getItem('worship-sing') || '{}')); }catch(e){}
+  const savePrefs = () => { try{ localStorage.setItem('worship-sing', JSON.stringify(prefs)); }catch(e){} };
+  let wakeLock = null;
+  async function keepAwake(){
+    try{ if('wakeLock' in navigator && !wakeLock){ wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } }catch(e){}
+  }
+  function letSleep(){ try{ if(wakeLock) wakeLock.release(); }catch(e){} wakeLock = null; }
+  document.addEventListener('visibilitychange', () => { if(!document.hidden && sing) keepAwake(); });
+
+  function openSing(ids, i, label){
+    sing = {ids, i, label};
+    const box = $('sing');
+    box.dataset.theme = prefs.theme === 'light' ? 'light' : 'dark';
+    box.style.setProperty('--scale', prefs.scale);
+    box.hidden = false;
+    document.body.classList.add('singing');
+    $('sgFull').hidden = !document.documentElement.requestFullscreen;
+    history.pushState({sing: 1}, ''); // the phone's Back button closes the lyrics instead of leaving the page
+    renderSing(0);
+    keepAwake();
+  }
+  function closeSing(fromBack){
+    if(!sing) return;
+    sing = null;
+    $('sing').hidden = true;
+    document.body.classList.remove('singing');
+    letSleep();
+    if(document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    if(!fromBack && history.state && history.state.sing) history.back();
+  }
+  window.addEventListener('popstate', () => { if(sing) closeSing(true); });
+
+  // dir: 0 = redraw in place, 1 = went forward, -1 = went back
+  function renderSing(dir){
+    if(!sing) return;
+    const n = sing.ids.length, s = byId.get(sing.ids[sing.i]);
+    $('sgPos').textContent = n > 1 ? 'Song ' + (sing.i + 1) + ' of ' + n : 'Lyrics';
+    $('sgLabel').textContent = sing.label;
+    $('sgDots').hidden = n < 2;
+    $('sgDots').innerHTML = n > 1 ? sing.ids.map((id, k) => `<button type="button" class="${k === sing.i ? 'on' : ''}" data-k="${k}" aria-label="Song ${k + 1}"></button>`).join('') : '';
+    const nextSong = byId.get(sing.ids[sing.i + 1]), prevSong = byId.get(sing.ids[sing.i - 1]);
+    const body = $('sgBody');
+    const html = s ? lyricsHtml(s.lyrics) : '';
+    body.innerHTML = s
+      ? `<div class="${dir ? 'sg-anim' + (dir < 0 ? ' back' : '') : ''}">
+          <h1 class="sg-title">${esc(s.title)}</h1>
+          <div class="sg-sub">${s.songKey ? `<span class="keychip">Key ${esc(s.songKey)}</span>` : ''}</div>
+          <div class="sg-lyrics lyr">${html || '<div class="sg-missing">No lyrics yet — add them in the Song Library.</div>'}</div>
+          <div class="sg-end"><span class="rule"></span>${nextSong ? `<button type="button" class="sg-next" data-go="1"><span>Next: ${esc(nextSong.title)}</span><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>` : (n > 1 ? 'Last song' : '')}</div>
+        </div>`
+      : '<div class="sg-missing">This song was deleted from the library.</div>';
+    if(dir) body.scrollTop = 0;
+    $('sgPrev').disabled = !prevSong;
+    $('sgNext').disabled = !nextSong;
+    $('sgPrevName').textContent = prevSong ? prevSong.title : '—';
+    $('sgNextName').textContent = nextSong ? nextSong.title : '—';
+  }
+  function go(d){
+    if(!sing) return;
+    const k = sing.i + d;
+    if(k < 0 || k >= sing.ids.length) return;
+    sing.i = k;
+    renderSing(d);
+  }
+  function setScale(v){
+    prefs.scale = Math.round(Math.max(0.6, Math.min(2.4, v)) * 10) / 10;
+    $('sing').style.setProperty('--scale', prefs.scale);
+    savePrefs();
+  }
+  $('sgClose').addEventListener('click', () => closeSing(false));
+  $('sgPrev').addEventListener('click', () => go(-1));
+  $('sgNext').addEventListener('click', () => go(1));
+  $('sgBody').addEventListener('click', e => { if(e.target.closest('[data-go]')) go(1); });
+  $('sgDots').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if(b){ const k = Number(b.dataset.k); const d = k - sing.i; sing.i = k; renderSing(d ? Math.sign(d) : 0); } });
+  $('sgSmaller').addEventListener('click', () => setScale(prefs.scale - 0.1));
+  $('sgBigger').addEventListener('click', () => setScale(prefs.scale + 0.1));
+  $('sgTheme').addEventListener('click', () => {
+    prefs.theme = prefs.theme === 'light' ? 'dark' : 'light';
+    $('sing').dataset.theme = prefs.theme;
+    savePrefs();
+  });
+  $('sgFull').addEventListener('click', () => {
+    if(document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else document.documentElement.requestFullscreen().catch(() => {});
+  });
+
+  // keyboards and Bluetooth page-turner pedals: ← → change song; ↓ / Page Down / Space scroll, then move on at the end
+  document.addEventListener('keydown', e => {
+    if(!sing || (e.target.closest && e.target.closest('input, textarea'))) return;
+    const body = $('sgBody'), page = body.clientHeight * 0.8;
+    const atEnd = body.scrollTop + body.clientHeight >= body.scrollHeight - 4, atTop = body.scrollTop <= 4;
+    switch(e.key){
+      case 'ArrowRight': go(1); break;
+      case 'ArrowLeft': go(-1); break;
+      case 'ArrowDown': case 'PageDown': case ' ':
+        if(atEnd) go(1); else body.scrollBy({top: page}); break;
+      case 'ArrowUp': case 'PageUp':
+        if(atTop) go(-1); else body.scrollBy({top: -page}); break;
+      case 'Escape': closeSing(false); break;
+      case '+': case '=': setScale(prefs.scale + 0.1); break;
+      case '-': setScale(prefs.scale - 0.1); break;
+      default: return;
+    }
+    e.preventDefault();
+  });
+  // swipe left / right on a phone to change song (up and down still scrolls)
+  let touch = null;
+  $('sgBody').addEventListener('touchstart', e => { if(e.touches.length === 1) touch = {x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now()}; }, {passive: true});
+  $('sgBody').addEventListener('touchend', e => {
+    if(!touch) return;
+    const dx = e.changedTouches[0].clientX - touch.x, dy = e.changedTouches[0].clientY - touch.y, dt = Date.now() - touch.t;
+    touch = null;
+    if(Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6 && dt < 800) go(dx < 0 ? 1 : -1);
+  }, {passive: true});
+</script>
+</body>
+</html>
