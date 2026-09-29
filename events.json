@@ -1,6 +1,6 @@
 {
   "_note": "Public list of gatherings, read by the AJM Office app (Events, no login) each time it is opened — keep it in step with events.html. Times are India time (IST). 'special': one-off events, hidden the day after their date. 'weekly': repeating gatherings; 'skip' lists dates it does not meet (shown as 'not this week'), 'skipNote' says why. 'notices': announcements shown at the top from 'from' to 'until'.",
-  "updated": "2026-09-29",
+  "updated": "2026-09-30",
   "whatsapp": "917999929550",
   "notices": [
     {
@@ -13,21 +13,7 @@
       "by": "AJM Media Team"
     }
   ],
-  "special": [
-    {
-      "id": "womens-meet-2026-09-29",
-      "title": "Women's Meet",
-      "date": "2026-09-29",
-      "time": "20:30",
-      "durationMinutes": 90,
-      "where": "Online via Zoom",
-      "online": true,
-      "text": "“Rooted in Christ. Rising in purpose.” — with Pastor Juhi Vishal. No registration fee.",
-      "image": "img/womens-meet-flyer-sep29-v2.jpg",
-      "link": "womens-meet.html",
-      "linkLabel": "Register"
-    }
-  ],
+  "special": [],
   "weekly": [
     {
       "title": "Sunday Worship Service",
