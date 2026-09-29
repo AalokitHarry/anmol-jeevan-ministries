@@ -149,6 +149,9 @@ Limits: 3,000 songs, 20,000 characters of lyrics per song, 40 songs per service.
 The app's login screen has two tiles anyone can use, without a key:
 
 - **Events** — reads [`events.json`](events.json) from the website: the special events (with flyer, *Register*, *Zoom link* on WhatsApp, *Add to calendar*) and the weekly gatherings, as a "coming up in the next 7 days" list in India time, with a LIVE badge while a gathering is on. A special event disappears by itself the day after its date. When events change, update **events.json** together with **events.html** — every phone picks it up the next time Events is opened (no app update). The app keeps the last list it downloaded, so it also works offline.
+  - **Announcements** (`notices` in events.json): a flyer and a few lines shown at the top of Events and on the login tile, between a `from` and an `until` date — e.g. "Wednesday Fellowship temporarily paused".
+  - **Paused weeks** (`skip` on a weekly gathering): those dates show crossed out as "Not this week" with the reason (`skipNote`), and the home page's "Next Gathering" skips them too.
+  - On the website, anything marked `data-until="YYYY-MM-DD"` takes itself down the day after that date.
 - **Invite** — the same questions as [`invite.html`](invite.html). Sending it opens WhatsApp with the full invitation (as the website does) and adds a row to the sheet with source **Speaking Invitation** (details end with "Sent from the app"), so it shows in Admin like a website invitation.
 
 ## Important limitations — please read

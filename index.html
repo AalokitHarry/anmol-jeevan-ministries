@@ -614,6 +614,7 @@
     .theme-fab svg{width:18px;height:18px}
     .theme-fab svg{width:18px;height:18px}
   }
+  .paused-note{font-style:normal;color:#c0504d;font-weight:600}
 </style>
 </head>
 <body>
@@ -841,7 +842,7 @@
           <div class="time-row"><span class="day">Youth Fellowship</span><span class="det">Worship &amp; the Word for our youth — Thursdays, 8:30 PM · Online via Zoom</span></div>
           <div class="time-row"><span class="day">Morning Devotion</span><span class="det">Start the day in prayer &amp; the Word — Monday to Saturday, 7:30 AM · Online via Zoom</span></div>
           <div class="time-row"><span class="day">Night Prayer</span><span class="det">Join us in prayer together — Monday to Saturday, 10 PM · Online via Zoom</span></div>
-          <div class="time-row" style="border-bottom:0"><span class="day">90 Minutes with Jesus</span><span class="det">A focused time in His presence — Wednesdays, 7 PM</span></div>
+          <div class="time-row" style="border-bottom:0"><span class="day">90 Minutes with Jesus</span><span class="det">A focused time in His presence — Wednesdays, 7 PM<em class="paused-note" data-until="2026-10-14"> · paused on 30 Sep, 7 Oct &amp; 14 Oct — resumes soon</em></span></div>
         </div>
       </div>
       <div class="right">
@@ -998,6 +999,12 @@
 </div>
 
 <script>
+
+  // Notices with data-until="YYYY-MM-DD" take themselves down the day after that date (India time)
+  (function(){
+    const today=new Date(Date.now()+330*60000).toISOString().slice(0,10);
+    document.querySelectorAll('[data-until]').forEach(el=>{ if(today>el.dataset.until) el.remove(); });
+  })();
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 
@@ -1006,19 +1013,22 @@
   (function(){
     const ngName=document.getElementById('ngName'), ngDesc=document.getElementById('ngDesc'), ngTime=document.getElementById('ngTime');
     if(!ngName||!ngDesc||!ngTime)return;
-    function nextOccurrence(day,hour,minute){
+    const dayKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    function nextOccurrence(day,hour,minute,skip){
       const now=new Date();
       const d=new Date(now);
       d.setHours(hour,minute,0,0);
       let diff=(day-now.getDay()+7)%7;
       if(diff===0&&d<=now)diff=7;
       d.setDate(now.getDate()+diff);
+      while((skip||[]).includes(dayKey(d)))d.setDate(d.getDate()+7); // weeks it doesn't meet
       return d;
     }
     const gatherings=[
       {name:'Sunday Fellowship',day:0,hour:15,minute:0,desc:"Praise, the Word & prayer together — come as you are."},
-      {name:'90 Minutes with Jesus',day:3,hour:19,minute:0,desc:'A focused time in His presence — worship, the Word & prayer.'}
-    ].map(g=>({...g,next:nextOccurrence(g.day,g.hour,g.minute)}));
+      // paused on these Wednesdays (announcement from the AJM Media Team)
+      {name:'90 Minutes with Jesus',day:3,hour:19,minute:0,desc:'A focused time in His presence — worship, the Word & prayer.',skip:["2026-09-30", "2026-10-07", "2026-10-14"]}
+    ].map(g=>({...g,next:nextOccurrence(g.day,g.hour,g.minute,g.skip)}));
     gatherings.sort((a,b)=>a.next-b.next);
     const upcoming=gatherings[0];
     const isToday=upcoming.next.toDateString()===new Date().toDateString();

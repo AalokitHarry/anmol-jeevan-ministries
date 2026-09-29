@@ -1,7 +1,18 @@
 {
-  "_note": "Public list of gatherings, read by the AJM Office app (Events, no login). Keep it in step with events.html. Times are in India time (IST). A special event disappears from the app the day after its date.",
+  "_note": "Public list of gatherings, read by the AJM Office app (Events, no login) each time it is opened — keep it in step with events.html. Times are India time (IST). 'special': one-off events, hidden the day after their date. 'weekly': repeating gatherings; 'skip' lists dates it does not meet (shown as 'not this week'), 'skipNote' says why. 'notices': announcements shown at the top from 'from' to 'until'.",
   "updated": "2026-09-29",
   "whatsapp": "917999929550",
+  "notices": [
+    {
+      "id": "wednesday-paused-2026-10",
+      "title": "Wednesday Fellowship — temporarily paused",
+      "text": "There is no AJM Prophetic Wednesday Fellowship for the next three Wednesdays: 30 September, 7 October and 14 October 2026. The regular Wednesday Fellowship will resume soon.",
+      "image": "img/wednesday-fellowship-paused.jpg",
+      "from": "2026-09-29",
+      "until": "2026-10-14",
+      "by": "AJM Media Team"
+    }
+  ],
   "special": [
     {
       "id": "womens-meet-2026-09-29",
@@ -20,7 +31,9 @@
   "weekly": [
     {
       "title": "Sunday Worship Service",
-      "days": ["SUN"],
+      "days": [
+        "SUN"
+      ],
       "time": "15:00",
       "durationMinutes": 120,
       "where": "Indore, Madhya Pradesh",
@@ -29,16 +42,26 @@
     },
     {
       "title": "90 Minutes with Jesus",
-      "days": ["WED"],
+      "days": [
+        "WED"
+      ],
       "time": "19:00",
       "durationMinutes": 90,
       "where": "Indore, Madhya Pradesh",
       "online": false,
-      "text": "A focused time in His presence — worship, the Word & prayer."
+      "text": "A focused time in His presence — worship, the Word & prayer.",
+      "skip": [
+        "2026-09-30",
+        "2026-10-07",
+        "2026-10-14"
+      ],
+      "skipNote": "Paused on 30 Sep, 7 Oct & 14 Oct — resumes soon"
     },
     {
       "title": "Youth Fellowship",
-      "days": ["THU"],
+      "days": [
+        "THU"
+      ],
       "time": "20:30",
       "durationMinutes": 60,
       "where": "Online via Zoom",
@@ -47,7 +70,14 @@
     },
     {
       "title": "Morning Devotion",
-      "days": ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      "days": [
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT"
+      ],
       "time": "07:30",
       "durationMinutes": 30,
       "where": "Online via Zoom",
@@ -56,7 +86,14 @@
     },
     {
       "title": "Night Prayer",
-      "days": ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      "days": [
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT"
+      ],
       "time": "22:00",
       "durationMinutes": 30,
       "where": "Online via Zoom",

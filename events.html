@@ -259,6 +259,14 @@
   .badge-soon{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(232,163,61,.18);color:var(--gold-deep);padding:4px 10px;border-radius:100px;font-weight:700}
   .event-card p{color:var(--on-surface-muted);font-size:.94rem;margin-bottom:6px}
   .event-card .meta{color:var(--on-surface-muted);font-size:.85rem}
+  .event-card.is-notice{background:linear-gradient(135deg,rgba(22,48,90,.07),rgba(232,163,61,.12));border:1.5px solid rgba(232,163,61,.45);padding:30px 34px}
+  .event-card.is-notice .event-photo{width:190px;border-radius:16px}
+  .event-card.is-notice h3{font-size:1.45rem}
+  .event-card.is-notice p{color:var(--on-surface)}
+  .notice-dates{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px}
+  .notice-dates span{padding:6px 12px;border-radius:100px;background:var(--surface);border:1px solid rgba(232,163,61,.45);font-size:.82rem;font-weight:700;color:var(--on-surface)}
+  .badge-paused{background:rgba(214,69,69,.12);color:#b73a3a}
+  .paused-note{color:#b73a3a!important;font-weight:600}
 
   /* booking */
   .book{background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 100%);color:var(--cream)}
@@ -323,6 +331,9 @@
     .event-card.is-featured .info{text-align:center}
     .event-card.is-featured h3{justify-content:center}
     .event-photo{width:120px}
+    .event-card.is-notice{padding:26px;justify-content:center;text-align:center}
+    .event-card.is-notice .event-photo{width:min(100%,320px)}
+    .event-card.is-notice h3,.notice-dates{justify-content:center}
     .book-form .field-row{grid-template-columns:1fr}
     .float-stack{right:16px;bottom:16px;gap:8px}
     .float-cta{padding:12px 18px;font-size:.85rem}
@@ -385,6 +396,15 @@
         </div>
         <a href="womens-meet.html" class="btn-lg btn-gold magnetic">Register Now</a>
       </div>
+      <div class="event-card is-notice" data-until="2026-10-14">
+        <img class="event-photo" src="img/wednesday-fellowship-paused.jpg" alt="AJM Prophetic Wednesday Fellowship — temporarily paused on 30 September, 7 October and 14 October 2026" loading="lazy">
+        <div class="info">
+          <h3>Wednesday Fellowship <span class="badge-soon badge-paused">Temporarily paused</span></h3>
+          <p>There is no AJM Prophetic Wednesday Fellowship for the next three Wednesdays. The regular Wednesday Fellowship will resume soon.</p>
+          <div class="notice-dates"><span>Wed, 30 Sep</span><span>Wed, 7 Oct</span><span>Wed, 14 Oct</span></div>
+          <div class="meta">An announcement from the AJM Media Team · Stay connected, stay blessed, keep growing</div>
+        </div>
+      </div>
       <div class="event-card">
         <div class="date-badge">
           <span class="dow">Every</span>
@@ -403,8 +423,9 @@
           <span class="time">Wednesday</span>
         </div>
         <div class="info">
-          <h3>90 Minutes with Jesus</h3>
+          <h3>90 Minutes with Jesus <span class="badge-soon badge-paused" data-until="2026-10-14">Paused</span></h3>
           <p>A focused time in His presence — worship, the Word &amp; prayer, 7:00 PM.</p>
+          <p class="paused-note" data-until="2026-10-14">No gathering on 30 Sep, 7 Oct or 14 Oct — resumes soon.</p>
           <div class="meta">📍 Indore, Madhya Pradesh, India</div>
         </div>
         <a href="#book" class="btn-lg btn-gold magnetic">Reserve a spot</a>
@@ -468,7 +489,7 @@
       <label class="full">Which gathering?
         <select name="which">
           <option>Sunday Worship Service</option>
-          <option>90 Minutes with Jesus (Wednesdays, 7 PM)</option>
+          <option data-paused-until="2026-10-14">90 Minutes with Jesus (Wednesdays, 7 PM)</option>
           <option>Youth Fellowship (Thursdays, 8:30 PM)</option>
           <option>Morning Devotion (Mon–Sat, 7:30 AM)</option>
           <option>Night Prayer (Mon–Sat, 10 PM)</option>
@@ -519,6 +540,17 @@
 </div>
 
 <script>
+
+  // Notices with data-until="YYYY-MM-DD" take themselves down the day after that date (India time)
+  (function(){
+    const today=new Date(Date.now()+330*60000).toISOString().slice(0,10);
+    document.querySelectorAll('[data-until]').forEach(el=>{ if(today>el.dataset.until) el.remove(); });
+  })();
+  // while a gathering is paused, say so in the booking list
+  (function(){
+    const today=new Date(Date.now()+330*60000).toISOString().slice(0,10);
+    document.querySelectorAll('option[data-paused-until]').forEach(o=>{ if(today<=o.dataset.pausedUntil) o.textContent+=' — paused until '+new Date(o.dataset.pausedUntil+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'}); });
+  })();
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 
