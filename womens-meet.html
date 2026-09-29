@@ -258,6 +258,25 @@
   .btn-rose{background:var(--rose);color:var(--night);box-shadow:0 8px 30px rgba(232,143,160,.4)}
   .btn-rose:hover{box-shadow:0 16px 40px rgba(232,143,160,.6)}
   .btn-rose:not(.jsmag):hover{transform:translateY(-3px) scale(1.02)}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn-share{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:100px;border:1.5px solid rgba(250,246,238,.35);
+    background:rgba(250,246,238,.06);color:var(--cream);font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:border-color .25s,background .25s,color .25s}
+  .btn-share:hover{border-color:var(--rose);color:var(--rose);background:rgba(232,143,160,.08)}
+  .btn-share svg{width:18px;height:18px}
+  .share-panel{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(250,246,238,.07);border:1px solid rgba(250,246,238,.16);max-width:460px}
+  .share-panel[hidden]{display:none}
+  .share-link{display:block;font-size:.8rem;color:rgba(250,246,238,.6);margin-bottom:10px;word-break:break-all}
+  .share-opts{display:flex;flex-wrap:wrap;gap:8px}
+  .share-opt{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;border:1px solid rgba(250,246,238,.22);
+    background:rgba(250,246,238,.06);color:var(--cream);font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s}
+  .share-opt svg{width:17px;height:17px}
+  .share-opt:hover{background:rgba(250,246,238,.14)}
+  .share-wa svg{color:#25d366}
+  .share-fb svg{color:#4d8cf5}
+  .share-copy.done{border-color:#25d366;color:#7fe0a5}
+  .wreg-share{margin:0 auto 22px;display:flex;flex-direction:column;align-items:center}
+  .wreg-share p{margin-bottom:12px!important;font-size:.92rem}
+  .wreg-share .share-panel{text-align:left}
 
   footer{background:#07081a;color:rgba(250,246,238,.6);padding:50px 0 40px;text-align:center}
   footer .brand{justify-content:center;color:var(--cream);margin-bottom:14px}
@@ -273,6 +292,8 @@
     .whero-grid{grid-template-columns:1fr;gap:0}
     .whero-copy{padding-bottom:32px;text-align:center}
     .whero .details{justify-content:center}
+    .hero-actions{justify-content:center}
+    .whero .share-panel{margin-left:auto;margin-right:auto;text-align:left}
     .whero .theme-badge{white-space:normal;text-align:center;font-size:.78rem}
     .whero-photo img{max-width:260px;margin:0 auto}
     .wreg-form .field-row{grid-template-columns:1fr}
@@ -319,7 +340,18 @@
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>On Zoom</span>
       </div>
       <p style="max-width:480px;color:rgba(250,246,238,.8);margin-bottom:30px">With Pastor Juhi Vishal. Free to attend — no registration fee. Reserve your spot below and we'll send you the Zoom link.</p>
-      <a href="#register" class="btn-lg btn-rose magnetic">Register Now</a>
+      <div class="hero-actions">
+        <a href="#register" class="btn-lg btn-rose magnetic">Register Now</a>
+        <button type="button" class="btn-share" data-share="sharePanelHero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share registration link</button>
+      </div>
+      <div class="share-panel" id="sharePanelHero" hidden>
+        <span class="share-link">ajmfamily.site/womens-meet.html</span>
+        <div class="share-opts">
+          <a class="share-opt share-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a>
+          <a class="share-opt share-fb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-2.8 0-4 2-4 4.5V8H7.5v3.5H10V22h4V11.5h2.7L17 8h-3z"/></svg>Facebook</a>
+          <button type="button" class="share-opt share-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy link</span></button>
+        </div>
+      </div>
     </div>
     <div class="whero-photo reveal in">
       <img src="img/womens-meet-flyer-sep29-v2.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal, Tuesday Sep 29, 8:30 PM, on Zoom">
@@ -361,6 +393,18 @@
       <div class="check">✓</div>
       <h3>You're registered, <span id="wregSuccessName"></span>!</h3>
       <p>We've received your details for Women's Meet. WhatsApp should have opened with a message ready to send us — once you send it, we'll confirm and reply with your Zoom link.</p>
+      <div class="wreg-share">
+        <p>Know other women who'd love to come? Send them the registration link.</p>
+        <button type="button" class="btn-share" data-share="sharePanelDone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share registration link</button>
+        <div class="share-panel" id="sharePanelDone" hidden>
+        <span class="share-link">ajmfamily.site/womens-meet.html</span>
+        <div class="share-opts">
+          <a class="share-opt share-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a>
+          <a class="share-opt share-fb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-2.8 0-4 2-4 4.5V8H7.5v3.5H10V22h4V11.5h2.7L17 8h-3z"/></svg>Facebook</a>
+          <button type="button" class="share-opt share-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy link</span></button>
+        </div>
+      </div>
+      </div>
       <button type="button" class="wreg-again-btn" id="wregAgainBtn">Register someone else</button>
     </div>
     <p class="wreg-note" id="wregNote">Prefer to just message us? Reach the AJM Family team on <a href="https://wa.me/917999929550" target="_blank" rel="noopener">WhatsApp</a>.</p>
@@ -490,6 +534,35 @@
     document.getElementById('wregNote').style.display = 'block';
     form.style.display = 'flex';
   });
+
+  // Share registration link: the phone's own share sheet (WhatsApp, SMS, …) where there is one; otherwise WhatsApp / Facebook / Copy link
+  (function(){
+    const url='https://ajmfamily.site/womens-meet.html#register';
+    const text="Join the AJM Family Women's Meet with Pastor Juhi Vishal — Tuesday, 29 September 2026, 8:30 PM (IST) on Zoom. Free, for women of the Christian community. Register here:";
+    document.querySelectorAll('.share-wa').forEach(a=>{a.href='https://wa.me/?text='+encodeURIComponent(text+' '+url);});
+    document.querySelectorAll('.share-fb').forEach(a=>{a.href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);});
+    document.querySelectorAll('[data-share]').forEach(btn=>{
+      const panel=document.getElementById(btn.dataset.share);
+      btn.addEventListener('click',async()=>{
+        if(navigator.share){
+          try{ await navigator.share({title:"Women's Meet — AJM Family",text:text,url:url}); return; }
+          catch(e){ if(e&&e.name==='AbortError') return; }
+        }
+        panel.hidden=!panel.hidden;
+      });
+    });
+    document.querySelectorAll('.share-copy').forEach(b=>b.addEventListener('click',async()=>{
+      let ok=false;
+      try{ await navigator.clipboard.writeText(url); ok=true; }catch(e){
+        const t=document.createElement('textarea'); t.value=url; t.style.position='fixed'; t.style.opacity='0';
+        document.body.appendChild(t); t.select(); try{ ok=document.execCommand('copy'); }catch(_){} t.remove();
+      }
+      const label=b.querySelector('span');
+      label.textContent=ok?'Link copied ✓':'Copy failed — long-press the link above';
+      b.classList.toggle('done',ok);
+      setTimeout(()=>{label.textContent='Copy link'; b.classList.remove('done');},2500);
+    }));
+  })();
 
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
