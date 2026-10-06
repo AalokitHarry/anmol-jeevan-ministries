@@ -259,6 +259,13 @@
   .badge-soon{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(232,163,61,.18);color:var(--gold-deep);padding:4px 10px;border-radius:100px;font-weight:700}
   .event-card p{color:var(--on-surface-muted);font-size:.94rem;margin-bottom:6px}
   .event-card .meta{color:var(--on-surface-muted);font-size:.85rem}
+  .event-card.is-coming{background:linear-gradient(135deg,#071a40 0%,#0d3170 60%,#164486 100%);color:var(--cream);border:1.5px solid rgba(246,201,104,.55);
+    box-shadow:0 24px 60px -26px rgba(10,42,102,.7),inset 0 1px 0 rgba(255,255,255,.12);padding:34px 40px;gap:34px;position:relative;overflow:hidden}
+  .event-card.is-coming .event-photo{width:210px;border-radius:16px;box-shadow:0 0 0 1px rgba(246,201,104,.45),0 20px 44px -16px rgba(0,0,0,.65)}
+  .event-card.is-coming h3{font-size:clamp(1.7rem,3vw,2.3rem);color:var(--cream)}
+  .event-card.is-coming p{color:rgba(250,246,238,.88);font-size:1.02rem}
+  .event-card.is-coming .meta{color:var(--gold-soft);font-weight:600}
+  .badge-coming{background:linear-gradient(135deg,#f6c968,#e8a33d);color:#07122e}
   .event-card.is-notice{background:linear-gradient(135deg,rgba(22,48,90,.07),rgba(232,163,61,.12));border:1.5px solid rgba(232,163,61,.45);padding:30px 34px}
   .event-card.is-notice .event-photo{width:190px;border-radius:16px}
   .event-card.is-notice h3{font-size:1.45rem}
@@ -331,6 +338,9 @@
     .event-card.is-featured .info{text-align:center}
     .event-card.is-featured h3{justify-content:center}
     .event-photo{width:120px}
+    .event-card.is-coming{padding:28px 24px;justify-content:center;text-align:center}
+    .event-card.is-coming .event-photo{width:min(100%,300px)}
+    .event-card.is-coming h3{justify-content:center}
     .event-card.is-notice{padding:26px;justify-content:center;text-align:center}
     .event-card.is-notice .event-photo{width:min(100%,320px)}
     .event-card.is-notice h3,.notice-dates{justify-content:center}
@@ -383,6 +393,15 @@
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
+      <div class="event-card is-coming" id="faith-conference">
+        <img class="event-photo" src="img/faith-conference.jpg" alt="Faith Conference, Indore — Anmol Jeevan Ministries presents. Coming soon." width="1024" height="1536">
+        <div class="info">
+          <h3>Faith Conference · Indore <span class="badge-soon badge-coming">Coming soon</span></h3>
+          <p>Anmol Jeevan Ministries presents a very big gathering in Indore. Dates and details will be announced soon — stay connected, and we'll let you know first.</p>
+          <div class="meta">📍 Indore, Madhya Pradesh</div>
+        </div>
+        <a href="https://wa.me/917999929550?text=Hello%20AJM%20Family%2C%20please%20keep%20me%20updated%20about%20the%20Faith%20Conference%20in%20Indore." target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">Get updates</a>
+      </div>
       <div class="event-card is-notice" data-until="2026-10-14">
         <img class="event-photo" src="img/wednesday-fellowship-paused.jpg" alt="AJM Prophetic Wednesday Fellowship — temporarily paused on 30 September, 7 October and 14 October 2026" loading="lazy">
         <div class="info">

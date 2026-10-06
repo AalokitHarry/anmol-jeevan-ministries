@@ -1,8 +1,18 @@
 {
   "_note": "Public list of gatherings, read by the AJM Office app (Events, no login) each time it is opened — keep it in step with events.html. Times are India time (IST). 'special': one-off events, hidden the day after their date. 'weekly': repeating gatherings; 'skip' lists dates it does not meet (shown as 'not this week'), 'skipNote' says why. 'notices': announcements shown at the top from 'from' to 'until'.",
-  "updated": "2026-09-30",
+  "updated": "2026-10-07",
   "whatsapp": "917999929550",
   "notices": [
+    {
+      "id": "faith-conference-indore",
+      "title": "Faith Conference — Indore · Coming soon",
+      "text": "Anmol Jeevan Ministries presents a very big gathering in Indore. Dates and details will be announced soon — stay connected, and we'll let you know first.",
+      "image": "img/faith-conference.jpg",
+      "link": "https://wa.me/917999929550?text=Hello%20AJM%20Family%2C%20please%20keep%20me%20updated%20about%20the%20Faith%20Conference%20in%20Indore.",
+      "linkLabel": "Get updates on WhatsApp",
+      "from": "2026-10-07",
+      "by": "Anmol Jeevan Ministries"
+    },
     {
       "id": "wednesday-paused-2026-10",
       "title": "Wednesday Fellowship — temporarily paused",
