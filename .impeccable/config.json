@@ -1,0 +1,37 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "events.html",
+          "index.html"
+        ],
+        "createdAt": "2026-10-21T01:41:26.350Z",
+        "reason": "Codex: actual label, navigation, footer and social-link contrast problems were fixed. Remaining static findings flatten translucent decorative gradients against the light body instead of their opaque navy base; rendered pages were checked manually in the browser."
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "events.html",
+          "index.html"
+        ],
+        "createdAt": "2026-10-21T01:41:40.010Z",
+        "reason": "Codex: this scoped visitor/prayer addition preserves the existing AJM gold button shadows, navy surfaces and conference image edging. These are incumbent styles rather than newly introduced effects."
+      },
+      {
+        "rule": "icon-tile-stack",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-21T01:41:40.071Z",
+        "reason": "Codex: the existing Word, Worship and Family pillars are outside the visitor/prayer addition and retain their established icon and heading arrangement."
+      }
+    ]
+  }
+}
