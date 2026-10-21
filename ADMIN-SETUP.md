@@ -160,3 +160,14 @@ The app's login screen has two tiles anyone can use, without a key:
 - The admin page isn't linked from the site and is excluded from search engines (`robots.txt` + `noindex`), but the URL itself isn't secret once shared — treat the key like a password and don't post it publicly.
 - If you ever want to revoke access, just change `ADMIN_KEY` in the Apps Script and redeploy (**Deploy → Manage deployments → Edit → New version**).
 - The Google Sheet itself is the real source of truth — you can always open it directly to view, sort, filter, or export the data with Google Sheets' own tools, no need to go through the admin panel.
+
+## Admin follow-ups and Media assignments (workflow upgrade)
+
+The workflow update adds follow-up owners, dates, notes and completion status to registrations, plus a shared dated assignment planner in Media Office. Keep your existing deployment URL and configured access keys when updating the Apps Script project with `admin-tools/apps-script.gs`, then redeploy the existing web app with the new version.
+
+- The Registrations sheet gains five columns on the right: FollowUpOwner, FollowUpDate, FollowUpNote, FollowUpStatus and FollowUpRev. Existing columns and records stay in place.
+- The MediaPlan tab is created when the first assignment is saved. It does not replace the Made/Uploaded logs or Content Stock.
+- Media login reports version 5. Admin list responses advertise `features.followUps`. Older deployments show an upgrade notice and keep their existing functions.
+- Follow-up and assignment saves use POST bodies, validate dates and field lengths, and reject an outdated record revision instead of overwriting a teammate's changes.
+- Deadlines and follow-up dates are interpreted in India time. Assignments can be marked Cancelled; records are retained.
+- Local regression checks: `node --test tests/office-workflows.test.cjs`.

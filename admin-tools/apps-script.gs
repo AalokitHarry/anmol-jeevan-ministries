@@ -15,7 +15,7 @@ const MEDIA_KEY = 'media-2026-change-me';
 const WORSHIP_KEY = 'worship-2026-change-me';
 
 const SHEET_NAME = 'Registrations';
-const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status', 'Archive', 'ArchivedAt'];
+const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Email', 'Details', 'ID', 'Status', 'Archive', 'ArchivedAt', 'FollowUpOwner', 'FollowUpDate', 'FollowUpNote', 'FollowUpStatus', 'FollowUpRev'];
 const ID_COL = 7;
 const STATUS_COL = 8;
 const ARCHIVE_COL = 9;      // name of the past event a registration was moved to (empty = still in the main list)
@@ -39,6 +39,11 @@ function getSheet_() {
 
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
+  if (data.action === 'setFollowUp') {
+    if (!adminAuthorized_(data.key)) return jsonOut_({ error: 'unauthorized' });
+    return handleFollowUp_(data);
+  }
+  if (String(data.action || '').indexOf('media') === 0) return handleMedia_(data, true);
   // worship.html saves song lyrics this way (they are too long for a web address);
   // everything else posted here is a form registration
   if (String(data.action || '').indexOf('worship') === 0) {
@@ -81,10 +86,12 @@ function doGet(e) {
   }
 
   // (the sample key is refused, so a forgotten "change me" can never expose the list)
-  if (!e.parameter.key || e.parameter.key !== ADMIN_KEY || ADMIN_KEY === 'ajm-2026-change-me') {
+  if (!adminAuthorized_(e.parameter.key)) {
     return ContentService.createTextOutput(JSON.stringify({ error: 'unauthorized' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+
+  if (e.parameter.action === 'setFollowUp') return jsonOut_({ error: 'use POST' });
 
   if (e.parameter.action === 'delete') {
     return handleDelete_(e.parameter.id);
@@ -107,8 +114,37 @@ function doGet(e) {
     headers.forEach(function (h, i) { obj[h] = row[i]; });
     return obj;
   });
-  return ContentService.createTextOutput(JSON.stringify({ ok: true, data: data }))
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, data: data, features: { followUps: true } }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function adminAuthorized_(key) {
+  return !!key && key === ADMIN_KEY && ADMIN_KEY !== 'ajm-2026-change-me';
+}
+
+function validWorkflowDate_(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const d = new Date(value + 'T12:00:00Z');
+  return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === value;
+}
+
+function handleFollowUp_(p) {
+  const owner = String(p.owner || '').trim(), note = String(p.note || '').trim();
+  const due = String(p.due || ''), status = String(p.status || 'Open');
+  if (!p.id || owner.length > 80 || note.length > 1000 || (due && !validWorkflowDate_(due)) || ['Open', 'Done'].indexOf(status) === -1) return jsonOut_({ error: 'invalid follow-up' });
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getSheet_();
+    if (sheet.getLastRow() < 2) return jsonOut_({ error: 'not found' });
+    const row = findRowById_(sheet, p.id);
+    if (row < 2) return jsonOut_({ error: 'not found' });
+    const old = sheet.getRange(row, 11, 1, 5).getValues()[0];
+    if (String(old[4] || '') !== String(p.rev || '')) return jsonOut_({ error: 'conflict' });
+    const rev = Utilities.getUuid();
+    sheet.getRange(row, 11, 1, 5).setNumberFormat('@').setValues([[owner, due, note, status, rev]]);
+    return jsonOut_({ ok: true, followUp: { FollowUpOwner: owner, FollowUpDate: due, FollowUpNote: note, FollowUpStatus: status, FollowUpRev: rev } });
+  } finally { lock.releaseLock(); }
 }
 
 function findRowById_(sheet, id) {
@@ -341,7 +377,10 @@ function handleMeetings_(p) {
 // ---------------------------------------------------------------------------
 const MEDIA_SHEET_NAME = 'MediaWork';
 const MEDIA_HEADERS = ['Month', 'Total', 'SubmittedAt', 'UpdatedAt', 'Note', 'Data', 'Uploaded', 'UploadedTotal'];
-const MEDIA_VERSION = 4;
+const MEDIA_VERSION = 5;
+const MEDIA_PLAN_SHEET = 'MediaPlan';
+const MEDIA_PLAN_HEADERS = ['ID', 'Title', 'Type', 'Owner', 'DueDate', 'Status', 'Notes', 'UpdatedAt', 'Rev'];
+const MEDIA_PLAN_STATUSES = ['Planned', 'In progress', 'In review', 'Done', 'Cancelled'];
 
 // Stock adjustments, one row per work type: what was already in stock before this
 // page was used (Opening) and what will never be uploaded (NotNeeded).
@@ -464,10 +503,14 @@ function chartOut_(r) {
   };
 }
 
-function handleMedia_(p) {
+function handleMedia_(p, isPost) {
   if (!mediaAuthorized_(p.key)) return jsonOut_({ error: 'unauthorized' });
 
   switch (p.action) {
+    case 'mediaPlanList':
+      return jsonOut_({ ok: true, tasks: readTab_(MEDIA_PLAN_SHEET, MEDIA_PLAN_HEADERS).map(mediaPlanOut_) });
+    case 'mediaPlanSave':
+      return isPost ? mediaPlanSave_(p) : jsonOut_({ error: 'use POST' });
     case 'mediaLogin':
       // version lets the page tell whether this script is up to date; now is
       // the real date, so a wrong computer clock can't open the wrong month
@@ -489,6 +532,35 @@ function handleMedia_(p) {
     default:
       return jsonOut_({ error: 'unknown action' });
   }
+}
+
+function mediaPlanOut_(r) {
+  return { id: String(r.ID), title: String(r.Title), type: String(r.Type), owner: String(r.Owner || ''), due: String(r.DueDate), status: String(r.Status), notes: String(r.Notes || ''), updatedAt: String(r.UpdatedAt || ''), rev: String(r.Rev || '') };
+}
+
+function mediaPlanSave_(p) {
+  const title = String(p.title || '').trim(), owner = String(p.owner || '').trim();
+  const notes = String(p.notes || '').trim(), due = String(p.due || ''), type = cleanCat_(p.type);
+  const status = String(p.status || 'Planned');
+  if (!title || title.length > 120 || owner.length > 80 || notes.length > 600 || !type || !validWorkflowDate_(due) || MEDIA_PLAN_STATUSES.indexOf(status) === -1) return jsonOut_({ error: 'invalid assignment' });
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const rows = readTab_(MEDIA_PLAN_SHEET, MEDIA_PLAN_HEADERS);
+    let rec = null;
+    if (p.id) {
+      rec = rows.filter(function (r) { return String(r.ID) === String(p.id); })[0];
+      if (!rec) return jsonOut_({ error: 'not found' });
+      if (String(rec.Rev || '') !== String(p.rev || '')) return jsonOut_({ error: 'conflict' });
+    } else {
+      if (rows.length >= 5000) return jsonOut_({ error: 'assignment list is full' });
+      rec = { ID: Utilities.getUuid(), _row: 0 };
+    }
+    Object.assign(rec, { Title: title, Type: type, Owner: owner, DueDate: due, Status: status, Notes: notes, UpdatedAt: new Date().toISOString(), Rev: Utilities.getUuid() });
+    const sheet = getTab_(MEDIA_PLAN_SHEET, MEDIA_PLAN_HEADERS);
+    writeTabRow_(sheet, rec._row, MEDIA_PLAN_HEADERS, MEDIA_PLAN_HEADERS.map(function (h) { return rec[h]; }));
+    return jsonOut_({ ok: true, task: mediaPlanOut_(rec) });
+  } finally { lock.releaseLock(); }
 }
 
 function mediaGet_(p) {
