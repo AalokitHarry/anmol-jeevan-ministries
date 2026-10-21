@@ -1,0 +1,54 @@
+/* Workflow additions follow the existing office palette and controls. */
+.workflow-section{margin:18px 0 24px;padding:22px;background:var(--card,#fff);border-radius:16px}
+.workflow-section>summary{cursor:pointer;font-size:1.1rem;font-weight:700;color:var(--navy,#16305a);padding:4px 0}
+.workflow-section>summary span{font-size:.9rem;font-weight:500;margin-left:10px}
+.workflow-body{padding-top:20px}
+.workflow-toolbar,.workflow-actions{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:16px 0}
+.workflow-toolbar label{min-width:180px;flex:1;max-width:320px}
+.workflow-toolbar label,.workflow-fields label{display:flex;flex-direction:column;gap:7px;font-size:.88rem;font-weight:600;color:var(--ink,#141a2e)}
+.workflow-toolbar input,.workflow-toolbar select,.workflow-fields input,.workflow-fields textarea,.workflow-fields select{width:100%;min-width:0;padding:11px 12px;border:1px solid #aebbd1;border-radius:10px;background:#fff;color:#141a2e;font:inherit;caret-color:var(--navy,#16305a)}
+.workflow-toolbar input::placeholder,.workflow-fields input::placeholder,.workflow-fields textarea::placeholder{color:#56647c;opacity:1}
+.workflow-fields textarea{resize:vertical}
+.workflow-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.workflow-wide{grid-column:1/-1}
+.workflow-help,.workflow-empty{color:#526079;font-size:.9rem;line-height:1.65}
+.workflow-editor{margin-top:22px;padding-top:24px;border-top:1px solid var(--line,#e3e8f1);scroll-margin-top:24px}
+.workflow-editor h2,.workflow-editor h3{font-family:inherit;font-size:1.15rem;font-weight:700;margin-bottom:20px;color:var(--navy,#16305a)}
+.workflow-result{min-height:1.5em;font-size:.9rem;color:var(--navy,#16305a);margin-top:10px}
+.workflow-result.is-error{color:#a32424}
+.workflow-list{display:grid}
+.workflow-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line,#e3e8f1);overflow-wrap:anywhere}
+.workflow-row h3{font:inherit;font-size:1rem;font-weight:700;margin-bottom:5px}
+.workflow-row p{color:#526079;font-size:.9rem;white-space:pre-wrap}
+.workflow-row .workflow-notes{margin-top:8px;max-width:72ch;color:var(--ink,#141a2e)}
+.workflow-tag{display:inline-block;font-size:.8rem;font-weight:600;padding:4px 9px;border-radius:6px;background:#eaf1ff;color:#204d90;margin-right:8px}
+.workflow-tag.is-late{background:#fde8e8;color:#9c2525}
+.workflow-tag.is-done{background:#e3f6ec;color:#176a43}
+.workflow-section :focus-visible,.workflow-editor :focus-visible,#planView .workflow-toolbar :focus-visible{outline:3px solid var(--navy,#16305a);outline-offset:3px}
+#table .followup-open{font-size:.8rem;padding:7px 12px;margin-right:8px;min-height:38px}
+#planView .workflow-section{margin:0 0 22px}
+#planView .workflow-task-chip{padding:12px 0;border-bottom:1px solid var(--line,#e3e8f1);font-size:.88rem;overflow-wrap:anywhere}
+.workflow-task-chip strong{display:block;font-weight:700;color:var(--ink,#141a2e)}
+.workflow-task-chip span{display:block;color:#526079;margin-top:5px}
+.workflow-task-chip .workflow-tag{display:inline-block;margin-top:8px}
+.pl-now .workflow-task-chip{border-bottom-color:rgba(255,255,255,.25)}
+.pl-now .workflow-task-chip strong{color:#fff}
+.pl-now .workflow-task-chip>span:not(.workflow-tag),.pl-now .workflow-empty,.pl-now .workflow-help{color:#e0e8f8}
+.pl-top.workflow-no-event{grid-template-columns:1fr}
+.workflow-board .pl-col.today .pl-h .dn,.workflow-board .pl-col.today .pl-h .dd{color:#37260b}
+.workflow-today-label{color:#37260b;font-size:.75rem;font-weight:700}
+.workflow-readonly{padding:12px 16px;background:#fff6e1;color:#684315;border-radius:10px;margin-bottom:18px;font-size:.9rem}
+.workflow-guide{margin-top:24px}
+.workflow-guide>summary{cursor:pointer;font-size:1rem;font-weight:600;padding:16px 0}
+@media(max-width:760px){
+  .workflow-fields{grid-template-columns:1fr}
+  .workflow-section{padding:18px}
+  .workflow-row{align-items:flex-start;flex-direction:column;gap:12px}
+  .workflow-row .btn{align-self:flex-start}
+  .workflow-actions .btn{min-height:44px}
+  #table .followup-open{min-height:44px}
+}
+@media print{
+  .workflow-editor,.workflow-toolbar,.workflow-actions,.followup-open{display:none!important}
+  .workflow-section{break-inside:avoid}
+}
