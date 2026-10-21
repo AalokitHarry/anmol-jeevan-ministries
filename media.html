@@ -485,6 +485,7 @@
     body.print-plan .pl-av i{width:22px;height:22px;font-size:.7rem}
   }
 </style>
+<link rel="stylesheet" href="css/office-workflow.css">
 </head>
 <body>
 
@@ -525,7 +526,8 @@
       <span><b>1</b>Content Log — type how many pieces were made each day</span>
       <span id="howtoStock"><b>2</b>Content Stock — list each piece, tap “Uploaded” once it is posted</span>
       <span><b>3</b>Stock Summary — see how much is left</span>
-      <span class="ht-note">Everything saves by itself.</span>
+      <span><b>4</b>Weekly Plan: assign content, a person and a deadline</span>
+      <span class="ht-note">Content Log changes save automatically. Use Save Assignment for weekly tasks.</span>
       <button type="button" id="howtoHide">Got it</button>
     </div>
 
@@ -606,9 +608,28 @@
       <div class="panel-head">
         <div>
           <h2>Weekly Content Plan</h2>
-          <p>What the media team makes on which day. The same plan repeats every week.</p>
+          <p>Assign content to the team, set deadlines and track progress. Dates use India time (IST).</p>
         </div>
       </div>
+
+      <p id="planUpgrade" class="workflow-readonly" hidden>The saved weekly planner needs the updated Google Sheet script. The recurring guide below remains available.</p>
+      <section id="planAssignments" class="workflow-section" hidden aria-labelledby="assignmentsTitle">
+        <div class="panel-head"><div><h3 id="assignmentsTitle">Team Assignments</h3><p>Saved to the shared team sheet. Changing an assignment does not change the Made or Uploaded totals.</p></div><div class="workflow-actions"><button class="btn primary" id="planAdd" type="button">Add Assignment</button><button class="btn" id="planRefresh" type="button">Refresh Assignments</button></div></div>
+        <p id="planLoadState" class="workflow-result" role="status" aria-live="polite"></p>
+        <form id="planTaskForm" class="workflow-editor" hidden>
+          <h3 id="planTaskTitle" tabindex="-1">Add Assignment</h3>
+          <div class="workflow-fields">
+            <label class="workflow-wide">Content title<input id="planTitle" required maxlength="120" placeholder="e.g. Sunday message reel"></label>
+            <label>Content type<select id="planType"></select></label>
+            <label>Assigned person<input id="planOwner" maxlength="80" autocomplete="off" placeholder="Team member's name"></label>
+            <label>Deadline<input id="planDue" type="date" required></label>
+            <label>Status<select id="planStatus"><option>Planned</option><option>In progress</option><option>In review</option><option>Done</option><option>Cancelled</option></select></label>
+            <label class="workflow-wide">Notes<textarea id="planNotes" maxlength="600" rows="3" placeholder="Brief, source footage or next step"></textarea></label>
+          </div>
+          <div class="workflow-actions"><button class="btn primary" id="planSave" type="submit">Save Assignment</button><button class="btn" id="planCancel" type="button">Cancel</button></div>
+          <p id="planSaveState" class="workflow-result" role="status" aria-live="polite"></p>
+        </form>
+      </section>
 
       <div class="pl-top">
         <section class="pl-now" id="plNow" aria-label="Today and tomorrow"></section>
@@ -627,10 +648,18 @@
         <div class="pl-board" id="plBoard"></div>
       </section>
 
-      <section class="card tcard">
-        <div class="tcard-head"><h3>The plan, type by type</h3><span class="hint">Coloured boxes are the days it is made</span></div>
-        <div class="pl-list" id="plList"></div>
+      <section id="planTaskListSection" class="workflow-section" hidden aria-labelledby="planTaskListTitle">
+        <h3 id="planTaskListTitle">Assignments This Week</h3>
+        <div class="workflow-toolbar"><label>Assigned person<input type="search" id="planOwnerFilter" placeholder="Search assigned person"></label><label>Status<select id="planStatusFilter"><option value="all">All statuses</option><option>Planned</option><option>In progress</option><option>In review</option><option>Done</option><option>Cancelled</option></select></label></div>
+        <div id="planTaskList" class="workflow-list"></div>
       </section>
+      <details class="workflow-guide">
+        <summary>Recurring Content Guide</summary>
+        <section class="card tcard">
+        <div class="tcard-head"><h3>The repeating schedule</h3><span class="hint">A reference for planning the week; dated assignments are managed above.</span></div>
+        <div class="pl-list" id="plList"></div>
+        </section>
+      </details>
     </div>
 
     <!-- ===== content list: which pieces are left ===== -->
@@ -709,6 +738,7 @@
   let mediaKey = null;    // kept in memory only — never persisted, re-enter on every page load
   let hasUploads = false; // the Google script keeps the "uploaded" chart (version 3+)
   let hasStock = false;   // ...and the content list + stock adjustments (version 4+)
+  let hasPlan = false;    // saved assignments with revisions (version 5+)
   let serverOffset = 0;   // Google's clock minus this computer's clock
   let activeTab = 'chart';
   let activeCell = null;
@@ -838,6 +868,7 @@
       mediaKey = key;
       hasUploads = j.version >= 3; // older script: everything works except the "uploaded" chart
       hasStock = j.version >= 4;   // older script: no content list / stock adjustments
+      hasPlan = j.version >= 5;
       // the real date comes from Google, so a wrong computer clock can't open the wrong month
       serverOffset = new Date(j.now).getTime() - Date.now();
       const today = serverNow();
@@ -875,6 +906,7 @@
     location.reload();
   }
   $('logoutBtn').addEventListener('click', async () => {
+    if(window.AjmPlan && window.AjmPlan.hasUnsaved() && !confirm('Discard the unsaved assignment changes and log out?')) return;
     if(hasUnsaved()){
       const ok = await save();
       if(!ok && !confirm('Your latest changes could not be saved. Log out anyway?')) return;
@@ -1225,14 +1257,14 @@
   });
 
   window.addEventListener('beforeunload', e => {
-    if(hasUnsaved()){ e.preventDefault(); e.returnValue = ''; }
+    if(hasUnsaved() || (window.AjmPlan && window.AjmPlan.hasUnsaved())){ e.preventDefault(); e.returnValue = ''; }
   });
 
   /* ---------- keeping in step with the rest of the team ---------- */
   async function tick(){
     if(!mediaKey || document.hidden) return;
     if(activeTab === 'chart') return poll();
-    if(activeTab === 'plan'){ if(planDayKey !== dayKey(midnight(serverNow()))) renderPlan(); return; } // a new day has started
+    if(activeTab === 'plan'){ if(planDayKey !== dayKey(midnight(serverNow()))) renderPlan(); if(hasPlan && window.AjmPlan) return window.AjmPlan.poll(); return; }
     if(activeTab === 'stock' && hasStock && !editingId && !document.activeElement.closest('#stockView')) return pollItems();
   }
 
@@ -1751,14 +1783,20 @@
   function renderPlan(){
     const today = midnight(serverNow());
     planDayKey = dayKey(today);
+    $('planUpgrade').hidden = hasPlan;
+    $('planAssignments').hidden = !hasPlan;
+    $('planTaskListSection').hidden = !hasPlan;
+    if(hasPlan && window.AjmPlan){
+      renderPlanEvent(today); renderPlanList(today); window.AjmPlan.render(); return;
+    }
     $('plNow').innerHTML = planNowDay(today, 'Today', 'td') + planNowDay(addDays(today, 1), 'Tomorrow', 'tm');
     renderPlanEvent(today);
     renderPlanBoard(today);
     renderPlanList(today);
   }
-  $('plPrev').addEventListener('click', () => { planOffset--; renderPlanBoard(midnight(serverNow())); });
-  $('plNext').addEventListener('click', () => { planOffset++; renderPlanBoard(midnight(serverNow())); });
-  $('plNowBtn').addEventListener('click', () => { planOffset = 0; renderPlanBoard(midnight(serverNow())); });
+  $('plPrev').addEventListener('click', () => { planOffset--; renderPlan(); });
+  $('plNext').addEventListener('click', () => { planOffset++; renderPlan(); });
+  $('plNowBtn').addEventListener('click', () => { planOffset = 0; renderPlan(); });
 
   /* ---------- tabs & print ---------- */
   async function showTab(tab){
@@ -1773,7 +1811,7 @@
     $('totalView').hidden = tab !== 'total';
     if(tab === 'total') await loadTotals();
     else if(tab === 'stock'){ fillTypeSelects(); renderItems(); await loadItems(); }
-    else if(tab === 'plan'){ planOffset = 0; renderPlan(); }
+    else if(tab === 'plan'){ planOffset = 0; renderPlan(); if(hasPlan && window.AjmPlan) await window.AjmPlan.load(); }
     else await loadChart();
   }
   $('tabs').addEventListener('click', e => {
@@ -1794,5 +1832,6 @@
     window.print();
   });
 </script>
+<script src="js/media-plan.js"></script>
 </body>
 </html>

@@ -315,6 +315,7 @@
     .meeting{padding:14px}
   }
 </style>
+<link rel="stylesheet" href="css/office-workflow.css">
 </head>
 <body>
 
@@ -375,6 +376,29 @@
     </div>
 
     <div class="count-line"><label class="selall-line"><input type="checkbox" class="selall-box" aria-label="Select all"> Select all</label><span id="countLine"></span></div>
+
+    <details class="workflow-section" id="followupPanel">
+      <summary>Follow-ups <span id="followupCount"></span></summary>
+      <div class="workflow-body">
+        <p class="workflow-help" id="followupUpgrade" hidden>Follow-up editing needs the updated Google Sheet script. Your existing registrations still work.</p>
+        <div class="workflow-toolbar">
+          <label>Show<select id="followupFilter"><option value="due">Due or overdue</option><option value="all">All follow-ups</option><option value="upcoming">Upcoming</option><option value="done">Completed</option></select></label>
+          <label>Assigned person<input id="followupOwnerFilter" type="search" placeholder="Search assigned person"></label>
+        </div>
+        <div id="followupList" class="workflow-list"></div>
+        <form id="followupForm" class="workflow-editor" hidden>
+          <h2 id="followupTitle" tabindex="-1">Edit Follow-up</h2>
+          <div class="workflow-fields">
+            <label>Assigned person<input id="followupOwner" maxlength="80" autocomplete="off" placeholder="Team member's name"></label>
+            <label>Follow-up date<input id="followupDate" type="date"><span class="workflow-help">Dates use India time (IST).</span></label>
+            <label>Status<select id="followupStatus"><option>Open</option><option>Done</option></select></label>
+            <label class="workflow-wide">Team notes<textarea id="followupNote" maxlength="1000" rows="3" placeholder="Next step or context for the team"></textarea></label>
+          </div>
+          <div class="workflow-actions"><button class="btn primary" type="submit" id="followupSave">Save Follow-up</button><button class="btn" type="button" id="followupCancel">Cancel</button></div>
+          <p id="followupResult" class="workflow-result" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </details>
 
     <div class="card table-card">
       <div id="loading">Loading…</div>
@@ -530,7 +554,7 @@ See you there!</textarea>
   }
 
   function toCSV(rows){
-    const cols = ['Timestamp','Source','Name','Phone','Email','Details','Status'];
+    const cols = ['Timestamp','Source','Name','Phone','Email','Details','Status','FollowUpOwner','FollowUpDate','FollowUpNote','FollowUpStatus'];
     const lines = [cols.join(',')];
     rows.forEach(r=> lines.push(cols.map(c=>csvCell(c, r[c])).join(',')));
     return lines.join('\n');
@@ -1505,7 +1529,7 @@ See you there!</textarea>
         <td class="mail" data-label="Email">${esc(r.Email)}</td>
         <td class="details-cell" data-label="Details">${esc(r.Details)}</td>
         <td data-label="Status"><select class="status-select st-${status.toLowerCase()}" data-id="${esc(r.ID)}" data-prev="${status}" aria-label="Status">${statusOptions(status)}</select></td>
-        <td class="c-actions"><button class="del-btn" data-id="${esc(r.ID)}" title="Delete" aria-label="Delete">${TRASH}</button></td>
+        <td class="c-actions"><button type="button" class="btn followup-open" data-id="${esc(r.ID)}"${r.ID ? '' : ' disabled'}>Follow-up</button><button class="del-btn" data-id="${esc(r.ID)}" title="Delete" aria-label="Delete">${TRASH}</button></td>
       </tr>`;
     }).join('');
 
@@ -1523,6 +1547,7 @@ See you there!</textarea>
     $('countLine').textContent = activeCount ? `Showing ${rows.length} of ${activeCount}` : '';
     renderStats();
     updateSelectionUI();
+    document.dispatchEvent(new Event('ajm:admin-render'));
   }
 
   async function loadData(key){
@@ -1537,6 +1562,7 @@ See you there!</textarea>
         throw new Error(json.error === 'unauthorized' ? 'wrongkey' : json.error);
       }
       allRows = json.data || [];
+      document.dispatchEvent(new CustomEvent('ajm:admin-features', {detail: {followUps: !!(json.features && json.features.followUps)}}));
       animateCounts = true;
       archiveSupported = !allRows.length || ('Archive' in allRows[0]); // an older script has no Archive column
       $('loading').hidden = true;
@@ -1591,6 +1617,7 @@ See you there!</textarea>
   $('logoutBtn').addEventListener('click', ()=>{
     adminKey = null;
     allRows = [];
+    document.dispatchEvent(new Event('ajm:admin-logout'));
     meetings = [];
     historyState = 'unknown';
     clearSelection();
@@ -1682,5 +1709,6 @@ See you there!</textarea>
   // version of this page that did save it to sessionStorage
   try{ sessionStorage.removeItem('ajm-admin-key'); }catch(e){}
 </script>
+<script src="js/admin-followups.js"></script>
 </body>
 </html>
