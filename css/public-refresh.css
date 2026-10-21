@@ -1,0 +1,55 @@
+/* AJM public pages: a quieter editorial treatment of the existing navy and gold. */
+:root {
+  --cream:#f7f8fb;
+  --cream-2:#edf1f6;
+  --surface:#f7f8fb;
+  --surface-2:#edf1f6;
+  --on-surface:#202944;
+  --on-surface-muted:#4f5a70;
+  --ink:#202944;
+  --muted:#4f5a70;
+  --clay:#9d4f3e;
+  --hairline:rgba(32,41,68,.12);
+  --hairline-2:rgba(32,41,68,.24);
+  --nav-glass:rgba(247,248,251,.94);
+  --nav-glass-brd:rgba(32,41,68,.12);
+}
+
+:root[data-theme="dark"] {
+  --on-surface-muted:#b6bdd2;
+}
+
+body,button,input,select,textarea {font-family:'Source Sans 3','Noto Sans Devanagari',sans-serif}
+h1,h2,h3,.display,blockquote {font-family:'Cormorant Garamond',serif}
+
+/* Let the words and photography lead; use a single restrained rule for light. */
+.hero,.ehero,.ihero,.ghero {
+  background:linear-gradient(155deg,#080d24 0%,#101b3d 68%,#263353 100%);
+}
+.hero::after,.ehero::after,.ihero::after,.ghero::after {
+  content:"";position:absolute;inset:auto 0 0;height:3px;
+  background:linear-gradient(90deg,transparent 4%,var(--gold) 48%,transparent 96%);
+  opacity:.75;pointer-events:none;
+}
+.hero h1 {font-size:clamp(3.2rem,8.5vw,7rem);line-height:.94;letter-spacing:-.025em}
+.ehero h1,.ihero h1 {font-size:clamp(3rem,6.5vw,5rem);line-height:.96;letter-spacing:-.02em}
+.ghero h1 {font-size:clamp(2.8rem,5.5vw,4.3rem);line-height:.98}
+.hero .lead,.ehero .lead,.ihero .lead {line-height:1.58}
+.hero .hindi,.ehero .hindi,.ihero .hindi,.ghero .hindi {color:var(--gold-soft)}
+.btn-gold,.btn-gold:hover {box-shadow:0 10px 24px rgba(0,0,0,.22)}
+
+.values-strip {
+  display:flex;justify-content:center;align-items:center;flex-wrap:wrap;
+  gap:10px 22px;padding:22px 28px;background:var(--surface-2);
+  border-block:1px solid var(--hairline);
+}
+.values-strip .word {font:italic 500 1.28rem/1.2 'Cormorant Garamond',serif;color:var(--clay)}
+.values-strip .word.dev {font:600 .92rem/1.4 'Noto Sans Devanagari',sans-serif;color:var(--on-surface)}
+.values-strip .dot {color:var(--gold-deep);font-size:.8rem}
+
+@media(max-width:700px) {
+  .hero h1 {font-size:clamp(3rem,11vw,4.8rem);line-height:.97}
+  .ehero h1,.ihero h1 {font-size:clamp(2.75rem,10vw,4rem)}
+  .values-strip {gap:8px 12px;padding:18px 20px}
+  .values-strip .word {font-size:1.13rem}
+}
