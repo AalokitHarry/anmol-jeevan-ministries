@@ -295,17 +295,7 @@
     border-radius:50%;pointer-events:none;z-index:1;will-change:transform;mix-blend-mode:screen;
     background:radial-gradient(circle,rgba(246,201,104,.22),transparent 70%);
   }
-  .hero-inner{position:relative;z-index:2;width:100%;text-align:center;padding:120px 28px 90px;will-change:transform,opacity}
-  .hero-logo{height:56px;width:auto;margin:0 auto 30px;display:block;
-    opacity:0;animation:rise 1.1s .02s var(--ease-out) forwards;will-change:transform,opacity;
-    filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))}
-  .hero .kicker{
-    display:inline-flex;align-items:center;gap:10px;
-    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;
-    color:var(--gold-soft);margin-bottom:26px;
-    opacity:0;animation:rise 1.1s .15s var(--ease-out) forwards;will-change:transform,opacity;
-  }
-  .hero .kicker::before,.hero .kicker::after{content:"";width:26px;height:1px;background:var(--gold-soft);opacity:.6}
+  .hero-inner{position:relative;z-index:2;width:100%;text-align:center;padding:90px 28px 66px;will-change:transform,opacity}
   .hero h1{
     font-size:clamp(2.9rem,8vw,6.2rem);line-height:1.02;font-weight:500;
     letter-spacing:-.01em;margin-bottom:8px;
@@ -370,7 +360,7 @@
   .fc-kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);animation:fcPulse 2s infinite}
   @keyframes fcPulse{0%{box-shadow:0 0 0 0 rgba(246,201,104,.7)}70%{box-shadow:0 0 0 12px rgba(246,201,104,0)}100%{box-shadow:0 0 0 0 rgba(246,201,104,0)}}
   .fc-copy h2{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(3.2rem,7.4vw,6.8rem);line-height:.98;margin-bottom:6px;letter-spacing:-.01em}
-  .fc-copy h2 em{display:block;font-style:normal;font-size:.5em;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-soft);margin-top:6px}
+  .fc-copy h2 em{display:block;font-style:normal;font-size:clamp(1.6rem,3.7vw,3.4rem);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-soft);margin-top:6px}
   .fc-where{font-size:clamp(1.1rem,1.8vw,1.5rem);letter-spacing:.34em;text-transform:uppercase;font-weight:600;margin:18px 0 20px}
   .fc-where span{color:var(--gold-soft)}
   .fc-soon{display:inline-block;padding:10px 26px;border-radius:12px;background:linear-gradient(135deg,#f6c968,#e8a33d);color:#07122e;font-family:'Fraunces',serif;font-style:italic;font-weight:700;
@@ -397,7 +387,7 @@
   /* about */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
   .about h2{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:500;line-height:1.1;margin:14px 0 22px}
-  .about h2 .dev{display:block;color:var(--clay);font-size:.62em;margin-top:8px}
+  .about h2 .dev{display:block;color:var(--clay);font-size:clamp(1.24rem,2.79vw,1.922rem);margin-top:8px}
   .about p{color:var(--on-surface-muted);margin-bottom:16px;font-size:1.05rem}
   .about-visual{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
     background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 60%,var(--clay) 130%);
@@ -477,7 +467,7 @@
 
   /* permanent featured video (does not change when new videos are uploaded) */
   .blessing{background:var(--surface-2)}
-  .blessing h2 .dev{display:block;color:var(--clay);font-size:.62em;margin-top:8px}
+  .blessing h2 .dev{display:block;color:var(--clay);font-size:clamp(1.24rem,2.79vw,1.86rem);margin-top:8px}
   .blessing .watch-featured{max-width:960px;margin:0 auto 22px}
   .blessing-cap{max-width:760px;margin:0 auto;text-align:center;color:var(--on-surface-muted);font-size:1rem;line-height:1.6}
   .blessing-cap strong{color:var(--on-surface);font-weight:600}
@@ -614,7 +604,17 @@
     .theme-fab svg{width:18px;height:18px}
   }
   .paused-note{font-style:normal;color:#c0504d;font-weight:600}
+  /* Readable text in both themes; decorative brand colors stay unchanged. */
+  .eyebrow,.leader .role,.about h2 .dev,.blessing h2 .dev,.blessing-cap a,.faq-item p a,.marquee-track span.word{color:#984b3c}
+  .verse blockquote{color:#93601f}
+  :root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .leader .role,:root[data-theme="dark"] .about h2 .dev,:root[data-theme="dark"] .blessing h2 .dev,:root[data-theme="dark"] .blessing-cap a,:root[data-theme="dark"] .faq-item p a,:root[data-theme="dark"] .marquee-track span.word{color:#efb29e}
+  :root[data-theme="dark"] .verse blockquote{color:var(--gold-soft)}
+  nav .navlinks .btn,nav.scrolled .navlinks .btn{color:var(--night)!important}
+  footer p:last-child{opacity:1!important;color:rgba(250,246,238,.75)}
+  .soc.yt:hover{background:#c90028;border-color:#c90028}
+  .soc.fb:hover{background:#145cba;border-color:#145cba}
 </style>
+<link rel="stylesheet" href="css/visitor-care.css">
 </head>
 <body>
 
@@ -625,19 +625,36 @@
     <img class="brand-logo logo-dark" src="img/logo.png" alt="Anmol Jeevan Ministries">
     <img class="brand-logo logo-light" src="img/logo-light.png" alt="Anmol Jeevan Ministries">
   </a>
-  <button class="menutoggle" id="menutoggle" aria-label="Menu">
+  <button class="menutoggle" id="menutoggle" aria-label="Menu" aria-controls="navlinks" aria-expanded="false">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="#latest">Latest</a>
-    <a href="#about">About</a>
-    <a href="#service">Gatherings</a>
-    <a href="events.html">Events</a>
-    <a href="#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="#leaders">Leaders</a>
-    <a href="invite.html">Invite</a>
-    <a href="#connect" class="btn">Connect</a>
+    <a class="nav-full-link" href="#latest">Latest</a>
+    <a class="nav-full-link" href="#about">About</a>
+    <a class="nav-full-link" href="#service">Gatherings</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="#leaders">Leaders</a>
+    <a class="nav-full-link" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="events.html#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="events.html#prayer">Prayer</a>
+      <a href="#watch">Watch</a>
+      <a href="#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="#latest">Latest</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
@@ -647,18 +664,32 @@
   <div class="sun"></div>
   <div class="spot" id="spot"></div>
   <div class="hero-inner">
-    <img class="hero-logo" src="img/logo.png" alt="Anmol Jeevan Ministries">
-    <span class="kicker">Indore · India</span>
     <h1><span class="ln"><span>Proclaiming the <em>love</em></span></span><span class="ln"><span>of Jesus to all nations</span></span></h1>
     <div class="hindi dev">यीशु का प्रेम — सब देशों तक</div>
     <p class="lead">Anmol Jeevan Ministries is a Hindi-language family in Christ — sharing the gospel, worship, and the Word so that every precious life may know Him.</p>
+    <p class="hero-service-meta">Sunday Fellowship · 3:00 PM IST · Indore</p>
     <div class="hero-cta">
-      <a href="#service" class="btn-lg btn-gold magnetic">Join Us This Sunday</a>
+      <a href="events.html#visit" class="btn-lg btn-gold magnetic">Join Us This Sunday</a>
       <a href="#watch" class="btn-lg btn-ghost magnetic">Watch Latest Message</a>
     </div>
+    <p class="hero-prayer"><a class="care-link" href="events.html#prayer">Request Prayer <span lang="hi">· प्रार्थना निवेदन</span></a></p>
   </div>
   <div class="scroll-hint">Scroll</div>
 </header>
+
+<section class="next-gathering reveal">
+  <div class="aurora"></div>
+  <div class="wrap next-gathering-inner">
+    <span class="kicker"><span class="dot"></span>Next Gathering</span>
+    <h2 id="ngName">Sunday Fellowship</h2>
+    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
+    <div class="ng-meta">
+      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
+      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
+    </div>
+    <a href="events.html#visit" class="btn-lg btn-gold magnetic">Plan Your Visit</a>
+  </div>
+</section>
 
 <section class="fc-banner reveal in" id="faith-conference" aria-label="Faith Conference, Indore — coming soon">
   <div class="wrap fc-inner">
@@ -681,20 +712,6 @@
   <div class="wrap">
     <blockquote>"For God so loved the world, that He gave His only Son…"</blockquote>
     <cite>John 3:16 · यूहन्ना ३:१६</cite>
-  </div>
-</section>
-
-<section class="next-gathering reveal">
-  <div class="aurora"></div>
-  <div class="wrap next-gathering-inner">
-    <span class="kicker"><span class="dot"></span>Next Gathering</span>
-    <h2 id="ngName">Sunday Fellowship</h2>
-    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
-    <div class="ng-meta">
-      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
-      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
-    </div>
-    <a href="events.html#book" class="btn-lg btn-gold magnetic">Get Directions &amp; Times</a>
   </div>
 </section>
 
@@ -845,10 +862,13 @@
         </div>
       </div>
       <div class="right">
-        <span class="loc-label">Where we meet</span>
-        <div class="loc">Indore</div>
+        <h3>Visit us in Indore</h3>
         <div class="addr">Madhya Pradesh, India</div>
-        <a href="events.html#book" class="btn-lg btn-gold magnetic" style="margin-top:20px;align-self:flex-start">Get directions & times</a>
+        <p class="visit-note">Joining us for the first time? Ask our team for the exact venue and landmark before you travel.</p>
+        <div class="care-actions">
+          <a href="events.html#visit" class="btn-lg btn-gold magnetic">Plan Your Visit</a>
+          <a href="tel:+917999929550" class="care-link">Call +91 79999 29550</a>
+        </div>
       </div>
     </div>
   </div>
@@ -959,6 +979,10 @@
     <span class="eyebrow" style="color:var(--gold-soft)">Stay connected</span>
     <h2>Join the <em>AJM Family</em></h2>
     <p class="sub">Follow along, be encouraged daily, and reach out for prayer. We would love to walk with you.</p>
+    <div class="care-actions">
+      <a href="events.html#prayer" class="btn-lg btn-gold">Request Prayer</a>
+      <a href="events.html#visit" class="soc">Plan Your Visit</a>
+    </div>
     <div class="socials">
       <a class="soc yt" href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.5 15.5v-7l6.5 3.5z"/></svg>
@@ -988,8 +1012,8 @@
 </footer>
 
 <div class="float-stack">
-  <a class="float-cta" id="floatCta" href="invite.html" aria-label="Invite Apostle Vishal Samuel">
-    <span class="pulse-dot"></span> Invite
+  <a class="float-cta" id="floatCta" href="events.html#prayer" aria-label="Request Prayer">
+    <span class="pulse-dot"></span> Request Prayer
   </a>
   <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
     <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -1115,8 +1139,16 @@
 
   // mobile menu
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
-  tog.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  function setMenuOpen(open){
+    links.classList.toggle('open',open);
+    tog.setAttribute('aria-expanded',String(open));
+    if(!open){const more=links.querySelector('details');if(more)more.open=false;}
+  }
+  tog.addEventListener('click',()=>setMenuOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenuOpen(false)));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&links.classList.contains('open')){setMenuOpen(false);tog.focus();}
+  });
 
   // theme toggle
   const themeBtn=document.getElementById('themeToggle');
@@ -1138,7 +1170,7 @@
       const el=e.target;el.classList.add('in');io.unobserve(el);
       el.addEventListener('transitionend',()=>el.classList.add('done'),{once:true});
     }
-  }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  }),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   // stat count-up

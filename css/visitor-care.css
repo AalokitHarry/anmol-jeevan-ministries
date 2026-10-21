@@ -1,0 +1,96 @@
+/* Visitor care uses the site's existing colors and typefaces. */
+:root{--care-accent:#984b3c;--care-gold-text:#93601f}
+:root[data-theme="dark"]{--care-accent:#efb29e;--care-gold-text:var(--gold-soft)}
+#visit,#prayer,#book{scroll-margin-top:110px}
+.care-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
+.care-actions .btn-lg{min-height:48px;text-align:center}
+.care-link{text-decoration:underline;text-underline-offset:4px;font-weight:600}
+.care-link:hover{text-decoration-thickness:2px}
+.care-actions a:focus-visible,.care-link:focus-visible,.prayer-form :focus-visible,.prayer-preview :focus-visible,.visit-contact a:focus-visible{outline:3px solid var(--on-surface);outline-offset:5px}
+.hero-prayer .care-link:focus-visible,.connect .care-actions a:focus-visible{outline-color:var(--cream)}
+.hero-prayer{margin-top:22px;color:var(--cream);font-size:.96rem}
+.hero-prayer a{display:inline-block;padding:8px 2px}
+.hero-service-meta{margin:-12px auto 24px;color:var(--cream);font-size:.98rem;font-weight:600;letter-spacing:.01em}
+.nav-mobile-primary,.nav-mobile-more{display:none}
+.booking-privacy{max-width:58ch;margin:0 auto;color:rgba(250,246,238,.75);font-size:.88rem;line-height:1.6;text-align:center}
+.ehero .btn-ghost{border:1px solid rgba(250,246,238,.35);color:var(--cream)}
+.ehero .btn-ghost:hover{background:rgba(250,246,238,.1)}
+.service .right h3{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:500;line-height:1.2}
+.service .right .visit-note{color:var(--cream);max-width:38ch;margin-top:10px}
+.service .right .care-actions{align-items:flex-start;flex-direction:column}
+.visit-section{background:var(--surface-2)}
+.visit-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start}
+.visit-section h2,.prayer-section h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:500;line-height:1.15;margin-bottom:16px}
+.care-hindi{display:block;font-family:'Noto Sans Devanagari',sans-serif;font-size:1.1rem;line-height:1.7;margin-top:12px;color:var(--care-accent)}
+.visit-section p{color:var(--on-surface-muted);max-width:60ch}
+.visit-schedule{margin-top:28px;display:grid;gap:18px}
+.visit-schedule div{padding-bottom:18px;border-bottom:1px solid var(--hairline-2)}
+.visit-schedule dt{font-weight:600;margin-bottom:4px}
+.visit-schedule dd{margin:0;color:var(--on-surface-muted)}
+.visit-contact{padding-top:4px}
+.visit-contact h3{font-size:1.6rem;font-weight:500;margin-bottom:12px}
+.visit-contact address{font-style:normal;line-height:1.7;margin-bottom:14px}
+.visit-phone{display:inline-flex;align-items:center;min-height:48px;margin-top:16px;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.prayer-section{background:var(--surface)}
+.prayer-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+.prayer-intro p{color:var(--on-surface-muted);max-width:48ch;margin-top:18px}
+.prayer-form{display:flex;flex-direction:column;gap:24px}
+.prayer-form label:not(.prayer-callback){display:flex;flex-direction:column;gap:9px;font-weight:600}
+.prayer-form .optional{font-size:.86rem;font-weight:400;color:var(--on-surface-muted)}
+.prayer-form input:not([type=checkbox]),.prayer-form textarea{width:100%;min-width:0;padding:14px 16px;border:1px solid var(--hairline-2);border-radius:12px;background:var(--surface-2);color:var(--on-surface);font:inherit;caret-color:var(--on-surface)}
+.prayer-form textarea{min-height:160px;resize:vertical}
+.prayer-form input::placeholder,.prayer-form textarea::placeholder{color:var(--on-surface-muted);opacity:1}
+.prayer-callback{display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:8px 0}
+.prayer-callback input{width:20px;height:20px;flex:none;margin-top:3px;accent-color:var(--gold-deep)}
+.prayer-form .prayer-help{font-size:.9rem;font-weight:400;color:var(--on-surface-muted);line-height:1.6}
+.prayer-form .prayer-error{font-size:.9rem;color:#a82727;font-weight:600}
+:root[data-theme="dark"] .prayer-form .prayer-error{color:#ffb0b0}
+.prayer-form button{align-self:flex-start}
+.prayer-preview{padding:28px;background:var(--surface-2);border-radius:16px}
+.prayer-preview h3{font-size:1.7rem;font-weight:500;line-height:1.2;margin-bottom:14px}
+.prayer-preview p{color:var(--on-surface-muted)}
+.prayer-message{white-space:pre-wrap;overflow-wrap:anywhere;margin:22px 0;padding:20px 0;border-block:1px solid var(--hairline-2);font:inherit;line-height:1.7}
+.prayer-section [hidden]{display:none!important}
+.prayer-noscript{padding:20px 0;line-height:1.8}
+.connect .care-actions{justify-content:center;margin:0 0 32px}
+@media(max-width:860px){
+  .navlinks{visibility:hidden;gap:0;padding:76px 20px 20px;max-height:100dvh;overflow-y:auto;transition:transform .35s,visibility .35s}
+  .navlinks.open{visibility:visible}
+  .navlinks>.nav-full-link{display:none}
+  .nav-mobile-primary{display:flex;flex-direction:column;gap:4px;width:100%}
+  .nav-mobile-primary a{display:flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:12px}
+  .nav-mobile-primary a:hover,.nav-mobile-primary a:focus-visible,.nav-mobile-more a:hover,.nav-mobile-more a:focus-visible{background:rgba(250,246,238,.1)}
+  .nav-mobile-more{display:block;width:100%;border-top:1px solid rgba(250,246,238,.18);margin-top:10px;padding-top:10px;color:var(--cream)}
+  .nav-mobile-more summary{min-height:44px;padding:10px 16px;cursor:pointer;font-weight:600}
+  .nav-mobile-more div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .nav-mobile-more a{display:flex;align-items:center;min-height:44px;padding:8px 12px;font-size:.96rem!important}
+  .visit-layout,.prayer-layout{grid-template-columns:1fr;gap:36px}
+  .visit-contact{padding-top:24px;border-top:1px solid var(--hairline-2)}
+  .prayer-preview{padding:24px}
+}
+@media(max-width:600px){
+  .hero{min-height:100svh}
+  .hero-inner{padding:104px 24px 68px}
+  .hero h1{font-size:clamp(2.55rem,10vw,3.7rem)}
+  .hero .hindi{margin-bottom:14px}
+  .hero p.lead{margin-bottom:20px;font-size:1rem;line-height:1.55}
+  .hero-service-meta{margin:0 auto 20px;font-size:.94rem}
+  .hero-cta{flex-direction:column;align-items:stretch;max-width:330px;margin:0 auto}
+  .hero-cta .btn-lg{justify-content:center;min-height:48px}
+  .hero-prayer{margin-top:12px}
+  .scroll-hint{display:none}
+  .ehero{min-height:auto;padding:104px 0 62px}
+  .ehero-inner{padding:0 22px}
+  .ehero .kicker{display:none}
+  .ehero .lead{font-size:1rem;line-height:1.55}
+  .ehero .care-actions{gap:10px}
+  .ehero .care-actions .btn-lg{justify-content:center}
+  section{padding:68px 0}
+  .next-gathering{padding:62px 0}
+  .float-cta{display:none!important}
+}
+@media(max-width:480px){
+  .care-actions{align-items:stretch;flex-direction:column}
+  .care-actions .btn-lg{width:100%}
+  .prayer-form button{width:100%}
+}

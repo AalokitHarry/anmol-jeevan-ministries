@@ -351,7 +351,16 @@
     .theme-fab svg{width:18px;height:18px}
     .theme-fab svg{width:18px;height:18px}
   }
+  /* Keep small labels and the mobile navigation button legible. */
+  .eyebrow,.date-badge.muted .dow{color:#984b3c}
+  .date-badge .dow,.badge-soon{font-size:.75rem}
+  .badge-soon:not(.badge-coming):not(.badge-paused){color:#93601f}
+  :root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .date-badge.muted .dow{color:#efb29e}
+  :root[data-theme="dark"] .badge-soon:not(.badge-coming):not(.badge-paused){color:var(--gold-soft)}
+  nav .navlinks .btn,nav.scrolled .navlinks .btn{color:var(--night)!important}
+  footer p:last-child{opacity:1!important;color:rgba(250,246,238,.75)}
 </style>
+<link rel="stylesheet" href="css/visitor-care.css">
 </head>
 <body>
 
@@ -362,18 +371,35 @@
     <img class="brand-logo logo-dark" src="img/logo.png" alt="Anmol Jeevan Ministries">
     <img class="brand-logo logo-light" src="img/logo-light.png" alt="Anmol Jeevan Ministries">
   </a>
-  <button class="menutoggle" id="menutoggle" aria-label="Menu">
+  <button class="menutoggle" id="menutoggle" aria-label="Menu" aria-controls="navlinks" aria-expanded="false">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="index.html#latest">Latest</a>
-    <a href="index.html#about">About</a>
-    <a href="events.html">Events</a>
-    <a href="index.html#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="index.html#leaders">Leaders</a>
-    <a href="invite.html">Invite</a>
-    <a href="index.html#connect" class="btn">Connect</a>
+    <a class="nav-full-link" href="index.html#latest">Latest</a>
+    <a class="nav-full-link" href="index.html#about">About</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="index.html#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="index.html#leaders">Leaders</a>
+    <a class="nav-full-link" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="index.html#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="#prayer">Prayer</a>
+      <a href="index.html#watch">Watch</a>
+      <a href="index.html#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="index.html#latest">Latest</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="index.html#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
@@ -384,7 +410,12 @@
     <span class="kicker">Join Us</span>
     <h1>Events &amp; <em>Gatherings</em></h1>
     <div class="hindi dev">आइए, साथ मिलकर आराधना करें</div>
-    <p class="lead">Whether it's our weekly Sunday gathering or a special occasion, Apostle Vishal Samuel, Pastor Juhi Vishal, and the AJM Family would love to welcome you. Reserve your spot below.</p>
+    <p class="lead">Join us for worship, the Word and prayer in Indore. We would love to welcome you this Sunday at 3:00 PM IST.</p>
+    <div class="care-actions" style="justify-content:center">
+      <a href="#book" class="btn-lg btn-gold">Book Your Sunday Visit</a>
+      <a href="#visit" class="btn-lg btn-ghost">Plan Your Visit</a>
+      <a href="#prayer" class="wa-link">Request Prayer</a>
+    </div>
   </div>
 </header>
 
@@ -393,6 +424,18 @@
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
+      <div class="event-card">
+        <div class="date-badge">
+          <span class="dow">Every</span>
+          <span class="time">Sunday</span>
+        </div>
+        <div class="info">
+          <h3>Sunday Worship Service</h3>
+          <p>Praise, the Word &amp; prayer together — come as you are, 3:00 PM.</p>
+          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
+        </div>
+        <a href="#book" data-gathering="Sunday Worship Service" class="btn-lg btn-gold magnetic">Reserve a spot</a>
+      </div>
       <div class="event-card is-coming" id="faith-conference">
         <img class="event-photo" src="img/faith-conference.jpg" alt="Faith Conference, Indore — Anmol Jeevan Ministries presents. Coming soon." width="1024" height="1536">
         <div class="info">
@@ -414,18 +457,6 @@
       <div class="event-card">
         <div class="date-badge">
           <span class="dow">Every</span>
-          <span class="time">Sunday</span>
-        </div>
-        <div class="info">
-          <h3>Sunday Worship Service</h3>
-          <p>Praise, the Word &amp; prayer together — come as you are, 3:00 PM.</p>
-          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
-        </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Reserve a spot</a>
-      </div>
-      <div class="event-card">
-        <div class="date-badge">
-          <span class="dow">Every</span>
           <span class="time">Wednesday</span>
         </div>
         <div class="info">
@@ -434,7 +465,7 @@
           <p class="paused-note" data-until="2026-10-14">No gathering on 30 Sep, 7 Oct or 14 Oct — resumes soon.</p>
           <div class="meta">📍 Indore, Madhya Pradesh, India</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Reserve a spot</a>
+        <a href="#book" data-gathering="90 Minutes with Jesus (Wednesdays, 7 PM)" class="btn-lg btn-gold magnetic">Reserve a spot</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -446,7 +477,7 @@
           <p>Worship &amp; the Word for our youth — 8:30 PM.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Youth Fellowship (Thursdays, 8:30 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -458,7 +489,7 @@
           <p>Start the day in prayer &amp; the Word.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Morning Devotion (Mon–Sat, 7:30 AM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -470,8 +501,63 @@
           <p>Join us in prayer together.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Night Prayer (Mon–Sat, 10 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="visit-section" id="visit" aria-labelledby="visitTitle">
+  <div class="wrap visit-layout">
+    <div>
+      <h2 id="visitTitle">Visit Us<span class="care-hindi" lang="hi">हमारे साथ संगति में जुड़ें</span></h2>
+      <p>Join the AJM Family for worship, the Word and prayer in Indore. Our team can help you plan your first visit.</p>
+      <dl class="visit-schedule">
+        <div><dt>Sunday Worship Service</dt><dd>Every Sunday · 3:00 PM IST</dd></div>
+        <div><dt>90 Minutes with Jesus</dt><dd>Every Wednesday · 7:00 PM IST</dd></div>
+      </dl>
+      <div class="care-actions"><a href="#book" class="btn-lg btn-gold">Book a Visit</a></div>
+    </div>
+    <div class="visit-contact">
+      <h3>Find your way to us</h3>
+      <address>Indore, Madhya Pradesh, India</address>
+      <p>For the exact venue and a nearby landmark, please contact our team before travelling.</p>
+      <div class="care-actions">
+        <a href="https://wa.me/917999929550?text=Hello%20AJM%20Family%2C%20I%20would%20like%20to%20visit.%20Please%20share%20the%20exact%20venue%2C%20landmark%20and%20Google%20Maps%20directions." target="_blank" rel="noopener noreferrer" class="btn-lg btn-ghost-dark">Ask for Directions on WhatsApp</a>
+      </div>
+      <a class="visit-phone" href="tel:+917999929550">Call +91 79999 29550</a>
+    </div>
+  </div>
+</section>
+
+<section class="prayer-section" id="prayer" aria-labelledby="prayerTitle">
+  <div class="wrap prayer-layout">
+    <div class="prayer-intro">
+      <h2 id="prayerTitle">Request Prayer<span class="care-hindi" lang="hi">प्रार्थना निवेदन</span></h2>
+      <p>What would you like us to pray for? Share your request with the AJM Family team, in Hindi or English.</p>
+      <p id="prayerPrivacy">Your message is prepared here in your browser. Nothing from this form is sent until you open WhatsApp and send it yourself. Only include details you are comfortable sharing with the AJM team.</p>
+    </div>
+    <div>
+      <form id="prayerForm" class="prayer-form" aria-describedby="prayerPrivacy">
+        <label for="prayerName"><span>Your name <span class="optional">(optional)</span></span><input id="prayerName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name"></label>
+        <label for="prayerMessage">Your prayer request<textarea id="prayerMessage" name="message" required maxlength="2000" placeholder="Write your request in Hindi or English…"></textarea></label>
+        <label class="prayer-callback" for="prayerCallback"><input id="prayerCallback" name="callback" type="checkbox"><span>I would like the AJM team to contact me.</span></label>
+        <div id="prayerPhoneGroup" hidden>
+          <label for="prayerPhone">Contact number<input id="prayerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="Include your country code, e.g. +91" aria-describedby="prayerPhoneHelp prayerError"><span id="prayerPhoneHelp" class="prayer-help">Only needed if you would like the team to contact you.</span></label>
+          <p id="prayerError" class="prayer-error" role="alert" hidden>Enter a phone number with 7 to 15 digits, including your country code.</p>
+        </div>
+        <button type="submit" class="btn-lg btn-gold">Review Prayer Message</button>
+      </form>
+      <div id="prayerPreview" class="prayer-preview" hidden>
+        <h3 id="prayerPreviewTitle" tabindex="-1">Your message is ready to review</h3>
+        <p>Check the details below. Open WhatsApp when you are ready, then press Send there to share your request.</p>
+        <div id="prayerDraft" class="prayer-message"></div>
+        <div class="care-actions">
+          <a id="prayerWhatsApp" class="btn-lg btn-gold" target="_blank" rel="noopener noreferrer">Open WhatsApp to Send</a>
+          <button id="prayerEdit" class="btn-lg btn-ghost-dark" type="button">Edit Message</button>
+        </div>
+      </div>
+      <noscript><style>#prayerForm{display:none}</style><p class="prayer-noscript">You can send your prayer request directly to our team. <a class="care-link" href="https://wa.me/917999929550" target="_blank" rel="noopener noreferrer">Open WhatsApp</a> or <a class="care-link" href="tel:+917999929550">call +91 79999 29550</a>.</p></noscript>
     </div>
   </div>
 </section>
@@ -499,18 +585,19 @@
           <option>Youth Fellowship (Thursdays, 8:30 PM)</option>
           <option>Morning Devotion (Mon–Sat, 7:30 AM)</option>
           <option>Night Prayer (Mon–Sat, 10 PM)</option>
-          <option>General Inquiry / Prayer Request</option>
+          <option>General Inquiry</option>
         </select>
       </label>
       <label class="full"><span>Message <span class="opt">(optional)</span></span>
         <textarea name="message" placeholder="Anything you'd like us to know…"></textarea>
       </label>
       <button type="submit" class="btn-lg btn-gold magnetic">Send via WhatsApp</button>
+      <p class="booking-privacy">Submitting also records your booking details in AJM's private registration list so our team can follow up. Please send the WhatsApp message that opens to complete your request.</p>
     </form>
     <div class="book-success" id="bookSuccess">
       <div class="check">✓</div>
-      <h3>You're all set, <span id="bookSuccessName"></span>!</h3>
-      <p>We've received your details. WhatsApp should have opened with a message ready to send us — once you send it, we'll confirm your spot personally.</p>
+      <h3>One more step, <span id="bookSuccessName"></span>!</h3>
+      <p>WhatsApp should have opened with your message ready to send. Please send it so our team can confirm your spot personally.</p>
       <button type="button" class="book-again-btn" id="bookAgainBtn">Book another visit</button>
     </div>
     <div class="book-alt" id="bookAlt">
@@ -535,8 +622,8 @@
 </footer>
 
 <div class="float-stack">
-  <a class="float-cta" id="floatCta" href="invite.html" aria-label="Invite Apostle Vishal Samuel">
-    <span class="pulse-dot"></span> Invite
+  <a class="float-cta" id="floatCta" href="#prayer" aria-label="Request Prayer">
+    <span class="pulse-dot"></span> Request Prayer
   </a>
   <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
     <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -603,8 +690,16 @@
   }
 
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
-  tog.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  function setMenuOpen(open){
+    links.classList.toggle('open',open);
+    tog.setAttribute('aria-expanded',String(open));
+    if(!open){const more=links.querySelector('details');if(more)more.open=false;}
+  }
+  tog.addEventListener('click',()=>setMenuOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenuOpen(false)));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&links.classList.contains('open')){setMenuOpen(false);tog.focus();}
+  });
 
   // theme toggle
   const themeBtn=document.getElementById('themeToggle');
@@ -625,7 +720,7 @@
       const el=e.target;el.classList.add('in');io.unobserve(el);
       el.addEventListener('transitionend',()=>el.classList.add('done'),{once:true});
     }
-  }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  }),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
 
   const frag=document.createDocumentFragment();
@@ -636,6 +731,11 @@
     v=(v||'').trim();
     return v&&!v.startsWith('+')?'+91 '+v:v;
   }
+
+  const gatheringSelect=document.querySelector('#bookForm select[name="which"]');
+  document.querySelectorAll('a[data-gathering]').forEach(link=>link.addEventListener('click',()=>{
+    gatheringSelect.value=link.dataset.gathering;
+  }));
 
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();
@@ -673,5 +773,6 @@
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="js/reglog.js"></script>
+<script src="js/prayer.js"></script>
 </body>
 </html>
