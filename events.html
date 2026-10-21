@@ -371,18 +371,35 @@
     <img class="brand-logo logo-dark" src="img/logo.png" alt="Anmol Jeevan Ministries">
     <img class="brand-logo logo-light" src="img/logo-light.png" alt="Anmol Jeevan Ministries">
   </a>
-  <button class="menutoggle" id="menutoggle" aria-label="Menu">
+  <button class="menutoggle" id="menutoggle" aria-label="Menu" aria-controls="navlinks" aria-expanded="false">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="index.html#latest">Latest</a>
-    <a href="index.html#about">About</a>
-    <a href="events.html">Events</a>
-    <a href="index.html#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="index.html#leaders">Leaders</a>
-    <a href="invite.html">Invite</a>
-    <a href="index.html#connect" class="btn">Connect</a>
+    <a class="nav-full-link" href="index.html#latest">Latest</a>
+    <a class="nav-full-link" href="index.html#about">About</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="index.html#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="index.html#leaders">Leaders</a>
+    <a class="nav-full-link" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="index.html#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="#prayer">Prayer</a>
+      <a href="index.html#watch">Watch</a>
+      <a href="index.html#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="index.html#latest">Latest</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="index.html#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
@@ -393,9 +410,10 @@
     <span class="kicker">Join Us</span>
     <h1>Events &amp; <em>Gatherings</em></h1>
     <div class="hindi dev">आइए, साथ मिलकर आराधना करें</div>
-    <p class="lead">Whether it's our weekly Sunday gathering or a special occasion, Apostle Vishal Samuel, Pastor Juhi Vishal, and the AJM Family would love to welcome you. Reserve your spot below.</p>
+    <p class="lead">Join us for worship, the Word and prayer in Indore. We would love to welcome you this Sunday at 3:00 PM IST.</p>
     <div class="care-actions" style="justify-content:center">
-      <a href="#visit" class="btn-lg btn-gold">Plan Your Visit</a>
+      <a href="#book" class="btn-lg btn-gold">Book Your Sunday Visit</a>
+      <a href="#visit" class="btn-lg btn-ghost">Plan Your Visit</a>
       <a href="#prayer" class="wa-link">Request Prayer</a>
     </div>
   </div>
@@ -406,6 +424,18 @@
     <span class="eyebrow">Join us</span>
     <h2>Upcoming Gatherings</h2>
     <div class="event-grid stagger reveal">
+      <div class="event-card">
+        <div class="date-badge">
+          <span class="dow">Every</span>
+          <span class="time">Sunday</span>
+        </div>
+        <div class="info">
+          <h3>Sunday Worship Service</h3>
+          <p>Praise, the Word &amp; prayer together — come as you are, 3:00 PM.</p>
+          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
+        </div>
+        <a href="#book" data-gathering="Sunday Worship Service" class="btn-lg btn-gold magnetic">Reserve a spot</a>
+      </div>
       <div class="event-card is-coming" id="faith-conference">
         <img class="event-photo" src="img/faith-conference.jpg" alt="Faith Conference, Indore — Anmol Jeevan Ministries presents. Coming soon." width="1024" height="1536">
         <div class="info">
@@ -427,18 +457,6 @@
       <div class="event-card">
         <div class="date-badge">
           <span class="dow">Every</span>
-          <span class="time">Sunday</span>
-        </div>
-        <div class="info">
-          <h3>Sunday Worship Service</h3>
-          <p>Praise, the Word &amp; prayer together — come as you are, 3:00 PM.</p>
-          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
-        </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Reserve a spot</a>
-      </div>
-      <div class="event-card">
-        <div class="date-badge">
-          <span class="dow">Every</span>
           <span class="time">Wednesday</span>
         </div>
         <div class="info">
@@ -447,7 +465,7 @@
           <p class="paused-note" data-until="2026-10-14">No gathering on 30 Sep, 7 Oct or 14 Oct — resumes soon.</p>
           <div class="meta">📍 Indore, Madhya Pradesh, India</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Reserve a spot</a>
+        <a href="#book" data-gathering="90 Minutes with Jesus (Wednesdays, 7 PM)" class="btn-lg btn-gold magnetic">Reserve a spot</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -459,7 +477,7 @@
           <p>Worship &amp; the Word for our youth — 8:30 PM.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Youth Fellowship (Thursdays, 8:30 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -471,7 +489,7 @@
           <p>Start the day in prayer &amp; the Word.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Morning Devotion (Mon–Sat, 7:30 AM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -483,7 +501,7 @@
           <p>Join us in prayer together.</p>
           <div class="meta">💻 Online via Zoom</div>
         </div>
-        <a href="#book" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Night Prayer (Mon–Sat, 10 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
       </div>
     </div>
   </div>
@@ -574,11 +592,12 @@
         <textarea name="message" placeholder="Anything you'd like us to know…"></textarea>
       </label>
       <button type="submit" class="btn-lg btn-gold magnetic">Send via WhatsApp</button>
+      <p class="booking-privacy">Submitting also records your booking details in AJM's private registration list so our team can follow up. Please send the WhatsApp message that opens to complete your request.</p>
     </form>
     <div class="book-success" id="bookSuccess">
       <div class="check">✓</div>
-      <h3>You're all set, <span id="bookSuccessName"></span>!</h3>
-      <p>We've received your details. WhatsApp should have opened with a message ready to send us — once you send it, we'll confirm your spot personally.</p>
+      <h3>One more step, <span id="bookSuccessName"></span>!</h3>
+      <p>WhatsApp should have opened with your message ready to send. Please send it so our team can confirm your spot personally.</p>
       <button type="button" class="book-again-btn" id="bookAgainBtn">Book another visit</button>
     </div>
     <div class="book-alt" id="bookAlt">
@@ -671,8 +690,16 @@
   }
 
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
-  tog.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  function setMenuOpen(open){
+    links.classList.toggle('open',open);
+    tog.setAttribute('aria-expanded',String(open));
+    if(!open){const more=links.querySelector('details');if(more)more.open=false;}
+  }
+  tog.addEventListener('click',()=>setMenuOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenuOpen(false)));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&links.classList.contains('open')){setMenuOpen(false);tog.focus();}
+  });
 
   // theme toggle
   const themeBtn=document.getElementById('themeToggle');
@@ -693,7 +720,7 @@
       const el=e.target;el.classList.add('in');io.unobserve(el);
       el.addEventListener('transitionend',()=>el.classList.add('done'),{once:true});
     }
-  }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  }),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
 
   const frag=document.createDocumentFragment();
@@ -704,6 +731,11 @@
     v=(v||'').trim();
     return v&&!v.startsWith('+')?'+91 '+v:v;
   }
+
+  const gatheringSelect=document.querySelector('#bookForm select[name="which"]');
+  document.querySelectorAll('a[data-gathering]').forEach(link=>link.addEventListener('click',()=>{
+    gatheringSelect.value=link.dataset.gathering;
+  }));
 
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();

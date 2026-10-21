@@ -295,17 +295,7 @@
     border-radius:50%;pointer-events:none;z-index:1;will-change:transform;mix-blend-mode:screen;
     background:radial-gradient(circle,rgba(246,201,104,.22),transparent 70%);
   }
-  .hero-inner{position:relative;z-index:2;width:100%;text-align:center;padding:120px 28px 90px;will-change:transform,opacity}
-  .hero-logo{height:56px;width:auto;margin:0 auto 30px;display:block;
-    opacity:1;animation:rise 1.1s .02s var(--ease-out) forwards;will-change:transform,opacity;
-    filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))}
-  .hero .kicker{
-    display:inline-flex;align-items:center;gap:10px;
-    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;
-    color:var(--gold-soft);margin-bottom:26px;
-    opacity:0;animation:rise 1.1s .15s var(--ease-out) forwards;will-change:transform,opacity;
-  }
-  .hero .kicker::before,.hero .kicker::after{content:"";width:26px;height:1px;background:var(--gold-soft);opacity:.6}
+  .hero-inner{position:relative;z-index:2;width:100%;text-align:center;padding:90px 28px 66px;will-change:transform,opacity}
   .hero h1{
     font-size:clamp(2.9rem,8vw,6.2rem);line-height:1.02;font-weight:500;
     letter-spacing:-.01em;margin-bottom:8px;
@@ -635,19 +625,36 @@
     <img class="brand-logo logo-dark" src="img/logo.png" alt="Anmol Jeevan Ministries">
     <img class="brand-logo logo-light" src="img/logo-light.png" alt="Anmol Jeevan Ministries">
   </a>
-  <button class="menutoggle" id="menutoggle" aria-label="Menu">
+  <button class="menutoggle" id="menutoggle" aria-label="Menu" aria-controls="navlinks" aria-expanded="false">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="#latest">Latest</a>
-    <a href="#about">About</a>
-    <a href="#service">Gatherings</a>
-    <a href="events.html">Events</a>
-    <a href="#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="#leaders">Leaders</a>
-    <a href="invite.html">Invite</a>
-    <a href="#connect" class="btn">Connect</a>
+    <a class="nav-full-link" href="#latest">Latest</a>
+    <a class="nav-full-link" href="#about">About</a>
+    <a class="nav-full-link" href="#service">Gatherings</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="#leaders">Leaders</a>
+    <a class="nav-full-link" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="events.html#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="events.html#prayer">Prayer</a>
+      <a href="#watch">Watch</a>
+      <a href="#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="#latest">Latest</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
@@ -657,19 +664,32 @@
   <div class="sun"></div>
   <div class="spot" id="spot"></div>
   <div class="hero-inner">
-    <img class="hero-logo" src="img/logo.png" alt="Anmol Jeevan Ministries">
-    <span class="kicker">Indore · India</span>
     <h1><span class="ln"><span>Proclaiming the <em>love</em></span></span><span class="ln"><span>of Jesus to all nations</span></span></h1>
     <div class="hindi dev">यीशु का प्रेम — सब देशों तक</div>
     <p class="lead">Anmol Jeevan Ministries is a Hindi-language family in Christ — sharing the gospel, worship, and the Word so that every precious life may know Him.</p>
+    <p class="hero-service-meta">Sunday Fellowship · 3:00 PM IST · Indore</p>
     <div class="hero-cta">
-      <a href="#service" class="btn-lg btn-gold magnetic">Join Us This Sunday</a>
+      <a href="events.html#visit" class="btn-lg btn-gold magnetic">Join Us This Sunday</a>
       <a href="#watch" class="btn-lg btn-ghost magnetic">Watch Latest Message</a>
     </div>
     <p class="hero-prayer"><a class="care-link" href="events.html#prayer">Request Prayer <span lang="hi">· प्रार्थना निवेदन</span></a></p>
   </div>
   <div class="scroll-hint">Scroll</div>
 </header>
+
+<section class="next-gathering reveal">
+  <div class="aurora"></div>
+  <div class="wrap next-gathering-inner">
+    <span class="kicker"><span class="dot"></span>Next Gathering</span>
+    <h2 id="ngName">Sunday Fellowship</h2>
+    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
+    <div class="ng-meta">
+      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
+      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
+    </div>
+    <a href="events.html#visit" class="btn-lg btn-gold magnetic">Plan Your Visit</a>
+  </div>
+</section>
 
 <section class="fc-banner reveal in" id="faith-conference" aria-label="Faith Conference, Indore — coming soon">
   <div class="wrap fc-inner">
@@ -692,20 +712,6 @@
   <div class="wrap">
     <blockquote>"For God so loved the world, that He gave His only Son…"</blockquote>
     <cite>John 3:16 · यूहन्ना ३:१६</cite>
-  </div>
-</section>
-
-<section class="next-gathering reveal">
-  <div class="aurora"></div>
-  <div class="wrap next-gathering-inner">
-    <span class="kicker"><span class="dot"></span>Next Gathering</span>
-    <h2 id="ngName">Sunday Fellowship</h2>
-    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
-    <div class="ng-meta">
-      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
-      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
-    </div>
-    <a href="events.html#visit" class="btn-lg btn-gold magnetic">Plan Your Visit</a>
   </div>
 </section>
 
@@ -1133,8 +1139,16 @@
 
   // mobile menu
   const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
-  tog.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  function setMenuOpen(open){
+    links.classList.toggle('open',open);
+    tog.setAttribute('aria-expanded',String(open));
+    if(!open){const more=links.querySelector('details');if(more)more.open=false;}
+  }
+  tog.addEventListener('click',()=>setMenuOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenuOpen(false)));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&links.classList.contains('open')){setMenuOpen(false);tog.focus();}
+  });
 
   // theme toggle
   const themeBtn=document.getElementById('themeToggle');
@@ -1156,7 +1170,7 @@
       const el=e.target;el.classList.add('in');io.unobserve(el);
       el.addEventListener('transitionend',()=>el.classList.add('done'),{once:true});
     }
-  }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  }),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   // stat count-up

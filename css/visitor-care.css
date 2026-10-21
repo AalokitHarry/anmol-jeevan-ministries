@@ -1,7 +1,7 @@
 /* Visitor care uses the site's existing colors and typefaces. */
 :root{--care-accent:#984b3c;--care-gold-text:#93601f}
 :root[data-theme="dark"]{--care-accent:#efb29e;--care-gold-text:var(--gold-soft)}
-#visit,#prayer{scroll-margin-top:110px}
+#visit,#prayer,#book{scroll-margin-top:110px}
 .care-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
 .care-actions .btn-lg{min-height:48px;text-align:center}
 .care-link{text-decoration:underline;text-underline-offset:4px;font-weight:600}
@@ -10,6 +10,11 @@
 .hero-prayer .care-link:focus-visible,.connect .care-actions a:focus-visible{outline-color:var(--cream)}
 .hero-prayer{margin-top:22px;color:var(--cream);font-size:.96rem}
 .hero-prayer a{display:inline-block;padding:8px 2px}
+.hero-service-meta{margin:-12px auto 24px;color:var(--cream);font-size:.98rem;font-weight:600;letter-spacing:.01em}
+.nav-mobile-primary,.nav-mobile-more{display:none}
+.booking-privacy{max-width:58ch;margin:0 auto;color:rgba(250,246,238,.75);font-size:.88rem;line-height:1.6;text-align:center}
+.ehero .btn-ghost{border:1px solid rgba(250,246,238,.35);color:var(--cream)}
+.ehero .btn-ghost:hover{background:rgba(250,246,238,.1)}
 .service .right h3{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:500;line-height:1.2}
 .service .right .visit-note{color:var(--cream);max-width:38ch;margin-top:10px}
 .service .right .care-actions{align-items:flex-start;flex-direction:column}
@@ -49,9 +54,40 @@
 .prayer-noscript{padding:20px 0;line-height:1.8}
 .connect .care-actions{justify-content:center;margin:0 0 32px}
 @media(max-width:860px){
+  .navlinks{visibility:hidden;gap:0;padding:76px 20px 20px;max-height:100dvh;overflow-y:auto;transition:transform .35s,visibility .35s}
+  .navlinks.open{visibility:visible}
+  .navlinks>.nav-full-link{display:none}
+  .nav-mobile-primary{display:flex;flex-direction:column;gap:4px;width:100%}
+  .nav-mobile-primary a{display:flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:12px}
+  .nav-mobile-primary a:hover,.nav-mobile-primary a:focus-visible,.nav-mobile-more a:hover,.nav-mobile-more a:focus-visible{background:rgba(250,246,238,.1)}
+  .nav-mobile-more{display:block;width:100%;border-top:1px solid rgba(250,246,238,.18);margin-top:10px;padding-top:10px;color:var(--cream)}
+  .nav-mobile-more summary{min-height:44px;padding:10px 16px;cursor:pointer;font-weight:600}
+  .nav-mobile-more div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .nav-mobile-more a{display:flex;align-items:center;min-height:44px;padding:8px 12px;font-size:.96rem!important}
   .visit-layout,.prayer-layout{grid-template-columns:1fr;gap:36px}
   .visit-contact{padding-top:24px;border-top:1px solid var(--hairline-2)}
   .prayer-preview{padding:24px}
+}
+@media(max-width:600px){
+  .hero{min-height:100svh}
+  .hero-inner{padding:104px 24px 68px}
+  .hero h1{font-size:clamp(2.55rem,10vw,3.7rem)}
+  .hero .hindi{margin-bottom:14px}
+  .hero p.lead{margin-bottom:20px;font-size:1rem;line-height:1.55}
+  .hero-service-meta{margin:0 auto 20px;font-size:.94rem}
+  .hero-cta{flex-direction:column;align-items:stretch;max-width:330px;margin:0 auto}
+  .hero-cta .btn-lg{justify-content:center;min-height:48px}
+  .hero-prayer{margin-top:12px}
+  .scroll-hint{display:none}
+  .ehero{min-height:auto;padding:104px 0 62px}
+  .ehero-inner{padding:0 22px}
+  .ehero .kicker{display:none}
+  .ehero .lead{font-size:1rem;line-height:1.55}
+  .ehero .care-actions{gap:10px}
+  .ehero .care-actions .btn-lg{justify-content:center}
+  section{padding:68px 0}
+  .next-gathering{padding:62px 0}
+  .float-cta{display:none!important}
 }
 @media(max-width:480px){
   .care-actions{align-items:stretch;flex-direction:column}
