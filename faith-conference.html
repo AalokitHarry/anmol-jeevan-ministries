@@ -306,7 +306,7 @@
   :root[data-theme="dark"] .invite-submit-row .btn-gold:hover{background:var(--sun-soft)}
   .invite-note{margin-top:20px;text-align:center;color:var(--on-surface-muted);font-size:.92rem}
   .invite-note a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px}
-  .invite-success{text-align:center;display:none;background:var(--surface-2);border-radius:18px;padding:clamp(32px,4vw,52px) clamp(22px,4vw,44px);box-shadow:0 34px 70px -34px rgba(5,18,51,.55)}
+  .invite-success{scroll-margin-top:88px;text-align:center;display:none;background:var(--surface-2);border-radius:18px;padding:clamp(32px,4vw,52px) clamp(22px,4vw,44px);box-shadow:0 34px 70px -34px rgba(5,18,51,.55)}
   .invite-success .check{width:68px;height:68px;border-radius:50%;background:var(--sun);display:flex;align-items:center;justify-content:center;color:var(--sky-0);margin:0 auto 20px}
   .invite-success .check svg{width:32px;height:32px}
   .invite-success h3{font:800 clamp(1.5rem,3vw,2rem)/1.2 'Montserrat','Noto Sans Devanagari',sans-serif;margin-bottom:12px}
@@ -315,8 +315,30 @@
   .fc-wa-btn{display:inline-flex;margin-bottom:14px}
   .invite-again-btn{background:none;border:1.5px solid var(--hairline-2);color:var(--on-surface);padding:13px 26px;border-radius:100px;font-weight:600;font-size:.92rem;cursor:pointer;font-family:inherit}
   .invite-again-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .fc-pay{margin:0 auto 26px;padding:22px;border:1px solid var(--hairline-2);border-radius:14px;max-width:360px}
+  .fc-pay h4{font:800 1.1rem/1.3 'Montserrat',sans-serif;color:var(--on-surface);margin-bottom:12px}
+  .fc-pay img{display:block;width:min(100%,230px);height:auto;margin:0 auto 12px;background:#fff;padding:8px;border-radius:10px}
+  .invite-success .fc-pay p{margin-bottom:0;font-size:.92rem;overflow-wrap:anywhere}
+  .fc-pay b{color:var(--on-surface)}
+  .fc-pay .fc-upi-open{margin-top:14px}
   .fc-closed{display:none}
   .fc-over .fc-open-only{display:none!important}
+
+  /* registration fee */
+  .fc-give{background:linear-gradient(180deg,var(--sky-1),var(--sky-0));color:var(--cream);padding:clamp(72px,9vw,116px) 0}
+  .fc-give-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,6vw,84px);align-items:center}
+  .fc-give h2{font-size:clamp(2.1rem,5vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-.03em}
+  .fc-give h2 .dev{display:block;margin-top:10px;font-weight:700;font-size:clamp(1.15rem,2vw,1.5rem);color:var(--sun-soft)}
+  .fc-give-lead{margin-top:20px;max-width:52ch;font-size:clamp(1rem,1.6vw,1.15rem);color:#dbe4f7}
+  .fc-give-to{margin-top:24px;font-weight:600}
+  .fc-upi{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:10px}
+  .fc-upi code{font:700 clamp(1rem,2vw,1.2rem)/1.4 'Montserrat',sans-serif;color:var(--sun);overflow-wrap:anywhere}
+  .fc-copy{background:none;border:1.5px solid rgba(255,248,230,.5);color:var(--cream);padding:9px 18px;border-radius:100px;font:600 .9rem/1.2 'Inter',sans-serif;cursor:pointer;transition:border-color .25s,color .25s}
+  .fc-copy:hover{border-color:var(--sun);color:var(--sun)}
+  .fc-upi-open{display:none;margin-top:22px}
+  .fc-qr{justify-self:center;width:min(100%,340px);background:#fff;border-radius:18px;padding:16px;box-shadow:0 30px 60px -28px rgba(0,0,0,.8);text-align:center;color:var(--sky-1)}
+  .fc-qr img{display:block;width:100%;height:auto}
+  .fc-qr figcaption{margin-top:6px;font:700 .95rem/1.3 'Montserrat',sans-serif}
 
   /* phone register bar */
   .fc-sticky{display:none}
@@ -355,6 +377,8 @@
     .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
     .theme-fab svg{width:18px;height:18px}
     body.sticky-on .theme-fab{bottom:82px}
+    .fc-give-grid{grid-template-columns:1fr}
+    .fc-upi-open{display:inline-flex}
     .fc-sticky{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:65;align-items:center;justify-content:center;gap:6px;min-height:54px;border-radius:100px;
       background:var(--sun);color:var(--sky-0);font:800 1rem/1 'Montserrat',sans-serif;box-shadow:0 14px 34px -8px rgba(5,18,51,.75);
       transform:translateY(90px);opacity:0;pointer-events:none;transition:transform .5s var(--ease-out),opacity .3s}
@@ -465,6 +489,7 @@
         <ul class="fc-facts">
           <li><b>Dates</b>14, 15 &amp; 16 January 2027</li>
           <li><b>Place</b>Indore, Madhya Pradesh</li>
+          <li class="fc-open-only"><b>Registration fee</b>Pay by UPI. The AJM Family team will confirm the amount with you</li>
           <li><b>Venue &amp; timings</b>The AJM Family team will share these with you</li>
         </ul>
         <img class="fc-poster" src="img/faith-conference-2027.jpg" alt="Faith Conference poster — Anmol Jeevan Ministries presents, Stronger Faith, Greater Impact, 14, 15 and 16 January 2027" width="1024" height="1536">
@@ -529,6 +554,12 @@
           <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
           <h3>Thank you, <span id="fcSuccessName"></span>!</h3>
           <p class="fc-pending" id="fcPending">Your request is pending. We will send you a confirmation message.</p>
+          <div class="fc-pay">
+            <h4>Pay your registration fee</h4>
+            <img src="img/faith-conference/upi-qr.png" alt="UPI QR code for M/S Anmol Jeevan Sevkai Foundation, UPI ID vishaljadhav@icici" width="372" height="372">
+            <p>UPI ID: <b>vishaljadhav@icici</b><br>M/S Anmol Jeevan Sevkai Foundation</p>
+            <a class="btn-lg btn-gold fc-upi-open" href="upi://pay?pa=vishaljadhav@icici&amp;pn=M/S.ANMOL%20JEEVAN%20SEVKAI%20FOUNDATION&amp;tr=EZYS7611114401&amp;cu=INR&amp;mc=5411">Open UPI app</a>
+          </div>
           <p>We've received your registration for the Faith Conference. WhatsApp should have opened with a message ready to send us — please send it so the AJM Family team can follow up with you.</p>
           <a class="btn-lg btn-gold fc-wa-btn" id="fcWhatsApp" target="_blank" rel="noopener">Open WhatsApp</a><br>
           <button type="button" class="invite-again-btn" id="fcAgainBtn">Register someone else</button>
@@ -541,6 +572,25 @@
         <p class="invite-note" id="fcNote">Questions? Reach the AJM Family team directly on <a href="https://wa.me/917999929550" target="_blank" rel="noopener">WhatsApp</a>.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="fc-give fc-open-only" id="fcGive">
+  <div class="wrap fc-give-grid">
+    <div>
+      <h2>Registration fee <span class="dev">पंजीकरण शुल्क</span></h2>
+      <p class="fc-give-lead">Pay your registration fee by scanning the code with any UPI app. The AJM Family team will confirm the amount with you.</p>
+      <p class="fc-give-to">M/S Anmol Jeevan Sevkai Foundation</p>
+      <div class="fc-upi">
+        <code id="fcUpiId">vishaljadhav@icici</code>
+        <button type="button" class="fc-copy" id="fcUpiCopy">Copy UPI ID</button>
+      </div>
+      <a class="btn-lg btn-gold fc-upi-open" href="upi://pay?pa=vishaljadhav@icici&amp;pn=M/S.ANMOL%20JEEVAN%20SEVKAI%20FOUNDATION&amp;tr=EZYS7611114401&amp;cu=INR&amp;mc=5411">Open UPI app</a>
+    </div>
+    <figure class="fc-qr">
+      <img src="img/faith-conference/upi-qr.png" alt="UPI QR code for M/S Anmol Jeevan Sevkai Foundation, UPI ID vishaljadhav@icici" width="372" height="372" loading="lazy">
+      <figcaption>Scan and pay</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -649,14 +699,15 @@
 
   // Phone Register bar: shows after the first screen, steps aside at the form
   const sticky=document.getElementById('fcSticky');
-  const stickyState={past:false,atForm:false};
+  const stickyState={past:false,atForm:false,atFee:false};
   function syncSticky(){
-    const on=stickyState.past&&!stickyState.atForm&&!document.documentElement.classList.contains('fc-over');
+    const on=stickyState.past&&!stickyState.atForm&&!stickyState.atFee&&!document.documentElement.classList.contains('fc-over');
     sticky.classList.toggle('on',on);
     document.body.classList.toggle('sticky-on',on);
   }
   new IntersectionObserver(es=>es.forEach(e=>{stickyState.past=!e.isIntersecting;syncSticky();})).observe(document.getElementById('fcHero'));
   new IntersectionObserver(es=>es.forEach(e=>{stickyState.atForm=e.isIntersecting;syncSticky();})).observe(document.getElementById('register'));
+  new IntersectionObserver(es=>es.forEach(e=>{stickyState.atFee=e.isIntersecting;syncSticky();})).observe(document.getElementById('fcGive'));
 
   function withCountryCode(v){
     v=(v||'').trim();
@@ -711,7 +762,8 @@
     this.style.display = 'none';
     fcNote.style.display = 'none';
     document.getElementById('fcSuccess').style.display = 'block';
-    document.getElementById('fcSuccess').scrollIntoView({block:'center',behavior:'auto'});
+    document.getElementById('fcGive').style.display = 'none';
+    document.getElementById('fcSuccess').scrollIntoView({block:'start',behavior:'auto'});
   });
 
   document.getElementById('fcAgainBtn').addEventListener('click', ()=>{
@@ -719,8 +771,18 @@
     fcForm.elements['mobile'].value = '+91 ';
     daysError.hidden = true;
     document.getElementById('fcSuccess').style.display = 'none';
+    document.getElementById('fcGive').style.display = '';
     fcNote.style.display = 'block';
     fcForm.style.display = 'flex';
+  });
+
+  const upiCopy=document.getElementById('fcUpiCopy');
+  upiCopy.addEventListener('click',async()=>{
+    const id=document.getElementById('fcUpiId').textContent;
+    let ok=false;
+    try{await navigator.clipboard.writeText(id);ok=true;}catch(e){}
+    upiCopy.textContent=ok?'Copied':'Could not copy, please note it down';
+    setTimeout(()=>{upiCopy.textContent='Copy UPI ID';},2500);
   });
 
   document.getElementById('yr').textContent=new Date().getFullYear();
