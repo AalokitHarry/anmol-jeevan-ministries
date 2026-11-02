@@ -4,9 +4,7 @@
 #visit,#prayer,#book{scroll-margin-top:110px}
 .care-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
 .care-actions .btn-lg{min-height:48px;justify-content:center;text-align:center}
-.care-link{text-decoration:underline 1px color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:6px;font-weight:500;transition:text-decoration-color .2s}
-.care-link:hover{text-decoration-color:currentColor}
-.care-actions a:focus-visible,.care-link:focus-visible,.visit-contact a:focus-visible{outline:3px solid var(--on-surface);outline-offset:5px}
+.care-actions a:focus-visible,.blessing-link:focus-visible,.visit-contact a:focus-visible{outline:3px solid var(--on-surface);outline-offset:5px}
 .connect .care-actions a:focus-visible{outline-color:var(--cream)}
 .hero-cta a:focus-visible{outline:3px solid var(--cream);outline-offset:5px}
 .nav-mobile-primary,.nav-mobile-more{display:none}
@@ -28,7 +26,6 @@
 .visit-contact{padding-top:4px}
 .visit-contact h3{font-size:1.6rem;font-weight:500;margin-bottom:12px}
 .visit-contact address{font-style:normal;line-height:1.7;margin-bottom:14px}
-.visit-phone{display:inline-flex;align-items:center;min-height:48px;margin-top:16px;font-weight:600;text-decoration:underline;text-underline-offset:4px}
 .prayer-section{background:var(--surface)}
 .prayer-invite{text-align:center}
 .prayer-invite p{max-width:48ch;margin:0 auto 24px;color:var(--on-surface-muted)}
