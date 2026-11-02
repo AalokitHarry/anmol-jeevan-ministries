@@ -271,7 +271,8 @@
   .fc-photos{background:var(--sky-0);color:var(--cream);padding:clamp(72px,9vw,120px) 0 0}
   .fc-photos-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(26px,3vw,38px)}
   .fc-photos h2{font-size:clamp(1.9rem,4.4vw,3.3rem);font-weight:800;line-height:1.12;letter-spacing:-.02em}
-  .fc-photos-head a{display:inline-block;padding:12px 0;font:700 .95rem/1.4 'Montserrat',sans-serif;color:var(--sun);text-decoration:underline;text-underline-offset:4px}
+  .fc-photos-head a{display:inline-flex;align-items:center;min-height:48px;padding:10px 24px;border:1px solid var(--sun);border-radius:100px;font:700 .95rem/1.4 'Montserrat',sans-serif;color:var(--sun);text-decoration:none;transition:background .25s,color .25s}
+  .fc-photos-head a:hover{background:var(--sun);color:var(--sky-0)}
   .fc-strip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
   .fc-strip::-webkit-scrollbar{display:none}
   .fc-strip img{flex:1 0 clamp(250px,20vw,420px);width:0;height:clamp(300px,30vw,440px);object-fit:cover;scroll-snap-align:start;display:block}
