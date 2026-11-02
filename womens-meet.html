@@ -224,7 +224,8 @@
   @media(max-width:860px){
     .navlinks{position:fixed;inset:0 0 auto 0;top:0;flex-direction:column;background:var(--night);
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
-    .navlinks.open{transform:translateY(0)}
+    .navlinks{visibility:hidden;transition:transform .4s,visibility 0s .4s}
+    .navlinks.open{transform:translateY(0);visibility:visible;transition:transform .4s,visibility 0s}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .menutoggle{display:block;z-index:60}
     .whero-grid{grid-template-columns:1fr;gap:0}
