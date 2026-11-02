@@ -208,4 +208,4 @@
   .fam-main .book-form .field-row{grid-template-columns:minmax(0,1fr)}
 }
 .fc-layout>*,.fc-register .invite-panel .field{min-width:0}
-.fc-register .invite-panel input,.fc-register .invite-panel textarea{width:100%;min-width:0}
+.fc-register .invite-panel input:not([type=checkbox]),.fc-register .invite-panel textarea{width:100%;min-width:0}
