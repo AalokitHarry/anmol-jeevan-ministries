@@ -328,9 +328,6 @@
   .btn-ghost:not(.jsmag):hover{transform:translateY(-3px) scale(1.02)}
   @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
   @keyframes lineUp{from{opacity:0;transform:translateY(115%)}to{opacity:1;transform:translateY(0)}}
-  .scroll-hint{position:absolute;bottom:26px;left:50%;z-index:3;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,246,238,.5);opacity:0;animation:hintIn 1s 1.3s var(--ease-out) forwards,bob 2.6s 2.3s var(--ease-smooth) infinite;will-change:transform}
-  @keyframes hintIn{from{opacity:0}to{opacity:.6}}
-  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
   /* ---- SECTIONS ---- */
   section{padding:100px 0}
@@ -510,20 +507,6 @@
   .invite-cta .sub{max-width:560px;margin:0 auto 34px;color:rgba(250,246,238,.75);font-size:1.02rem}
 
   /* next gathering */
-  .next-gathering{position:relative;overflow:hidden;text-align:center;color:var(--cream);
-    background:
-      radial-gradient(120% 140% at 50% 0%,rgba(232,163,61,.35) 0%,transparent 55%),
-      linear-gradient(160deg,var(--night) 0%,var(--night-2) 60%,var(--night-3) 100%);
-    padding:84px 0}
-  .next-gathering-inner{position:relative;z-index:2}
-  .next-gathering .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.28em;
-    text-transform:uppercase;font-weight:600;color:var(--gold-soft);margin-bottom:18px}
-  .next-gathering .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulseDot 2s infinite}
-  .next-gathering h2{font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:500;margin-bottom:14px}
-  .next-gathering .sub{max-width:520px;margin:0 auto 30px;color:rgba(250,246,238,.78);font-size:1.05rem}
-  .ng-meta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:36px}
-  .ng-chip{display:inline-flex;align-items:center;gap:9px;background:var(--glass);border:1px solid var(--glass-brd);
-    padding:13px 24px;border-radius:100px;font-weight:600;font-size:1rem;color:var(--cream)}
 
   /* faq */
   .faq{background:var(--surface)}
@@ -618,6 +601,7 @@
   .soc.fb:hover{background:#145cba;border-color:#145cba}
 </style>
 <link rel="stylesheet" href="css/visitor-care.css">
+<link rel="stylesheet" href="css/open-door.css">
 </head>
 <body>
 
@@ -644,7 +628,7 @@
     <div class="nav-mobile-primary">
       <a href="events.html#visit">Visit</a>
       <a href="events.html">Events</a>
-      <a href="events.html#prayer">Prayer</a>
+      <a href="prayer.html">Prayer</a>
       <a href="#watch">Watch</a>
       <a href="#about">About</a>
     </div>
@@ -667,32 +651,27 @@
   <div class="sun"></div>
   <div class="spot" id="spot"></div>
   <div class="hero-inner">
+    <div class="hero-copy">
     <h1><span class="ln"><span>Proclaiming the <em>love</em></span></span><span class="ln"><span>of Jesus to all nations</span></span></h1>
     <div class="hindi dev">यीशु का प्रेम — सब देशों तक</div>
     <p class="lead">Anmol Jeevan Ministries is a Hindi-language family in Christ — sharing the gospel, worship, and the Word so that every precious life may know Him.</p>
-    <p class="hero-service-meta">Sunday Fellowship · 3:00 PM IST · Indore</p>
-    <div class="hero-cta">
-      <a href="events.html#visit" class="btn-lg btn-gold magnetic">Join Us This Sunday</a>
-      <a href="#watch" class="btn-lg btn-ghost magnetic">Watch Latest Message</a>
-      <a href="events.html#prayer" class="btn-lg btn-ghost magnetic">Request Prayer&nbsp;<span lang="hi">· प्रार्थना निवेदन</span></a>
+    <div class="door" id="door">
+      <p class="door-when" id="doorWhen" role="timer"><i></i><span>Every Sunday</span></p>
+      <div aria-live="polite">
+        <h2 class="door-name" id="doorName">Sunday Worship Service</h2>
+        <p class="door-detail" id="doorDetail">3:00 PM IST · Indore, Madhya Pradesh</p>
+      </div>
+      <div class="hero-cta">
+        <a id="doorCta" href="events.html#visit" class="btn-lg btn-gold magnetic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.5 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.43 1.33-1.98 1.38-.5.05-1.14.23-3.84-.82-3.24-1.28-5.3-4.6-5.46-4.81-.16-.21-1.3-1.73-1.3-3.3s.82-2.34 1.11-2.66c.3-.32.64-.4.86-.4l.62.01c.2.01.47-.08.73.56.27.65.92 2.25 1 2.42.08.16.14.35.03.56-.11.21-.16.34-.32.53l-.48.56c-.16.16-.33.33-.14.65.19.32.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.57 1.59.32.16.51.13.7-.08.19-.21.8-.94 1.02-1.26.21-.32.43-.27.72-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.14.08.77-.17 1.47Z"/></svg><span id="doorCtaText">Plan Your Visit</span></a>
+        <a href="#watch" class="btn-lg btn-ghost magnetic">Watch&nbsp;<span>Latest&nbsp;</span>Message</a>
+        <a href="prayer.html" class="btn-lg btn-ghost magnetic">Request Prayer<span lang="hi">&nbsp;· प्रार्थना निवेदन</span></a>
+      </div>
+      <p class="door-note" id="doorNote"></p>
     </div>
+    </div>
+    <ol class="door-rail" id="doorRail" aria-label="Gatherings coming up" hidden></ol>
   </div>
-  <div class="scroll-hint">Scroll</div>
 </header>
-
-<section class="next-gathering reveal">
-  <div class="aurora"></div>
-  <div class="wrap next-gathering-inner">
-    <span class="kicker"><span class="dot"></span>Next Gathering</span>
-    <h2 id="ngName">Sunday Fellowship</h2>
-    <p class="sub" id="ngDesc">Praise, the Word &amp; prayer together &mdash; come as you are.</p>
-    <div class="ng-meta">
-      <span class="ng-chip">📍 Indore, Madhya Pradesh</span>
-      <span class="ng-chip" id="ngTime">🕒 Every Sunday, 3:00 PM</span>
-    </div>
-    <a href="events.html#visit" class="btn-lg btn-gold magnetic">Plan Your Visit</a>
-  </div>
-</section>
 
 <section class="fc-banner reveal in" id="faith-conference" aria-label="Faith Conference, Indore — 14, 15 and 16 January 2027" data-until="2027-01-16">
   <div class="wrap fc-inner">
@@ -983,7 +962,7 @@
     <h2>Join the <em>AJM Family</em></h2>
     <p class="sub">Follow along, be encouraged daily, and reach out for prayer. We would love to walk with you.</p>
     <div class="care-actions">
-      <a href="events.html#prayer" class="btn-lg btn-gold">Request Prayer</a>
+      <a href="prayer.html" class="btn-lg btn-gold">Request Prayer</a>
       <a href="events.html#visit" class="soc">Plan Your Visit</a>
     </div>
     <div class="socials">
@@ -1015,7 +994,7 @@
 </footer>
 
 <div class="float-stack">
-  <a class="float-cta" id="floatCta" href="events.html#prayer" aria-label="Request Prayer">
+  <a class="float-cta" id="floatCta" href="prayer.html" aria-label="Request Prayer">
     <span class="pulse-dot"></span> Request Prayer
   </a>
   <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
@@ -1034,38 +1013,6 @@
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  // "Next Gathering" section — auto-picks whichever recurring gathering
-  // (Sunday Fellowship or 90 Minutes with Jesus) comes up soonest
-  (function(){
-    const ngName=document.getElementById('ngName'), ngDesc=document.getElementById('ngDesc'), ngTime=document.getElementById('ngTime');
-    if(!ngName||!ngDesc||!ngTime)return;
-    const dayKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    function nextOccurrence(day,hour,minute,skip){
-      const now=new Date();
-      const d=new Date(now);
-      d.setHours(hour,minute,0,0);
-      let diff=(day-now.getDay()+7)%7;
-      if(diff===0&&d<=now)diff=7;
-      d.setDate(now.getDate()+diff);
-      while((skip||[]).includes(dayKey(d)))d.setDate(d.getDate()+7); // weeks it doesn't meet
-      return d;
-    }
-    const gatherings=[
-      {name:'Sunday Fellowship',day:0,hour:15,minute:0,desc:"Praise, the Word & prayer together — come as you are."},
-      // paused on these Wednesdays (announcement from the AJM Media Team)
-      {name:'90 Minutes with Jesus',day:3,hour:19,minute:0,desc:'A focused time in His presence — worship, the Word & prayer.',skip:["2026-09-30", "2026-10-07", "2026-10-14"]}
-    ].map(g=>({...g,next:nextOccurrence(g.day,g.hour,g.minute,g.skip)}));
-    gatherings.sort((a,b)=>a.next-b.next);
-    const upcoming=gatherings[0];
-    const isToday=upcoming.next.toDateString()===new Date().toDateString();
-    const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
-    const isTomorrow=upcoming.next.toDateString()===tomorrow.toDateString();
-    const dayLabel=isToday?'Today':isTomorrow?'Tomorrow':'This '+upcoming.next.toLocaleDateString('en-US',{weekday:'long'});
-    const timeLabel=upcoming.next.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-    ngName.textContent=upcoming.name;
-    ngDesc.textContent=upcoming.desc;
-    ngTime.textContent='🕒 '+dayLabel+', '+timeLabel;
-  })();
 
   const nav=document.getElementById('nav');
   const heroInner=document.querySelector('.hero-inner');
@@ -1205,5 +1152,6 @@
 
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
+<script src="js/open-door.js"></script>
 </body>
 </html>

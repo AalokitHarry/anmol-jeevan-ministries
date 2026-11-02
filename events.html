@@ -389,7 +389,7 @@
     <div class="nav-mobile-primary">
       <a href="#visit">Visit</a>
       <a href="events.html">Events</a>
-      <a href="#prayer">Prayer</a>
+      <a href="prayer.html">Prayer</a>
       <a href="index.html#watch">Watch</a>
       <a href="index.html#about">About</a>
     </div>
@@ -417,7 +417,7 @@
     <div class="care-actions" style="justify-content:center">
       <a href="#book" class="btn-lg btn-gold">Book Your Sunday Visit</a>
       <a href="#visit" class="btn-lg btn-ghost">Plan Your Visit</a>
-      <a href="#prayer" class="wa-link">Request Prayer</a>
+      <a href="prayer.html" class="wa-link">Request Prayer</a>
     </div>
   </div>
 </header>
@@ -534,34 +534,10 @@
 </section>
 
 <section class="prayer-section" id="prayer" aria-labelledby="prayerTitle">
-  <div class="wrap prayer-layout">
-    <div class="prayer-intro">
-      <h2 id="prayerTitle">Request Prayer<span class="care-hindi" lang="hi">प्रार्थना निवेदन</span></h2>
-      <p>What would you like us to pray for? Share your request with the AJM Family team, in Hindi or English.</p>
-      <p id="prayerPrivacy">Your message is prepared here in your browser. Nothing from this form is sent until you open WhatsApp and send it yourself. Only include details you are comfortable sharing with the AJM team.</p>
-    </div>
-    <div>
-      <form id="prayerForm" class="prayer-form" aria-describedby="prayerPrivacy">
-        <label for="prayerName"><span>Your name <span class="optional">(optional)</span></span><input id="prayerName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name"></label>
-        <label for="prayerMessage">Your prayer request<textarea id="prayerMessage" name="message" required maxlength="2000" placeholder="Write your request in Hindi or English…"></textarea></label>
-        <label class="prayer-callback" for="prayerCallback"><input id="prayerCallback" name="callback" type="checkbox"><span>I would like the AJM team to contact me.</span></label>
-        <div id="prayerPhoneGroup" hidden>
-          <label for="prayerPhone">Contact number<input id="prayerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="Include your country code, e.g. +91" aria-describedby="prayerPhoneHelp prayerError"><span id="prayerPhoneHelp" class="prayer-help">Only needed if you would like the team to contact you.</span></label>
-          <p id="prayerError" class="prayer-error" role="alert" hidden>Enter a phone number with 7 to 15 digits, including your country code.</p>
-        </div>
-        <button type="submit" class="btn-lg btn-gold">Review Prayer Message</button>
-      </form>
-      <div id="prayerPreview" class="prayer-preview" hidden>
-        <h3 id="prayerPreviewTitle" tabindex="-1">Your message is ready to review</h3>
-        <p>Check the details below. Open WhatsApp when you are ready, then press Send there to share your request.</p>
-        <div id="prayerDraft" class="prayer-message"></div>
-        <div class="care-actions">
-          <a id="prayerWhatsApp" class="btn-lg btn-gold" target="_blank" rel="noopener noreferrer">Open WhatsApp to Send</a>
-          <button id="prayerEdit" class="btn-lg btn-ghost-dark" type="button">Edit Message</button>
-        </div>
-      </div>
-      <noscript><style>#prayerForm{display:none}</style><p class="prayer-noscript">You can send your prayer request directly to our team. <a class="care-link" href="https://wa.me/917999929550" target="_blank" rel="noopener noreferrer">Open WhatsApp</a> or <a class="care-link" href="tel:+917999929550">call +91 79999 29550</a>.</p></noscript>
-    </div>
+  <div class="wrap prayer-invite">
+    <h2 id="prayerTitle">Request Prayer<span class="care-hindi" lang="hi">प्रार्थना निवेदन</span></h2>
+    <p>Write it or send a voice note, in Hindi or English. You don’t need the right words.</p>
+    <a class="btn-lg btn-gold" href="prayer.html">Go to the Prayer Room</a>
   </div>
 </section>
 
@@ -625,7 +601,7 @@
 </footer>
 
 <div class="float-stack">
-  <a class="float-cta" id="floatCta" href="#prayer" aria-label="Request Prayer">
+  <a class="float-cta" id="floatCta" href="prayer.html" aria-label="Request Prayer">
     <span class="pulse-dot"></span> Request Prayer
   </a>
   <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
@@ -776,6 +752,5 @@
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="js/reglog.js"></script>
-<script src="js/prayer.js"></script>
 </body>
 </html>
