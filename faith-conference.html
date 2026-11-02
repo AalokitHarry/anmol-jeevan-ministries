@@ -189,7 +189,7 @@
   .fc-hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(70px,10svh,96px) 4vw 58px 30vw;will-change:transform}
   .fc-credit{font:600 clamp(.8rem,1.15vw,.92rem)/1.5 'Montserrat',sans-serif;letter-spacing:.2em;text-transform:uppercase;margin-bottom:clamp(0px,.6svh,8px)}
   .fc-credit span{display:block;font-weight:600;font-size:max(.75rem,.82em);letter-spacing:.34em;opacity:.86}
-  .fc-hero h1{line-height:0;width:min(62vw,68svh,1100px);margin-top:-1svh}
+  .fc-hero h1{line-height:0;width:min(62vw,64svh,1100px);margin-top:-1svh}
   .fc-hero h1 img{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 30px rgba(5,18,51,.45))}
   .fc-tagline{display:block;width:min(50vw,54svh,680px);height:auto;margin-top:clamp(2px,.8svh,10px);filter:drop-shadow(0 1px 2px rgba(5,18,51,.85)) drop-shadow(0 2px 10px rgba(5,18,51,.6))}
   .fc-date{display:block;width:min(50vw,40svh,620px);height:auto;margin-top:clamp(0px,.6svh,8px)}
@@ -249,10 +249,10 @@
   .fc-theme h2 span{display:block}
   .fc-theme h2 span+span{color:#5f2300}
   .fc-theme-hi{margin-top:18px;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.9rem);color:var(--sky-1)}
-  .fc-verse{margin-top:clamp(36px,5vw,60px);max-width:62ch;margin-left:auto;font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--sky-0)}
+  .fc-verse{margin-top:clamp(32px,4vw,52px);max-width:62ch;font-size:clamp(1.08rem,1.5vw,1.6rem);color:var(--sky-0)}
   .fc-verse p+p{margin-top:8px}
   .fc-verse .dev{font-weight:600;font-size:1.1em}
-  .fc-verse cite{display:block;margin-top:10px;font:700 .9rem/1.3 'Montserrat',sans-serif;font-style:normal}
+  .fc-verse cite{display:block;margin-top:10px;font:700 .84em/1.3 'Montserrat',sans-serif;font-style:normal}
 
   /* leaders */
   .fc-leaders{background:var(--sky-0);color:var(--cream)}
@@ -364,6 +364,8 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks{visibility:hidden;transition:transform .4s,visibility 0s .4s}
     .navlinks.open{transform:translateY(0);visibility:visible;transition:transform .4s,visibility 0s}
+    nav:has(.navlinks.open){top:0;width:100%;padding:18px 28px;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:0}
+    nav:has(.navlinks.open) .menutoggle{color:var(--cream)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .navlinks .btn{color:var(--sky-0)!important}
     .menutoggle{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-right:-9px;z-index:60}
@@ -660,13 +662,13 @@
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   const nav=document.getElementById('nav');
-  const heroInner=document.getElementById('fcHeroInner'),heroLand=document.getElementById('fcHeroLand');
+  const heroInner=document.getElementById('fcHeroInner'),heroLand=document.getElementById('fcHeroLand'),heroCount=document.getElementById('fcCountdown');
   let lastY=-1;
   function frame(){
     nav.classList.toggle('scrolled',scrollY>40);
     if(!reduced&&scrollY<innerHeight*1.2&&scrollY!==lastY){
       lastY=scrollY;
-      heroInner.style.transform='translate3d(0,'+(scrollY*.22).toFixed(1)+'px,0)';
+      heroInner.style.transform=heroCount.style.transform='translate3d(0,'+(scrollY*.22).toFixed(1)+'px,0)';
       heroLand.style.transform='translate3d(0,'+(scrollY*.08).toFixed(1)+'px,0)';
     }
     requestAnimationFrame(frame);

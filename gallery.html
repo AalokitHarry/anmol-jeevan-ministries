@@ -235,6 +235,8 @@
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks{visibility:hidden;transition:transform .4s,visibility 0s .4s}
     .navlinks.open{transform:translateY(0);visibility:visible;transition:transform .4s,visibility 0s}
+    nav:has(.navlinks.open){top:0;width:100%;padding:18px 28px;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:0}
+    nav:has(.navlinks.open) .menutoggle{color:var(--cream)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .menutoggle{display:block;z-index:60}
     /* absolute scatter is unusable at phone widths — fall back to a simple overlapping grid, straight (no rotation) */
