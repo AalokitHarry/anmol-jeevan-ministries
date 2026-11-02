@@ -70,13 +70,15 @@
   .card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--radius);box-shadow:var(--shadow)}
 
   /* ---------- summary tiles ---------- */
-  .tiles{display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:14px;margin-bottom:18px}
+  .tiles{display:grid;grid-template-columns:1.7fr repeat(5,1fr);gap:14px;margin-bottom:18px}
   .tile{padding:18px 20px;position:relative;overflow:hidden}
+  .tile:not(.hero) .k{padding-right:38px}
   .tile .k{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .tile .v{font-family:'Fraunces',serif;font-size:2.3rem;line-height:1.1;margin-top:6px;color:var(--navy);font-weight:600}
   .tile .ico{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center}
   .ico.pink{background:var(--pink-soft);color:var(--pink)} .ico.blue{background:var(--blue-soft);color:var(--blue)}
   .ico.gold{background:var(--warn-soft);color:var(--warn)} .ico.red{background:var(--bad-soft);color:var(--bad)}
+  .ico.faith{background:#ece8fd;color:#5b3fc4}
   .tile.hero{background:var(--grad);border:0;color:#fff}
   .tile.hero .k{color:#c6d6f5}
   .tile.hero .v{color:#fff;font-size:2.8rem}
@@ -130,6 +132,7 @@
   .src-womens{background:var(--pink-soft);color:var(--pink)}
   .src-event{background:var(--blue-soft);color:var(--blue)}
   .src-invite{background:var(--warn-soft);color:var(--warn)}
+  .src-faith{background:#ece8fd;color:#5b3fc4}
   .details-cell{max-width:280px;color:var(--muted);font-size:.8rem;word-break:break-word}
   .mail{color:var(--muted);font-size:.82rem;min-width:150px;overflow-wrap:anywhere}
   .phone-link{color:var(--ok);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
@@ -323,7 +326,7 @@
   <div class="gate-card fade">
     <img src="img/logo-light.png" alt="Anmol Jeevan Ministries">
     <h1>Admin</h1>
-    <p class="lead">This page is not indexed or linked from the site. Enter the admin key to view registrations from Women's Meet, event bookings, and speaking invitations.</p>
+    <p class="lead">This page is not indexed or linked from the site. Enter the admin key to view registrations from Women's Meet, event bookings, speaking invitations, and the Faith Conference.</p>
     <div class="gate-field">
       <svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
       <input type="password" id="keyInput" placeholder="Admin key" autocomplete="off">
@@ -362,6 +365,7 @@
         <button class="tab" data-filter="Women's Meet">Women's Meet <b id="cnt-womens">0</b></button>
         <button class="tab" data-filter="Event Booking">Event Booking <b id="cnt-event">0</b></button>
         <button class="tab" data-filter="Speaking Invitation">Speaking Invitation <b id="cnt-invite">0</b></button>
+        <button class="tab" data-filter="Faith Conference">Faith Conference <b id="cnt-faith">0</b></button>
         <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates <b id="cnt-dup">0</b></button>
       </div>
       <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="search" placeholder="Search name, phone, email…"></label>
@@ -535,7 +539,8 @@ See you there!</textarea>
   const SOURCES = {
     "Women's Meet":        {cls:'src-womens', color:'#d9558a', count:'cnt-womens'},
     'Event Booking':       {cls:'src-event',  color:'#2f6df6', count:'cnt-event'},
-    'Speaking Invitation': {cls:'src-invite', color:'#d98a0b', count:'cnt-invite'}
+    'Speaking Invitation': {cls:'src-invite', color:'#d98a0b', count:'cnt-invite'},
+    'Faith Conference':    {cls:'src-faith',  color:'#5b3fc4', count:'cnt-faith'}
   };
   const STATUSES = ['Pending','Contacted','Confirmed'];
 
@@ -1465,7 +1470,7 @@ See you there!</textarea>
   function renderStats(){
     markDuplicates();
     const rows = activeRows();
-    const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0 };
+    const counts = { "Women's Meet":0, 'Event Booking':0, 'Speaking Invitation':0, 'Faith Conference':0 };
     const st = { Pending:0, Contacted:0, Confirmed:0 };
     rows.forEach(r=>{
       if(counts[r.Source]!==undefined) counts[r.Source]++;
@@ -1484,6 +1489,7 @@ See you there!</textarea>
       <div class="card tile fade"><div class="ico pink"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-8.6C1 9.2 2.6 5.5 6 5.5c2 0 3.3 1.1 4 2.3.7-1.2 2-2.3 4-2.3 3.4 0 5 3.7 3.3 6.9C19 16.6 12 21 12 21z"/></svg></div><div class="k">Women's Meet</div><div class="v">${counts["Women's Meet"]}</div></div>
       <div class="card tile fade"><div class="ico blue"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div><div class="k">Event Booking</div><div class="v">${counts['Event Booking']}</div></div>
       <div class="card tile fade"><div class="ico gold"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div class="k">Speaking Invitation</div><div class="v">${counts['Speaking Invitation']}</div></div>
+      <div class="card tile fade"><div class="ico faith"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v18M6 9h12"/></svg></div><div class="k">Faith Conference</div><div class="v">${counts['Faith Conference']}</div></div>
       <div class="card tile fade"><div class="ico red"><svg class="i" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></div><div class="k">Duplicate entries</div><div class="v">${dupCount}</div></div>
     `;
     if(animateCounts){ animateCounts = false; runCountUp($('stats')); }
