@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#07081a">
+<meta name="theme-color" content="#faf6ee">
+<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Prayer Room | प्रार्थना निवेदन | AJM Family</title>
+<title>Request Prayer | प्रार्थना निवेदन | AJM Family</title>
 <meta name="description" content="Share a prayer request with the AJM Family team. Write it or send a voice note on WhatsApp, in Hindi or English.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ajmfamily.site/prayer.html">
@@ -22,172 +23,234 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#0a0b22;--night-deep:#07081a;--gold:#e8a33d;--gold-soft:#f6c968;--cream:#faf6ee;--cream-dim:rgba(250,246,238,.84);--line:rgba(250,246,238,.34);
-    --ease-out:cubic-bezier(.16,1,.3,1);--dawn:0;
+    --night:#0a0b22;--night-2:#14163f;--gold:#e8a33d;--gold-soft:#f6c968;--gold-deep:#c9832f;--cream:#faf6ee;--clay:#c96f5a;
+    --ease-out:cubic-bezier(.16,1,.3,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);--ease-smooth:cubic-bezier(.4,0,.2,1);
+    --surface:#faf6ee;--surface-2:#f3ecdd;--on-surface:#2a2540;--on-surface-muted:#6b6580;--accent-text:#984b3c;
+    --hairline:rgba(42,37,64,.08);--hairline-2:rgba(42,37,64,.28);--nav-glass:rgba(250,246,238,.78);--nav-glass-brd:rgba(255,255,255,.6);
+    --panel-edge:rgba(42,37,64,.06);--error-bg:#fbe5e3;--error-text:#8a1f1f;--dawn:0;
+    color-scheme:light;
+  }
+  :root[data-theme="dark"]{
+    --surface:#0d0e28;--surface-2:#161a3d;--on-surface:#eae7f5;--on-surface-muted:#a29dc4;--accent-text:#efb29e;
+    --hairline:rgba(255,255,255,.08);--hairline-2:rgba(255,255,255,.3);--nav-glass:rgba(10,11,34,.78);--nav-glass-brd:rgba(255,255,255,.14);
+    --panel-edge:rgba(255,255,255,.1);--error-bg:#5d1720;--error-text:#ffe3e3;
     color-scheme:dark;
   }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--night-deep);color:var(--cream);font:400 1rem/1.6 'Inter','Noto Sans Devanagari',system-ui,sans-serif;caret-color:var(--gold-soft)}
-  ::selection{background:var(--gold-soft);color:var(--night)}
-  a{color:inherit}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:'Inter','Noto Sans Devanagari',sans-serif;background:var(--surface);color:var(--on-surface);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s}
   [lang="hi"]{font-family:'Noto Sans Devanagari','Inter',sans-serif}
   [hidden]{display:none!important}
+  h1,h2{font-family:'Fraunces',serif;text-wrap:balance}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
 
-  /* The sky: night gives way to dawn as the visitor shares what is on their heart */
-  .sky,.sky i{position:fixed;inset:0;pointer-events:none}
-  .sky{z-index:0;background:linear-gradient(180deg,var(--night-deep) 0%,var(--night) 50%,#14163f 100%)}
-  .sky-dawn{display:block;opacity:var(--dawn);transition:opacity 1.4s var(--ease-out);background:linear-gradient(180deg,#0d1035 0%,#2a2354 46%,#5e3558 76%,#8a4c4a 100%)}
-  .sky .sun{inset:auto;left:50%;bottom:-62vh;width:130vh;height:90vh;margin-left:-65vh;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(246,190,110,.62) 0%,rgba(232,140,80,.3) 46%,transparent 100%);
-    transform:translateY(calc((1 - var(--dawn))*30vh));opacity:calc(.35 + var(--dawn)*.65);transition:transform 1.8s var(--ease-out),opacity 1.4s var(--ease-out)}
+  /* nav */
+  nav{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-radius:0;
+    transition:top .5s var(--ease-out),width .5s var(--ease-out),padding .5s var(--ease-out),border-radius .5s var(--ease-out),background .4s,box-shadow .4s,border-color .4s;border:1px solid transparent}
+  nav.scrolled{top:14px;width:min(92%,1080px);padding:10px 22px;border-radius:100px;background:var(--nav-glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:var(--nav-glass-brd)}
+  .brand{display:flex;align-items:center;color:var(--cream)}
+  .brand-logo{height:36px;width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+  .brand-logo-lg{height:46px}
+  nav .logo-dark{display:block}
+  nav .logo-light{display:none}
+  nav.scrolled .logo-dark{display:none}
+  nav.scrolled .logo-light{display:block}
+  :root[data-theme="dark"] nav.scrolled .logo-dark{display:block}
+  :root[data-theme="dark"] nav.scrolled .logo-light{display:none}
+  .navlinks{display:flex;gap:28px;align-items:center}
+  .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
+  nav.scrolled .navlinks a{color:var(--on-surface)}
+  .navlinks a:hover{opacity:1;color:var(--gold)}
+  .navlinks .btn{background:var(--gold);color:var(--night);padding:9px 18px;border-radius:100px;font-weight:600;opacity:1;transition:background .3s var(--ease-smooth),transform .3s var(--ease-spring)}
+  nav.scrolled .navlinks .btn{color:var(--night)}
+  .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
+  .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
+  nav.scrolled .menutoggle{color:var(--on-surface)}
+
+  /* floating theme toggle */
+  .theme-fab{position:fixed;bottom:26px;right:26px;z-index:70;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--night);color:var(--cream);border:1px solid rgba(232,163,61,.35);box-shadow:0 16px 40px -10px rgba(20,10,40,.5);cursor:pointer;transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s}
+  .theme-fab.hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
+  .theme-fab:hover{transform:scale(1.08);background:var(--night-2)}
+  .theme-fab svg{width:20px;height:20px}
+  .theme-fab .icon-sun{display:none}
+  :root[data-theme="dark"] .theme-fab .icon-sun{display:block}
+  :root[data-theme="dark"] .theme-fab .icon-moon{display:none}
+
+  /* Night gives way to dawn as the visitor shares */
+  .phero{position:relative;overflow:hidden;color:var(--cream);text-align:center;padding:clamp(112px,15svh,150px) 0 clamp(110px,14svh,140px);
+    background:radial-gradient(120% 90% at 50% 130%,rgba(232,163,61,.55) 0%,rgba(201,111,90,.25) 30%,transparent 60%),linear-gradient(180deg,#07081a 0%,var(--night) 45%,var(--night-2) 100%)}
+  .phero i{position:absolute;inset:0;pointer-events:none}
+  .sky-dawn{opacity:var(--dawn);transition:opacity 1.4s var(--ease-out);background:linear-gradient(180deg,#0d1035 0%,#2a2354 44%,#5e3558 74%,#8a4c4a 100%)}
+  .phero .sun{inset:auto;left:50%;bottom:-70%;width:min(900px,170%);aspect-ratio:1.5;transform:translate(-50%,calc((1 - var(--dawn))*16%));opacity:calc(.25 + var(--dawn)*.75);border-radius:50%;
+    background:radial-gradient(closest-side,rgba(246,190,110,.7) 0%,rgba(232,140,80,.32) 46%,transparent 100%);transition:transform 1.8s var(--ease-out),opacity 1.4s var(--ease-out)}
   .stars{opacity:calc(1 - var(--dawn)*.8);transition:opacity 1.4s}
-  .stars b{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 4s infinite ease-in-out}
+  .stars b{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw 4s infinite ease-in-out}
   @keyframes tw{0%,100%{opacity:.15}50%{opacity:.75}}
+  .phero-inner{position:relative;z-index:2}
+  .phero h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+  .phero .hindi{margin-top:10px;font-weight:600;font-size:clamp(1.1rem,2.4vw,1.45rem);line-height:1.4;color:var(--gold-soft)}
+  .phero .gentle{max-width:560px;margin:14px auto 0;font-size:1.04rem;color:rgba(250,246,238,.9);text-wrap:balance}
+  .phero .gentle span{display:block}
 
-  .room{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100svh}
-  .room-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(20px,4vw,44px)}
-  .room-top img{display:block;height:36px;width:auto}
-  .room-back{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:100px;background:rgba(7,8,26,.3);font-weight:600;font-size:.92rem;text-decoration:none;white-space:nowrap;transition:background .25s}
-  .room-back:hover{background:rgba(250,246,238,.1)}
+  /* The panels rise out of the sky, like the rest of the site's forms */
+  .pray{position:relative;z-index:3;margin-top:calc(clamp(70px,9svh,96px)*-1);padding-bottom:clamp(56px,6.5vw,80px)}
+  .pray-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"form voice" "form live";gap:20px}
+  .pray-grid.is-sent{grid-template-columns:minmax(0,720px);justify-content:center;grid-template-rows:auto auto;grid-template-areas:"sent" "live"}
+  .panel{background:var(--surface-2);border-radius:20px;padding:clamp(22px,3vw,34px) clamp(20px,3vw,36px);border:1px solid var(--panel-edge);box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+  .panel h2{font-size:1.3rem;font-weight:600;line-height:1.3}
+  .panel-voice{grid-area:voice}
+  .panel-form{grid-area:form}
+  .panel-live{grid-area:live;display:flex;flex-direction:column}
+  .panel-sent{grid-area:sent;text-align:center}
+  .panel-sent:focus{outline:none}
 
-  .room-body{flex:1;width:100%;max-width:1160px;margin:0 auto;padding:clamp(8px,3svh,40px) clamp(20px,4vw,44px) 48px}
-  .room-ask{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-areas:"head form" "speak form";grid-template-rows:auto 1fr;column-gap:clamp(40px,6vw,88px)}
-  .room-head{grid-area:head}
-  .room-speak{grid-area:speak}
-  .room-form{grid-area:form}
-
-  h1,h2{font-family:'Fraunces',serif;font-weight:500;text-wrap:balance;margin:0}
-  h1{font-size:clamp(2.2rem,5.2vw,4rem);line-height:1.06;letter-spacing:-.015em}
-  .room-hi{margin:12px 0 0;font-size:clamp(1.15rem,2.1vw,1.5rem);font-weight:600;line-height:1.35;color:var(--gold-soft)}
-  .room-gentle{max-width:44ch;margin:16px 0 0;font-size:1.06rem;color:var(--cream-dim)}
-  .room-gentle span{display:block;margin-top:2px}
-
-  .room-speak{margin-top:clamp(20px,3svh,32px)}
-  .room-speak h2{font-size:1.25rem;line-height:1.3}
-  .ways{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:12px 24px;border-radius:100px;border:1px solid transparent;background:none;color:inherit;font:600 1rem/1.25 'Inter','Noto Sans Devanagari',sans-serif;text-decoration:none;text-align:center;cursor:pointer;transition:transform .35s var(--ease-out),background .25s,box-shadow .25s}
-  .btn svg{width:20px;height:20px;flex:none}
-  .btn:hover{transform:translateY(-2px)}
-  .btn:active{transform:translateY(0)}
-  .btn-gold{background:var(--gold);color:var(--night)}
+  .btn-lg{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:12px 24px;border-radius:100px;border:1px solid transparent;background:none;color:inherit;font:600 .98rem/1.25 'Inter','Noto Sans Devanagari',sans-serif;text-align:center;cursor:pointer;transition:background .25s,transform .35s var(--ease-spring)}
+  .btn-lg svg{width:20px;height:20px;flex:none}
+  .btn-lg:hover{transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:var(--night);box-shadow:0 10px 24px -12px rgba(20,10,40,.55)}
   .btn-gold:hover{background:var(--gold-soft)}
-  .btn-line{border-color:var(--line);background:rgba(7,8,26,.3)}
-  .btn-line:hover{background:rgba(250,246,238,.1)}
-  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold-soft);outline-offset:3px}
-  .way-hint{margin:10px 0 0;max-width:46ch;font-size:.9rem;line-height:1.45;color:var(--cream-dim)}
+  .btn-ghost-dark{border-color:var(--hairline-2);color:var(--on-surface)}
+  .btn-ghost-dark:hover{background:var(--hairline)}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold-deep);outline-offset:3px}
+  .ways{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+  .way-hint{margin-top:12px;font-size:.88rem;line-height:1.5;color:var(--on-surface-muted)}
 
-  .room-form{display:flex;flex-direction:column;gap:14px;align-self:start}
-  .room-or{display:none;margin:26px 0 0;font-family:'Fraunces',serif;font-size:1.25rem;line-height:1.3}
-  fieldset{margin:0;padding:0;border:0;min-width:0}
-  legend{padding:0;margin-bottom:8px;font-weight:600;font-size:.94rem}
-  legend small{font-weight:400;font-size:.86rem;color:var(--cream-dim)}
+  .panel-form{display:flex;flex-direction:column;gap:16px}
+  fieldset{border:0;min-width:0}
+  legend{margin-bottom:8px;font-size:.88rem;font-weight:600}
+  legend small,.field small{font-weight:400;font-size:.84rem;color:var(--on-surface-muted)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chips label{position:relative;display:block;cursor:pointer}
-  .chips input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
-  .chips span{display:flex;align-items:center;gap:6px;min-height:44px;padding:8px 15px;border:1px solid var(--line);border-radius:100px;background:rgba(7,8,26,.3);font-size:.92rem;font-weight:500;transition:background .25s,border-color .25s,color .25s}
-  .chips span i{font-style:normal;font-size:.86rem;color:var(--cream-dim)}
-  .chips label:hover span{background:rgba(250,246,238,.1)}
+  .chips input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+  .chips span{display:flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:1px solid var(--hairline-2);border-radius:100px;background:var(--surface);font-size:.9rem;font-weight:500;transition:background .25s,border-color .25s,color .25s}
+  .chips span i{font-style:normal;font-size:.84rem;color:var(--on-surface-muted)}
+  .chips label:hover span{border-color:var(--gold-deep)}
   .chips input:checked+span{background:var(--gold-soft);border-color:var(--gold-soft);color:var(--night);font-weight:600}
   .chips input:checked+span i{color:var(--night)}
-  .chips input:focus-visible+span{outline:3px solid var(--gold-soft);outline-offset:2px}
-
-  .field{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.94rem}
-  .field small{font-weight:400;font-size:.86rem;color:var(--cream-dim)}
-  textarea,input[type=text]{width:100%;min-width:0;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(7,8,26,.5);color:var(--cream);font:400 1.06rem/1.55 'Inter','Noto Sans Devanagari',sans-serif;transition:border-color .25s,background .25s}
+  .chips input:focus-visible+span{outline:3px solid var(--gold-deep);outline-offset:2px}
+  .field{display:flex;flex-direction:column;gap:6px;font-size:.88rem;font-weight:600}
+  textarea,input[type=text]{width:100%;min-width:0;padding:12px 14px;border:1px solid var(--hairline-2);border-radius:12px;background:var(--surface);color:var(--on-surface);font:400 1rem/1.55 'Inter','Noto Sans Devanagari',sans-serif;transition:border-color .25s}
   textarea{min-height:128px;resize:vertical}
-  textarea::placeholder,input::placeholder{color:rgba(250,246,238,.72);opacity:1}
-  textarea:hover,input[type=text]:hover{border-color:rgba(250,246,238,.55)}
-  .room-call{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:8px 0;cursor:pointer;font-size:.96rem;line-height:1.45}
-  .room-call input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--gold)}
-  .room-error{margin:0;padding:10px 14px;border-radius:10px;background:#5d1720;color:#ffe3e3;font-weight:500;font-size:.94rem}
-  .room-form .btn-gold{width:100%;min-height:56px;font-size:1.06rem}
-  .room-private{margin:0;font-size:.88rem;line-height:1.5;color:var(--cream-dim)}
+  textarea::placeholder,input::placeholder{color:var(--on-surface-muted);opacity:1}
+  textarea:focus,input[type=text]:focus{border-color:var(--gold-deep)}
+  .pray-call{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:6px 0;cursor:pointer;font-size:.95rem;line-height:1.45}
+  .pray-call input{flex:none;width:22px;height:22px;accent-color:var(--gold-deep)}
+  .pray-error{padding:10px 14px;border-radius:10px;background:var(--error-bg);color:var(--error-text);font-weight:500;font-size:.92rem}
+  .panel-form .btn-gold{width:100%;min-height:56px;font-size:1.04rem}
+  .pray-private{font-size:.86rem;line-height:1.5;color:var(--on-surface-muted)}
 
-  /* After the visitor opens WhatsApp */
-  .room-sent{max-width:680px;margin:0 auto;padding-top:clamp(0px,4svh,48px);text-align:center;animation:rise 1.2s var(--ease-out) both}
-  .room-sent:focus{outline:none}
-  .room-sent h1{font-size:clamp(2.1rem,5vw,3.6rem)}
-  .room-sent>p{margin:14px auto 0;max-width:48ch;font-size:1.1rem;color:var(--cream)}
-  .room-sent>.sent-hi{margin-top:6px;font-size:1.02rem;color:var(--gold-soft)}
-  .verse{margin:clamp(24px,4svh,40px) auto 0;padding:0}
-  .verse p{margin:0;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.25rem,2.6vw,1.65rem);line-height:1.35;text-wrap:balance}
-  .verse p[lang="hi"]{margin-top:10px;font-family:'Noto Sans Devanagari',sans-serif;font-style:normal;font-weight:600;font-size:clamp(1.05rem,2vw,1.25rem);color:var(--gold-soft)}
-  .verse cite{display:block;margin-top:8px;font-style:normal;font-weight:600;font-size:.9rem}
-  .together{margin:clamp(26px,4svh,44px) auto 0}
-  .together h2{font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.25}
-  .together p{margin:6px 0 0;color:var(--cream)}
-  .together .ways{justify-content:center;margin-top:16px}
-  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .times{list-style:none;margin-top:14px}
+  .times li{padding:10px 0;border-bottom:1px solid var(--hairline-2)}
+  .times li:first-child{padding-top:0}
+  .times b{display:block;font-family:'Fraunces',serif;font-size:1.06rem;font-weight:600;line-height:1.3}
+  .times span{font-size:.9rem;color:var(--on-surface-muted)}
+  .panel-live .btn-lg{width:100%;margin-top:auto}
+  .panel-live .times{margin-bottom:16px}
 
-  .room-ask>*{animation:rise 1.1s var(--ease-out) both}
-  .room-speak{animation-delay:.12s}
-  .room-form{animation-delay:.2s}
+  .panel-sent h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;line-height:1.15}
+  .panel-sent>p{max-width:48ch;margin:10px auto 0;font-size:1.04rem}
+  .panel-sent>.sent-hi{margin-top:4px;font-size:.98rem;font-weight:500;color:var(--accent-text)}
+  .verse{margin:clamp(20px,3.4svh,30px) auto 0}
+  .verse p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.35;text-wrap:balance}
+  .verse p[lang="hi"]{margin-top:8px;font-family:'Noto Sans Devanagari',sans-serif;font-style:normal;font-weight:600;font-size:clamp(1rem,1.9vw,1.14rem);color:var(--accent-text)}
+  .verse cite{display:block;margin-top:8px;font-style:normal;font-weight:600;font-size:.86rem;color:var(--on-surface-muted)}
+  .sent-ways{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+
+  footer{background:#07081a;color:rgba(250,246,238,.6);padding:50px 0 40px;text-align:center}
+  footer .brand{justify-content:center;margin-bottom:14px}
+  footer p{font-size:.86rem}
+  footer .verse-sm{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);margin-bottom:22px;font-size:1.05rem}
 
   @media(max-width:900px){
-    .room-ask{display:block}
-    .room-or{display:block}
-    .room-form{margin-top:12px}
-    .room-body{padding-bottom:36px}
-    .room-top{padding-bottom:6px}
-    h1{font-size:clamp(2rem,8.6vw,3.2rem)}
+    .pray-grid,.pray-grid.is-sent{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-template-areas:"voice" "form" "live"}
+    .pray-grid.is-sent{grid-template-areas:"sent" "live"}
+    .ways{flex-direction:row;flex-wrap:wrap}
+    .ways .btn-lg{flex:1 1 auto;padding-inline:14px}
+  }
+  @media(max-width:860px){
+    .wrap{padding:0 16px}
+    .navlinks{position:fixed;inset:0 0 auto 0;top:0;flex-direction:column;background:var(--night);padding:90px 28px 34px;gap:22px;transform:translateY(-100%);visibility:hidden;transition:transform .4s,visibility 0s .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
+    .navlinks.open{transform:translateY(0);visibility:visible;transition:transform .4s,visibility 0s}
+    nav:has(.navlinks.open){top:0;width:100%;padding:18px 28px;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:0}
+    nav:has(.navlinks.open) .menutoggle{color:var(--cream)}
+    .navlinks a{color:var(--cream)!important;font-size:1.1rem}
+    .navlinks .btn{color:var(--night)!important}
+    .menutoggle{display:block;z-index:60}
+    .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
+    .theme-fab svg{width:18px;height:18px}
+    .phero{padding-left:20px;padding-right:20px}
+    .phero-inner{padding:0 4px}
+    .phero h1{font-size:clamp(2rem,8.6vw,3rem)}
   }
   @media(max-width:560px){
-    .ways{gap:8px}
-    #ask .btn-line{flex:1 1 auto;padding-inline:14px}
     .way-number,.way-hint{display:none}
-    .room-gentle{font-size:1rem}
-    .room-speak h2,.room-or{font-size:1.12rem}
-    .room-speak{margin-top:18px}
-    .room-or{margin-top:20px}
-    .together .ways .btn{flex:1 1 100%}
+    .phero .gentle{font-size:.98rem}
+    .sent-ways .btn-lg{flex:1 1 100%}
   }
   @media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation:none!important;transition:none!important}
-    .stars b{opacity:.5}
+    *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   }
 </style>
 </head>
 <body>
-<div class="sky" aria-hidden="true"><i class="sky-dawn"></i><i class="stars" id="stars"></i><i class="sun"></i></div>
 
-<div class="room">
-  <header class="room-top">
-    <a href="index.html" aria-label="Anmol Jeevan Ministries home"><img src="img/logo.png" alt="Anmol Jeevan Ministries" width="168" height="36" style="width:auto"></a>
-    <a class="room-back" href="index.html">Back to home</a>
-  </header>
+<nav id="nav">
+  <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
+    <img class="brand-logo logo-dark" src="img/logo.png" alt="Anmol Jeevan Ministries">
+    <img class="brand-logo logo-light" src="img/logo-light.png" alt="Anmol Jeevan Ministries">
+  </a>
+  <button class="menutoggle" id="menutoggle" aria-label="Menu">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+  </button>
+  <div class="navlinks" id="navlinks">
+    <a href="index.html#about">About</a>
+    <a href="index.html#service">Gatherings</a>
+    <a href="events.html">Events</a>
+    <a href="index.html#watch">Watch</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="index.html#leaders">Leaders</a>
+    <a href="invite.html">Invite</a>
+    <a href="index.html#connect" class="btn">Connect</a>
+  </div>
+</nav>
 
-  <main class="room-body">
-    <div class="room-ask" id="ask">
-      <div class="room-head">
-        <h1>What can we pray with you about?</h1>
-        <p class="room-hi" lang="hi">हम आपके साथ किस बात के लिए प्रार्थना करें?</p>
-        <p class="room-gentle">You don’t need the right words. Share it in Hindi or English, just as you are.<span lang="hi">सही शब्दों की ज़रूरत नहीं। जैसे हैं, वैसे ही बताइए।</span></p>
+<header class="phero">
+  <i class="sky-dawn" aria-hidden="true"></i>
+  <i class="stars" id="stars" aria-hidden="true"></i>
+  <i class="sun" aria-hidden="true"></i>
+  <div class="wrap phero-inner">
+    <h1>What can we pray with you about?</h1>
+    <p class="hindi" lang="hi">हम आपके साथ किस बात के लिए प्रार्थना करें?</p>
+    <p class="gentle">You don’t need the right words. Share it in Hindi or English, just as you are.<span lang="hi">सही शब्दों की ज़रूरत नहीं। जैसे हैं, वैसे ही बताइए।</span></p>
+  </div>
+</header>
+
+<main class="pray">
+  <div class="wrap pray-grid" id="prayGrid">
+    <section class="panel panel-voice" id="voicePanel" aria-labelledby="speakTitle">
+      <h2 id="speakTitle">Say it in your own voice <span lang="hi">· बोलकर बताइए</span></h2>
+      <div class="ways">
+        <a class="btn-lg btn-ghost-dark way-voice" id="voiceNote" href="https://wa.me/917999929550?text=Prayer%20request%20from%20the%20AJM%20Family%20website%3A%0A%0AI%20would%20like%20to%20send%20my%20request%20as%20a%20voice%20note." target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          Send a voice note
+        </a>
+        <a class="btn-lg btn-ghost-dark way-call" href="tel:+917999929550">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 4.2 2 2 0 0 1 3.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+          Call<span class="way-number"> +91 79999 29550</span>
+        </a>
       </div>
+      <p class="way-hint">The voice note opens WhatsApp. Hold the microphone there and speak. <span lang="hi">WhatsApp में माइक दबाकर बोलिए।</span></p>
+    </section>
 
-      <section class="room-speak" aria-labelledby="speakTitle">
-        <h2 id="speakTitle">Say it in your own voice <span lang="hi">· बोलकर बताइए</span></h2>
-        <div class="ways">
-          <a class="btn btn-line way-voice" id="voiceNote" href="https://wa.me/917999929550?text=Prayer%20request%20from%20the%20AJM%20Family%20website%3A%0A%0AI%20would%20like%20to%20send%20my%20request%20as%20a%20voice%20note." target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-            Send a voice note
-          </a>
-          <a class="btn btn-line way-call" href="tel:+917999929550">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 4.2 2 2 0 0 1 3.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
-            Call<span class="way-number"> +91 79999 29550</span>
-          </a>
-        </div>
-        <p class="way-hint">The voice note opens WhatsApp. Hold the microphone there and speak. <span lang="hi">WhatsApp में माइक दबाकर बोलिए।</span></p>
-      </section>
-
-      <p class="room-or" aria-hidden="true">Or write it here <span lang="hi">· या यहाँ लिखिए</span></p>
-      <form class="room-form" id="prayerForm" novalidate aria-label="Write your prayer request">
-        <fieldset>
-          <legend>This is about <small>(optional)</small></legend>
-          <div class="chips">
+    <form class="panel panel-form" id="ask" novalidate aria-labelledby="writeTitle">
+      <h2 id="writeTitle">Write it here <span lang="hi">· यहाँ लिखिए</span></h2>
+      <fieldset>
+        <legend>This is about <small>(optional)</small></legend>
+        <div class="chips">
             <label><input type="checkbox" name="about" value="Health"><span>Health <i lang="hi">स्वास्थ्य</i></span></label>
             <label><input type="checkbox" name="about" value="Family"><span>Family <i lang="hi">परिवार</i></span></label>
             <label><input type="checkbox" name="about" value="Work"><span>Work <i lang="hi">काम</i></span></label>
@@ -195,26 +258,25 @@
             <label><input type="checkbox" name="about" value="Peace"><span>Peace <i lang="hi">शांति</i></span></label>
             <label><input type="checkbox" name="about" value="Thanksgiving"><span>Thanks <i lang="hi">धन्यवाद</i></span></label>
           </div>
-        </fieldset>
-        <label class="field" for="prayerMessage">Your prayer request
-          <textarea id="prayerMessage" name="message" maxlength="2000" rows="4" autocomplete="off" placeholder="Write here in your own words… यहाँ लिखिए…" aria-describedby="prayerError"></textarea>
-        </label>
-        <p class="room-error" id="prayerError" role="alert" hidden>Please write your request, or send a voice note instead.</p>
-        <label class="field" for="prayerName"><span>Your name <small>(optional)</small></span>
-          <input id="prayerName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name">
-        </label>
-        <label class="room-call" for="prayerContact"><input id="prayerContact" name="contact" type="checkbox"><span>Please contact me on this WhatsApp number.</span></label>
-        <button type="submit" class="btn btn-gold">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.5 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.43 1.33-1.98 1.38-.5.05-1.14.23-3.84-.82-3.24-1.28-5.3-4.6-5.46-4.81-.16-.21-1.3-1.73-1.3-3.3s.82-2.34 1.11-2.66c.3-.32.64-.4.86-.4l.62.01c.2.01.47-.08.73.56.27.65.92 2.25 1 2.42.08.16.14.35.03.56-.11.21-.16.34-.32.53l-.48.56c-.16.16-.33.33-.14.65.19.32.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.57 1.59.32.16.51.13.7-.08.19-.21.8-.94 1.02-1.26.21-.32.43-.27.72-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.14.08.77-.17 1.47Z"/></svg>
-          Send on WhatsApp
-        </button>
-        <p class="room-private">Nothing leaves this page until you press Send in WhatsApp. It goes to the AJM team, and this website does not save it.</p>
-      </form>
-      <noscript><style>.room-form,.room-or{display:none!important}</style></noscript>
-    </div>
+      </fieldset>
+      <label class="field" for="prayerMessage">Your prayer request
+        <textarea id="prayerMessage" name="message" maxlength="2000" rows="4" autocomplete="off" placeholder="Write here in your own words… यहाँ लिखिए…" aria-describedby="prayerError"></textarea>
+      </label>
+      <p class="pray-error" id="prayerError" role="alert" hidden>Please write your request, or send a voice note instead.</p>
+      <label class="field" for="prayerName"><span>Your name <small>(optional)</small></span>
+        <input id="prayerName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name">
+      </label>
+      <label class="pray-call" for="prayerContact"><input id="prayerContact" name="contact" type="checkbox"><span>Please contact me on this WhatsApp number.</span></label>
+      <button type="submit" class="btn-lg btn-gold">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.5 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.43 1.33-1.98 1.38-.5.05-1.14.23-3.84-.82-3.24-1.28-5.3-4.6-5.46-4.81-.16-.21-1.3-1.73-1.3-3.3s.82-2.34 1.11-2.66c.3-.32.64-.4.86-.4l.62.01c.2.01.47-.08.73.56.27.65.92 2.25 1 2.42.08.16.14.35.03.56-.11.21-.16.34-.32.53l-.48.56c-.16.16-.33.33-.14.65.19.32.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.57 1.59.32.16.51.13.7-.08.19-.21.8-.94 1.02-1.26.21-.32.43-.27.72-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.14.08.77-.17 1.47Z"/></svg>
+        Send on WhatsApp
+      </button>
+      <p class="pray-private">Nothing leaves this page until you press Send in WhatsApp. It goes to the AJM team, and this website does not save it.</p>
+    </form>
+    <noscript><style>.panel-form{display:none!important}.pray-grid{grid-template-areas:"voice" "live";grid-template-columns:minmax(0,720px);justify-content:center}</style></noscript>
 
-    <section class="room-sent" id="sent" tabindex="-1" hidden aria-labelledby="sentTitle">
-      <h1 id="sentTitle">One last step in WhatsApp</h1>
+    <section class="panel panel-sent" id="sent" tabindex="-1" hidden aria-labelledby="sentTitle">
+      <h2 id="sentTitle">One last step in WhatsApp</h2>
       <p id="sentText">Your request is ready there. Press Send and it will reach the AJM team.</p>
       <p class="sent-hi" id="sentHi" lang="hi">आपका निवेदन वहाँ तैयार है। Send दबाइए, और यह AJM टीम तक पहुँच जाएगा।</p>
       <blockquote class="verse">
@@ -222,25 +284,66 @@
         <p lang="hi">“कदाचित् रात को रोना पड़े, परन्तु सवेरे आनन्द पहुँचेगा।”</p>
         <cite>Psalm 30:5 · भजन संहिता 30:5</cite>
       </blockquote>
-      <div class="together">
-        <h2>Pray with us live</h2>
-        <p>Morning Devotion, 7:30 AM and Night Prayer, 10 PM. Monday to Saturday on Zoom.</p>
-        <div class="ways">
-          <a class="btn btn-gold" href="https://wa.me/917999929550?text=Hello%20AJM%20Family%2C%20please%20send%20me%20the%20Zoom%20link%20for%20Morning%20Devotion%20and%20Night%20Prayer." target="_blank" rel="noopener noreferrer">Get the Zoom link</a>
-          <button class="btn btn-line" id="sentAgain" type="button">Share another request</button>
-          <a class="btn btn-line" href="index.html">Back to the website</a>
-        </div>
+      <div class="sent-ways">
+        <button class="btn-lg btn-ghost-dark" id="sentAgain" type="button">Share another request</button>
+        <a class="btn-lg btn-ghost-dark" href="index.html">Back to home</a>
       </div>
     </section>
-  </main>
-</div>
+
+    <section class="panel panel-live" aria-labelledby="liveTitle">
+      <h2 id="liveTitle">Pray with us live</h2>
+      <ul class="times">
+        <li><b>Morning Devotion</b><span>Monday to Saturday, 7:30 AM · Online via Zoom</span></li>
+        <li><b>Night Prayer</b><span>Monday to Saturday, 10 PM · Online via Zoom</span></li>
+      </ul>
+      <a class="btn-lg btn-ghost-dark" href="https://wa.me/917999929550?text=Hello%20AJM%20Family%2C%20please%20send%20me%20the%20Zoom%20link%20for%20Morning%20Devotion%20and%20Night%20Prayer." target="_blank" rel="noopener noreferrer">Get the Zoom link</a>
+    </section>
+  </div>
+</main>
+
+<footer id="siteFooter">
+  <div class="wrap">
+    <p class="verse-sm">"…that they may have life, and have it to the full." — John 10:10</p>
+    <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
+      <img class="brand-logo brand-logo-lg" src="img/logo.png" alt="Anmol Jeevan Ministries">
+    </a>
+    <p style="margin-top:16px">Indore, Madhya Pradesh, India · Hindi-language Christian ministry</p>
+    <p style="margin-top:8px;opacity:.7">© <span id="yr"></span> Anmol Jeevan Ministries. To God be the glory.</p>
+  </div>
+</footer>
+
+<button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 
 <script>
 (function(){
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',scrollY>40);
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const tog=document.getElementById('menutoggle'),links=document.getElementById('navlinks');
+  tog.addEventListener('click',()=>links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  const themeFab=document.getElementById('themeToggle');
+  new IntersectionObserver(es=>es.forEach(e=>themeFab.classList.toggle('hide',e.isIntersecting)),{threshold:.15}).observe(document.getElementById('siteFooter'));
+  themeFab.addEventListener('click',()=>{
+    const root=document.documentElement,next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('ajm-theme',next);}catch(e){}
+    document.querySelector('meta[name="theme-color"]').setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
+  });
+
+  const stars=document.getElementById('stars'),frag=document.createDocumentFragment();
+  for(let i=0;i<70;i++){const s=document.createElement('b');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*80+'%';s.style.animationDelay=Math.random()*4+'s';frag.appendChild(s);}
+  stars.appendChild(frag);
+
   const WA='https://wa.me/917999929550?text=';
-  const root=document.documentElement,form=document.getElementById('prayerForm'),message=document.getElementById('prayerMessage'),
-    nameBox=document.getElementById('prayerName'),contact=document.getElementById('prayerContact'),error=document.getElementById('prayerError'),
-    ask=document.getElementById('ask'),sent=document.getElementById('sent'),sentTitle=document.getElementById('sentTitle'),sentText=document.getElementById('sentText'),sentHi=document.getElementById('sentHi'),voice=document.getElementById('voiceNote');
+  const root=document.documentElement,grid=document.getElementById('prayGrid'),form=document.getElementById('ask'),message=document.getElementById('prayerMessage'),
+    nameBox=document.getElementById('prayerName'),contact=document.getElementById('prayerContact'),error=document.getElementById('prayerError'),voicePanel=document.getElementById('voicePanel'),
+    sent=document.getElementById('sent'),sentTitle=document.getElementById('sentTitle'),sentText=document.getElementById('sentText'),sentHi=document.getElementById('sentHi'),voice=document.getElementById('voiceNote');
   const about=()=>[...form.querySelectorAll('[name=about]:checked')].map(c=>c.value);
 
   // Night slowly becomes dawn as the visitor shares; full dawn comes only after they go to WhatsApp
@@ -250,10 +353,6 @@
     setDawn(len||picked?Math.min(.68,.12+picked*.05+len/240*.56):0);
   }
   form.addEventListener('input',()=>{follow();if(message.value.trim())error.hidden=true;});
-
-  const stars=document.getElementById('stars'),frag=document.createDocumentFragment();
-  for(let i=0;i<70;i++){const s=document.createElement('b');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*72+'%';s.style.animationDelay=Math.random()*4+'s';frag.appendChild(s);}
-  stars.appendChild(frag);
 
   function draft(request){
     return ['Prayer request from the AJM Family website:',
@@ -265,7 +364,7 @@
   }
   function showSent(title,text,hindi){
     sentTitle.textContent=title;sentText.textContent=text;sentHi.textContent=hindi;
-    ask.hidden=true;sent.hidden=false;setDawn(1);
+    form.hidden=true;voicePanel.hidden=true;sent.hidden=false;grid.classList.add('is-sent');setDawn(1);
     scrollTo({top:0,behavior:'auto'});
     sent.focus({preventScroll:true});
   }
@@ -281,7 +380,7 @@
     setTimeout(()=>showSent('Now speak in WhatsApp','Hold the microphone there and speak in your own words, then let go to send it to the AJM team.','WhatsApp में माइक दबाकर रखिए और अपने शब्दों में बोलिए। छोड़ते ही यह AJM टीम को चला जाएगा।'),0);
   });
   document.getElementById('sentAgain').addEventListener('click',()=>{
-    form.reset();error.hidden=true;sent.hidden=true;ask.hidden=false;setDawn(0);
+    form.reset();error.hidden=true;sent.hidden=true;form.hidden=false;voicePanel.hidden=false;grid.classList.remove('is-sent');setDawn(0);
     message.focus();
   });
 })();
