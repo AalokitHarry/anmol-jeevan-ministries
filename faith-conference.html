@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#faf6ee">
-<script>(function(){try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');if(t==='dark'){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#0a0b22');}}catch(e){}})();</script>
+<meta name="theme-color" content="#051233">
+<script>(function(){document.documentElement.classList.add('js');try{var t=localStorage.getItem('ajm-theme');document.documentElement.setAttribute('data-theme',t||'light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Faith Conference 2027, Indore — Register | Anmol Jeevan Ministries</title>
 <meta name="description" content="Register for the Faith Conference by Anmol Jeevan Ministries — 14, 15 and 16 January 2027 in Indore. Stronger Faith, Greater Impact.">
@@ -61,52 +61,57 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/faith-conference/lockup.webp">
 <style>
   :root{
-    --night:#0a0b22;
-    --night-2:#14163f;
-    --night-3:#1c1f52;
-    --gold:#e8a33d;
-    --gold-soft:#f6c968;
-    --gold-deep:#c9832f;
-    --cream:#faf6ee;
-    --cream-2:#f3ecdd;
-    --clay:#c96f5a;
-    --sky:#7b94b8;
-    --ink:#2a2540;
-    --muted:#6b6580;
-    --glass:rgba(255,255,255,.06);
-    --glass-brd:rgba(255,255,255,.14);
+    --sky-0:#051233;
+    --sky-1:#0a2559;
+    --sky-2:#123c80;
+    --sun:#f7c933;
+    --sun-soft:#ffdf73;
+    --amber:#ec9a2b;
+    --ember:#8a3f0c;
+    --cream:#fff8e6;
+    --night:#051233;
+    --night-2:#0a2559;
+    --gold:#f7c933;
+    --gold-soft:#ffdf73;
     --ease-out:cubic-bezier(.16,1,.3,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
     --ease-smooth:cubic-bezier(.4,0,.2,1);
-    --surface:#faf6ee;
-    --surface-2:#f3ecdd;
-    --on-surface:#2a2540;
-    --on-surface-muted:#6b6580;
-    --hairline:rgba(42,37,64,.08);
-    --hairline-2:rgba(42,37,64,.22);
-    --nav-glass:rgba(250,246,238,.78);
+    --surface:#fff3cd;
+    --surface-2:#fffaf0;
+    --field:#ffffff;
+    --on-surface:#0a2559;
+    --on-surface-muted:#4c5a7c;
+    --accent:#a85400;
+    --hairline:rgba(10,37,89,.14);
+    --hairline-2:rgba(10,37,89,.32);
+    --nav-glass:rgba(255,248,230,.84);
     --nav-glass-brd:rgba(255,255,255,.6);
     color-scheme:light;
   }
   :root[data-theme="dark"]{
-    --surface:#0d0e28;
-    --surface-2:#161a3d;
-    --on-surface:#eae7f5;
-    --on-surface-muted:#a29dc4;
-    --hairline:rgba(255,255,255,.08);
-    --hairline-2:rgba(255,255,255,.22);
-    --nav-glass:rgba(10,11,34,.78);
+    --surface:#051233;
+    --surface-2:#0d2b63;
+    --field:#071c49;
+    --on-surface:#f4f6ff;
+    --on-surface-muted:#b4c2e2;
+    --accent:#ffdf73;
+    --hairline:rgba(255,255,255,.14);
+    --hairline-2:rgba(255,255,255,.34);
+    --nav-glass:rgba(5,18,51,.82);
     --nav-glass-brd:rgba(255,255,255,.14);
     color-scheme:dark;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scrollbar-color:var(--amber) var(--sky-0)}
   @media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+    *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   }
+  ::selection{background:var(--sun);color:var(--sky-0)}
+  :focus-visible{outline:3px solid var(--amber);outline-offset:3px}
   body{
     font-family:'Inter','Noto Sans Devanagari',sans-serif;
     background:var(--surface);
@@ -116,16 +121,10 @@
     overflow-x:hidden;
     transition:background .4s,color .4s;
   }
-  .dev{font-family:'Noto Sans Devanagari',sans-serif}
-  h1,h2,h3,.display{font-family:'Fraunces',serif}
+  .dev{font-family:'Noto Sans Devanagari',sans-serif;letter-spacing:0}
+  h1,h2,h3{font-family:'Montserrat','Noto Sans Devanagari',sans-serif;text-wrap:balance}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-  .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--clay)}
-
-  .grain{
-    position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
 
   /* nav */
   nav{
@@ -138,7 +137,7 @@
   nav.scrolled{
     top:14px;width:min(92%,1080px);padding:10px 22px;border-radius:100px;
     background:var(--nav-glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-    box-shadow:0 10px 40px -12px rgba(20,10,40,.28);border-color:var(--nav-glass-brd);
+    box-shadow:0 10px 40px -12px rgba(5,18,51,.4);border-color:var(--nav-glass-brd);
   }
   .brand{display:flex;align-items:center;color:var(--cream);transition:color .4s}
   .brand-logo{height:36px;width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
@@ -150,14 +149,13 @@
   :root[data-theme="dark"] nav.scrolled .logo-dark{display:block}
   :root[data-theme="dark"] nav.scrolled .logo-light{display:none}
   .navlinks{display:flex;gap:28px;align-items:center}
-  .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);opacity:.85;transition:color .4s,opacity .2s}
+  .navlinks a{font-size:.9rem;font-weight:500;color:var(--cream);transition:color .3s}
   nav.scrolled .navlinks a{color:var(--on-surface)}
-  .navlinks a:hover{opacity:1;color:var(--gold)}
-  .navlinks a.current{opacity:1;color:var(--gold-soft)}
-  nav.scrolled .navlinks a.current{color:var(--gold-deep)}
-  .navlinks .btn{background:var(--gold);color:var(--night);padding:9px 18px;border-radius:100px;font-weight:600;opacity:1;
+  .navlinks a:hover,nav.scrolled .navlinks a:hover{color:var(--accent)}
+  nav:not(.scrolled) .navlinks a:hover{color:var(--sun)}
+  .navlinks .btn,nav.scrolled .navlinks .btn{background:var(--sun);color:var(--sky-0);padding:9px 18px;border-radius:100px;font-weight:600;
     transition:background .3s var(--ease-smooth),transform .3s var(--ease-spring)}
-  .navlinks .btn:hover{background:var(--gold-soft);color:var(--night);transform:translateY(-2px)}
+  .navlinks .btn:hover,nav.scrolled .navlinks .btn:hover,nav:not(.scrolled) .navlinks .btn:hover{background:var(--sun-soft);color:var(--sky-0);transform:translateY(-2px)}
   .menutoggle{display:none;background:none;border:0;cursor:pointer;color:var(--cream)}
   nav.scrolled .menutoggle{color:var(--on-surface)}
 
@@ -166,139 +164,206 @@
     position:fixed;bottom:26px;right:26px;z-index:70;
     display:flex;align-items:center;justify-content:center;
     width:52px;height:52px;border-radius:50%;
-    background:var(--night);color:var(--cream);
-    border:1px solid rgba(232,163,61,.35);
-    box-shadow:0 16px 40px -10px rgba(20,10,40,.5),0 0 0 1px rgba(232,163,61,.15);
-    opacity:1;transform:none;pointer-events:auto;cursor:pointer;
-    transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s;
+    background:var(--sky-0);color:var(--cream);
+    border:1px solid rgba(247,201,51,.4);
+    box-shadow:0 16px 40px -10px rgba(5,18,51,.6);
+    cursor:pointer;
+    transition:opacity .5s var(--ease-out),transform .3s var(--ease-spring),background .3s,bottom .4s var(--ease-out);
   }
   .theme-fab.hide{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
-  .theme-fab:hover{transform:scale(1.08);background:var(--night-2)}
+  .theme-fab:hover{transform:scale(1.08);background:var(--sky-1)}
   .theme-fab svg{width:20px;height:20px}
   .theme-fab .icon-sun{display:none}
   .theme-fab .icon-moon{display:block}
   :root[data-theme="dark"] .theme-fab .icon-sun{display:block}
   :root[data-theme="dark"] .theme-fab .icon-moon{display:none}
 
-  /* page hero */
-  .ihero{position:relative;min-height:42vh;display:flex;align-items:center;overflow:hidden;color:var(--cream);
-    background:
-      radial-gradient(120% 90% at 50% 130%,rgba(232,163,61,.55) 0%,rgba(201,111,90,.25) 30%,transparent 60%),
-      linear-gradient(180deg,#07081a 0%,var(--night) 45%,var(--night-2) 100%);
-    padding:150px 0 70px}
-  .aurora{position:absolute;inset:-10%;pointer-events:none;opacity:.8;will-change:transform;
-    background:
-      radial-gradient(38% 30% at 20% 20%,rgba(123,148,184,.35),transparent 60%),
-      radial-gradient(30% 26% at 82% 15%,rgba(201,111,90,.32),transparent 60%),
-      radial-gradient(45% 35% at 60% 88%,rgba(232,163,61,.3),transparent 65%);
-    filter:blur(46px);animation:auroraShift 22s ease-in-out infinite alternate}
-  @keyframes auroraShift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(2%,-3%,0) scale(1.06)}100%{transform:translate3d(-2%,2%,0) scale(1.02)}}
-  .stars{position:absolute;inset:0;pointer-events:none}
-  .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw 4s infinite ease-in-out}
-  @keyframes tw{0%,100%{opacity:.15}50%{opacity:.75}}
-  .ihero-inner{position:relative;z-index:2;width:100%;text-align:center;padding:0 28px}
-  .ihero .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--gold-soft);margin-bottom:22px}
-  .ihero .kicker::before,.ihero .kicker::after{content:"";width:26px;height:1px;background:var(--gold-soft);opacity:.6}
-  .ihero h1{font-size:clamp(2.4rem,6vw,4rem);line-height:1.05;font-weight:500;margin-bottom:10px}
-  .ihero h1 em{font-style:italic;color:var(--gold-soft)}
-  .ihero .hindi{font-weight:600;font-size:clamp(1.1rem,2.6vw,1.4rem);color:var(--gold);margin-bottom:20px}
-  .ihero .lead{max-width:600px;margin:0 auto;font-size:1.04rem;color:rgba(250,246,238,.82)}
+  /* hero: the poster, opened out to the full screen */
+  .fc-hero{position:relative;min-height:max(100svh,61vw);overflow:hidden;color:var(--cream);isolation:isolate;
+    display:flex;flex-direction:column;background:var(--sky-1) url(img/faith-conference/sky.jpg) center top/cover no-repeat}
+  .fc-hero-land{position:absolute;left:0;right:0;bottom:0;height:64vw;z-index:-1;will-change:transform}
+  .fc-hero-land i{position:absolute;inset:0;display:block;background:url(img/faith-conference/sunrise.jpg) center bottom/cover no-repeat;
+    -webkit-mask-image:linear-gradient(180deg,transparent 8%,#000 44%),radial-gradient(ellipse 26% 29% at 17% 29%,#000 68%,transparent 100%);mask-image:linear-gradient(180deg,transparent 8%,#000 44%),radial-gradient(ellipse 26% 29% at 17% 29%,#000 68%,transparent 100%);
+    transform-origin:50% 100%;animation:landRise 1.4s var(--ease-out) both}
+  @keyframes landRise{from{transform:scale(1.09);opacity:.3}to{transform:none;opacity:1}}
+  .fc-hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(70px,10svh,96px) 4vw 58px 30vw;will-change:transform}
+  .fc-credit{font:600 clamp(.72rem,1.15vw,.92rem)/1.5 'Montserrat',sans-serif;letter-spacing:.2em;text-transform:uppercase;margin-bottom:clamp(0px,.6svh,8px)}
+  .fc-credit span{display:block;font-weight:600;font-size:.82em;letter-spacing:.34em;opacity:.86}
+  .fc-hero h1{line-height:0;width:min(62vw,72svh,860px);margin-top:-1svh}
+  .fc-hero h1 img{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 30px rgba(5,18,51,.45))}
+  .fc-tagline{display:block;width:min(50vw,56svh,520px);height:auto;margin-top:clamp(2px,.8svh,10px);filter:drop-shadow(0 1px 2px rgba(5,18,51,.85)) drop-shadow(0 2px 10px rgba(5,18,51,.6))}
+  .fc-date{display:block;width:min(50vw,42svh,470px);height:auto;margin-top:clamp(0px,.6svh,8px)}
+  .fc-hero-cta{margin-top:clamp(2px,1svh,12px);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .fc-where{font:700 .86rem/1.3 'Montserrat',sans-serif;letter-spacing:.02em;color:var(--cream);text-shadow:0 1px 8px rgba(5,18,51,.9)}
+  .fc-hero h1,.fc-credit,.fc-tagline,.fc-date,.fc-hero-cta{animation:riseIn 1s var(--ease-out) both}
+  .fc-credit{animation-delay:.05s}
+  .fc-hero h1{animation-delay:.1s}
+  .fc-tagline{animation-delay:.28s}
+  .fc-date{animation-delay:.36s}
+  .fc-hero-cta{animation-delay:.44s}
+  @keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  .fc-countdown{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;align-items:baseline;gap:clamp(14px,2.4vw,30px);
+    font:700 .72rem/1 'Montserrat',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);text-shadow:0 1px 8px #000;padding:0 16px}
+  .fc-countdown b{font-size:clamp(1.3rem,2.4vw,1.8rem);font-weight:800;letter-spacing:0;margin-right:5px;color:var(--sun);font-variant-numeric:tabular-nums}
+  .fc-countdown[hidden]{display:none}
 
-  section{padding:80px 0}
-  .reveal{opacity:0;transform:translateY(30px) scale(.98);filter:blur(6px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out),filter 1s var(--ease-out);will-change:transform,opacity,filter}
-  .reveal.in{opacity:1;transform:none;filter:blur(0)}
-  .reveal.in.done{will-change:auto}
-
-  /* invite form */
-  .invite-form{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
-  .invite-panel{background:var(--surface-2);border-radius:20px;padding:34px 38px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-  .invite-panel h2{font-size:1.3rem;font-weight:600;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--hairline-2)}
-  .invite-panel .field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  .invite-panel .field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-  .invite-panel .field:last-child{margin-bottom:0}
-  .invite-panel .field-row .field{margin-bottom:0}
-  .invite-panel label{font-size:.85rem;font-weight:600;color:var(--on-surface)}
-  .invite-panel label .req{color:var(--clay)}
-  .invite-panel input,.invite-panel select,.invite-panel textarea{
-    background:var(--surface);border:1px solid var(--hairline-2);border-radius:10px;padding:11px 14px;
-    color:var(--on-surface);font-family:'Inter',sans-serif;font-size:.95rem;transition:border-color .3s,background .3s}
-  .invite-panel input::placeholder,.invite-panel textarea::placeholder{color:var(--on-surface-muted);opacity:.6}
-  .invite-panel input:focus,.invite-panel select:focus,.invite-panel textarea:focus{outline:none;border-color:var(--gold)}
-  .invite-panel select{
-    appearance:none;-webkit-appearance:none;-moz-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'%3E%3Cpath d='M1 1.5L7 7.5L13 1.5' stroke='%23c9832f' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 16px center;background-size:13px;padding-right:42px}
-  .invite-panel select option{color:#111;background:#fff}
-  .invite-panel textarea{resize:vertical;min-height:120px}
-  .invite-panel .instructions{color:var(--on-surface-muted);font-size:.92rem;line-height:1.8;margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--hairline)}
-  .invite-panel .hint{font-size:.78rem;color:var(--on-surface-muted);margin-top:2px}
-  .invite-panel input[type="date"]{color-scheme:light}
-  :root[data-theme="dark"] .invite-panel input[type="date"]{color-scheme:dark}
-  .invite-submit-row{text-align:center}
-  .invite-note{max-width:640px;margin:22px auto 0;text-align:center;color:var(--on-surface-muted);font-size:.88rem}
-  .invite-success{max-width:560px;margin:0 auto;text-align:center;display:none;
-    background:var(--surface-2);border-radius:20px;padding:44px 38px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-  .invite-success .check{width:64px;height:64px;border-radius:50%;background:rgba(232,163,61,.16);
-    border:1.5px solid rgba(232,163,61,.5);display:flex;align-items:center;justify-content:center;
-    font-size:1.8rem;color:var(--gold-deep);margin:0 auto 20px}
-  .invite-success h3{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:500;margin-bottom:12px}
-  .invite-success p{color:var(--on-surface-muted);margin-bottom:26px}
-  .invite-again-btn{background:none;border:1.5px solid var(--hairline);color:var(--on-surface);
-    padding:13px 26px;border-radius:100px;font-weight:600;font-size:.9rem;cursor:pointer}
-  .invite-again-btn:hover{border-color:var(--gold-deep);color:var(--gold-deep)}
-  .invite-note a{color:var(--clay);font-weight:600}
-
-  /* conference layout */
-  .fc-layout{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:40px;align-items:start;max-width:1040px;margin:0 auto}
-  .fc-side{position:sticky;top:96px;display:flex;flex-direction:column;gap:18px}
-  .fc-poster{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 24px 50px -22px rgba(20,10,40,.55)}
-  .fc-facts{list-style:none;display:flex;flex-direction:column;gap:10px;background:var(--surface-2);border-radius:16px;padding:20px 22px;font-size:.93rem}
-  .fc-facts b{display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-surface-muted);font-weight:600}
-  .fc-main .invite-form{max-width:none;scroll-margin-top:96px}
-  .fc-main .field-row{margin-bottom:20px}
-  .fc-main .field-row:last-child{margin-bottom:0}
-  .fc-hero-cta{margin-top:26px}
-  .fc-days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border:0}
-  .fc-days legend{font-size:.85rem;font-weight:600;margin-bottom:8px}
-  .fc-days label{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--hairline-2);border-radius:10px;padding:11px 12px;font-weight:500;cursor:pointer}
-  .fc-days input{width:17px;height:17px;padding:0;accent-color:var(--gold-deep);flex:none}
-  .fc-error{color:var(--clay);font-size:.82rem;font-weight:600;margin-top:8px}
-  .fc-wa-btn{display:inline-flex;margin-bottom:14px}
-  .fc-closed{display:none}
-
-  .btn-lg{padding:14px 30px;border-radius:100px;font-weight:600;font-size:.98rem;display:inline-flex;align-items:center;justify-content:center;
-    transition:box-shadow .45s var(--ease-out),background .3s var(--ease-smooth),transform .45s var(--ease-spring);will-change:transform;cursor:pointer;border:0;font-family:inherit}
+  .btn-lg{padding:15px 34px;border-radius:100px;font-weight:700;font-size:1.02rem;display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;
+    transition:box-shadow .45s var(--ease-out),background .3s var(--ease-smooth),transform .45s var(--ease-spring);cursor:pointer;border:0}
   .jsmag{transition:box-shadow .45s var(--ease-out),background .3s var(--ease-smooth)!important}
-  .btn-gold{background:var(--gold);color:var(--night);box-shadow:0 8px 30px rgba(232,163,61,.4)}
-  .btn-gold:hover{box-shadow:0 16px 40px rgba(232,163,61,.6)}
+  .btn-gold{background:var(--sun);color:var(--sky-0);box-shadow:0 12px 32px -8px rgba(5,18,51,.7)}
+  .btn-gold:hover{background:var(--sun-soft);box-shadow:0 18px 40px -8px rgba(5,18,51,.8)}
   .btn-gold:not(.jsmag):hover{transform:translateY(-3px) scale(1.02)}
 
-  footer{background:#07081a;color:rgba(250,246,238,.6);padding:50px 0 40px;text-align:center}
+  /* reveals only hide content once the script is known to be running */
+  .js .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  /* three days */
+  .fc-days-band{position:relative;background:linear-gradient(180deg,#040a1c 0,var(--sky-0) 90px,var(--sky-1) 100%);color:var(--cream);padding:clamp(80px,10vw,136px) 0 clamp(70px,9vw,120px);text-align:center}
+  .fc-days-band h2{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+  .fc-days-band .dev{display:block;margin-top:8px;font-weight:600;font-size:clamp(1.05rem,2vw,1.4rem);color:var(--sun-soft)}
+  .fc-three{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(40px,6vw,76px)}
+  .fc-three li{padding:0 8px;border-left:1px solid rgba(255,248,230,.2)}
+  .fc-three li:first-child{border-left:0}
+  .fc-three li:nth-child(2){transition-delay:.12s}
+  .fc-three li:nth-child(3){transition-delay:.24s}
+  .fc-three b{display:block;font:900 clamp(5rem,19vw,15rem)/.92 'Montserrat',sans-serif;letter-spacing:-.04em;color:var(--sun)}
+  .fc-three span{display:block;margin-top:14px;font:700 clamp(.84rem,1.7vw,1.2rem)/1.3 'Montserrat',sans-serif}
+  .fc-three small{display:block;margin-top:2px;font-size:clamp(.82rem,1.4vw,1rem);color:#c9d6f2}
+  .fc-place{margin-top:clamp(44px,6vw,72px);font-size:clamp(1rem,1.6vw,1.15rem);color:#dbe4f7;max-width:62ch;margin-inline:auto}
+  .fc-place strong{color:var(--cream)}
+
+  /* theme: the sunrise itself */
+  .fc-theme{position:relative;background:linear-gradient(170deg,var(--sun-soft) 0,var(--sun) 42%,var(--amber) 100%);color:var(--sky-0);padding:clamp(84px,11vw,150px) 0}
+  .fc-theme h2{font-size:clamp(2.7rem,9.4vw,7.4rem);font-weight:900;line-height:.98;letter-spacing:-.035em}
+  .fc-theme h2 span{display:block}
+  .fc-theme h2 span+span{color:#5f2300}
+  .fc-theme-hi{margin-top:18px;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.9rem);color:var(--sky-1)}
+  .fc-verse{margin-top:clamp(36px,5vw,60px);max-width:62ch;margin-left:auto;font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--sky-0)}
+  .fc-verse p+p{margin-top:8px}
+  .fc-verse .dev{font-weight:600;font-size:1.1em}
+  .fc-verse cite{display:block;margin-top:10px;font:700 .9rem/1.3 'Montserrat',sans-serif;font-style:normal}
+
+  /* leaders */
+  .fc-leaders{background:var(--sky-0);color:var(--cream)}
+  .fc-leaders-head{padding:clamp(72px,9vw,120px) 0 clamp(36px,4vw,52px)}
+  .fc-leaders h2{font-size:clamp(1.9rem,4.4vw,3.3rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;max-width:20ch}
+  .fc-leader-grid{display:grid;grid-template-columns:3fr 2fr}
+  .fc-leader{position:relative;height:clamp(420px,52vw,720px);overflow:hidden}
+  .fc-leader img{width:100%;height:100%;object-fit:cover;display:block}
+  .fc-leader:first-child img{object-position:34% 30%}
+  .fc-leader:last-child img{object-position:50% 34%}
+  .fc-leader figcaption{position:absolute;left:0;right:0;bottom:0;padding:90px 28px 26px;background:linear-gradient(180deg,transparent,rgba(5,18,51,.92))}
+  .fc-leader h3{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:800;line-height:1.15}
+  .fc-leader p{color:var(--sun-soft);font-weight:600;font-size:.98rem}
+
+  /* photos */
+  .fc-photos{background:var(--sky-0);color:var(--cream);padding:clamp(72px,9vw,120px) 0 0}
+  .fc-photos-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(26px,3vw,38px)}
+  .fc-photos h2{font-size:clamp(1.9rem,4.4vw,3.3rem);font-weight:800;line-height:1.12;letter-spacing:-.02em}
+  .fc-photos-head a{font:700 .95rem/1.4 'Montserrat',sans-serif;color:var(--sun);text-decoration:underline;text-underline-offset:4px}
+  .fc-strip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
+  .fc-strip::-webkit-scrollbar{display:none}
+  .fc-strip img{flex:1 0 clamp(250px,20vw,420px);width:0;height:clamp(300px,30vw,440px);object-fit:cover;scroll-snap-align:start;display:block}
+
+  /* register */
+  .fc-register{padding:clamp(76px,9vw,124px) 0;scroll-margin-top:60px}
+  .fc-layout{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,72px);align-items:start}
+  .fc-side{position:sticky;top:96px}
+  .fc-side h2{font-size:clamp(2.4rem,5.4vw,4.2rem);font-weight:900;line-height:1;letter-spacing:-.03em}
+  .fc-side .dev{display:block;margin-top:10px;font-weight:700;font-size:clamp(1.15rem,2vw,1.5rem);color:var(--accent)}
+  .fc-facts{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:12px;font-size:1rem}
+  .fc-facts b{display:block;font:700 .9rem/1.4 'Montserrat',sans-serif;color:var(--accent)}
+  .fc-poster{display:block;width:min(100%,300px);height:auto;margin-top:30px;border-radius:6px;box-shadow:0 26px 50px -20px rgba(5,18,51,.65)}
+  .fc-main .invite-form{scroll-margin-top:84px}
+  .invite-form{display:flex;flex-direction:column;gap:clamp(26px,3vw,36px);background:var(--surface-2);border-radius:18px;padding:clamp(24px,3.6vw,44px);
+    box-shadow:0 34px 70px -34px rgba(5,18,51,.55)}
+  .invite-panel h3{font-size:1.25rem;font-weight:800;margin-bottom:18px}
+  .invite-panel .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  .invite-panel .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+  .invite-panel .field:last-child{margin-bottom:0}
+  .invite-panel .field-row .field{margin-bottom:0}
+  .invite-panel label,.fc-days legend{font-size:.9rem;font-weight:600;color:var(--on-surface)}
+  .req{color:var(--accent)}
+  .invite-panel input,.invite-panel textarea{
+    background:var(--field);border:1px solid var(--hairline-2);border-radius:10px;padding:12px 14px;caret-color:var(--accent);
+    color:var(--on-surface);font-family:'Inter',sans-serif;font-size:1rem;transition:border-color .3s,box-shadow .3s}
+  .invite-panel input::placeholder,.invite-panel textarea::placeholder{color:var(--on-surface-muted)}
+  .invite-panel input:focus,.invite-panel textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(236,154,43,.3)}
+  .invite-panel textarea{resize:vertical;min-height:110px}
+  .fc-days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border:0}
+  .fc-days legend{margin-bottom:8px}
+  .fc-days label{display:flex;align-items:center;gap:9px;background:var(--field);border:1px solid var(--hairline-2);border-radius:10px;padding:12px;font-weight:600;cursor:pointer;transition:border-color .25s,background .25s}
+  .fc-days label:has(input:checked){border-color:var(--amber);background:rgba(247,201,51,.2)}
+  .fc-days input{width:18px;height:18px;padding:0;accent-color:#c47400;flex:none}
+  .fc-error{color:#b3261e;font-size:.86rem;font-weight:600;margin-top:8px}
+  :root[data-theme="dark"] .fc-error{color:#ffb4a8}
+  .invite-submit-row .btn-lg{width:100%}
+  .invite-submit-row .btn-gold{background:var(--sky-1);color:var(--cream);box-shadow:0 14px 30px -12px rgba(5,18,51,.7)}
+  .invite-submit-row .btn-gold:hover{background:var(--sky-2)}
+  :root[data-theme="dark"] .invite-submit-row .btn-gold{background:var(--sun);color:var(--sky-0)}
+  :root[data-theme="dark"] .invite-submit-row .btn-gold:hover{background:var(--sun-soft)}
+  .invite-note{margin-top:20px;text-align:center;color:var(--on-surface-muted);font-size:.92rem}
+  .invite-note a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .invite-success{text-align:center;display:none;background:var(--surface-2);border-radius:18px;padding:clamp(32px,4vw,52px) clamp(22px,4vw,44px);box-shadow:0 34px 70px -34px rgba(5,18,51,.55)}
+  .invite-success .check{width:68px;height:68px;border-radius:50%;background:var(--sun);display:flex;align-items:center;justify-content:center;color:var(--sky-0);margin:0 auto 20px}
+  .invite-success .check svg{width:32px;height:32px}
+  .invite-success h3{font:800 clamp(1.5rem,3vw,2rem)/1.2 'Montserrat','Noto Sans Devanagari',sans-serif;margin-bottom:12px}
+  .invite-success p{color:var(--on-surface-muted);margin-bottom:24px}
+  .invite-success .fc-pending{color:var(--on-surface);font-weight:700;font-size:1.1rem;margin-bottom:14px}
+  .fc-wa-btn{display:inline-flex;margin-bottom:14px}
+  .invite-again-btn{background:none;border:1.5px solid var(--hairline-2);color:var(--on-surface);padding:13px 26px;border-radius:100px;font-weight:600;font-size:.92rem;cursor:pointer;font-family:inherit}
+  .invite-again-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .fc-closed{display:none}
+  .fc-over .fc-open-only{display:none!important}
+
+  /* phone register bar */
+  .fc-sticky{display:none}
+
+  footer{background:#030a1f;color:rgba(255,248,230,.72);padding:50px 0 40px;text-align:center}
   footer .brand{justify-content:center;color:var(--cream);margin-bottom:14px}
   footer p{font-size:.86rem}
-  footer .verse-sm{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-soft);margin-bottom:22px;font-size:1.05rem}
+  footer .verse-sm{font-family:'Fraunces',serif;font-style:italic;color:var(--sun-soft);margin-bottom:22px;font-size:1.05rem}
 
   @media(max-width:860px){
-    .navlinks{position:fixed;inset:0 0 auto 0;top:0;flex-direction:column;background:var(--night);
+    .navlinks{position:fixed;inset:0 0 auto 0;top:0;flex-direction:column;background:var(--sky-0);
       padding:90px 28px 34px;gap:22px;transform:translateY(-100%);transition:transform .4s;box-shadow:0 20px 40px rgba(0,0,0,.3)}
     .navlinks.open{transform:translateY(0)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
+    .navlinks .btn{color:var(--sky-0)!important}
     .menutoggle{display:block;z-index:60}
-    .invite-panel{padding:26px 22px}
+    .wrap{padding:0 20px}
+    .fc-hero{min-height:100svh}
+    .fc-hero-land{height:42svh}
+    .fc-hero-land i{background-position:20% bottom}
+    .fc-hero-inner{padding:clamp(70px,10svh,92px) 12px 54px}
+    .fc-hero h1{width:min(96vw,54svh)}
+    .fc-tagline{width:min(80vw,44svh)}
+    .fc-date{width:min(82vw,40svh)}
+    .fc-hero-cta{margin-top:auto;padding-top:8px}
+    .fc-countdown{justify-content:flex-start;gap:12px;padding:0 66px 0 14px;letter-spacing:.04em}
+    .fc-three b{font-size:clamp(4.4rem,25vw,9rem)}
+    .fc-three small{font-size:.8rem}
+    .fc-leader-grid{grid-template-columns:1fr}
+    .fc-leader{height:auto;aspect-ratio:4/4.2}
+    .fc-layout{grid-template-columns:1fr}
+    .fc-side{position:static}
+    .fc-poster{display:none}
     .invite-panel .field-row{grid-template-columns:1fr}
-    .fc-layout{grid-template-columns:1fr;gap:26px}
-    .fc-side{position:static;align-items:center}
-    .fc-poster{width:min(100%,300px)}
-    .fc-facts{width:100%}
     .fc-days{grid-template-columns:1fr}
     .theme-fab{right:16px;bottom:16px;width:44px;height:44px}
     .theme-fab svg{width:18px;height:18px}
+    body.sticky-on .theme-fab{bottom:82px}
+    .fc-sticky{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:65;align-items:center;justify-content:center;gap:6px;min-height:54px;border-radius:100px;
+      background:var(--sun);color:var(--sky-0);font:800 1rem/1 'Montserrat',sans-serif;box-shadow:0 14px 34px -8px rgba(5,18,51,.75);
+      transform:translateY(90px);opacity:0;pointer-events:none;transition:transform .5s var(--ease-out),opacity .3s}
+    .fc-sticky.on{transform:none;opacity:1;pointer-events:auto}
+    .fc-sticky .dev{font-weight:700}
   }
 </style>
 </head>
 <body>
-
-<div class="grain"></div>
 
 <nav id="nav">
   <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
@@ -320,34 +385,95 @@
   </div>
 </nav>
 
-<header class="ihero">
-  <div class="aurora"></div>
-  <div class="stars" id="stars"></div>
-  <div class="ihero-inner reveal in">
-    <span class="kicker">Anmol Jeevan Ministries presents</span>
-    <h1>Faith <em>Conference</em></h1>
-    <div class="hindi dev">विश्वास सम्मेलन</div>
-    <p class="lead">Stronger Faith · Greater Impact. Join us in Indore on 14, 15 and 16 January 2027. Register below and the AJM Family team will be in touch.</p>
-    <div class="fc-hero-cta" id="fcHeroCta"><a href="#fcForm" class="btn-lg btn-gold magnetic">Register now</a></div>
+<header class="fc-hero" id="fcHero">
+  <div class="fc-hero-land" id="fcHeroLand"><i></i></div>
+  <div class="fc-hero-inner" id="fcHeroInner">
+    <p class="fc-credit">Anmol Jeevan Ministries <span>presents</span></p>
+    <h1><img src="img/faith-conference/lockup.webp" alt="Faith Conference" width="1215" height="810"></h1>
+    <img class="fc-tagline" src="img/faith-conference/tagline.webp" alt="Stronger Faith · Greater Impact" width="1260" height="140">
+    <img class="fc-date" src="img/faith-conference/date.webp" alt="14, 15, 16 January 2027" width="1320" height="420">
+    <div class="fc-hero-cta" id="fcHeroCta">
+      <a href="#fcForm" class="btn-lg btn-gold magnetic">Register now</a>
+      <span class="fc-where">Indore, Madhya Pradesh</span>
+    </div>
+  </div>
+  <div class="fc-countdown fc-open-only" id="fcCountdown" role="timer" aria-label="Time until the conference begins">
+    <span><b id="cdDays">0</b>days</span><span><b id="cdHours">0</b>hours</span><span><b id="cdMins">0</b>minutes</span>
   </div>
 </header>
 
-<section class="reveal">
+<section class="fc-days-band">
+  <div class="wrap">
+    <h2 class="reveal">Three days in Indore <span class="dev">इंदौर में तीन दिन</span></h2>
+    <ol class="fc-three">
+      <li class="reveal"><b>14</b><span>Thursday, January 2027</span><small class="dev">गुरुवार</small></li>
+      <li class="reveal"><b>15</b><span>Friday, January 2027</span><small class="dev">शुक्रवार</small></li>
+      <li class="reveal"><b>16</b><span>Saturday, January 2027</span><small class="dev">शनिवार</small></li>
+    </ol>
+    <p class="fc-place reveal"><strong>Come for all three days, or the days you can.</strong> The AJM Family team will share the venue and timings with you after you register.</p>
+  </div>
+</section>
+
+<section class="fc-theme">
+  <div class="wrap">
+    <h2 class="reveal"><span>Stronger Faith.</span><span>Greater Impact.</span></h2>
+    <p class="fc-theme-hi dev reveal">दृढ़ विश्वास, अधिक प्रभाव</p>
+    <blockquote class="fc-verse reveal">
+      <p class="dev">अब विश्वास आशा की हुई वस्तुओं का निश्चय, और अनदेखी वस्तुओं का प्रमाण है।</p>
+      <p>Now faith is confidence in what we hope for and assurance about what we do not see.</p>
+      <cite>Hebrews 11:1 · इब्रानियों 11:1</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="fc-leaders">
+  <div class="wrap fc-leaders-head">
+    <h2 class="reveal">The AJM Family invites you to Indore</h2>
+  </div>
+  <div class="fc-leader-grid">
+    <figure class="fc-leader">
+      <img src="img/apostle-vishal-samuel.jpg" alt="Apostle Vishal Samuel holding a Bible and preaching" width="2048" height="1366" loading="lazy">
+      <figcaption><h3>Apostle Vishal Samuel</h3><p>Founder &amp; Lead Pastor</p></figcaption>
+    </figure>
+    <figure class="fc-leader">
+      <img src="img/pastor-juhi-vishal.jpg" alt="Pastor Juhi Vishal speaking on stage" width="884" height="1280" loading="lazy">
+      <figcaption><h3>Pastor Juhi Vishal</h3><p>Pastor</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="fc-photos">
+  <div class="wrap fc-photos-head">
+    <h2 class="reveal">Our family, in worship</h2>
+    <a href="gallery.html">See the full gallery</a>
+  </div>
+  <div class="fc-strip" tabindex="0" aria-label="Photos of AJM Family gatherings">
+    <img src="img/gallery/m-068.jpg" alt="A full hall of the AJM Family worshipping" width="480" height="320" loading="lazy">
+    <img src="img/gallery/m-010.jpg" alt="Worship leaders singing with hands raised" width="352" height="480" loading="lazy">
+    <img src="img/gallery/m-046.jpg" alt="The congregation with hands raised in a church" width="480" height="320" loading="lazy">
+    <img src="img/gallery/m-083.jpg" alt="A worship leader singing between two singers" width="343" height="480" loading="lazy">
+    <img src="img/gallery/m-162.jpg" alt="A pastor greeting a child and family" width="1100" height="733" loading="lazy">
+    <img src="img/gallery/m-093.jpg" alt="The AJM Family gathered in the hall with hands raised" width="480" height="320" loading="lazy">
+  </div>
+</section>
+
+<section class="fc-register" id="register">
   <div class="wrap">
     <div class="fc-layout">
       <aside class="fc-side">
-        <img class="fc-poster" src="img/faith-conference-2027.jpg" alt="Faith Conference poster — Anmol Jeevan Ministries presents, Stronger Faith, Greater Impact, 14, 15 and 16 January 2027" width="1024" height="1536">
+        <h2>Register now <span class="dev">अभी पंजीकरण करें</span></h2>
         <ul class="fc-facts">
           <li><b>Dates</b>14, 15 &amp; 16 January 2027</li>
           <li><b>Place</b>Indore, Madhya Pradesh</li>
           <li><b>Venue &amp; timings</b>The AJM Family team will share these with you</li>
         </ul>
+        <img class="fc-poster" src="img/faith-conference-2027.jpg" alt="Faith Conference poster — Anmol Jeevan Ministries presents, Stronger Faith, Greater Impact, 14, 15 and 16 January 2027" width="1024" height="1536">
       </aside>
 
       <div class="fc-main">
         <form id="fcForm" class="invite-form">
           <div class="invite-panel">
-            <h2>Your Details</h2>
+            <h3>Your details</h3>
             <div class="field-row">
               <div class="field">
                 <label for="fcName">Full Name <span class="req">*</span></label>
@@ -375,7 +501,7 @@
           </div>
 
           <div class="invite-panel">
-            <h2>Your Attendance</h2>
+            <h3>Your attendance</h3>
             <div class="field">
               <label for="fcPeople">Number of people coming, including you <span class="req">*</span></label>
               <input id="fcPeople" type="number" name="people" required min="1" max="200" value="1" inputmode="numeric" style="max-width:140px">
@@ -400,8 +526,9 @@
           </div>
         </form>
         <div class="invite-success" id="fcSuccess">
-          <div class="check">✓</div>
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
           <h3>Thank you, <span id="fcSuccessName"></span>!</h3>
+          <p class="fc-pending" id="fcPending">Your request is pending. We will send you a confirmation message.</p>
           <p>We've received your registration for the Faith Conference. WhatsApp should have opened with a message ready to send us — please send it so the AJM Family team can follow up with you.</p>
           <a class="btn-lg btn-gold fc-wa-btn" id="fcWhatsApp" target="_blank" rel="noopener">Open WhatsApp</a><br>
           <button type="button" class="invite-again-btn" id="fcAgainBtn">Register someone else</button>
@@ -428,6 +555,8 @@
   </div>
 </footer>
 
+<a class="fc-sticky fc-open-only" id="fcSticky" href="#fcForm">Register now <span class="dev">· पंजीकरण करें</span></a>
+
 <button class="theme-fab" id="themeToggle" aria-label="Toggle dark theme">
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
   <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -438,8 +567,15 @@
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   const nav=document.getElementById('nav');
+  const heroInner=document.getElementById('fcHeroInner'),heroLand=document.getElementById('fcHeroLand');
+  let lastY=-1;
   function frame(){
     nav.classList.toggle('scrolled',scrollY>40);
+    if(!reduced&&scrollY<innerHeight*1.2&&scrollY!==lastY){
+      lastY=scrollY;
+      heroInner.style.transform='translate3d(0,'+(scrollY*.22).toFixed(1)+'px,0)';
+      heroLand.style.transform='translate3d(0,'+(scrollY*.08).toFixed(1)+'px,0)';
+    }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -486,8 +622,6 @@
       const isDark=root.getAttribute('data-theme')==='dark';
       const next=isDark?'light':'dark';
       root.setAttribute('data-theme',next);
-      const metaTheme=document.querySelector('meta[name="theme-color"]');
-      if(metaTheme)metaTheme.setAttribute('content',next==='dark'?'#0a0b22':'#faf6ee');
       try{localStorage.setItem('ajm-theme',next);}catch(e){}
     });
   }
@@ -500,9 +634,29 @@
   }),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
 
-  const frag=document.createDocumentFragment();
-  for(let i=0;i<50;i++){const d=document.createElement('i');d.style.left=Math.random()*100+'%';d.style.top=Math.random()*90+'%';d.style.animationDelay=Math.random()*4+'s';d.style.animationDuration=(3+Math.random()*3)+'s';frag.appendChild(d)}
-  document.getElementById('stars').appendChild(frag);
+  // Count down to the first day (India time); hidden once the conference begins
+  const fcCountdown=document.getElementById('fcCountdown');
+  const fcStart=Date.parse('2027-01-14T00:00:00+05:30');
+  function tick(){
+    const left=fcStart-Date.now();
+    if(left<=0){fcCountdown.hidden=true;return false;}
+    document.getElementById('cdDays').textContent=Math.floor(left/864e5);
+    document.getElementById('cdHours').textContent=Math.floor(left/36e5)%24;
+    document.getElementById('cdMins').textContent=Math.floor(left/6e4)%60;
+    return true;
+  }
+  if(tick())setInterval(tick,20000);
+
+  // Phone Register bar: shows after the first screen, steps aside at the form
+  const sticky=document.getElementById('fcSticky');
+  const stickyState={past:false,atForm:false};
+  function syncSticky(){
+    const on=stickyState.past&&!stickyState.atForm&&!document.documentElement.classList.contains('fc-over');
+    sticky.classList.toggle('on',on);
+    document.body.classList.toggle('sticky-on',on);
+  }
+  new IntersectionObserver(es=>es.forEach(e=>{stickyState.past=!e.isIntersecting;syncSticky();})).observe(document.getElementById('fcHero'));
+  new IntersectionObserver(es=>es.forEach(e=>{stickyState.atForm=e.isIntersecting;syncSticky();})).observe(document.getElementById('register'));
 
   function withCountryCode(v){
     v=(v||'').trim();
@@ -518,6 +672,7 @@
     fcForm.style.display='none';
     fcNote.style.display='none';
     document.getElementById('fcHeroCta').style.display='none';
+    document.documentElement.classList.add('fc-over');
     document.getElementById('fcClosed').style.display='block';
   }
 
