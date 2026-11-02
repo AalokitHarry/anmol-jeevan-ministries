@@ -4,7 +4,6 @@
 .hero-copy{margin:auto 0;padding:96px 28px 28px}
 .hero h1{font-size:clamp(2.6rem,6.4vw,5.2rem)}
 .hero .hindi{margin-bottom:12px}
-.hero p.lead{margin-bottom:0;font-size:1.04rem;line-height:1.55}
 
 /* Sky over Indore. Upper tones stay dark enough for cream text at every hour. */
 .hero[data-sky="dawn"]{background:
@@ -34,8 +33,6 @@
 .door-detail{max-width:620px;margin:0 auto clamp(14px,2.2svh,22px);color:rgba(250,246,238,.9);font-size:1rem;line-height:1.45;text-wrap:balance}
 .door .hero-cta{animation:none;opacity:1}
 .door .btn-gold svg{width:20px;height:20px;margin-right:9px;flex:none}
-.door-note{min-height:1.4em;margin:12px auto 0;color:rgba(250,246,238,.82);font-size:.86rem;line-height:1.4}
-.door-note:empty{display:none}
 
 /* The week ahead, laid along the horizon */
 .door-rail{flex:none;display:flex;list-style:none;margin:0;padding:0 max(84px,calc((100% - 1240px)/2));overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;text-align:left;
@@ -58,28 +55,15 @@ a.door-stop{text-decoration:none}
 a.door-stop::before{background:var(--gold-soft)}
 a.door-stop b{color:var(--gold-soft)}
 
-@media(max-height:800px) and (min-width:861px){
-  .hero p.lead{display:none}
-}
 @media(max-width:860px){
   .hero-copy{padding:88px 20px 20px}
   .hero h1{font-size:clamp(1.7rem,8.3vw,3.4rem)}
   .door-name{font-size:clamp(1.6rem,7.2vw,2.3rem)}
   .door-rail{padding:0}
   .hero .hindi{margin-bottom:10px}
-  .hero p.lead{font-size:.95rem;line-height:1.5}
   .door .hero-cta{flex-direction:row;flex-wrap:wrap;max-width:420px;gap:10px}
   .door .btn-gold{flex:1 1 100%;font-size:1.02rem}
-  .door .btn-ghost{flex:1 1 calc(50% - 5px);padding:10px 8px;font-size:.88rem}
-  .door .btn-ghost span{display:none}
-  .door-note{margin-top:10px}
-}
-@media(max-width:480px){
-  .hero p.lead{display:none}
-}
-@media(max-height:740px) and (max-width:860px){
-  .hero p.lead{display:none}
-  .door-note{display:none}
+  .door .btn-ghost{flex:1 1 100%;font-size:.94rem}
 }
 @media(max-width:860px){
   body.at-door .theme-fab{opacity:0;visibility:hidden}

@@ -52,7 +52,6 @@
   .hero-inner{padding:104px 24px 68px}
   .hero h1{font-size:clamp(2.55rem,10vw,3.7rem)}
   .hero .hindi{margin-bottom:14px}
-  .hero p.lead{margin-bottom:20px;font-size:1rem;line-height:1.55}
   .hero-cta{flex-direction:column;align-items:stretch;max-width:330px;margin:0 auto}
   .hero-cta .btn-lg{justify-content:center;min-height:48px}
   .ehero{min-height:auto;padding:104px 0 62px}
@@ -61,7 +60,7 @@
   .ehero .lead{font-size:1rem;line-height:1.55}
   .ehero .care-actions{gap:10px}
   .ehero .care-actions .btn-lg{justify-content:center}
-  section{padding:68px 0}
+  section{padding:52px 0}
   .float-cta{display:none!important}
 }
 @media(max-width:480px){
