@@ -1,0 +1,211 @@
+/* One design language for the public pages, taken from the Prayer Room:
+   a night sky header, cream panels that rise into it, one gold action per view. */
+:root{--panel-edge:rgba(42,37,64,.06);--accent-text:#984b3c;--lift:clamp(70px,9svh,96px)}
+:root[data-theme="dark"]{--panel-edge:rgba(255,255,255,.1);--accent-text:#efb29e}
+:root:not(:has(.fc-hero)){--hairline-2:rgba(42,37,64,.28)}
+:root[data-theme="dark"]:not(:has(.fc-hero)){--hairline-2:rgba(255,255,255,.3)}
+:root:has(.fc-hero){--panel-edge:rgba(10,37,89,.1);--accent-text:var(--accent)}
+:root[data-theme="dark"]:has(.fc-hero){--panel-edge:rgba(255,255,255,.14)}
+
+/* the menu is the same on every page */
+.nav-mobile-primary,.nav-mobile-more{display:none}
+@media(max-width:860px){
+  .navlinks{visibility:hidden;gap:0;padding:76px 20px 20px;max-height:100dvh;overflow-y:auto;transition:transform .35s,visibility .35s}
+  .navlinks.open{visibility:visible}
+  .navlinks>.nav-full-link{display:none}
+  .nav-mobile-primary{display:flex;flex-direction:column;gap:4px;width:100%}
+  .nav-mobile-primary a{display:flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:12px}
+  .nav-mobile-primary a:hover,.nav-mobile-primary a:focus-visible,.nav-mobile-more a:hover,.nav-mobile-more a:focus-visible{background:rgba(250,246,238,.1)}
+  .nav-mobile-more{display:block;width:100%;border-top:1px solid rgba(250,246,238,.18);margin-top:10px;padding-top:10px;color:var(--cream)}
+  .nav-mobile-more summary{min-height:44px;padding:10px 16px;cursor:pointer;font-weight:600}
+  .nav-mobile-more div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .nav-mobile-more a{display:flex;align-items:center;min-height:44px;padding:8px 12px;font-size:.96rem!important}
+}
+
+/* sky header */
+.fam-sky{position:relative;display:block;min-height:0;overflow:hidden;color:var(--cream);text-align:center;
+  padding:clamp(112px,15svh,150px) 0 clamp(110px,14svh,140px);
+  background:radial-gradient(120% 90% at 50% 130%,rgba(232,163,61,.55) 0%,rgba(201,111,90,.25) 30%,transparent 60%),linear-gradient(180deg,#07081a 0%,var(--night) 45%,var(--night-2) 100%)}
+.fam-sky .aurora{display:none}
+.fam-sky-inner{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 28px}
+.fam-sky h1{margin:0;text-wrap:balance;font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+.fam-sky .hindi{margin:10px 0 0;font-weight:600;font-size:clamp(1.1rem,2.4vw,1.45rem);line-height:1.4;color:var(--gold-soft)}
+.fam-sky .lead{max-width:560px;margin:14px auto 0;font-size:1.04rem;color:rgba(250,246,238,.9);text-wrap:balance}
+
+/* panels rise into the sky */
+.fam-main{position:relative;z-index:3;margin-top:calc(var(--lift)*-1);padding-bottom:clamp(56px,6.5vw,80px)}
+.fam-main section:not(.panel){padding:0;background:none}
+.fam-main>section{margin-top:20px}
+.fam-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+.fam-fill{align-items:stretch}
+.fam-fill:not(:has(>:nth-child(2))){grid-template-columns:minmax(0,1fr)}
+.fam-col{display:grid;gap:20px;min-width:0}
+.panel{background:var(--surface-2);border-radius:20px;padding:clamp(22px,3vw,34px) clamp(20px,3vw,36px);border:1px solid var(--panel-edge);box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+.panel h2{font-size:1.3rem;font-weight:600;line-height:1.3;margin:0 0 10px}
+.panel p{color:var(--on-surface-muted)}
+
+/* buttons */
+.btn-lg{min-height:52px;padding:12px 24px;gap:10px;text-align:center;line-height:1.3}
+.btn-lg:hover{transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:var(--night);box-shadow:0 10px 24px -12px rgba(20,10,40,.55)}
+.btn-gold:hover{background:var(--gold-soft);box-shadow:0 10px 24px -12px rgba(20,10,40,.55)}
+.btn-gold:not(.jsmag):hover,.btn-ghost-dark:not(.jsmag):hover{transform:translateY(-2px)}
+.btn-ghost-dark{border:1px solid var(--hairline-2);color:var(--on-surface);background:transparent}
+.fam-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.fam-actions-center{justify-content:center}
+
+/* Events: gatherings as rows in one panel */
+.fam-list{display:flex;flex-direction:column}
+.fam-list h2{margin-bottom:6px}
+.fam-list .event-grid{display:flex;flex-direction:column;justify-content:space-between;gap:0;flex:1;opacity:1}
+.fam-list .event-card{display:grid;grid-template-columns:112px minmax(0,1fr) auto;align-items:center;gap:18px;padding:20px 0;background:none;border:0;border-radius:0;box-shadow:none;border-bottom:1px solid var(--hairline-2);color:inherit}
+.fam-list .event-card:last-child{border-bottom:0;padding-bottom:0}
+.fam-list .date-badge{width:auto;padding:10px 8px;background:var(--surface);border:1px solid var(--hairline-2);border-radius:12px;color:var(--on-surface)}
+.fam-list .date-badge .dow{font-size:.74rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--accent-text)}
+.fam-list .date-badge .time{font-size:.96rem;margin-top:1px}
+.fam-list .info{min-width:0}
+.fam-list .event-card h3{font-size:1.14rem;font-weight:600;line-height:1.3;margin-bottom:3px;color:inherit}
+.fam-list .event-card p{margin-bottom:4px;font-size:.94rem;color:var(--on-surface-muted)}
+.fam-list .event-card.is-notice{grid-template-columns:minmax(0,1fr)}
+.fam-list .event-card.is-notice .event-photo{width:100%;max-width:220px;border-radius:12px}
+.fam-list .btn-lg{min-height:48px;padding:10px 18px;font-size:.92rem;white-space:nowrap}
+.meta{display:flex;align-items:center;gap:6px;color:var(--on-surface-muted);font-size:.86rem}
+.meta svg{width:15px;height:15px;flex:none;color:var(--accent-text)}
+.fam-feature{display:flex;flex-direction:column;gap:16px}
+.fam-feature-text{display:flex;flex-direction:column;flex:1}
+.fam-feature-img{display:block;width:100%;height:auto;border-radius:12px}
+.fam-feature h2{margin-bottom:2px}
+.fam-date{font-weight:600;color:var(--accent-text)!important;margin-bottom:8px}
+.fam-feature .meta{margin-top:8px}
+.fam-feature .btn-lg{width:100%;margin-top:auto}
+.fam-feature .meta{margin-bottom:16px}
+.prayer-section .btn-lg{width:100%;margin-top:16px}
+.prayer-section.panel{background:var(--surface-2);text-align:left;padding-top:clamp(22px,3vw,34px);padding-bottom:clamp(22px,3vw,34px)}
+.prayer-section .care-hindi{margin-top:2px;font-size:1rem;font-weight:500;color:var(--accent-text)}
+.prayer-section p{margin:0}
+
+/* Events: visit and booking */
+.fam-main .visit-layout{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.fam-main .visit-layout>.panel{display:flex;flex-direction:column}
+.fam-main .visit-layout .care-actions{margin-top:auto;padding-top:20px;flex-direction:column;align-items:stretch}
+.fam-main .visit-layout .care-actions .btn-lg{width:100%}
+.fam-main .visit-layout .prayer-section .btn-lg{margin-top:auto}
+.fam-main .visit-layout .prayer-section p{margin-bottom:20px}
+.fam-main .visit-section h2{font-size:1.3rem;font-weight:600;line-height:1.3;margin:0 0 10px}
+.fam-main .visit-section .care-hindi{margin-top:2px;font-size:1rem;font-weight:500;color:var(--accent-text)}
+.fam-main .visit-contact{padding-top:clamp(22px,3vw,34px);border-top:1px solid var(--panel-edge)}
+.fam-main .visit-contact h3{font-size:1.3rem;font-weight:600;line-height:1.3}
+.fam-main .visit-schedule{margin-top:18px;gap:0}
+.fam-main .visit-schedule div{padding:10px 0}
+.fam-main .visit-schedule dt{font-family:'Fraunces',serif;font-size:1.06rem}
+.fam-form{max-width:760px;margin:0 auto}
+.fam-main .book{color:var(--on-surface)}
+.fam-main .book-head{max-width:none;text-align:left}
+.fam-main .book-head h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;line-height:1.15;margin:0 0 8px}
+.fam-main .book-head .sub{color:var(--on-surface-muted)}
+.fam-main .book-form{max-width:none;margin:22px 0 0;gap:16px}
+.fam-main .book-form label{gap:7px;font-size:.92rem;letter-spacing:0;color:var(--on-surface)}
+.fam-main .book-form .opt{color:var(--on-surface-muted)}
+.fam-main .book-form input,.fam-main .book-form select,.fam-main .book-form textarea{min-width:0;width:100%;background-color:var(--surface);border:1px solid var(--hairline-2);border-radius:12px;color:var(--on-surface);font-size:1rem}
+.fam-main .book-form input::placeholder,.fam-main .book-form textarea::placeholder{color:var(--on-surface-muted)}
+.fam-main .book-form input:focus,.fam-main .book-form select:focus,.fam-main .book-form textarea:focus{background-color:var(--surface);border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.fam-main .book-form button{align-self:stretch;min-height:56px;margin-top:0;font-size:1.04rem}
+.fam-main .booking-privacy{max-width:none;margin:0;font-size:.86rem;line-height:1.5;text-align:left;color:var(--on-surface-muted)}
+.fam-main .book-success{margin:22px auto 0}
+.fam-main .book-success .check{color:var(--accent-text)}
+.fam-main .book-success p{color:var(--on-surface-muted)}
+.fam-main .book-again-btn{min-height:48px;border:1px solid var(--hairline-2);color:var(--on-surface)}
+.fam-main .book-again-btn:hover{border-color:var(--hairline-2);background:var(--hairline);color:var(--on-surface)}
+.fam-main .book-alt{margin-top:22px;padding-top:20px;border-top:1px solid var(--hairline-2)}
+.fam-main .book-alt p{color:var(--on-surface-muted);margin-bottom:10px}
+.fam-main .wa-link{min-height:48px;color:var(--on-surface);border:1px solid var(--hairline-2);border-radius:100px}
+.fam-main .wa-link:hover{background:var(--hairline);border-color:var(--hairline-2)}
+.fam-main .wa-link svg{color:#128c4b}
+:root[data-theme="dark"] .fam-main .wa-link svg{color:#4ade80}
+
+/* Invite: the form panels rise into the sky */
+.ihero~.fam-main .invite-form{max-width:820px;gap:20px}
+.ihero~.fam-main .invite-panel,.ihero~.fam-main .invite-success{background:var(--surface-2);border-radius:20px;padding:clamp(22px,3vw,34px) clamp(20px,3vw,36px);border:1px solid var(--panel-edge);box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+.ihero~.fam-main .invite-panel input,.ihero~.fam-main .invite-panel select,.ihero~.fam-main .invite-panel textarea{background-color:var(--surface);border:1px solid var(--hairline-2);border-radius:12px;color:var(--on-surface);font-size:1rem}
+.ihero~.fam-main .invite-panel input::placeholder,.ihero~.fam-main .invite-panel textarea::placeholder{opacity:1}
+.ihero~.fam-main .invite-panel input:focus,.ihero~.fam-main .invite-panel select:focus,.ihero~.fam-main .invite-panel textarea:focus{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.ihero~.fam-main .invite-panel .field-row{margin-bottom:20px}
+.ihero~.fam-main .invite-panel .field-row:last-child{margin-bottom:0}
+.ihero~.fam-main .invite-panel label{font-size:.92rem}
+.ihero~.fam-main .invite-panel label .req{color:var(--accent-text)}
+.ihero~.fam-main .invite-panel .hint{font-size:.84rem}
+.ihero~.fam-main .invite-note a{color:var(--accent-text);text-decoration:underline;text-underline-offset:2px}
+.ihero~.fam-main .invite-submit-row .btn-lg{width:100%;min-height:56px;font-size:1.04rem}
+
+/* Women's Meet */
+:root:has(.whero){--rose:var(--gold);--rose-deep:var(--gold-deep)}
+.whero .tagline{margin:10px 0 0;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.1rem,2.4vw,1.45rem);color:var(--gold-soft)}
+.fam-poster{display:block;width:100%;height:auto;border-radius:12px}
+.fam-main .details{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.fam-main .chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid var(--hairline-2);border-radius:100px;background:var(--surface);font-size:.9rem;font-weight:500}
+.fam-main .chip svg{width:16px;height:16px;flex:none;color:var(--accent-text)}
+.fam-poster-panel{display:flex;align-items:center}
+.fam-thanks h3{margin:18px 0 6px;font-size:1.06rem;font-weight:600}
+
+/* Gallery keeps its collage; the header above it reads clearly */
+.ghero h1{letter-spacing:-.01em}
+.ghero .hindi{color:var(--gold-soft)}
+.ghero .ghero-sub{font-size:.92rem;color:rgba(250,246,238,.9)}
+@media(min-width:861px){.ghero{padding-bottom:52px;background:linear-gradient(180deg,#07081a 0%,#07081a 84%,rgba(7,8,26,0) 100%)}}
+
+/* Home */
+.pillar,.leader,.faq-item{border:1px solid var(--panel-edge);box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+.pillar:hover,.leader:hover{transform:translateY(-2px);box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+.leader{background:var(--surface-2)}
+.leaders{background:var(--surface)}
+.about h2 .dev,.blessing h2 .dev,.faq-item summary::after,.faq-item p a{color:var(--accent-text)}
+#service .service{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;background:none;color:var(--on-surface);border-radius:0;overflow:visible;box-shadow:none}
+#service .service .left h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;line-height:1.15;margin:0 0 8px}
+#service .service .times{gap:0;margin-top:0}
+#service .service .time-row{gap:16px;padding:12px 0;border-bottom:1px solid var(--hairline-2)}
+#service .service .time-row .day{color:var(--on-surface);font-size:1.06rem}
+#service .service .time-row .det{color:var(--on-surface-muted)}
+#service .service .right{display:flex;flex-direction:column;justify-content:flex-start;background:var(--surface-2);color:var(--on-surface);text-align:left}
+#service .service .right h3{font-size:1.3rem;font-weight:600;line-height:1.3}
+#service .service .right .addr{color:var(--on-surface-muted)}
+#service .service .right .visit-note{color:var(--on-surface-muted);margin-top:10px}
+#service .service .right .care-actions{width:100%;margin-top:auto;padding-top:20px}
+.fc-where svg{width:1em;height:1em;vertical-align:-.12em}
+.invite-cta{background:var(--surface);color:var(--on-surface);padding-top:0}
+.invite-cta .panel{max-width:820px;margin:0 auto}
+.invite-cta h2{font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.15;margin:0 0 10px}
+.invite-cta .sub{margin:0 auto 22px;color:var(--on-surface-muted)}
+.connect{background:radial-gradient(120% 90% at 50% 130%,rgba(232,163,61,.4) 0%,rgba(201,111,90,.18) 30%,transparent 60%),linear-gradient(180deg,#07081a 0%,var(--night) 45%,var(--night-2) 100%)}
+.connect h2{font-size:clamp(2.2rem,5.4vw,3.9rem);letter-spacing:-.01em}
+
+/* Faith Conference keeps its poster colours and hero; its form matches the panels */
+.fc-register .invite-form,.fc-register .invite-success{border:1px solid var(--panel-edge);border-radius:20px;box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
+.fc-register .invite-panel input,.fc-register .invite-panel textarea,.fc-register .fc-days label{border-radius:12px}
+.fc-photos-head a,.fc-copy,.invite-again-btn{min-height:48px}
+
+@media(max-width:900px){
+  .fam-grid{grid-template-columns:minmax(0,1fr)}
+  .fam-col{display:contents}
+  .fam-feature{order:-1}
+  #service .service{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:1000px){
+  .fam-main .visit-layout{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:600px){
+  .fam-sky{padding-left:20px;padding-right:20px}
+  .fam-sky-inner{padding:0 4px}
+  .fam-sky h1{font-size:clamp(2rem,8.6vw,3rem)}
+  .fam-sky .lead{font-size:.98rem}
+  .fam-main .wrap{padding:0 16px}
+  .fam-feature{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:start;gap:14px}
+  .fam-list .event-card{grid-template-columns:108px minmax(0,1fr);gap:12px 14px}
+  .fam-list .event-card .btn-lg{grid-column:1/-1;width:100%}
+  .fam-list .event-card.is-notice{grid-template-columns:minmax(0,1fr)}
+  .fam-actions .btn-lg{width:100%}
+  #service .service .time-row{flex-direction:column;gap:2px}
+  #service .service .time-row .day{min-width:0}
+  .fam-main .book-form .field-row{grid-template-columns:minmax(0,1fr)}
+}
+.fc-layout>*,.fc-register .invite-panel .field{min-width:0}
+.fc-register .invite-panel input,.fc-register .invite-panel textarea{width:100%;min-width:0}

@@ -364,6 +364,7 @@
   footer p:last-child{opacity:1!important;color:rgba(250,246,238,.75)}
 </style>
 <link rel="stylesheet" href="css/visitor-care.css">
+<link rel="stylesheet" href="css/family.css">
 </head>
 <body>
 
@@ -378,8 +379,8 @@
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a class="nav-full-link" href="index.html#latest">Latest</a>
     <a class="nav-full-link" href="index.html#about">About</a>
+    <a class="nav-full-link" href="index.html#service">Gatherings</a>
     <a class="nav-full-link" href="events.html">Events</a>
     <a class="nav-full-link" href="index.html#watch">Watch</a>
     <a class="nav-full-link" href="gallery.html">Gallery</a>
@@ -396,7 +397,6 @@
     <details class="nav-mobile-more">
       <summary>More from AJM</summary>
       <div>
-        <a href="index.html#latest">Latest</a>
         <a href="gallery.html">Gallery</a>
         <a href="index.html#leaders">Leaders</a>
         <a href="invite.html">Invite</a>
@@ -406,27 +406,22 @@
   </div>
 </nav>
 
-<header class="ehero">
+<header class="ehero fam-sky">
   <div class="aurora"></div>
   <div class="stars" id="stars"></div>
-  <div class="ehero-inner reveal in">
-    <span class="kicker">Join Us</span>
-    <h1>Events &amp; <em>Gatherings</em></h1>
+  <div class="fam-sky-inner">
+    <h1>Events &amp; Gatherings</h1>
     <div class="hindi dev">आइए, साथ मिलकर आराधना करें</div>
     <p class="lead">Join us for worship, the Word and prayer in Indore. We would love to welcome you this Sunday at 3:00 PM IST.</p>
-    <div class="care-actions" style="justify-content:center">
-      <a href="#book" class="btn-lg btn-gold">Book Your Sunday Visit</a>
-      <a href="#visit" class="btn-lg btn-ghost">Plan Your Visit</a>
-      <a href="prayer.html" class="wa-link">Request Prayer</a>
-    </div>
   </div>
 </header>
 
-<section class="events-list reveal">
-  <div class="wrap">
-    <span class="eyebrow">Join us</span>
-    <h2>Upcoming Gatherings</h2>
-    <div class="event-grid stagger reveal">
+<main class="fam-main" id="main">
+  <div class="wrap fam-grid fam-fill">
+    <div class="fam-col">
+    <section class="panel fam-list" aria-labelledby="gatheringsTitle">
+      <h2 id="gatheringsTitle">Upcoming Gatherings</h2>
+      <div class="event-grid">
       <div class="event-card">
         <div class="date-badge">
           <span class="dow">Every</span>
@@ -435,18 +430,9 @@
         <div class="info">
           <h3>Sunday Worship Service</h3>
           <p>Praise, the Word &amp; prayer together — come as you are, 3:00 PM.</p>
-          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Indore, Madhya Pradesh, India</div>
         </div>
-        <a href="#book" data-gathering="Sunday Worship Service" class="btn-lg btn-gold magnetic">Reserve a spot</a>
-      </div>
-      <div class="event-card is-coming" id="faith-conference" data-until="2027-01-16">
-        <img class="event-photo" src="img/faith-conference-2027.jpg" alt="Faith Conference — Anmol Jeevan Ministries presents. Stronger Faith, Greater Impact. 14, 15 and 16 January 2027." width="1024" height="1536">
-        <div class="info">
-          <h3>Faith Conference · Indore <span class="badge-soon badge-coming">14, 15 &amp; 16 Jan 2027</span></h3>
-          <p>Anmol Jeevan Ministries presents a very big gathering in Indore. Stronger Faith · Greater Impact — register now and join us for all three days.</p>
-          <div class="meta">📍 Indore, Madhya Pradesh</div>
-        </div>
-        <a href="faith-conference.html" class="btn-lg btn-gold magnetic">Register now</a>
+        <a href="#book" data-gathering="Sunday Worship Service" class="btn-lg btn-gold">Reserve a spot</a>
       </div>
       <div class="event-card is-notice" data-until="2026-10-14">
         <img class="event-photo" src="img/wednesday-fellowship-paused.jpg" alt="AJM Prophetic Wednesday Fellowship — temporarily paused on 30 September, 7 October and 14 October 2026" loading="lazy">
@@ -466,9 +452,9 @@
           <h3>90 Minutes with Jesus <span class="badge-soon badge-paused" data-until="2026-10-14">Paused</span></h3>
           <p>A focused time in His presence — worship, the Word &amp; prayer, 7:00 PM.</p>
           <p class="paused-note" data-until="2026-10-14">No gathering on 30 Sep, 7 Oct or 14 Oct — resumes soon.</p>
-          <div class="meta">📍 Indore, Madhya Pradesh, India</div>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Indore, Madhya Pradesh, India</div>
         </div>
-        <a href="#book" data-gathering="90 Minutes with Jesus (Wednesdays, 7 PM)" class="btn-lg btn-gold magnetic">Reserve a spot</a>
+        <a href="#book" data-gathering="90 Minutes with Jesus (Wednesdays, 7 PM)" class="btn-lg btn-ghost-dark">Reserve a spot</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -478,9 +464,9 @@
         <div class="info">
           <h3>Youth Fellowship</h3>
           <p>Worship &amp; the Word for our youth — 8:30 PM.</p>
-          <div class="meta">💻 Online via Zoom</div>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Online via Zoom</div>
         </div>
-        <a href="#book" data-gathering="Youth Fellowship (Thursdays, 8:30 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Youth Fellowship (Thursdays, 8:30 PM)" class="btn-lg btn-ghost-dark">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -490,9 +476,9 @@
         <div class="info">
           <h3>Morning Devotion</h3>
           <p>Start the day in prayer &amp; the Word.</p>
-          <div class="meta">💻 Online via Zoom</div>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Online via Zoom</div>
         </div>
-        <a href="#book" data-gathering="Morning Devotion (Mon–Sat, 7:30 AM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Morning Devotion (Mon–Sat, 7:30 AM)" class="btn-lg btn-ghost-dark">Get the Zoom link</a>
       </div>
       <div class="event-card">
         <div class="date-badge">
@@ -502,17 +488,28 @@
         <div class="info">
           <h3>Night Prayer</h3>
           <p>Join us in prayer together.</p>
-          <div class="meta">💻 Online via Zoom</div>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Online via Zoom</div>
         </div>
-        <a href="#book" data-gathering="Night Prayer (Mon–Sat, 10 PM)" class="btn-lg btn-gold magnetic">Get the Zoom link</a>
+        <a href="#book" data-gathering="Night Prayer (Mon–Sat, 10 PM)" class="btn-lg btn-ghost-dark">Get the Zoom link</a>
       </div>
+      </div>
+    </section>
     </div>
+      <article class="panel fam-feature" id="faith-conference" data-until="2027-01-16">
+        <img class="fam-feature-img" src="img/faith-conference-2027.jpg" alt="Faith Conference — Anmol Jeevan Ministries presents. Stronger Faith, Greater Impact. 14, 15 and 16 January 2027." width="1024" height="1536">
+        <div class="fam-feature-text">
+          <h2>Faith Conference · Indore</h2>
+          <p class="fam-date">14, 15 &amp; 16 Jan 2027</p>
+          <p>Anmol Jeevan Ministries presents a very big gathering in Indore. Stronger Faith · Greater Impact — register now and join us for all three days.</p>
+          <div class="meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Indore, Madhya Pradesh</div>
+          <a href="faith-conference.html" class="btn-lg btn-ghost-dark">Register now</a>
+        </div>
+      </article>
   </div>
-</section>
 
 <section class="visit-section" id="visit" aria-labelledby="visitTitle">
   <div class="wrap visit-layout">
-    <div>
+    <div class="panel">
       <h2 id="visitTitle">Visit Us<span class="care-hindi" lang="hi">हमारे साथ संगति में जुड़ें</span></h2>
       <p>Join the AJM Family for worship, the Word and prayer in Indore. Our team can help you plan your first visit.</p>
       <dl class="visit-schedule">
@@ -521,7 +518,7 @@
       </dl>
       <div class="care-actions"><a href="#book" class="btn-lg btn-gold">Book a Visit</a></div>
     </div>
-    <div class="visit-contact">
+    <div class="visit-contact panel">
       <h3>Find your way to us</h3>
       <address>Indore, Madhya Pradesh, India</address>
       <p>For the exact venue and a nearby landmark, please contact our team before travelling.</p>
@@ -530,21 +527,18 @@
         <a class="btn-lg btn-ghost-dark" href="tel:+917999929550">Call +91 79999 29550</a>
       </div>
     </div>
+    <section class="panel prayer-section" id="prayer" aria-labelledby="prayerTitle">
+        <h2 id="prayerTitle">Request Prayer<span class="care-hindi" lang="hi">प्रार्थना निवेदन</span></h2>
+        <p>Write it or send a voice note, in Hindi or English. You don’t need the right words.</p>
+        <a class="btn-lg btn-ghost-dark" href="prayer.html">Go to the Prayer Room</a>
+      </section>
   </div>
 </section>
 
-<section class="prayer-section" id="prayer" aria-labelledby="prayerTitle">
-  <div class="wrap prayer-invite">
-    <h2 id="prayerTitle">Request Prayer<span class="care-hindi" lang="hi">प्रार्थना निवेदन</span></h2>
-    <p>Write it or send a voice note, in Hindi or English. You don’t need the right words.</p>
-    <a class="btn-lg btn-gold" href="prayer.html">Go to the Prayer Room</a>
-  </div>
-</section>
-
-<section class="book reveal" id="book">
+<section class="book" id="book">
   <div class="wrap">
+   <div class="panel fam-form">
     <div class="book-head">
-      <span class="eyebrow" style="color:var(--gold-soft)"><span class="live-dot"></span>Reserve your spot</span>
       <h2>Book a Visit</h2>
       <p class="sub">Fill this in and it'll open a WhatsApp message to us with your details — we'll confirm personally.</p>
     </div>
@@ -586,8 +580,10 @@
         Chat with us on WhatsApp
       </a>
     </div>
+   </div>
   </div>
 </section>
+</main>
 
 <footer id="siteFooter">
   <div class="wrap">
