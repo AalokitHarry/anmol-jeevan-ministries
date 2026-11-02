@@ -273,7 +273,7 @@
     e.preventDefault();
     const request=message.value.trim();
     if(!request){error.hidden=false;message.focus();return;}
-    window.open(WA+encodeURIComponent(draft('Prayer request: '+request)),'_blank','noopener');
+    window.open(WA+encodeURIComponent(draft(request)),'_blank','noopener');
     showSent('One last step in WhatsApp','Your request is ready there. Press Send and it will reach the AJM team.','आपका निवेदन वहाँ तैयार है। Send दबाइए, और यह AJM टीम तक पहुँच जाएगा।');
   });
   voice.addEventListener('click',()=>{
