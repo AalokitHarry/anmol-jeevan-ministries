@@ -570,6 +570,20 @@
     el.addEventListener('click',e=>e.preventDefault());
   });
 
+  // the host sometimes refuses a few photos when this many load at once — try
+  // those again after a short wait instead of leaving a broken picture on the wall
+  function retryPhoto(img){
+    const tries=+img.dataset.tries||0;
+    if(tries>=4)return;
+    img.dataset.tries=tries+1;
+    const src=img.getAttribute('src').split('?')[0];
+    setTimeout(()=>{img.src=`${src}?retry=${tries+1}`},1000*2**tries+Math.random()*1000);
+  }
+  document.querySelectorAll('.scatter-item img').forEach(img=>{
+    img.addEventListener('error',()=>retryPhoto(img));
+    if(img.complete&&!img.naturalWidth)retryPhoto(img); // already failed before this script ran
+  });
+
   document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 </body>
