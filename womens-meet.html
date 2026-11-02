@@ -239,6 +239,7 @@
     .theme-fab svg{width:18px;height:18px}
   }
 </style>
+<link rel="stylesheet" href="css/family.css">
 </head>
 <body>
 
@@ -253,68 +254,77 @@
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="index.html#latest">Latest</a>
-    <a href="index.html#about">About</a>
-    <a href="events.html">Events</a>
-    <a href="index.html#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="index.html#leaders">Leaders</a>
-    <a href="invite.html">Invite</a>
-    <a href="#register" class="btn">Recap</a>
+    <a class="nav-full-link" href="index.html#about">About</a>
+    <a class="nav-full-link" href="index.html#service">Gatherings</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="index.html#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="index.html#leaders">Leaders</a>
+    <a class="nav-full-link" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="index.html#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="events.html#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="prayer.html">Prayer</a>
+      <a href="index.html#watch">Watch</a>
+      <a href="index.html#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="index.html#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
-<header class="whero">
+<header class="whero fam-sky">
   <div class="aurora"></div>
   <div class="stars" id="stars"></div>
-  <div class="wrap whero-grid">
-    <div class="whero-copy reveal in">
-      <span class="kicker">AJM Family Special Gathering</span>
-      <h1>Women's <em>Meet</em></h1>
-      <p class="tagline">"Rooted in Christ. Rising in purpose."</p>
+  <div class="fam-sky-inner">
+    <h1>Women's Meet</h1>
+    <p class="tagline">"Rooted in Christ. Rising in purpose."</p>
+    <p class="lead">With Pastor Juhi Vishal. Thank you to everyone who joined us live on Zoom!</p>
+  </div>
+</header>
+
+<main class="fam-main" id="main">
+  <div class="wrap fam-grid fam-fill">
+    <div class="fam-col">
+    <section class="panel">
+      <h2>An evening for the women of the AJM Family</h2>
+      <p>It was an evening of worship, the Word, and encouragement with Pastor Juhi Vishal — a space to be rooted in Christ and rise into the purpose He's called us to. Whether part of the AJM Family already or joining for the first time, every woman was warmly welcome.</p>
       <div class="details">
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tuesday, Sep 29, 2026</span>
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>8:30 PM IST</span>
         <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>On Zoom</span>
       </div>
-      <p style="max-width:480px;color:rgba(250,246,238,.8);margin-bottom:30px">With Pastor Juhi Vishal. Thank you to everyone who joined us live on Zoom!</p>
-      <a href="#register" class="btn-lg btn-rose magnetic">Read the Recap</a>
-    </div>
-    <div class="whero-photo reveal in">
-      <img src="img/womens-meet-flyer-sep29-v2.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal, Tuesday Sep 29, 8:30 PM, on Zoom">
-    </div>
-  </div>
-</header>
-
-<section class="wabout reveal">
-  <div class="wrap">
-    <span class="eyebrow">Join us</span>
-    <h2 style="margin-top:12px">An evening for the women of the AJM Family</h2>
-    <p>It was an evening of worship, the Word, and encouragement with Pastor Juhi Vishal — a space to be rooted in Christ and rise into the purpose He's called us to. Whether part of the AJM Family already or joining for the first time, every woman was warmly welcome.</p>
-  </div>
-</section>
-
-<section class="wreg reveal" id="register">
-  <div class="wrap">
-    <div class="wreg-head">
-      <span class="eyebrow" style="color:var(--rose)">Gathering concluded</span>
+    </section>
+    <section class="panel fam-thanks" id="register">
       <h2>Thank You for Joining Us</h2>
-      <p class="sub">The Women's Meet with Pastor Juhi Vishal has concluded. We're grateful for every woman who joined us in prayer and worship — rooted in Christ, rising in purpose.</p>
-    </div>
-    <div class="wreg-success" style="display:block">
-      <div class="check">✓</div>
+      <p>The Women's Meet with Pastor Juhi Vishal has concluded. We're grateful for every woman who joined us in prayer and worship — rooted in Christ, rising in purpose.</p>
       <h3>See you at the next gathering</h3>
       <p>Want to stay connected, share a prayer request, or hear about future events? Reach out any time — we'd love to hear from you.</p>
+      <div class="fam-actions">
+        <a class="btn-lg btn-gold" href="https://wa.me/917999929550" target="_blank" rel="noopener">Reach us on WhatsApp</a>
+        <a class="btn-lg btn-ghost-dark" href="events.html">See upcoming gatherings</a>
+      </div>
+    </section>
     </div>
-    <p class="wreg-note">Reach the AJM Family team on <a href="https://wa.me/917999929550" target="_blank" rel="noopener">WhatsApp</a>.</p>
+    <aside class="panel fam-poster-panel">
+      <img class="fam-poster" src="img/womens-meet-flyer-sep29-v2.jpg" alt="AJM Family Women's Meet flyer — with Pastor Juhi Vishal, Tuesday Sep 29, 8:30 PM, on Zoom">
+    </aside>
   </div>
-</section>
+</main>
 
 <footer id="siteFooter">
   <div class="wrap">
     <p class="verse-sm">"…that they may have life, and have it to the full." — John 10:10</p>
     <a class="brand" href="index.html" aria-label="Anmol Jeevan Ministries">
-      <img class="brand-logo" src="img/logo.png" alt="Anmol Jeevan Ministries" style="height:46px">
+      <img class="brand-logo brand-logo-lg" src="img/logo.png" alt="Anmol Jeevan Ministries">
     </a>
     <p style="margin-top:16px">Indore, Madhya Pradesh, India · Hindi-language Christian ministry</p>
     <p style="margin-top:8px;opacity:.7">© <span id="yr"></span> Anmol Jeevan Ministries. To God be the glory.</p>

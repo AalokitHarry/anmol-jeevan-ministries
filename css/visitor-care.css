@@ -7,7 +7,6 @@
 .care-actions a:focus-visible,.blessing-link:focus-visible,.visit-contact a:focus-visible{outline:3px solid var(--on-surface);outline-offset:5px}
 .connect .care-actions a:focus-visible{outline-color:var(--cream)}
 .hero-cta a:focus-visible{outline:3px solid var(--cream);outline-offset:5px}
-.nav-mobile-primary,.nav-mobile-more{display:none}
 .booking-privacy{max-width:58ch;margin:0 auto;color:rgba(250,246,238,.75);font-size:.88rem;line-height:1.6;text-align:center}
 .ehero .btn-ghost{border:1px solid rgba(250,246,238,.35);color:var(--cream)}
 .ehero .btn-ghost:hover{background:rgba(250,246,238,.1)}
@@ -31,16 +30,6 @@
 .prayer-invite p{max-width:48ch;margin:0 auto 24px;color:var(--on-surface-muted)}
 .connect .care-actions{justify-content:center;margin:0 0 32px}
 @media(max-width:860px){
-  .navlinks{visibility:hidden;gap:0;padding:76px 20px 20px;max-height:100dvh;overflow-y:auto;transition:transform .35s,visibility .35s}
-  .navlinks.open{visibility:visible}
-  .navlinks>.nav-full-link{display:none}
-  .nav-mobile-primary{display:flex;flex-direction:column;gap:4px;width:100%}
-  .nav-mobile-primary a{display:flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:12px}
-  .nav-mobile-primary a:hover,.nav-mobile-primary a:focus-visible,.nav-mobile-more a:hover,.nav-mobile-more a:focus-visible{background:rgba(250,246,238,.1)}
-  .nav-mobile-more{display:block;width:100%;border-top:1px solid rgba(250,246,238,.18);margin-top:10px;padding-top:10px;color:var(--cream)}
-  .nav-mobile-more summary{min-height:44px;padding:10px 16px;cursor:pointer;font-weight:600}
-  .nav-mobile-more div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
-  .nav-mobile-more a{display:flex;align-items:center;min-height:44px;padding:8px 12px;font-size:.96rem!important}
   .visit-layout{grid-template-columns:1fr;gap:36px}
   .visit-contact{padding-top:24px;border-top:1px solid var(--hairline-2)}
 }

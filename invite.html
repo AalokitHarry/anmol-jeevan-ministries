@@ -281,6 +281,7 @@
     .theme-fab svg{width:18px;height:18px}
   }
 </style>
+<link rel="stylesheet" href="css/family.css">
 </head>
 <body>
 
@@ -295,29 +296,45 @@
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a href="index.html#latest">Latest</a>
-    <a href="index.html#about">About</a>
-    <a href="events.html">Events</a>
-    <a href="index.html#watch">Watch</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="index.html#leaders">Leaders</a>
-    <a href="invite.html" class="current">Invite</a>
-    <a href="index.html#connect" class="btn">Connect</a>
+    <a class="nav-full-link" href="index.html#about">About</a>
+    <a class="nav-full-link" href="index.html#service">Gatherings</a>
+    <a class="nav-full-link" href="events.html">Events</a>
+    <a class="nav-full-link" href="index.html#watch">Watch</a>
+    <a class="nav-full-link" href="gallery.html">Gallery</a>
+    <a class="nav-full-link" href="index.html#leaders">Leaders</a>
+    <a class="nav-full-link current" href="invite.html">Invite</a>
+    <a class="nav-full-link btn" href="index.html#connect">Connect</a>
+    <div class="nav-mobile-primary">
+      <a href="events.html#visit">Visit</a>
+      <a href="events.html">Events</a>
+      <a href="prayer.html">Prayer</a>
+      <a href="index.html#watch">Watch</a>
+      <a href="index.html#about">About</a>
+    </div>
+    <details class="nav-mobile-more">
+      <summary>More from AJM</summary>
+      <div>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#leaders">Leaders</a>
+        <a href="invite.html">Invite</a>
+        <a href="index.html#connect">Connect</a>
+      </div>
+    </details>
   </div>
 </nav>
 
-<header class="ihero">
+<header class="ihero fam-sky">
   <div class="aurora"></div>
   <div class="stars" id="stars"></div>
-  <div class="ihero-inner reveal in">
-    <span class="kicker">Speaking Invitations</span>
-    <h1>Invite Apostle <em>Vishal Samuel</em></h1>
+  <div class="fam-sky-inner">
+    <h1>Invite Apostle Vishal Samuel</h1>
     <div class="hindi dev">आमंत्रण</div>
     <p class="lead">Host a revival meeting, conference, or special service with Apostle Vishal Samuel or Pastor Juhi Vishal. Fill out the form below and the AJM Family team will get back to you.</p>
   </div>
 </header>
 
-<section class="reveal">
+<main class="fam-main" id="main">
+<section>
   <div class="wrap">
     <form id="inviteForm" class="invite-form">
 
@@ -449,6 +466,7 @@
     <p class="invite-note" id="inviteNote">Prefer email or a call? Reach the AJM Family team directly on <a href="https://wa.me/917999929550" target="_blank" rel="noopener">WhatsApp</a>.</p>
   </div>
 </section>
+</main>
 
 <footer id="siteFooter">
   <div class="wrap">
