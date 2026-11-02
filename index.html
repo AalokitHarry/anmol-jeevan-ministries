@@ -170,7 +170,6 @@
   html{scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-    .marquee-track{animation:none!important}
     .float-cta .pulse-dot{animation:none!important}
     .live-dot{animation:none!important}
   }
@@ -187,10 +186,6 @@
   h1,h2,h3,.display{font-family:'Fraunces',serif}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-  .eyebrow{
-    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
-    font-weight:600;color:var(--clay);
-  }
 
   /* ---- FILM GRAIN ---- */
   .grain{
@@ -310,10 +305,6 @@
     font-size:clamp(1.4rem,4vw,2.4rem);color:var(--gold);
     margin-bottom:26px;opacity:0;animation:rise 1.1s .58s var(--ease-out) forwards;will-change:transform,opacity;
   }
-  .hero p.lead{
-    max-width:560px;margin:0 auto 38px;font-size:1.12rem;color:rgba(250,246,238,.82);
-    opacity:0;animation:rise 1.1s .72s var(--ease-out) forwards;will-change:transform,opacity;
-  }
   .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:rise 1.1s .86s var(--ease-out) forwards;will-change:transform,opacity}
   .btn-lg{padding:14px 28px;border-radius:100px;font-weight:600;font-size:.98rem;display:inline-flex;align-items:center;
     transition:box-shadow .45s var(--ease-out),background .3s var(--ease-smooth),transform .45s var(--ease-spring);
@@ -330,7 +321,7 @@
   @keyframes lineUp{from{opacity:0;transform:translateY(115%)}to{opacity:1;transform:translateY(0)}}
 
   /* ---- SECTIONS ---- */
-  section{padding:100px 0}
+  section{padding:clamp(56px,6.5vw,80px) 0}
   .reveal{opacity:0;transform:translateY(40px) scale(.98);filter:blur(6px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out),filter 1s var(--ease-out);will-change:transform,opacity,filter}
   .reveal.in{opacity:1;transform:none;filter:blur(0)}
   .stagger>*{opacity:0;transform:translateY(28px) scale(.98);filter:blur(4px);transition:opacity .85s var(--ease-out),transform .85s var(--ease-out),filter .85s var(--ease-out);will-change:transform,opacity,filter}
@@ -366,66 +357,45 @@
   .fc-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
   /* verse strip */
-  .verse{position:relative;background:var(--surface);color:var(--on-surface);text-align:center;padding:74px 0;overflow:hidden}
+  .verse{position:relative;background:var(--surface);color:var(--on-surface);text-align:center;padding:clamp(36px,5vw,52px) 0;overflow:hidden}
   .verse::before{content:"";position:absolute;left:50%;top:50%;width:60%;height:140%;transform:translate(-50%,-50%);
     background:radial-gradient(circle,rgba(232,163,61,.16),transparent 65%);pointer-events:none}
   .verse blockquote{position:relative;font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.35;max-width:820px;margin:0 auto;color:var(--gold-deep)}
   .verse cite{position:relative;display:block;margin-top:22px;font-style:normal;font-family:'Inter',sans-serif;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--on-surface-muted)}
 
-  /* marquee */
-  .marquee-wrap{overflow:hidden;background:var(--surface-2);padding:20px 0;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
-  .marquee-track{display:flex;width:max-content;gap:28px;animation:marquee 32s linear infinite}
-  .marquee-wrap:hover .marquee-track{animation-play-state:paused}
-  .marquee-track span.word{font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;color:var(--clay);white-space:nowrap;display:flex;align-items:center;gap:28px}
-  .marquee-track span.word .dev{font-family:'Noto Sans Devanagari',sans-serif;font-style:normal;font-weight:600;color:var(--on-surface)}
-  .marquee-track .dot{color:var(--gold)}
-  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   /* about */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
   .about h2{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:500;line-height:1.1;margin:14px 0 22px}
   .about h2 .dev{display:block;color:var(--clay);font-size:clamp(1.24rem,2.79vw,1.922rem);margin-top:8px}
   .about p{color:var(--on-surface-muted);margin-bottom:16px;font-size:1.05rem}
-  .about-visual{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
-    background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 60%,var(--clay) 130%);
-    display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -20px rgba(22,23,58,.5)}
-  .about-visual::before{content:"";position:absolute;inset:-30%;
-    background:conic-gradient(from 0deg,rgba(232,163,61,.35),transparent 30%,rgba(201,111,90,.3) 55%,transparent 80%,rgba(232,163,61,.35));
-    animation:spin 14s linear infinite;filter:blur(20px)}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .about-visual .glow{position:absolute;width:70%;height:70%;border-radius:50%;
-    background:radial-gradient(circle,rgba(242,197,116,.7),transparent 68%);filter:blur(10px);bottom:-18%}
-  .about-visual .word{position:relative;z-index:2;text-align:center;color:var(--cream);padding:20px}
-  .about-visual .word .big{font-family:'Noto Sans Devanagari',sans-serif;font-size:clamp(2.4rem,6vw,3.6rem);font-weight:700;line-height:1.1}
-  .about-visual .word .sub{font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;opacity:.85;margin-top:8px}
+
 
   /* pillars */
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
-  .pillar{background:var(--surface-2);border-radius:16px;padding:34px 28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  .pillars{display:grid;gap:12px}
+  .pillar{position:relative;background:var(--surface-2);border-radius:16px;padding:18px 20px 18px 78px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
     transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-out);will-change:transform}
   .pillar:hover{transform:translateY(-8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 28px 46px -22px rgba(42,37,64,.4)}
-  .pillar .ic{width:46px;height:46px;border-radius:12px;background:var(--night);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:transform .5s var(--ease-spring)}
+  .pillar .ic{position:absolute;left:18px;top:18px;width:46px;height:46px;border-radius:12px;background:var(--night);color:var(--gold);display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease-spring)}
   .pillar:hover .ic{transform:rotate(-8deg) scale(1.08)}
-  .pillar h3{font-size:1.25rem;font-weight:600;margin-bottom:8px}
-  .pillar p{color:var(--on-surface-muted);font-size:.96rem}
+  .pillar h3{font-size:1.15rem;font-weight:600;margin-bottom:2px}
+  .pillar p{margin-bottom:0;color:var(--on-surface-muted);font-size:.96rem}
 
   /* stats */
   .stats{background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 100%);color:var(--cream)}
-  .stats-head{text-align:center;margin-bottom:50px}
-  .stats-head h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:500;margin-top:10px}
+  .stats{padding:clamp(28px,4vw,44px) 0}
   .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
-  .stat{padding:30px 20px;border-radius:18px;background:var(--glass);border:1px solid var(--glass-brd);backdrop-filter:blur(10px)}
-  .stat .num,.stat .num-static{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);color:var(--gold-soft)}
-  .stat .label{display:block;margin-top:8px;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,246,238,.65);font-weight:600}
+  .stat{padding:0 4px}
+  .stat .num,.stat .num-static{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.15;color:var(--gold-soft)}
+  .stat .label{display:block;margin-top:4px;font-size:clamp(.68rem,1.6vw,.78rem);letter-spacing:.1em;line-height:1.35;text-transform:uppercase;color:rgba(250,246,238,.65);font-weight:600}
 
   /* service card */
   .service{background:var(--night);color:var(--cream);border-radius:26px;overflow:hidden;
     display:grid;grid-template-columns:1.1fr 1fr;position:relative}
-  .service .left{padding:56px 50px}
-  .service .eyebrow{color:var(--gold-soft)}
+  .service .left{padding:clamp(28px,4vw,44px) clamp(24px,4vw,44px)}
   .service h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:500;margin:12px 0 24px;line-height:1.1}
-  .service .times{display:flex;flex-direction:column;gap:18px;margin-top:10px}
-  .service .time-row{display:flex;align-items:flex-start;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(250,246,238,.14)}
+  .service .times{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+  .service .time-row{display:flex;align-items:flex-start;gap:16px;padding-bottom:10px;border-bottom:1px solid rgba(250,246,238,.14)}
   .service .time-row .day{font-family:'Fraunces',serif;font-size:1.18rem;font-weight:600;min-width:150px;color:var(--gold-soft)}
   .service .time-row .det{color:rgba(250,246,238,.75);font-size:.94rem}
   .service .right{background:
@@ -437,14 +407,15 @@
   .service .right .addr{color:rgba(255,255,255,.85);font-size:.98rem}
 
   /* latest update */
-  .latest-head{max-width:640px;margin:0 auto 40px;text-align:center}
+  .latest-head{max-width:640px;margin:0 auto 28px;text-align:center}
   .latest-head h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 14px}
   .latest-head .sub{color:var(--on-surface-muted);font-size:1.02rem}
-  .latest-foot{text-align:center;margin-top:32px}
 
   /* watch */
   .watch h2{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:500;line-height:1.1;margin:14px 0 10px}
   .watch .sub{color:var(--on-surface-muted);max-width:520px;margin-bottom:44px}
+  .watch .watch-featured{max-width:860px;margin:0 auto}
+  .watch-row-title{margin:clamp(32px,4vw,44px) 0 14px;font-size:1.3rem;font-weight:600}
   .watch-featured{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#000;
     border:1px solid rgba(232,163,61,.25);box-shadow:0 30px 60px -20px rgba(22,23,58,.45);margin-bottom:24px}
   .watch-featured iframe{width:100%;height:100%;border:0;display:block}
@@ -460,37 +431,32 @@
     color:#fff;border:1px solid rgba(255,255,255,.35);transition:transform .4s var(--ease-spring),background .3s,color .3s}
   .wcard:hover .play{transform:translate(-50%,-50%) scale(1.14);background:var(--gold);color:var(--night)}
   .wcard .title{position:absolute;left:14px;right:14px;bottom:12px;color:#fff;font-size:.86rem;font-weight:600;line-height:1.3}
-  .watch-more{margin-top:40px;text-align:center}
+  .watch-more{margin-top:32px;text-align:center}
 
   /* permanent featured video (does not change when new videos are uploaded) */
-  .blessing{background:var(--surface-2)}
+  .blessing-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
+  .blessing h2{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:500;line-height:1.12;margin-bottom:14px}
   .blessing h2 .dev{display:block;color:var(--clay);font-size:clamp(1.24rem,2.79vw,1.86rem);margin-top:8px}
-  .blessing .watch-featured{max-width:960px;margin:0 auto 22px}
-  .blessing-cap{max-width:760px;margin:0 auto;text-align:center;color:var(--on-surface-muted);font-size:1rem;line-height:1.6}
+  .blessing-cap{color:var(--on-surface-muted);font-size:1rem;line-height:1.6}
   .blessing-cap strong{color:var(--on-surface);font-weight:600}
   .blessing-cap .hl{color:var(--on-surface);font-weight:700;padding:0 4px;background:linear-gradient(transparent 58%,rgba(232,163,61,.5) 58%)}
   /* who the message is from — the first thing you notice above the video */
-  .from-badge{display:flex;flex-direction:column;align-items:center;gap:3px;width:max-content;max-width:100%;margin:-14px auto 30px;padding:16px 38px;border-radius:22px;
-    background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:var(--night);text-align:center;box-shadow:0 20px 40px -20px rgba(201,131,47,.75)}
-  .from-badge .from-lab{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:700;opacity:.75}
-  .from-badge strong{font-family:'Fraunces',serif;font-size:clamp(1.35rem,3.4vw,2rem);font-weight:600;line-height:1.2}
-  .from-badge .from-org{font-size:.86rem;font-weight:600;opacity:.8}
   .blessing-cap a{display:inline-block;margin-top:10px;color:var(--clay);font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
 
   /* leaders */
   .leaders{background:var(--surface-2)}
-  .leaders h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 50px}
-  .leader-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:880px;margin:0 auto}
-  .leader{background:var(--surface);border-radius:26px;overflow:hidden;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 2px rgba(42,37,64,.06);
+  .leaders h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:0 0 32px}
+  .leader-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1040px;margin:0 auto}
+  .leader{display:grid;grid-template-columns:38% 1fr;background:var(--surface);border-radius:20px;overflow:hidden;text-align:left;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 2px rgba(42,37,64,.06);
     transition:transform .5s var(--ease-spring),box-shadow .5s var(--ease-out);will-change:transform}
   .leader:hover{transform:translateY(-8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 26px 44px -24px rgba(42,37,64,.4)}
-  .leader .av{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
+  .leader .av{position:relative;width:100%;min-height:100%;aspect-ratio:4/5;overflow:hidden;
     background:linear-gradient(150deg,var(--night),var(--clay))}
   .leader .av img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease-out)}
   .leader:hover .av img{transform:scale(1.06)}
   .leader .av::after{content:'';position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(180deg,transparent 58%,rgba(10,11,34,.5) 100%)}
-  .leader .body{padding:28px 30px 34px}
+  .leader .body{align-self:center;padding:20px 24px}
   .leader h3{font-size:1.4rem;font-weight:600}
   .leader .role{color:var(--clay);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin:6px 0 14px}
   .leader .aka{color:var(--on-surface-muted);font-size:.78rem;font-style:italic;margin:-8px 0 14px}
@@ -510,15 +476,16 @@
 
   /* faq */
   .faq{background:var(--surface)}
-  .faq h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:12px 0 40px}
-  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  .faq h2{text-align:center;font-size:clamp(2rem,4.5vw,3rem);font-weight:500;margin:0 0 28px}
+  .faq-list{max-width:1040px;margin:0 auto;columns:2;column-gap:14px}
+  .faq-item{break-inside:avoid;margin-bottom:12px}
   .faq-item{background:var(--surface-2);border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
-  .faq-item summary{list-style:none;cursor:pointer;padding:22px 26px;display:flex;align-items:center;
+  .faq-item summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;
     justify-content:space-between;gap:16px;font-weight:600;font-size:1.05rem;font-family:'Fraunces',serif}
   .faq-item summary::-webkit-details-marker{display:none}
   .faq-item summary::after{content:'+';font-size:1.5rem;color:var(--clay);transition:transform .3s var(--ease-spring);flex:none;line-height:1}
   .faq-item[open] summary::after{transform:rotate(45deg)}
-  .faq-item p{padding:0 26px 22px;color:var(--on-surface-muted);font-size:.96rem;line-height:1.7}
+  .faq-item p{padding:0 20px 16px;color:var(--on-surface-muted);font-size:.96rem;line-height:1.7}
   .faq-item p a{color:var(--clay);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 
   /* connect */
@@ -567,22 +534,28 @@
     nav:has(.navlinks.open) .menutoggle{color:var(--cream)}
     .navlinks a{color:var(--cream)!important;font-size:1.1rem}
     .menutoggle{display:block;z-index:60}
-    .fc-inner{justify-content:center;text-align:center;padding:48px 24px;gap:28px}
-    .fc-photo{width:min(78vw,320px)}
+    .fc-inner{justify-content:center;text-align:center;padding:40px 24px;gap:22px}
+    .fc-photo{width:min(52vw,220px)}
     .fc-actions{justify-content:center}
     .fc-kicker{justify-content:center;text-align:center;line-height:1.5}
     .fc-kicker .dot{display:none}
     .fc-text{margin-left:auto;margin-right:auto}
     .about-grid{grid-template-columns:1fr;gap:40px}
-    .about-visual{max-width:360px;margin:0 auto}
-    .pillars{grid-template-columns:1fr}
     .service{grid-template-columns:1fr}
     .service .left,.service .right{padding:40px 32px}
     .service .time-row{flex-direction:column;gap:6px}
     .service .time-row .day{min-width:0}
-    .watch-grid{grid-template-columns:1fr}
-    .leader-grid{grid-template-columns:1fr;max-width:340px}
-    .stats-grid{grid-template-columns:1fr}
+    .watch-grid{display:flex;gap:12px;margin:0 -20px;padding:2px 20px 8px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
+    .watch-grid::-webkit-scrollbar{display:none}
+    .wcard{flex:0 0 min(74vw,300px);scroll-snap-align:center}
+    .blessing-grid{grid-template-columns:1fr}
+    .faq-list{columns:1}
+    .leader-grid{grid-template-columns:1fr;max-width:520px;gap:14px}
+    .leader{grid-template-columns:112px 1fr}
+    .leader .body{padding:14px 16px}
+    .leader h3{font-size:1.15rem}
+    .leader .role{margin:4px 0 8px}
+    .leader p{font-size:.9rem;line-height:1.45}
     .float-stack{right:16px;bottom:16px;gap:8px}
     .float-cta{padding:12px 18px;font-size:.85rem}
     .theme-fab{width:44px;height:44px}
@@ -591,9 +564,9 @@
   }
   .paused-note{font-style:normal;color:#c0504d;font-weight:600}
   /* Readable text in both themes; decorative brand colors stay unchanged. */
-  .eyebrow,.leader .role,.about h2 .dev,.blessing h2 .dev,.blessing-cap a,.faq-item p a,.marquee-track span.word{color:#984b3c}
+  .leader .role,.about h2 .dev,.blessing h2 .dev,.blessing-cap a,.faq-item p a{color:#984b3c}
   .verse blockquote{color:#93601f}
-  :root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .leader .role,:root[data-theme="dark"] .about h2 .dev,:root[data-theme="dark"] .blessing h2 .dev,:root[data-theme="dark"] .blessing-cap a,:root[data-theme="dark"] .faq-item p a,:root[data-theme="dark"] .marquee-track span.word{color:#efb29e}
+  :root[data-theme="dark"] .leader .role,:root[data-theme="dark"] .about h2 .dev,:root[data-theme="dark"] .blessing h2 .dev,:root[data-theme="dark"] .blessing-cap a,:root[data-theme="dark"] .faq-item p a{color:#efb29e}
   :root[data-theme="dark"] .verse blockquote{color:var(--gold-soft)}
   nav .navlinks .btn,nav.scrolled .navlinks .btn{color:var(--night)!important}
   footer p:last-child{opacity:1!important;color:rgba(250,246,238,.75)}
@@ -616,7 +589,6 @@
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
   <div class="navlinks" id="navlinks">
-    <a class="nav-full-link" href="#latest">Latest</a>
     <a class="nav-full-link" href="#about">About</a>
     <a class="nav-full-link" href="#service">Gatherings</a>
     <a class="nav-full-link" href="events.html">Events</a>
@@ -635,7 +607,6 @@
     <details class="nav-mobile-more">
       <summary>More from AJM</summary>
       <div>
-        <a href="#latest">Latest</a>
         <a href="gallery.html">Gallery</a>
         <a href="#leaders">Leaders</a>
         <a href="invite.html">Invite</a>
@@ -654,7 +625,6 @@
     <div class="hero-copy">
     <h1><span class="ln"><span>Proclaiming the <em>love</em></span></span><span class="ln"><span>of Jesus to all nations</span></span></h1>
     <div class="hindi dev">यीशु का प्रेम — सब देशों तक</div>
-    <p class="lead">Anmol Jeevan Ministries is a Hindi-language family in Christ — sharing the gospel, worship, and the Word so that every precious life may know Him.</p>
     <div class="door" id="door">
       <p class="door-when" id="doorWhen" role="timer"><i></i><span>Every Sunday</span></p>
       <div aria-live="polite">
@@ -663,10 +633,8 @@
       </div>
       <div class="hero-cta">
         <a id="doorCta" href="events.html#visit" class="btn-lg btn-gold magnetic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.5 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.43 1.33-1.98 1.38-.5.05-1.14.23-3.84-.82-3.24-1.28-5.3-4.6-5.46-4.81-.16-.21-1.3-1.73-1.3-3.3s.82-2.34 1.11-2.66c.3-.32.64-.4.86-.4l.62.01c.2.01.47-.08.73.56.27.65.92 2.25 1 2.42.08.16.14.35.03.56-.11.21-.16.34-.32.53l-.48.56c-.16.16-.33.33-.14.65.19.32.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.57 1.59.32.16.51.13.7-.08.19-.21.8-.94 1.02-1.26.21-.32.43-.27.72-.16.3.1 1.87.88 2.19 1.04.32.16.53.24.61.37.08.14.08.77-.17 1.47Z"/></svg><span id="doorCtaText">Plan Your Visit</span></a>
-        <a href="#watch" class="btn-lg btn-ghost magnetic">Watch&nbsp;<span>Latest&nbsp;</span>Message</a>
         <a href="prayer.html" class="btn-lg btn-ghost magnetic">Request Prayer<span lang="hi">&nbsp;· प्रार्थना निवेदन</span></a>
       </div>
-      <p class="door-note" id="doorNote"></p>
     </div>
     </div>
     <ol class="door-rail" id="doorRail" aria-label="Gatherings coming up" hidden></ol>
@@ -684,7 +652,6 @@
       <p class="fc-text">Stronger Faith · Greater Impact. A very big gathering is coming to Indore — register now and join us for all three days.</p>
       <div class="fc-actions">
         <a href="faith-conference.html" class="btn-lg btn-gold magnetic">Register now</a>
-        <a href="events.html#faith-conference" class="btn-lg btn-ghost magnetic">All events</a>
       </div>
     </div>
   </div>
@@ -697,27 +664,16 @@
   </div>
 </section>
 
-<section class="latest reveal" id="latest">
+<section class="watch reveal" id="watch">
   <div class="wrap">
-    <div class="latest-head">
-      <span class="eyebrow"><span class="live-dot"></span>Fresh from YouTube</span>
-      <h2>Latest Update</h2>
-      <p class="sub">Our newest message, worship set, or testimony — pulled straight from the AJM Family channel the moment it's posted.</p>
+    <div class="latest-head" id="latest">
+      <h2>Watch &amp; be encouraged</h2>
+      <p class="sub">Our newest message, worship and testimonies from the AJM Family channel.</p>
     </div>
     <div class="watch-featured reveal">
       <iframe src="https://www.youtube.com/embed/videoseries?list=UUFgr-yFzxfd3tbl0_U7bgAw" title="AJM Family — latest upload" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="latest-foot">
-      <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">See all updates on YouTube</a>
-    </div>
-  </div>
-</section>
-
-<section class="watch reveal" id="watch">
-  <div class="wrap">
-    <span class="eyebrow">More to explore</span>
-    <h2>Watch &amp; be encouraged</h2>
-    <p class="sub">A few more recent messages, worship sets, and testimonies from the AJM Family channel.</p>
+    <h3 class="watch-row-title">More messages</h3>
     <div class="watch-grid stagger reveal">
       <a class="wcard" href="https://www.youtube.com/watch?v=EqPVT13Xeas" target="_blank" rel="noopener">
         <img src="https://i.ytimg.com/vi/EqPVT13Xeas/hqdefault.jpg" alt="Favour आपके जीवन में कब आता है? — watch on YouTube" loading="lazy">
@@ -738,48 +694,41 @@
         <span class="title dev">जब प्रभु का अनुग्रह आप पर आता है</span>
       </a>
     </div>
+    <h3 class="watch-row-title" id="songs">Featured songs</h3>
+    <div class="watch-grid stagger reveal">
+      <a class="wcard" href="https://www.youtube.com/watch?v=TR_cqpH3uaE" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/TR_cqpH3uaE/hqdefault.jpg" alt="Mai Beta Hu Tera — Official Worship Song — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">Mai Beta Hu Tera</span>
+      </a>
+      <a class="wcard" href="https://www.youtube.com/watch?v=HD2ZS4AJ3cQ" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/HD2ZS4AJ3cQ/hqdefault.jpg" alt="Mai Hu Anmol — Official Worship Song — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">Mai Hu Anmol</span>
+      </a>
+      <a class="wcard" href="https://www.youtube.com/watch?v=EEvqOewUAj8" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/EEvqOewUAj8/hqdefault.jpg" alt="Tere Ek Shabd Se — Worship Song — watch on YouTube" loading="lazy">
+        <span class="ov"></span>
+        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="title dev">Tere Ek Shabd Se</span>
+      </a>
+    </div>
     <div class="watch-more">
       <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">Subscribe on YouTube</a>
     </div>
   </div>
 </section>
 
-<section class="latest blessing reveal" id="blessing">
-  <div class="wrap">
-    <div class="latest-head">
-      <span class="eyebrow">A word of blessing</span>
-      <h2>Anniversary Wishes<span class="dev">आशीर्वाद और शुभकामनाएँ</span></h2>
-    </div>
-    <p class="from-badge"><span class="from-lab">A message from</span><strong>Apostle Dr. P.S. Rambabu</strong><span class="from-org">New Creation Ministries</span></p>
-    <div class="watch-featured reveal">
-      <iframe src="https://www.youtube.com/embed/VBzm2YlUHCc?rel=0" title="Church Anniversary wishes from Apostle Dr. P.S. Rambabu to Apostle Vishal Samuel and Pastor Juhi" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-    <p class="blessing-cap"><strong>Church Anniversary wishes</strong> from <span class="hl">Apostle Dr. P.S. Rambabu</span> to Apostle Vishal Samuel and Pastor Juhi.<br><a href="https://youtu.be/VBzm2YlUHCc" target="_blank" rel="noopener">Watch on YouTube</a></p>
-  </div>
-</section>
-
 <section class="about reveal" id="about">
   <div class="wrap about-grid">
     <div>
-      <span class="eyebrow">Who we are</span>
       <h2>Every life is precious to God<span class="dev">अनमोल जीवन</span></h2>
       <p>The name says it plainly: <em>Anmol Jeevan</em> means <strong>precious life</strong>. We exist to carry the hope of Jesus into homes, streets, and screens across India — in the language people pray and dream in.</p>
       <p>What began as a passion to proclaim Christ's love has grown into a daily rhythm of teaching, worship, and testimony — reaching a growing family online and gathering together each week in Indore.</p>
       <p>Whether you've walked with Jesus for years or you're simply curious, there is a place for you here.</p>
-      <p style="color:var(--on-surface-muted);font-size:.92rem">You may also know us as <strong>AJM</strong>, <strong>AJM Family</strong>, or <strong>AJMI</strong>.</p>
     </div>
-    <div class="about-visual">
-      <div class="glow"></div>
-      <div class="word">
-        <div class="big dev">अनमोल<br>जीवन</div>
-        <div class="sub">Precious Life</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
     <div class="pillars stagger reveal">
       <div class="pillar">
         <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
@@ -800,27 +749,8 @@
   </div>
 </section>
 
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="word">FAITH</span><span class="dot">•</span><span class="word dev">विश्वास</span><span class="dot">•</span>
-    <span class="word">HOPE</span><span class="dot">•</span><span class="word dev">आशा</span><span class="dot">•</span>
-    <span class="word">LOVE</span><span class="dot">•</span><span class="word dev">प्रेम</span><span class="dot">•</span>
-    <span class="word">GRACE</span><span class="dot">•</span><span class="word dev">अनुग्रह</span><span class="dot">•</span>
-    <span class="word">WORSHIP</span><span class="dot">•</span><span class="word dev">आराधना</span><span class="dot">•</span>
-    <span class="word">FAITH</span><span class="dot">•</span><span class="word dev">विश्वास</span><span class="dot">•</span>
-    <span class="word">HOPE</span><span class="dot">•</span><span class="word dev">आशा</span><span class="dot">•</span>
-    <span class="word">LOVE</span><span class="dot">•</span><span class="word dev">प्रेम</span><span class="dot">•</span>
-    <span class="word">GRACE</span><span class="dot">•</span><span class="word dev">अनुग्रह</span><span class="dot">•</span>
-    <span class="word">WORSHIP</span><span class="dot">•</span><span class="word dev">आराधना</span><span class="dot">•</span>
-  </div>
-</div>
-
 <section class="stats reveal">
   <div class="wrap">
-    <div class="stats-head">
-      <span class="eyebrow" style="color:var(--gold-soft)">By His grace</span>
-      <h2>A family that keeps growing</h2>
-    </div>
     <div class="stats-grid stagger reveal">
       <div class="stat"><span class="num" data-count-to="41" data-suffix="K+">0</span><span class="label">YouTube Family</span></div>
       <div class="stat"><span class="num" data-count-to="1.4" data-decimals="1" data-suffix="K+">0</span><span class="label">Messages Preached</span></div>
@@ -833,7 +763,6 @@
   <div class="wrap">
     <div class="service">
       <div class="left">
-        <span class="eyebrow">Come as you are</span>
         <h2>Gather with us</h2>
         <div class="times">
           <div class="time-row"><span class="day">Sunday Fellowship</span><span class="det">Praise, the Word &amp; prayer together — every Sunday, 3:00 PM</span></div>
@@ -858,7 +787,6 @@
 
 <section class="leaders reveal" id="leaders">
   <div class="wrap">
-    <div style="text-align:center"><span class="eyebrow">Our shepherds</span></div>
     <h2>Led by faithful hearts</h2>
     <div class="leader-grid stagger reveal">
       <div class="leader">
@@ -882,33 +810,14 @@
   </div>
 </section>
 
-<section class="watch reveal" id="songs">
-  <div class="wrap">
-    <span class="eyebrow">Worship with us</span>
-    <h2>Featured Songs</h2>
-    <p class="sub">Original worship songs from the AJM Family — let these carry you into His presence.</p>
-    <div class="watch-grid stagger reveal">
-      <a class="wcard" href="https://www.youtube.com/watch?v=TR_cqpH3uaE" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/TR_cqpH3uaE/hqdefault.jpg" alt="Mai Beta Hu Tera — Official Worship Song — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">Mai Beta Hu Tera</span>
-      </a>
-      <a class="wcard" href="https://www.youtube.com/watch?v=HD2ZS4AJ3cQ" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/HD2ZS4AJ3cQ/hqdefault.jpg" alt="Mai Hu Anmol — Official Worship Song — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">Mai Hu Anmol</span>
-      </a>
-      <a class="wcard" href="https://www.youtube.com/watch?v=EEvqOewUAj8" target="_blank" rel="noopener">
-        <img src="https://i.ytimg.com/vi/EEvqOewUAj8/hqdefault.jpg" alt="Tere Ek Shabd Se — Worship Song — watch on YouTube" loading="lazy">
-        <span class="ov"></span>
-        <span class="play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <span class="title dev">Tere Ek Shabd Se</span>
-      </a>
+<section class="blessing reveal" id="blessing">
+  <div class="wrap blessing-grid">
+    <div class="watch-featured reveal">
+      <iframe src="https://www.youtube.com/embed/VBzm2YlUHCc?rel=0" title="Church Anniversary wishes from Apostle Dr. P.S. Rambabu to Apostle Vishal Samuel and Pastor Juhi" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
-    <div class="watch-more">
-      <a href="https://www.youtube.com/@ajmifamily" target="_blank" rel="noopener" class="btn-lg btn-gold magnetic">Listen to more on YouTube</a>
+    <div>
+      <h2>Anniversary Wishes<span class="dev">आशीर्वाद और शुभकामनाएँ</span></h2>
+      <p class="blessing-cap"><strong>Church Anniversary wishes</strong> from <span class="hl">Apostle Dr. P.S. Rambabu</span>, New Creation Ministries, to Apostle Vishal Samuel and Pastor Juhi.<br><a href="https://youtu.be/VBzm2YlUHCc" target="_blank" rel="noopener">Watch on YouTube</a></p>
     </div>
   </div>
 </section>
@@ -916,7 +825,6 @@
 <section class="invite-cta reveal" id="invite">
   <div class="aurora"></div>
   <div class="wrap invite-cta-inner">
-    <span class="eyebrow" style="color:var(--gold-soft)">Speaking invitations</span>
     <h2>Invite Apostle Vishal Samuel<br>to your church</h2>
     <p class="sub">Planning a revival meeting, conference, or special service? Apostle Vishal Samuel and Pastor Juhi Vishal would be honored to minister alongside your church.</p>
     <a href="invite.html" class="btn-lg btn-gold magnetic">Send an Invitation</a>
@@ -925,7 +833,6 @@
 
 <section class="faq reveal" id="faq">
   <div class="wrap">
-    <div style="text-align:center"><span class="eyebrow">Good to know</span></div>
     <h2>Frequently asked questions</h2>
     <div class="faq-list">
       <details class="faq-item">
@@ -958,7 +865,6 @@
 
 <section class="connect reveal" id="connect">
   <div class="wrap">
-    <span class="eyebrow" style="color:var(--gold-soft)">Stay connected</span>
     <h2>Join the <em>AJM Family</em></h2>
     <p class="sub">Follow along, be encouraged daily, and reach out for prayer. We would love to walk with you.</p>
     <div class="care-actions">

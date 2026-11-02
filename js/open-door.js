@@ -3,7 +3,7 @@
 (function(){
   const hero=document.getElementById('top'),when=document.getElementById('doorWhen'),name=document.getElementById('doorName'),
     detail=document.getElementById('doorDetail'),cta=document.getElementById('doorCta'),ctaText=document.getElementById('doorCtaText'),
-    note=document.getElementById('doorNote'),rail=document.getElementById('doorRail');
+    rail=document.getElementById('doorRail');
   if(!hero||!when||!rail)return;
 
   const IST=330*60000,MIN=60000,DAY=1440*MIN,WA='https://wa.me/917999929550?text=';
@@ -101,7 +101,6 @@
     ctaText.textContent=s.g.online?'Get the Zoom link':'Ask for the venue';
     cta.href=WA+encodeURIComponent(message(s,now));
     cta.target='_blank';cta.rel='noopener';
-    note.textContent=s.g.online?'Opens WhatsApp · WhatsApp पर Zoom लिंक मिलेगा':'Opens WhatsApp · WhatsApp पर पता पूछें';
   }
 
   show();
