@@ -6,6 +6,9 @@
   const dateLabel = value => new Date(value+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
   const weekStart = () => { const d=istToday(); return addDays(d,-d.getDay()+planOffset*7); };
   const finished = task => task.status === 'Done' || task.status === 'Cancelled';
+  const sort = {key:'due', dir:'asc'};
+  const COLS = [{key:'due',label:'Deadline',sort:true},{key:'title',label:'Content title',sort:true},{key:'type',label:'Type',sort:true},{key:'owner',label:'Assigned person',sort:true},{key:'status',label:'Status',sort:true},{key:'notes',label:'Notes'},{sr:'Actions'}];
+  const GET = {due:t=>t.due, title:t=>t.title, type:t=>t.type, owner:t=>t.owner||'', status:t=>t.status};
   function tag(task) {
     const late = !finished(task) && task.due < dateKey(istToday());
     return `<span class="workflow-tag ${task.status==='Done'?'is-done':late?'is-late':''}">${esc(late?'Overdue · '+task.status:task.status)}</span>`;
@@ -30,7 +33,7 @@
     $('plBoard').classList.add('workflow-board'); $('plBoard').style.setProperty('--rr',0); $('plBoard').innerHTML=board;
     const owner=$('planOwnerFilter').value.trim().toLowerCase(), status=$('planStatusFilter').value;
     const shown=tasks.filter(t=>t.due>=dateKey(start)&&t.due<=dateKey(end)&&(!owner||t.owner.toLowerCase().includes(owner))&&(status==='all'||t.status===status)).sort((a,b)=>a.due.localeCompare(b.due)||a.title.localeCompare(b.title));
-    $('planTaskList').innerHTML=shown.length?shown.map(t=>`<article class="workflow-row"><div><h3>${esc(t.title)}</h3><p>${tag(t)}${esc(dateLabel(t.due))} · ${esc(t.owner||'Unassigned')} · ${esc(t.type)}</p>${t.notes?`<p class="workflow-notes">${esc(t.notes)}</p>`:''}</div><button class="btn" type="button" data-plan-edit="${esc(t.id)}">Edit Assignment</button></article>`).join(''):`<p class="workflow-empty">${loaded?'No assignments match this week and filter. Add an assignment to plan the team’s work.':'The shared assignments have not loaded yet. Use Refresh Assignments to try again.'}</p>`;
+    $('planTaskList').innerHTML=shown.length?`<div class="dt-wrap dt-box"><table class="dt dt-stack">${AjmTable.head(COLS,sort)}<tbody>${AjmTable.sort(shown,sort,GET).map(t=>`<tr><td class="dt-nowrap" data-label="Deadline">${esc(dateLabel(t.due))}</td><td class="dt-lead" data-label="Content title">${esc(t.title)}</td><td data-label="Type">${esc(t.type)}</td><td data-label="Assigned person">${esc(t.owner||'Unassigned')}</td><td data-label="Status">${tag(t)}</td><td class="dt-note" data-label="Notes">${esc(t.notes)}</td><td class="dt-actions"><button class="btn sm" type="button" data-plan-edit="${esc(t.id)}">Edit Assignment</button></td></tr>`).join('')}</tbody></table></div>`:`<p class="workflow-empty">${loaded?'No assignments match this week and filter. Add an assignment to plan the team’s work.':'The shared assignments have not loaded yet. Use Refresh Assignments to try again.'}</p>`;
   }
   async function load(silent=false) {
     if(!hasPlan||loading||saving) return;
@@ -76,6 +79,7 @@
   $('planRefresh').addEventListener('click',()=>load());
   $('planOwnerFilter').addEventListener('input',render);
   $('planStatusFilter').addEventListener('change',render);
+  AjmTable.onSort($('planTaskList'),sort,render);
   $('planTaskList').addEventListener('click',event=>{
     const button=event.target.closest('[data-plan-edit]');
     if(button)openEditor(tasks.find(t=>t.id===button.dataset.planEdit));

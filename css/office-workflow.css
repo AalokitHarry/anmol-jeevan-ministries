@@ -17,13 +17,10 @@
 .workflow-result{min-height:1.5em;font-size:.9rem;color:var(--navy,#16305a);margin-top:10px}
 .workflow-result.is-error{color:#a32424}
 .workflow-list{display:grid}
-.workflow-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line,#e3e8f1);overflow-wrap:anywhere}
-.workflow-row h3{font:inherit;font-size:1rem;font-weight:700;margin-bottom:5px}
-.workflow-row p{color:#526079;font-size:.9rem;white-space:pre-wrap}
-.workflow-row .workflow-notes{margin-top:8px;max-width:72ch;color:var(--ink,#141a2e)}
 .workflow-tag{display:inline-block;font-size:.8rem;font-weight:600;padding:4px 9px;border-radius:6px;background:#eaf1ff;color:#204d90;margin-right:8px}
 .workflow-tag.is-late{background:#fde8e8;color:#9c2525}
 .workflow-tag.is-done{background:#e3f6ec;color:#176a43}
+.dt .workflow-tag{margin-right:0;white-space:nowrap}
 .workflow-section :focus-visible,.workflow-editor :focus-visible,#planView .workflow-toolbar :focus-visible{outline:3px solid var(--navy,#16305a);outline-offset:3px}
 #table .followup-open{font-size:.8rem;padding:7px 12px;margin-right:8px;min-height:38px}
 #planView .workflow-section{margin:0 0 22px}
@@ -43,8 +40,6 @@
 @media(max-width:760px){
   .workflow-fields{grid-template-columns:1fr}
   .workflow-section{padding:18px}
-  .workflow-row{align-items:flex-start;flex-direction:column;gap:12px}
-  .workflow-row .btn{align-self:flex-start}
   .workflow-actions .btn{min-height:44px}
   #table .followup-open{min-height:44px}
 }

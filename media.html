@@ -189,31 +189,26 @@
   .tchipbtn{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer}
   .tchipbtn i{width:8px;height:8px;border-radius:50%;background:var(--c,#69758c)}
   .tchipbtn.active{background:var(--ink);border-color:var(--ink);color:#fff}
-  .items{display:grid;gap:10px}
-  .item{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 16px 14px 20px;background:#fff;border:1px solid var(--line-2);border-radius:16px;box-shadow:0 1px 2px rgba(20,30,60,.04);position:relative;overflow:hidden}
-  .items.enter .item,.tiles.enter .tile{animation:fade .35s ease both}
-  .item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c,#69758c)}
-  .item.done{opacity:.78}
-  .item-title{font-weight:700;font-size:.98rem;line-height:1.3;word-break:break-word}
-  .item-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:5px;font-size:.76rem;color:var(--muted)}
+  .items.enter tbody tr,.tiles.enter .tile{animation:fade .35s ease both}
+  .item-row>td:first-child{box-shadow:inset 4px 0 0 var(--c,#69758c)}
+  .item-row.done>td:not(.dt-actions){opacity:.78}
+  .item-row .dt-lead{font-size:.92rem;line-height:1.3}
+  .item-row input,.item-row select{width:100%;min-width:120px;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);font:inherit;font-size:.84rem;background:#fff;color:var(--ink)}
   .tchip{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:100px;background:color-mix(in srgb,var(--c,#69758c) 14%,#fff);color:color-mix(in srgb,var(--c,#69758c) 75%,#000);font-weight:700;font-size:.72rem}
   .pchip{padding:2px 10px;border-radius:100px;background:var(--ok-soft);color:#166b45;font-weight:700;font-size:.72rem}
-  .linkbtn{display:inline-flex;align-items:center;gap:4px;color:var(--blue);font-weight:600;text-decoration:none}
+  .linkbtn{display:inline-flex;align-items:center;gap:4px;color:var(--blue);font-weight:600;text-decoration:none;white-space:nowrap}
   .linkbtn:hover{text-decoration:underline}
-  .item-side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
   .segmini{display:inline-flex;gap:3px;padding:3px;border-radius:100px;background:#eef2fa}
   .segmini button{padding:6px 12px;border-radius:100px;border:0;background:transparent;font:inherit;font-size:.74rem;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
   .segmini button.on-Ready{background:var(--warn-soft);color:var(--warn)}
   .segmini button.on-Uploaded{background:var(--ok-soft);color:var(--ok)}
   .segmini button.on-Notneeded{background:#e6e9f0;color:#5b6a84}
-  .platforms{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end}
+  .platforms{display:flex;flex-wrap:wrap;gap:5px}
   .platforms button{padding:3px 10px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:.7rem;font-weight:600;color:var(--muted);cursor:pointer}
   .platforms button.on{background:var(--ok);border-color:var(--ok);color:#fff}
-  .item-tools{display:flex;gap:6px}
   .iconbtn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,color .15s}
   .iconbtn:hover{background:var(--blue-soft);color:var(--blue)}
   .iconbtn.danger:hover{background:#fde8e8;color:var(--bad);border-color:#f5c2c2}
-  .editrow{grid-column:1/-1;display:grid;grid-template-columns:1.6fr .8fr 1fr auto auto;gap:8px;align-items:center}
   .empty{text-align:center;padding:54px 20px;color:var(--muted)}
   .empty .big{font-size:2.4rem;margin-bottom:8px}
   #itemsLoading,#tcLoading{text-align:center;padding:40px;color:var(--muted)}
@@ -395,11 +390,9 @@
     body{padding:14px}
     .sheet-in{padding:18px 14px 0}
     .sheet-head h2{font-size:1.25rem}
-    .item{grid-template-columns:1fr}
-    .item-side{align-items:flex-start}
-    .platforms{justify-content:flex-start}
-    .editrow{grid-template-columns:1fr 1fr}
-    .editrow input:first-child{grid-column:1/-1}
+    .item-row>td:first-child{box-shadow:none}
+    .item-row{box-shadow:inset 4px 0 0 var(--c,#69758c)}
+    .item-row .platforms{justify-content:flex-end}
   }
   @media(max-width:560px){
     .tabs{display:flex;width:100%;gap:2px;padding:4px}
@@ -486,6 +479,7 @@
   }
 </style>
 <link rel="stylesheet" href="css/office-workflow.css">
+<link rel="stylesheet" href="css/admin-table.css">
 </head>
 <body>
 
@@ -724,6 +718,7 @@
 <div id="toast" role="status"></div>
 
 <script src="js/reglog.js"></script>
+<script src="js/admin-table.js"></script>
 <script>
   const MEDIA_URL = REG_LOG_URL; // same Apps Script Web App as the admin page
   // Work types on the chart, in order. Anything saved under a name that isn't here still shows up.
@@ -1321,6 +1316,9 @@
     }catch(e){ /* next time */ }
   }
 
+  const itemSort = {key:'', dir:''}; // no key = the usual order: newest first
+  const ITEM_COLS = [{key:'title',label:'Title',sort:true},{key:'type',label:'Type',sort:true},{key:'status',label:'Status',sort:true},{key:'platform',label:'Uploaded to',sort:true},{key:'link',label:'Link'},{key:'added',label:'Added',sort:true},{key:'updated',label:'Last changed',sort:true},{sr:'Actions'}];
+  const ITEM_GET = {title:i => i.title, type:i => i.type, status:i => i.status, platform:i => i.platform, added:i => i.addedAt, updated:i => i.updatedAt};
   const matchesQuery = i => !itemFilter.q || (i.title + ' ' + i.type).toLowerCase().includes(itemFilter.q.toLowerCase());
 
   function renderItems(){
@@ -1336,12 +1334,13 @@
       `<button type="button" class="tchipbtn ${itemFilter.type === 'all' ? 'active' : ''}" data-type="all">All types</button>` +
       types.map(t => `<button type="button" class="tchipbtn ${itemFilter.type === t ? 'active' : ''}" data-type="${esc(t)}" style="--c:${colorOf(t)}"><i></i>${esc(t)}</button>`).join('');
 
-    const shown = base.filter(i => itemFilter.status === 'all' || i.status === itemFilter.status)
+    const listed = base.filter(i => itemFilter.status === 'all' || i.status === itemFilter.status)
       .sort((a, b) => (itemFilter.status === 'Ready' || itemFilter.status === 'all' ? b.addedAt.localeCompare(a.addedAt) : b.updatedAt.localeCompare(a.updatedAt)));
+    const shown = itemSort.key ? AjmTable.sort(listed, itemSort, ITEM_GET) : listed;
 
     $('itemList').classList.toggle('enter', animateItems);
     animateItems = false;
-    $('itemList').innerHTML = shown.map(itemHtml).join('');
+    $('itemList').innerHTML = shown.length ? `<div class="dt-wrap dt-box"><table class="dt dt-stack">${AjmTable.head(ITEM_COLS, itemSort)}<tbody>${shown.map(itemHtml).join('')}</tbody></table></div>` : '';
     const empty = $('itemsEmpty');
     if(!shown.length){
       empty.hidden = false;
@@ -1358,34 +1357,29 @@
   function itemHtml(i){
     const c = colorOf(i.type), url = safeUrl(i.link);
     if(editingId === i.id){
-      return `<article class="item" style="--c:${c}" data-id="${esc(i.id)}"><div class="editrow">
-        <input data-f="title" value="${esc(i.title)}" maxlength="120" aria-label="Title">
-        <select data-f="type" aria-label="Type">${allTypes().map(t => `<option value="${esc(t)}"${t === i.type ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select>
-        <input data-f="link" value="${esc(i.link)}" maxlength="300" placeholder="Link (optional)" aria-label="Link">
-        <button class="btn primary sm" data-act="save-edit">Save</button>
-        <button class="btn sm" data-act="cancel-edit">Cancel</button></div></article>`;
+      return `<tr class="item-row editing" style="--c:${c}" data-id="${esc(i.id)}">
+        <td class="dt-lead" data-label="Title"><input data-f="title" value="${esc(i.title)}" maxlength="120" aria-label="Title"></td>
+        <td data-label="Type"><select data-f="type" aria-label="Type">${allTypes().map(t => `<option value="${esc(t)}"${t === i.type ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></td>
+        <td></td><td></td>
+        <td data-label="Link"><input data-f="link" value="${esc(i.link)}" maxlength="300" placeholder="Link (optional)" aria-label="Link"></td>
+        <td></td><td></td>
+        <td class="dt-actions"><button class="btn primary sm" data-act="save-edit">Save</button><button class="btn sm" data-act="cancel-edit">Cancel</button></td>
+      </tr>`;
     }
     const status = i.status;
-    return `<article class="item ${status !== 'Ready' ? 'done' : ''}" style="--c:${c}" data-id="${esc(i.id)}">
-      <div class="item-main">
-        <div class="item-title">${esc(i.title)}</div>
-        <div class="item-meta">
-          <span class="tchip">${esc(i.type)}</span>
-          <span>Added ${esc(fmtShort(i.addedAt))}</span>
-          ${status !== 'Ready' ? `<span>· ${esc(status)} ${esc(fmtShort(i.updatedAt))}</span>` : ''}
-          ${i.platform ? `<span class="pchip">${esc(i.platform)}</span>` : ''}
-          ${url ? `<a class="linkbtn" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><svg class="i" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Open link</a>` : (i.link ? `<span>${esc(i.link)}</span>` : '')}
-        </div>
-      </div>
-      <div class="item-side">
-        <div class="segmini" role="group" aria-label="Status">${STATUSES.map(s => `<button data-act="status" data-status="${s}" class="${status === s ? 'on-' + statusClass(s) : ''}">${s}</button>`).join('')}</div>
-        ${status === 'Uploaded' ? `<div class="platforms">${PLATFORMS.map(p => `<button data-act="platform" data-platform="${p}" class="${i.platform === p ? 'on' : ''}">${p}</button>`).join('')}</div>` : ''}
-        <div class="item-tools">
-          <button class="iconbtn" data-act="edit" title="Edit" aria-label="Edit"><svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button>
-          <button class="iconbtn danger" data-act="delete" title="Remove" aria-label="Remove"><svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
-        </div>
-      </div>
-    </article>`;
+    return `<tr class="item-row${status !== 'Ready' ? ' done' : ''}" style="--c:${c}" data-id="${esc(i.id)}">
+      <td class="dt-lead" data-label="Title">${esc(i.title)}</td>
+      <td data-label="Type"><span class="tchip">${esc(i.type)}</span></td>
+      <td data-label="Status"><div class="segmini" role="group" aria-label="Status">${STATUSES.map(s => `<button data-act="status" data-status="${s}" class="${status === s ? 'on-' + statusClass(s) : ''}">${s}</button>`).join('')}</div></td>
+      <td data-label="Uploaded to">${status === 'Uploaded' ? `<div class="platforms">${PLATFORMS.map(p => `<button data-act="platform" data-platform="${p}" class="${i.platform === p ? 'on' : ''}">${p}</button>`).join('')}</div>` : (i.platform ? `<span class="pchip">${esc(i.platform)}</span>` : '')}</td>
+      <td data-label="Link">${url ? `<a class="linkbtn" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><svg class="i" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Open link</a>` : (i.link ? `<span class="dt-muted">${esc(i.link)}</span>` : '')}</td>
+      <td class="dt-nowrap dt-muted" data-label="Added">${esc(fmtShort(i.addedAt))}</td>
+      <td class="dt-nowrap dt-muted" data-label="Last changed">${status !== 'Ready' ? esc(status + ' ' + fmtShort(i.updatedAt)) : ''}</td>
+      <td class="dt-actions">
+        <button class="iconbtn" data-act="edit" title="Edit" aria-label="Edit ${esc(i.title)}"><svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button>
+        <button class="iconbtn danger" data-act="delete" title="Remove" aria-label="Remove ${esc(i.title)}"><svg class="i" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
+      </td>
+    </tr>`;
   }
 
   function putItem(item){
@@ -1402,6 +1396,7 @@
     if(b){ itemFilter.type = b.dataset.type; renderItems(); }
   });
   $('itemSearch').addEventListener('input', () => { itemFilter.q = $('itemSearch').value.trim(); renderItems(); });
+  AjmTable.onSort($('itemList'), itemSort, renderItems, {added:'desc', updated:'desc'});
 
   $('addForm').addEventListener('submit', async e => {
     e.preventDefault();
@@ -1428,7 +1423,7 @@
   $('itemList').addEventListener('click', async e => {
     const b = e.target.closest('button[data-act]');
     if(!b) return;
-    const card = b.closest('.item'), id = card.dataset.id, it = items.find(x => x.id === id);
+    const card = b.closest('tr[data-id]'), id = card.dataset.id, it = items.find(x => x.id === id);
     if(!it) return;
     const act = b.dataset.act;
     try{
