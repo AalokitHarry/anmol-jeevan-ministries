@@ -1,0 +1,157 @@
+/* Dark theme for the office pages (admin, media, worship).
+   Same switch as the public site: data-theme="dark" on <html>, saved as ajm-theme.
+   Printing always uses the light look, so everything here is screen-only. */
+@media screen{
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --navy:#c9d8ff; --blue:#7ea4ff; --blue-soft:rgba(91,140,255,.16);
+  --ink:#eae7f5; --muted:#a29dc4; --line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.08); --bg:#0a0b22;
+  --ok:#4fd296; --ok-soft:rgba(31,157,99,.2); --warn:#f2b453; --warn-soft:rgba(217,138,11,.18);
+  --bad:#ff8080; --bad-soft:rgba(214,69,69,.2); --pink:#f48bb5; --pink-soft:rgba(217,85,138,.18);
+  --gold-soft:rgba(232,163,61,.16);
+  --card:#13163a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 34px -18px rgba(0,0,0,.7);
+  --dk-raise:#1b1f4a; --dk-field:#0f1130; --dk-hover:rgba(126,164,255,.07);
+}
+:root[data-theme="dark"] body{
+  background:
+    radial-gradient(1100px 460px at 88% -8%,rgba(47,109,246,.16) 0%,transparent 62%),
+    radial-gradient(800px 380px at -8% 4%,rgba(124,92,255,.12) 0%,transparent 58%),
+    var(--bg)}
+
+/* raised surfaces that were plain white */
+:root[data-theme="dark"] :where(.btn:not(.primary):not(.ghost):not(.danger.solid),.search,.sort-select,.del-btn,.iconbtn,
+  .tab b,.seg button b,select,input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea){
+  background-color:var(--dk-raise);color:var(--ink)}
+:root[data-theme="dark"] :is(.gate-field,.modal textarea,.modal input.text){background:var(--dk-field)}
+:root[data-theme="dark"] .modal-backdrop .modal{background:var(--card);box-shadow:0 30px 70px -20px rgba(0,0,0,.8)}
+:root[data-theme="dark"] .gate-field input,:root[data-theme="dark"] .search input{background:transparent}
+:root[data-theme="dark"] .btn:hover{border-color:rgba(255,255,255,.28)}
+:root[data-theme="dark"] .modal-backdrop{background:rgba(3,4,14,.7)}
+
+/* segmented controls, table heads, row tints */
+:root[data-theme="dark"] :is(.tabs,.seg){background:rgba(255,255,255,.06)}
+:root[data-theme="dark"] :where(th,.m-msg){background:rgba(255,255,255,.04)}
+:root[data-theme="dark"] .m-table th{background:none}
+:root[data-theme="dark"] .dt>tbody>tr.dt-detail>td{background:rgba(255,255,255,.03)}
+@media(max-width:760px){
+  :root[data-theme="dark"] .dt.dt-stack>thead>tr{background:rgba(255,255,255,.04)}
+  :root[data-theme="dark"] .dt.dt-stack thead .dt-sort{background:var(--dk-raise)}
+}
+:root[data-theme="dark"] .m-msg,:root[data-theme="dark"] .people-list{color:var(--ink)}
+:root[data-theme="dark"] :is(tbody tr:hover,.recipient-row:hover){background:var(--dk-hover)}
+:root[data-theme="dark"] :is(tr.dup-row,.dt>tbody>tr.song-row.inset){background:rgba(232,163,61,.08)}
+:root[data-theme="dark"] tr.dup-row:hover{background:rgba(232,163,61,.13)}
+:root[data-theme="dark"] tr.sel-row{background:rgba(91,140,255,.14)}
+:root[data-theme="dark"] tr.sel-row:hover{background:rgba(91,140,255,.2)}
+
+/* badges with fixed light colours */
+:root[data-theme="dark"] :is(.ico.faith,.src-faith){background:rgba(124,92,255,.2);color:#c3b4ff}
+:root[data-theme="dark"] :is(.status-select.st-pending,.res.skipped){background-color:rgba(255,255,255,.08);color:#c2c8da}
+:root[data-theme="dark"] .avatar{background:color-mix(in srgb,var(--c) 22%,var(--card));color:color-mix(in srgb,var(--c) 55%,#fff)}
+:root[data-theme="dark"] .notice{color:#f6cf8a}
+:root[data-theme="dark"] .hist-status{color:#8ee6b8}
+:root[data-theme="dark"] .hist-status.busy{color:#b5ccff}
+:root[data-theme="dark"] .modal label.lab{color:var(--muted)}
+:root[data-theme="dark"] :is(.btn.danger,.del-btn:hover){border-color:rgba(255,128,128,.4)}
+
+/* follow-up and planning blocks (office-workflow.css) */
+:root[data-theme="dark"] :is(.workflow-toolbar,.workflow-fields) :is(input,select,textarea){border-color:var(--line);background:var(--dk-field);color:var(--ink)}
+:root[data-theme="dark"] :is(.workflow-toolbar,.workflow-fields) :is(input,textarea)::placeholder{color:#8d88b0}
+:root[data-theme="dark"] :is(.workflow-help,.workflow-empty,.workflow-task-chip span){color:var(--muted)}
+:root[data-theme="dark"] .workflow-result.is-error{color:var(--bad)}
+:root[data-theme="dark"] .workflow-tag{background:var(--blue-soft);color:#b5ccff}
+:root[data-theme="dark"] .workflow-tag.is-late{background:var(--bad-soft);color:#ffb3b3}
+:root[data-theme="dark"] .workflow-tag.is-done{background:var(--ok-soft);color:#8ee6b8}
+:root[data-theme="dark"] .workflow-readonly{background:var(--gold-soft);color:#f6cf8a}
+
+/* worship: set list, picker, library and the song editor */
+:root[data-theme="dark"] :where(.sheet){background:var(--card)}
+:root[data-theme="dark"] :where(.datechip:not(.on):not(.future)){background:var(--dk-raise)}
+:root[data-theme="dark"] :where(.note-box textarea,.fld input,.fld textarea){background:var(--dk-field);color:var(--ink)}
+:root[data-theme="dark"] :where(.set-empty,.ed-preview){background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.18)}
+:root[data-theme="dark"] :is(.keychip,.dup,.planned){color:#f6cf8a;border-color:rgba(232,163,61,.35)}
+:root[data-theme="dark"] .datechip.future{border-color:rgba(232,163,61,.35)}
+:root[data-theme="dark"] :is(.sc-first,.sheet p.msg,.ed-hint b){color:#c8c4de}
+:root[data-theme="dark"] :is(.sc-first.none,.ed-preview .ph,.fld>span,.ed-preview>.cap){color:var(--muted)}
+:root[data-theme="dark"] .sc-actions .btn.added{background:var(--ok-soft);border-color:rgba(79,210,150,.35);color:#8ee6b8}
+:root[data-theme="dark"] .set-item.gone .num,:root[data-theme="dark"] .savechip::before{background:#4a4f78}
+:root[data-theme="dark"] :is(.btn.danger:hover,.iconbtn.danger:hover){background:var(--bad-soft)}
+:root[data-theme="dark"] .ed-preview .lyr .lab{color:#f2b453}
+:root[data-theme="dark"] .ed-preview .lyr .stanza.chorus{color:#f6cf8a}
+:root[data-theme="dark"] .pk-row:not(.on) .tick{border-color:rgba(255,255,255,.22)}
+:root[data-theme="dark"] .sheet{box-shadow:0 30px 70px -20px rgba(0,0,0,.8)}
+
+/* places that used the navy/ink tokens as a fill (those tokens are light text now) */
+:root[data-theme="dark"] table.grid:not(.up) thead th:not(.sun):not(.tot):not(.today),
+:root[data-theme="dark"] .pl-col:not(.today) .pl-h,:root[data-theme="dark"] .datechip.on{background:#26468a;border-color:#26468a;color:#fff}
+
+/* media: content log grid */
+:root[data-theme="dark"] :where(.howto,.pl-col,.pl-row){background:var(--card)}
+:root[data-theme="dark"] :where(.howto button,.palette button,.tchipbtn,.platforms button:not(.on),.seg button.active){background:var(--dk-raise);color:var(--ink)}
+:root[data-theme="dark"] :where(.notes textarea,.addcard input,.addcard select,.editrow input,.editrow select,.item-row input,.item-row select,table.tt input.num){background:var(--dk-field);color:var(--ink)}
+:root[data-theme="dark"] :where(.periodbar,.legend,table.tt th,table.tt tfoot td){background:rgba(255,255,255,.04)}
+:root[data-theme="dark"] :where(.viewswitch,.segmini,.bar,.pl-num,.pl-av,.pl-strip i){background:rgba(255,255,255,.07)}
+:root[data-theme="dark"] :where(.viewswitch button b){background:var(--dk-raise)}
+:root[data-theme="dark"] .legend{border-color:rgba(255,255,255,.18)}
+:root[data-theme="dark"] :is(.legend strong,.notes label,.pl-empty,.pl-strip i){color:var(--muted)}
+:root[data-theme="dark"] #banner{color:#b5ccff}
+:root[data-theme="dark"] .gridtitle{color:#4fd296}
+:root[data-theme="dark"] table.grid tbody tr:nth-child(odd) th.lbl{background:#191d48}
+:root[data-theme="dark"] table.grid tbody tr:nth-child(even) th.lbl{background:#1e2252}
+:root[data-theme="dark"] table.grid tbody tr:nth-child(odd) td{background:var(--card)}
+:root[data-theme="dark"] table.grid tbody tr:nth-child(even) td{background:#161a41}
+:root[data-theme="dark"] table.grid td.sun{background:#1a2152!important}
+:root[data-theme="dark"] :is(table.grid td.na,table.grid th.na){background:#0c0e2a!important;border-color:var(--line-2)}
+:root[data-theme="dark"] table.grid tfoot th.lbl{background:#1e2252}
+:root[data-theme="dark"] table.grid tfoot td{background:#191d48}
+:root[data-theme="dark"] :is(table.grid.up td.tot,table.grid.up tfoot th.lbl,table.grid.up tfoot td:not(.tot)){color:#8ee6b8}
+:root[data-theme="dark"] input.cell:focus{background:var(--dk-raise)}
+:root[data-theme="dark"] table.grid td.today::after{background:rgba(232,163,61,.12)}
+:root[data-theme="dark"] .field .lab{color:var(--muted)}
+/* solid fills keep the deeper light-theme shades so white text stays readable */
+:root[data-theme="dark"] :is(table.grid thead th.tot,.howto span b,.pk-row.on .tick){background:#2f6df6;border-color:#2f6df6}
+:root[data-theme="dark"] table.grid tfoot td.tot{background:#2f6df6!important}
+:root[data-theme="dark"] :is(table.grid.up thead th.tot,.platforms button.on){background:#1f9d63;border-color:#1f9d63}
+:root[data-theme="dark"] table.grid.up tfoot td.tot{background:#1f9d63!important;color:#fff}
+:root[data-theme="dark"] :is(.btn.danger.solid,.bulkbar .btn.danger:hover){background:#d64545;border-color:#d64545}
+:root[data-theme="dark"] td.s-r{background:rgba(124,92,255,.2)!important}
+:root[data-theme="dark"] td.s-r input.cell{color:#c3b4ff}
+:root[data-theme="dark"] td.s-o{background:rgba(255,255,255,.06)!important}
+
+/* media: stock, summary and weekly plan */
+:root[data-theme="dark"] .seg button.active{background:var(--dk-raise);color:var(--ink)}
+:root[data-theme="dark"] table.tt input.num{background:var(--dk-field);color:var(--ink)}
+:root[data-theme="dark"] .tchip{background:color-mix(in srgb,var(--c,#69758c) 24%,var(--card));color:color-mix(in srgb,var(--c,#69758c) 45%,#fff)}
+:root[data-theme="dark"] .segmini button.on-Notneeded{background:rgba(255,255,255,.1);color:#c2c8da}
+:root[data-theme="dark"] :is(.iconbtn.danger:hover,.flag.warn){background:var(--bad-soft)}
+:root[data-theme="dark"] .flag.ok{color:#8ee6b8}
+:root[data-theme="dark"] .pl-ic{background:color-mix(in srgb,var(--c,#69758c) 24%,var(--card));color:color-mix(in srgb,var(--c,#69758c) 55%,#fff)}
+:root[data-theme="dark"] .pl-pill .pl-ic{background:var(--c);color:#fff}
+:root[data-theme="dark"] .pl-datebox{color:#16305a}
+:root[data-theme="dark"] .pl-b{background:transparent}
+:root[data-theme="dark"] .pl-col.today .pl-b{background:rgba(232,163,61,.08)}
+:root[data-theme="dark"] .pl-chip{background:color-mix(in srgb,var(--c) 14%,var(--card));border-color:color-mix(in srgb,var(--c) 40%,var(--card))}
+:root[data-theme="dark"] .pl-chip.evt{background:rgba(232,163,61,.16);border-color:#e8a33d}
+:root[data-theme="dark"] .pl-strip i.on{background:var(--c);color:#fff}
+:root[data-theme="dark"] .tchipbtn.active{background:#eae7f5;border-color:#eae7f5;color:#0a0b22}
+
+/* shared bits */
+:root[data-theme="dark"] #toast{background:#eae7f5;color:#0a0b22}
+:root[data-theme="dark"] .bulkbar{background:#1b1f4a;box-shadow:0 18px 40px -12px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1)}
+:root[data-theme="dark"] .brand img,:root[data-theme="dark"] .gate-card img{content:url(../img/logo.png)}
+
+/* theme switch: a small round button, bottom-left so it never covers the bulk bar */
+.theme-fab{position:fixed;left:16px;bottom:16px;z-index:95;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:#16305a;color:#fff;border:1px solid rgba(232,163,61,.35);box-shadow:0 12px 30px -10px rgba(20,10,40,.55);cursor:pointer;transition:transform .2s,background .2s}
+.theme-fab:hover{transform:scale(1.08)}
+.theme-fab:focus-visible{outline:2px solid #e8a33d;outline-offset:3px}
+.theme-fab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-fab .icon-sun{display:none}
+:root[data-theme="dark"] .theme-fab{background:#1b1f4a;color:#f2c879}
+:root[data-theme="dark"] .theme-fab .icon-sun{display:block}
+:root[data-theme="dark"] .theme-fab .icon-moon{display:none}
+}
+@media(max-width:820px){body.has-bar .theme-fab{display:none}}
+@media(max-width:560px){.theme-fab{left:12px;bottom:12px;width:40px;height:40px}}
+@media print{.theme-fab{display:none}}
