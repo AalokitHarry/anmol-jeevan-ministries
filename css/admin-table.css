@@ -1,0 +1,57 @@
+/* Data tables shared by the office pages. Colours come from each page's own tokens. */
+.dt-wrap{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.dt-box{border:1px solid var(--line-2,#edf1f8);border-radius:16px;background:var(--card,#fff)}
+.dt{position:relative;width:100%;border-collapse:collapse}
+.dt>thead>tr>th,.dt>tbody>tr>td{text-align:left;padding:11px 14px;font-size:.84rem;border-bottom:1px solid var(--line-2,#edf1f8);vertical-align:middle}
+.dt>thead>tr>th{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#69758c);background:#f6f8fd;font-weight:700;white-space:nowrap}
+.dt>tbody>tr{transition:background .15s}
+.dt>tbody>tr:hover{background:#f8faff}
+.dt>tbody>tr:last-child>td{border-bottom:0}
+.dt-sort{display:inline-flex;align-items:center;gap:3px;padding:0;border:0;background:none;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;cursor:pointer}
+.dt-sort:hover{color:var(--ink,#141a2e)}
+.dt-sort.on{color:var(--blue,#2f6df6)}
+.dt-arrow{opacity:0}
+.dt-sort.on .dt-arrow,.dt-sort:hover .dt-arrow{opacity:1}
+.dt-sort:focus-visible{outline:2px solid var(--blue,#2f6df6);outline-offset:3px;border-radius:4px}
+.dt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dt .dt-lead{font-weight:700;color:var(--ink,#141a2e);overflow-wrap:anywhere;min-width:140px}
+.dt .dt-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dt th.dt-num{text-align:right}
+.dt .dt-nowrap{white-space:nowrap}
+.dt .dt-muted{color:var(--muted,#69758c);font-size:.8rem}
+.dt .dt-note{min-width:160px;max-width:40ch;color:var(--muted,#69758c);font-size:.8rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.dt .dt-actions{text-align:right;white-space:nowrap}
+.dt .dt-actions>*{vertical-align:middle}
+.dt .dt-actions>*+*{margin-left:6px}
+.dt>tbody>tr.dt-detail>td{background:#f8faff;padding:6px 16px 16px}
+.dt>tbody>tr.dt-detail:hover{background:none}
+.dt-toggle[aria-expanded="true"] .dt-arrow{display:inline-block;transform:rotate(180deg)}
+.dt-toggle .dt-arrow{opacity:1}
+
+/* Phones: each row becomes a short labelled block, and the sortable
+   headers stay as a row of sort buttons above the list. */
+@media(max-width:760px){
+  .dt.dt-stack,.dt.dt-stack>tbody,.dt.dt-stack>thead{display:block}
+  .dt.dt-stack>thead>tr{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 14px;background:#f6f8fd;border-bottom:1px solid var(--line-2,#edf1f8)}
+  .dt.dt-stack>thead>tr::before{content:"Sort";font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#69758c);margin-right:2px}
+  .dt.dt-stack>thead>tr>th{display:none;padding:0;border:0;background:none}
+  .dt.dt-stack>thead>tr>th[aria-sort]{display:block}
+  .dt.dt-stack thead .dt-sort{padding:5px 11px;border-radius:100px;border:1.5px solid var(--line,#e3e8f1);background:#fff;font-size:.68rem}
+  .dt.dt-stack thead .dt-sort.on{border-color:var(--blue,#2f6df6)}
+  .dt.dt-stack>tbody>tr{display:flex;flex-direction:column;padding:12px 14px;border-bottom:1px solid var(--line-2,#edf1f8)}
+  .dt.dt-stack>tbody>tr:last-child{border-bottom:0}
+  .dt.dt-stack>tbody>tr>td{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:4px 0;border:0;text-align:right;min-width:0;max-width:none}
+  .dt.dt-stack>tbody>tr>td::before{content:attr(data-label);flex:none;text-align:left;color:var(--muted,#69758c);font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+  .dt.dt-stack>tbody>tr>td:empty{display:none}
+  .dt.dt-stack>tbody>tr>td.dt-lead{order:-1;justify-content:flex-start;text-align:left;font-size:.95rem;padding-bottom:6px}
+  .dt.dt-stack>tbody>tr>td.dt-lead::before,.dt.dt-stack>tbody>tr>td.dt-actions::before{display:none}
+  .dt.dt-stack>tbody>tr>td.dt-actions{justify-content:flex-end;flex-wrap:wrap;gap:6px;white-space:normal;padding-top:8px}
+  .dt.dt-stack>tbody>tr>td.dt-actions>*+*{margin-left:0}
+  .dt.dt-stack>tbody>tr>td.dt-note{text-align:right}
+  .dt.dt-stack>tbody>tr.dt-detail{padding:0 6px 10px}
+  .dt.dt-stack>tbody>tr.dt-detail>td{display:block;text-align:left;padding:6px;border-radius:12px}
+  .dt.dt-stack>tbody>tr.dt-detail>td::before{display:none}
+}
+@media print{
+  .dt-arrow,.dt .dt-actions{display:none}
+}

@@ -134,16 +134,20 @@
   .pane-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
   .pane-head h3{font-family:'Inter',sans-serif;font-size:1rem;font-weight:800;color:var(--navy)}
   .pane-head .hint{font-size:.78rem;color:var(--muted)}
-  .setlist{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
-  .set-item{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 12px;border:1px solid var(--line-2);border-radius:16px;background:#fff;transition:box-shadow .2s,border-color .2s}
-  .set-item:hover{border-color:#cfdaf0;box-shadow:0 8px 20px -14px rgba(20,40,90,.45)}
+  .set-table>tbody>tr>td{padding:8px 10px}
+  .set-table>thead>tr>th{padding:9px 10px}
+  .set-table{table-layout:fixed}
+  .set-table .c-num{width:54px}
+  .set-table .c-key{width:84px}
+  .set-table th.dt-actions{width:134px}
   .set-item .num{width:34px;height:34px;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:.95rem}
-  .set-item .si-main{flex:1;min-width:0;background:none;border:0;text-align:left;cursor:pointer;padding:2px 0;color:inherit}
+  .set-item .si-main{display:block;width:100%;min-width:0;background:none;border:0;text-align:left;cursor:pointer;padding:2px 0;color:inherit;font:inherit}
+  .set-item .si-main .keychip{display:none}
   .set-item .si-main b{display:flex;align-items:center;gap:8px;font-size:1rem;line-height:1.3;flex-wrap:wrap}
   .set-item .si-main small{display:block;color:var(--muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-  .set-item .si-tools{display:flex;gap:4px;flex:none}
+  .set-item .si-tools>*+*{margin-left:2px}
   .set-item .si-tools .iconbtn{width:32px;height:32px}
-  .set-item.gone{opacity:.7;border-style:dashed}
+  .set-item.gone>td{opacity:.7}
   .set-item.gone .num{background:#b6c0d4}
   .set-empty{text-align:center;padding:34px 14px;border:1.5px dashed #cdd8ec;border-radius:18px;background:#f8faff;color:var(--muted)}
   .set-empty .big{font-size:2.2rem;margin-bottom:6px}
@@ -170,17 +174,12 @@
   .seg button{padding:7px 14px;border-radius:100px;border:0;background:transparent;font:inherit;font-weight:700;font-size:.8rem;color:var(--muted);cursor:pointer}
   .seg button.active{background:#fff;color:var(--navy);box-shadow:0 4px 12px -6px rgba(20,40,90,.5)}
   .lib-tools .grow{flex:1}
-  .songs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
-  .song-card{display:flex;flex-direction:column;gap:10px;padding:16px 16px 14px;position:relative;overflow:hidden}
-  .song-card::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,#16305a,#3b6fd6 60%,var(--gold))}
-  .song-card.inset{border-color:#f3dcae;background:linear-gradient(180deg,#fffaf0,#fff 60%)}
-  .sc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-  .sc-top h3{font-family:'Inter','Noto Sans Devanagari',sans-serif;font-weight:800;font-size:1.02rem;line-height:1.3;color:var(--navy);word-break:break-word}
-  .sc-first{font-size:.86rem;color:#4a5670;line-height:1.5;min-height:2.6em;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .songs{background:var(--card)}
+  .song-row .dt-lead{color:var(--navy);font-size:.92rem}
+  .dt>tbody>tr.song-row.inset{background:#fffaf0}
+  .sc-first{font-size:.82rem;color:#4a5670;line-height:1.45;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-width:180px;max-width:42ch}
   .sc-first.none{color:#9aa6bb;font-style:italic}
-  .sc-meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.74rem;color:var(--muted)}
-  .sc-meta .planned{color:#8a5a00;font-weight:700}
-  .sc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .planned{color:#8a5a00;font-weight:700}
   .sc-actions .btn{padding:7px 13px;font-size:.78rem}
   .sc-actions .btn.added{background:var(--ok-soft);border-color:#bfe6d0;color:#166b45}
   .lib-empty{text-align:center;padding:60px 20px;color:var(--muted)}
@@ -211,16 +210,18 @@
   .sheet p.msg{padding:0 20px 8px;color:#4a5670}
 
   .pk-search{margin:0 20px 10px;max-width:none}
-  .pk-list{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding-bottom:4px}
-  .pk-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;cursor:pointer;color:inherit;font:inherit;transition:border-color .15s,background .15s}
-  .pk-row:hover{border-color:#cfdaf0}
+  .pk-list{padding-bottom:4px}
+  .pk-table>tbody>tr>td{padding:8px 10px}
+  .pk-table>thead>tr>th{padding:9px 10px}
+  .pk-table .c-tick{width:50px}
+  .pk-row{cursor:pointer}
   .pk-row .tick{width:30px;height:30px;border-radius:10px;border:2px solid #cdd8ec;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;transition:background .15s,border-color .15s}
-  .pk-row.on{border-color:var(--blue);background:var(--blue-soft)}
+  .dt>tbody>tr.pk-row.on{background:var(--blue-soft)}
   .pk-row.on .tick{background:var(--blue);border-color:var(--blue)}
-  .pk-row .pk-main{flex:1;min-width:0}
+  .pk-row .pk-main{display:block;width:100%;min-width:0;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
   .pk-row .pk-main b{display:flex;align-items:center;gap:8px;font-size:.95rem;flex-wrap:wrap}
-  .pk-row .pk-main small{display:block;color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .pk-row .pk-meta{font-size:.72rem;color:var(--muted);text-align:right;flex:none;max-width:110px}
+  .pk-row .pk-main small{display:block;color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40ch}
+  .pk-table .pk-meta{font-size:.72rem;color:var(--muted);text-align:right;white-space:nowrap}
   .pk-none{text-align:center;color:var(--muted);padding:26px 10px}
 
   .ed-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
@@ -304,13 +305,18 @@
     .singbtn{flex:1;justify-content:center;padding:14px 18px}
     .pane{padding:14px}
     .set-item .si-tools .iconbtn{width:30px;height:30px}
+    .set-table .c-key{display:none}
+    .set-item .si-main .keychip{display:inline-flex}
+    .set-table>tbody>tr>td{padding:8px 6px}
+    .set-table .c-num{width:44px}
+    .set-table th.dt-actions{width:126px}
     .modal{padding:0;align-items:flex-end}
     .sheet{border-radius:22px 22px 0 0;max-height:94vh;width:100%}
     .row2{grid-template-columns:1fr}
     .sheet > footer{gap:8px;padding:12px 14px 16px}
     .sheet > footer .btn{padding:10px 14px}
     .ed-switch{margin-top:2px}
-    .pk-row .pk-meta{display:none}
+    .pk-table .pk-meta{display:none}
     .sg-tools .hide-sm{display:none}
     .sg-nav button{padding:11px 12px;font-size:.85rem}
   }
@@ -330,6 +336,7 @@
     #printArea .lyr .lab{font-size:7pt}
   }
 </style>
+<link rel="stylesheet" href="css/admin-table.css">
 </head>
 <body>
 
@@ -540,6 +547,7 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
 <div id="toast" role="status"></div>
 
 <script src="js/reglog.js"></script>
+<script src="js/admin-table.js"></script>
 <script>
   const WORSHIP_URL = REG_LOG_URL; // same Apps Script Web App as the admin and media pages
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -556,7 +564,8 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
   let sets = {};           // "YYYY-MM-DD" -> {date, songs: [ids], note, updatedAt}
   let curDate = '';
   let activeTab = 'sunday';
-  let libSort = 'az';
+  const libSort = {key:'title', dir:'asc'};
+  const LIB_PRESETS = {az:{key:'title', dir:'asc'}, new:{key:'added', dir:'desc'}, sung:{key:'sung', dir:'desc'}};
   let pollTimer = null;
 
   // the list being edited: saved a moment after each change
@@ -817,18 +826,19 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
         + (prev ? `<button type="button" class="btn" data-act="copy" data-from="${prev.date}">Use ${esc(fmtShort(prev.date))}’s list (${prev.songs.length})</button>` : '')
         + `</div></div>`;
     }else{
-      list.innerHTML = set.songs.map((id, i) => {
+      list.innerHTML = `<div class="dt-wrap dt-box"><table class="dt set-table"><thead><tr><th scope="col" class="c-num">#</th><th scope="col">Song</th><th scope="col" class="c-key">Key</th><th scope="col" class="dt-actions"><span class="dt-sr">Order</span></th></tr></thead><tbody>` + set.songs.map((id, i) => {
         const s = byId.get(id);
-        const tools = `<div class="si-tools">
+        const tools = `<td class="dt-actions si-tools">
             <button type="button" class="iconbtn" data-act="up" data-i="${i}" aria-label="Move up" ${i === 0 ? 'disabled' : ''}><svg class="i" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
             <button type="button" class="iconbtn" data-act="down" data-i="${i}" aria-label="Move down" ${i === set.songs.length - 1 ? 'disabled' : ''}><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
             <button type="button" class="iconbtn danger" data-act="remove" data-i="${i}" aria-label="Take out of the list"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-          </div>`;
-        if(!s) return `<div class="set-item gone"><span class="num">${i + 1}</span><div class="si-main"><b>A song that was deleted from the library</b><small>Take it out of the list</small></div>${tools}</div>`;
+          </td>`;
+        if(!s) return `<tr class="set-item gone"><td class="c-num"><span class="num">${i + 1}</span></td><td><div class="si-main"><b>A song that was deleted from the library</b><small>Take it out of the list</small></div></td><td class="c-key"></td>${tools}</tr>`;
         const first = firstLines(s.lyrics, 1)[0];
-        return `<div class="set-item"><span class="num">${i + 1}</span>
-          <button type="button" class="si-main" data-act="sing" data-i="${i}"><b>${esc(s.title)}${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></button>${tools}</div>`;
-      }).join('');
+        const key = s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : '';
+        return `<tr class="set-item"><td class="c-num"><span class="num">${i + 1}</span></td>
+          <td><button type="button" class="si-main" data-act="sing" data-i="${i}"><b>${esc(s.title)}${key}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></button></td><td class="c-key">${key}</td>${tools}</tr>`;
+      }).join('') + '</tbody></table></div>';
     }
     if(document.activeElement !== $('note')) $('note').value = set.note || '';
 
@@ -964,22 +974,26 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
     renderPicker();
     setTimeout(() => { if(matchMedia('(pointer:fine)').matches) $('pkSearch').focus(); }, 60);
   }
+  const pkSort = {key:'title', dir:'asc'};
+  const PK_COLS = [{sr:'In the list', cls:'c-tick'},{key:'title',label:'Song',sort:true},{key:'sung',label:'Sung',sort:true,cls:'pk-meta'}];
   function renderPicker(){
     const set = curSet(), q = $('pkSearch').value.trim().toLowerCase(), use = usage();
     $('pkDate').textContent = fmtLong(curDate);
     $('pkCount').textContent = set.songs.length + ' song' + (set.songs.length === 1 ? '' : 's') + ' in the list';
-    const list = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q))
+    const found = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q))
       .sort((a, b) => a.title.localeCompare(b.title));
-    $('pkList').innerHTML = list.length ? list.map(s => {
+    const list = AjmTable.sort(found, pkSort, {title: s => s.title, sung: s => (use.get(s.id) || {}).count || 0});
+    $('pkList').innerHTML = list.length ? `<table class="dt pk-table">${AjmTable.head(PK_COLS, pkSort)}<tbody>` + list.map(s => {
       const pos = set.songs.indexOf(s.id), u = use.get(s.id), first = firstLines(s.lyrics, 1)[0];
       const meta = u && u.count ? `Sung ${u.count}× · last ${fmtShort(u.last)}` : 'Not sung yet';
-      return `<button type="button" class="pk-row${pos >= 0 ? ' on' : ''}" data-id="${esc(s.id)}" aria-pressed="${pos >= 0}">
-        <span class="tick">${pos >= 0 ? pos + 1 : ''}</span>
-        <span class="pk-main"><b>${esc(s.title)}${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></span>
-        <span class="pk-meta">${esc(meta)}</span></button>`;
-    }).join('') : `<div class="pk-none">No song matches “${esc(q)}”.</div>`;
+      return `<tr class="pk-row${pos >= 0 ? ' on' : ''}" data-id="${esc(s.id)}">
+        <td class="c-tick"><span class="tick">${pos >= 0 ? pos + 1 : ''}</span></td>
+        <td><button type="button" class="pk-main" aria-pressed="${pos >= 0}"><b>${esc(s.title)}${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</b><small>${first ? esc(first) : 'No lyrics yet'}</small></button></td>
+        <td class="pk-meta">${esc(meta)}</td></tr>`;
+    }).join('') + '</tbody></table>' : `<div class="pk-none">No song matches “${esc(q)}”.</div>`;
   }
   $('pkSearch').addEventListener('input', renderPicker);
+  AjmTable.onSort($('pkList'), pkSort, renderPicker, {sung:'desc'});
   $('pkList').addEventListener('click', e => {
     const row = e.target.closest('.pk-row');
     if(!row) return;
@@ -993,10 +1007,11 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
   function renderLibrary(){
     $('tabLibCount').textContent = songs.length;
     const q = $('libSearch').value.trim().toLowerCase(), use = usage(), inSet = new Set(curSet().songs);
-    let list = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q));
-    if(libSort === 'new') list.sort((a, b) => a.addedAt < b.addedAt ? 1 : -1);
-    else if(libSort === 'sung') list.sort((a, b) => ((use.get(b.id) || {}).count || 0) - ((use.get(a.id) || {}).count || 0) || a.title.localeCompare(b.title));
-    else list.sort((a, b) => a.title.localeCompare(b.title));
+    const found = songs.filter(s => !q || s.title.toLowerCase().includes(q) || s.lyrics.toLowerCase().includes(q))
+      .sort((a, b) => a.title.localeCompare(b.title));
+    const list = AjmTable.sort(found, libSort, {title: s => s.title, key: s => s.songKey, sung: s => (use.get(s.id) || {}).count || 0,
+      last: s => (use.get(s.id) || {}).last || '', next: s => (use.get(s.id) || {}).next || '', added: s => s.addedAt});
+    document.querySelectorAll('#libSort button').forEach(x => { const p = LIB_PRESETS[x.dataset.sort]; x.classList.toggle('active', p.key === libSort.key && p.dir === libSort.dir); });
 
     const empty = $('libEmpty');
     if(!songs.length){
@@ -1013,31 +1028,34 @@ Put Chorus, Verse 1 or कोरस on its own line to label a part."></textarea
     }
     empty.hidden = true;
     const target = fmtShort(curDate);
-    $('songGrid').innerHTML = list.map(s => {
-      const u = use.get(s.id), lines = firstLines(s.lyrics, 2), here = inSet.has(s.id);
-      const meta = [u && u.count ? `Sung ${u.count}× · last ${fmtShort(u.last)}` : 'Not sung yet'];
-      if(u && u.next) meta.push(`<span class="planned">Planned ${esc(fmtShort(u.next))}</span>`);
-      return `<article class="card song-card${here ? ' inset' : ''}">
-        <div class="sc-top"><h3>${esc(s.title)}</h3>${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</div>
-        <p class="sc-first lyr${lines.length ? '' : ' none'}">${lines.length ? esc(lines.join('\n')) : 'No lyrics yet'}</p>
-        <div class="sc-meta">${meta.join('<span>·</span>')}</div>
-        <div class="sc-actions">
+    const cols = [{key:'title',label:'Title',sort:true},{key:'key',label:'Key',sort:true},{key:'lyrics',label:'First lines'},{key:'sung',label:'Times sung',sort:true,cls:'dt-num'},{key:'last',label:'Last sung',sort:true},{key:'next',label:'Planned',sort:true},{key:'added',label:'Added',sort:true},{sr:'Actions'}];
+    $('songGrid').innerHTML = `<div class="dt-wrap dt-box"><table class="dt dt-stack">${AjmTable.head(cols, libSort)}<tbody>` + list.map(s => {
+      const u = use.get(s.id) || {}, lines = firstLines(s.lyrics, 2), here = inSet.has(s.id);
+      return `<tr class="song-row${here ? ' inset' : ''}">
+        <td class="dt-lead" data-label="Title">${esc(s.title)}</td>
+        <td data-label="Key">${s.songKey ? `<span class="keychip">${esc(s.songKey)}</span>` : ''}</td>
+        <td data-label="First lines"><p class="sc-first lyr${lines.length ? '' : ' none'}">${lines.length ? esc(lines.join('\n')) : 'No lyrics yet'}</p></td>
+        <td class="dt-num" data-label="Times sung">${u.count || 0}</td>
+        <td class="dt-nowrap dt-muted" data-label="Last sung">${u.last ? esc(fmtShort(u.last)) : 'Not sung yet'}</td>
+        <td class="dt-nowrap" data-label="Planned">${u.next ? `<span class="planned">${esc(fmtShort(u.next))}</span>` : ''}</td>
+        <td class="dt-nowrap dt-muted" data-label="Added">${s.addedAt ? esc(fmtShort(String(s.addedAt).slice(0, 10))) : ''}</td>
+        <td class="dt-actions sc-actions">
           <button type="button" class="btn" data-act="view" data-id="${esc(s.id)}">Lyrics</button>
           <button type="button" class="btn" data-act="edit" data-id="${esc(s.id)}">Edit</button>
           <button type="button" class="btn${here ? ' added' : ''}" data-act="toggle" data-id="${esc(s.id)}">${here ? '✓ In ' + esc(target) + ' list' : '+ Add to ' + esc(target)}</button>
           ${safeUrl(s.link) ? `<a class="btn" href="${esc(safeUrl(s.link))}" target="_blank" rel="noopener">Listen</a>` : ''}
-        </div></article>`;
-    }).join('');
+        </td></tr>`;
+    }).join('') + '</tbody></table></div>';
   }
   $('libSearch').addEventListener('input', renderLibrary);
   $('libSort').addEventListener('click', e => {
     const b = e.target.closest('[data-sort]');
     if(!b) return;
-    libSort = b.dataset.sort;
-    document.querySelectorAll('#libSort button').forEach(x => x.classList.toggle('active', x === b));
+    Object.assign(libSort, LIB_PRESETS[b.dataset.sort]);
     renderLibrary();
   });
   $('addSongBtn').addEventListener('click', () => openEditor(null));
+  AjmTable.onSort($('songGrid'), libSort, renderLibrary, {sung:'desc', last:'desc', added:'desc'});
   $('libEmpty').addEventListener('click', e => { if(e.target.closest('[data-act="add"]')) openEditor(null); });
   $('songGrid').addEventListener('click', e => {
     const b = e.target.closest('[data-act]');

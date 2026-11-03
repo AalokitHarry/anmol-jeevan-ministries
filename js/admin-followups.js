@@ -4,6 +4,10 @@
   const today = () => new Date().toLocaleDateString('en-CA', {timeZone:'Asia/Kolkata'});
   const dateText = value => value ? new Date(value + 'T12:00:00').toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'No date set';
   const hasFollowUp = row => row.FollowUpOwner || row.FollowUpDate || row.FollowUpNote || row.FollowUpStatus === 'Done';
+  const sort = {key:'date', dir:'asc'};
+  const COLS = [{key:'name',label:'Name',sort:true},{key:'source',label:'Source',sort:true},{key:'phone',label:'Phone'},{key:'date',label:'Follow-up date',sort:true},{key:'owner',label:'Assigned person',sort:true},{key:'state',label:'Status',sort:true},{key:'note',label:'Team notes'},{sr:'Actions'}];
+  const stateOf = (row, day) => row.FollowUpStatus === 'Done' ? 'Completed' : row.FollowUpDate && row.FollowUpDate < day ? 'Overdue' : 'Open';
+  const GET = {name:r => r.Name || '', source:r => r.Source || '', date:r => r.FollowUpDate || '', owner:r => r.FollowUpOwner || '', state:r => stateOf(r, today())};
   function renderFollowUps() {
     const day = today(), rows = activeRows().filter(hasFollowUp);
     const due = rows.filter(r => r.FollowUpStatus !== 'Done' && r.FollowUpDate && r.FollowUpDate <= day);
@@ -15,12 +19,22 @@
       if (filter === 'due') return due.includes(r);
       if (filter === 'upcoming') return r.FollowUpStatus !== 'Done' && r.FollowUpDate > day;
       return true;
-    }).sort((a,b) => String(a.FollowUpDate || '9999').localeCompare(String(b.FollowUpDate || '9999')));
-    $('followupList').innerHTML = shown.length ? shown.map(r => {
-      const done = r.FollowUpStatus === 'Done', late = !done && r.FollowUpDate && r.FollowUpDate < day;
-      return `<article class="workflow-row"><div><h3>${esc(r.Name || 'Registration')}</h3><p><span class="workflow-tag ${done ? 'is-done' : late ? 'is-late' : ''}">${done ? 'Completed' : late ? 'Overdue' : 'Open'}</span>${esc(dateText(r.FollowUpDate))} · ${esc(r.FollowUpOwner || 'Unassigned')}</p>${r.FollowUpNote ? `<p class="workflow-notes">${esc(r.FollowUpNote)}</p>` : ''}</div><button type="button" class="btn" data-followup="${esc(r.ID)}">Edit Follow-up</button></article>`;
-    }).join('') : '<p class="workflow-empty">No follow-ups match this view. Use Follow-up beside a registration to assign someone and set the next contact date.</p>';
+    });
+    $('followupList').innerHTML = shown.length ? `<div class="dt-wrap dt-box"><table class="dt dt-stack">${AjmTable.head(COLS, sort)}<tbody>${AjmTable.sort(shown, sort, GET).map(r => {
+      const state = stateOf(r, day);
+      return `<tr>
+        <td class="dt-lead" data-label="Name">${esc(r.Name || 'Registration')}</td>
+        <td data-label="Source"><span class="src-badge ${(SOURCES[r.Source] || {}).cls || ''}">${esc(r.Source)}</span></td>
+        <td data-label="Phone">${waLink(r.Phone)}</td>
+        <td class="dt-nowrap" data-label="Follow-up date">${esc(dateText(r.FollowUpDate))}</td>
+        <td data-label="Assigned person">${esc(r.FollowUpOwner || 'Unassigned')}</td>
+        <td data-label="Status"><span class="workflow-tag ${state === 'Completed' ? 'is-done' : state === 'Overdue' ? 'is-late' : ''}">${state}</span></td>
+        <td class="dt-note" data-label="Team notes">${esc(r.FollowUpNote)}</td>
+        <td class="dt-actions"><button type="button" class="btn sm" data-followup="${esc(r.ID)}">Edit Follow-up</button></td>
+      </tr>`;
+    }).join('')}</tbody></table></div>` : '<p class="workflow-empty">No follow-ups match this view. Use Follow-up beside a registration to assign someone and set the next contact date.</p>';
   }
+  AjmTable.onSort($('followupList'), sort, renderFollowUps, {date:'asc'});
   function closeEditor() {
     form.hidden = true; form.reset(); editing = null; dirty = false;
     [...form.querySelectorAll('input,textarea,select,button')].forEach(el => { el.disabled = false; });

@@ -146,6 +146,18 @@
   .status-select.st-pending{background-color:#eceff5;color:#5b6a84;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6a84' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
   .status-select.st-contacted{background-color:var(--blue-soft);color:var(--blue);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%232f6df6' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
   .status-select.st-confirmed{background-color:var(--ok-soft);color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231f9d63' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+  #table:not(.fc-mode) .c-fc,#table.fc-mode .c-src{display:none}
+  #table.fc-mode .details-cell{min-width:140px}
+  #table.fc-mode th,#table.fc-mode td{padding-left:10px;padding-right:10px}
+  #table.fc-mode td.c-date{white-space:normal;min-width:96px}
+  #table.fc-mode .mail{min-width:110px}
+  #table.fc-mode th{letter-spacing:.03em}
+  #table.fc-mode .followup-open{margin-right:4px}
+  #table td.c-actions{white-space:nowrap}
+  .view-filters{display:flex;gap:10px;flex-wrap:wrap}
+  .yn{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;white-space:nowrap}
+  .yn.yes{background:var(--ok-soft);color:var(--ok)} .yn.no{background:var(--bad-soft);color:var(--bad)}
+  .dt-detail .m-msg{margin-top:4px}
   .dup-badge{display:inline-block;background:var(--warn-soft);color:var(--warn);font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px;white-space:nowrap;cursor:help;vertical-align:middle}
   #empty,#loading,#fetchError{text-align:center;padding:56px 20px;color:var(--muted)}
   #fetchError{color:var(--bad)}
@@ -191,20 +203,12 @@
   .hist-status{margin-top:16px;padding:9px 14px;border-radius:12px;background:var(--ok-soft);color:#166b45;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .hist-status.busy{background:var(--blue-soft);color:#28527f}
   .hist-status.err{background:var(--bad-soft);color:var(--bad)}
-  .modal.wide{max-width:780px}
+  .modal.wide{max-width:1000px}
   .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
   .modal-head h2{margin-bottom:2px}
   .modal-head .sub{margin-bottom:0}
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
   .iconbtn:hover{background:var(--blue-soft);color:var(--blue)}
-  .meeting{border:1px solid var(--line-2);border-radius:16px;padding:16px 18px;margin-bottom:12px;background:#fff;box-shadow:0 1px 2px rgba(20,30,60,.04)}
-  .m-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-  .m-name{font-weight:800;font-size:1rem;word-break:break-word}
-  .m-meta{font-size:.78rem;color:var(--muted);margin-top:3px;display:flex;gap:4px 12px;flex-wrap:wrap}
-  .m-meta .ok{color:var(--ok);font-weight:700}
-  .m-actions{display:flex;gap:8px;flex-wrap:wrap}
-  .meeting details{margin-top:12px}
-  .meeting summary{cursor:pointer;font-size:.8rem;font-weight:700;color:var(--blue);user-select:none}
   .m-msg{margin:10px 0;padding:10px 14px;border-radius:12px;background:#f6f8fd;color:#3a4a62;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
   .m-scroll{overflow-x:auto}
   table.m-table{border-collapse:collapse;width:100%}
@@ -309,16 +313,17 @@
     .tile.hero .v{font-size:2.4rem}
     .tile .ico{display:none}
     .search{min-width:100%}
-    .sort-select{width:100%}
+    .sort-select{flex:1}
+    .view-filters{width:100%}
     .modal{padding:22px}
     .m-table.times th:nth-child(4),.m-table.times td:nth-child(4){display:none}
     .m-table.past th:nth-child(3),.m-table.past td:nth-child(3){display:none}
     .m-table th,.m-table td{padding:7px 5px;font-size:.76rem}
     .m-table .res{white-space:nowrap}
-    .meeting{padding:14px}
   }
 </style>
 <link rel="stylesheet" href="css/office-workflow.css">
+<link rel="stylesheet" href="css/admin-table.css">
 </head>
 <body>
 
@@ -368,7 +373,14 @@
         <button class="tab" data-filter="Faith Conference">Faith Conference <b id="cnt-faith">0</b></button>
         <button class="tab dup-tab" data-filter="__duplicates">⚠ Duplicates <b id="cnt-dup">0</b></button>
       </div>
-      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="search" placeholder="Search name, phone, email…"></label>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="search" placeholder="Search name, phone, email, city…"></label>
+      <div class="view-filters">
+      <select id="statusFilter" class="sort-select" aria-label="Filter by status">
+        <option value="all">All statuses</option>
+        <option>Pending</option>
+        <option>Contacted</option>
+        <option>Confirmed</option>
+      </select>
       <select id="sortSelect" class="sort-select" aria-label="Sort">
         <option value="Timestamp:desc">Newest first</option>
         <option value="Timestamp:asc">Oldest first</option>
@@ -377,6 +389,7 @@
         <option value="Status:asc">Status (A–Z)</option>
         <option value="Source:asc">Source (A–Z)</option>
       </select>
+      </div>
     </div>
 
     <div class="count-line"><label class="selall-line"><input type="checkbox" class="selall-box" aria-label="Select all"> Select all</label><span id="countLine"></span></div>
@@ -414,10 +427,14 @@
             <tr>
               <th class="c-sel"><input type="checkbox" class="selall-box" aria-label="Select all"></th>
               <th class="sortable" data-sort="Timestamp">Date <span class="arrow">▾</span></th>
-              <th class="sortable" data-sort="Source">Source <span class="arrow">▾</span></th>
+              <th class="sortable c-src" data-sort="Source">Source <span class="arrow">▾</span></th>
               <th class="sortable" data-sort="Name">Name <span class="arrow">▾</span></th>
               <th class="sortable" data-sort="Phone">Phone <span class="arrow">▾</span></th>
               <th class="sortable" data-sort="Email">Email <span class="arrow">▾</span></th>
+              <th class="sortable c-fc" data-sort="City">City <span class="arrow">▾</span></th>
+              <th class="sortable c-fc" data-sort="People">People <span class="arrow">▾</span></th>
+              <th class="sortable c-fc" data-sort="Days">Days <span class="arrow">▾</span></th>
+              <th class="sortable c-fc" data-sort="Willing">Willing <span class="arrow">▾</span></th>
               <th>Details</th>
               <th class="sortable" data-sort="Status">Status <span class="arrow">▾</span></th>
               <th></th>
@@ -523,6 +540,7 @@ See you there!</textarea>
 <div id="toast" role="status"></div>
 
 <script src="js/reglog.js"></script>
+<script src="js/admin-table.js"></script>
 <script>
   const ADMIN_URL = REG_LOG_URL; // same Apps Script Web App as reglog.js
   let adminKey = null; // kept in memory only — never persisted, re-enter on every page load
@@ -605,11 +623,42 @@ See you there!</textarea>
     } else if(activeFilter !== 'all'){
       base = base.filter(r=>r.Source===activeFilter);
     }
+    const status = $('statusFilter').value;
+    if(status !== 'all') base = base.filter(r=>(STATUSES.includes(r.Status) ? r.Status : 'Pending') === status);
     return base.filter(r=>{
       if(!q) return true;
       return [r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q);
     });
   }
+
+  // Faith Conference details are saved as "City: …; People: …; Days: …", so the
+  // Faith Conference tab splits them into their own columns (display only).
+  const FC_KEYS = ['City','People','Days','Attending willingly'];
+  function fcFields(r){
+    const f = {}, rest = [];
+    String(r.Details||'').split(/;\s*(?=[A-Z][A-Za-z /]*:\s)/).forEach(part=>{
+      const m = part.match(/^([^:]+):\s*([\s\S]*)$/);
+      if(m && FC_KEYS.includes(m[1].trim())) f[m[1].trim()] = m[2].trim();
+      else if(part.trim()) rest.push(part.trim());
+    });
+    f.rest = rest.join('; ');
+    return f;
+  }
+  // "14 January, 15 January, 16 January" → "14, 15, 16 January"
+  function shortDays(s){
+    const m = String(s||'').split(/,\s*/).filter(Boolean).map(p=>p.match(/^(\d{1,2})\s+(\S+)$/));
+    return m.length && m.every(x=>x && x[2]===m[0][2]) ? m.map(x=>x[1]).join(', ') + ' ' + m[0][2] : String(s||'');
+  }
+  function willingBadge(v){
+    const t = String(v||'').trim();
+    return /^yes$/i.test(t) ? '<span class="yn yes">Yes</span>' : /^no$/i.test(t) ? '<span class="yn no">No</span>' : esc(t);
+  }
+  const FC_SORT = {
+    City:    r=>fcFields(r).City || '',
+    People:  r=>fcFields(r).People || '',
+    Days:    r=>fcFields(r).Days || '',
+    Willing: r=>fcFields(r)['Attending willingly'] || ''
+  };
 
   function statusOptions(current){
     current = current || 'Pending';
@@ -965,28 +1014,39 @@ See you there!</textarea>
     return isNaN(d) ? '' : d.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
   }
 
+  // History lists are tables; each row's people open in a row underneath it
+  const histSort = {meetings:{key:'updated', dir:'desc'}, past:{key:'at', dir:'desc'}};
+  const HIST_COLS = {
+    meetings: [{key:'name',label:'Meeting',sort:true},{key:'updated',label:'Last sent',sort:true},{key:'sent',label:'Sent',sort:true,cls:'dt-num'},{key:'skipped',label:'Skipped',sort:true,cls:'dt-num'},{sr:'Actions'}],
+    past: [{key:'name',label:'Event',sort:true},{key:'at',label:'Moved to history',sort:true},{key:'people',label:'People',sort:true,cls:'dt-num'},{key:'confirmed',label:'Confirmed',sort:true,cls:'dt-num'},{sr:'Actions'}]
+  };
+  const pastPeople = name => allRows.filter(r=>r.Archive === name);
+  const HIST_GET = {
+    meetings: {name:m=>m.name, updated:m=>m.updatedAt, sent:m=>+m.sent||0, skipped:m=>+m.skipped||0},
+    past: {name:g=>g.name, at:g=>g.at, people:g=>pastPeople(g.name).length, confirmed:g=>pastPeople(g.name).filter(r=>r.Status==='Confirmed').length}
+  };
+  const toggleBtn = open => `<button class="btn sm dt-toggle" data-act="toggle" aria-expanded="${open}">People <span class="dt-arrow" aria-hidden="true">▾</span></button>`;
+  function histTable(tab, list, rowHtml){
+    return `<div class="dt-wrap dt-box"><table class="dt dt-stack">${AjmTable.head(HIST_COLS[tab], histSort[tab])}<tbody>${AjmTable.sort(list, histSort[tab], HIST_GET[tab]).map(rowHtml).join('')}</tbody></table></div>`;
+  }
+
   function meetingHtml(m){
     const restCount = dedupeByPhone(activeRows().filter(r=>r.Status==='Confirmed' && !wasSent(r, sentSet(m)))).length;
+    const open = openMeetingIds.has(m.id);
     return `
-    <article class="meeting" data-id="${esc(m.id)}">
-      <div class="m-head">
-        <div>
-          <div class="m-name">${esc(m.name)}</div>
-          <div class="m-meta"><span>Last sent ${esc(fmtWhen(m.updatedAt))}</span><span class="ok">✓ ${m.sent} sent</span><span>– ${m.skipped} skipped</span></div>
-        </div>
-        <div class="m-actions">
-          ${restCount ? `<button class="btn sm primary" data-act="rest">Send to the rest (${restCount})</button>` : ''}
-          <button class="btn sm" data-act="export">Export CSV</button>
-        </div>
-      </div>
-      <details data-id="${esc(m.id)}"${openMeetingIds.has(m.id) ? ' open' : ''}>
-        <summary>Show people &amp; message</summary>
-        ${m.message ? `<div class="m-msg">${esc(m.message)}</div>` : ''}
-        <div class="m-scroll"><table class="m-table times"><thead><tr><th>Name</th><th>Phone</th><th>Result</th><th>Time</th></tr></thead><tbody>
-          ${m.recipients.map(r=>`<tr><td>${esc(r.name)}</td><td>${waLink(r.phone)}</td><td><span class="res ${r.result}">${r.result==='sent' ? '✓ Sent' : 'Skipped'}</span></td><td>${esc(fmtWhen(r.at))}</td></tr>`).join('')}
-        </tbody></table></div>
-      </details>
-    </article>`;
+    <tr data-meeting="${esc(m.id)}">
+      <td class="dt-lead" data-label="Meeting">${esc(m.name)}</td>
+      <td class="dt-nowrap dt-muted" data-label="Last sent">${esc(fmtWhen(m.updatedAt))}</td>
+      <td class="dt-num" data-label="Sent"><span class="res sent">✓ ${esc(m.sent)}</span></td>
+      <td class="dt-num" data-label="Skipped">${esc(m.skipped)}</td>
+      <td class="dt-actions">${restCount ? `<button class="btn sm primary" data-act="rest">Send to the rest (${restCount})</button>` : ''}<button class="btn sm" data-act="export">Export CSV</button>${toggleBtn(open)}</td>
+    </tr>${open ? `
+    <tr class="dt-detail" data-meeting="${esc(m.id)}"><td colspan="5">
+      ${m.message ? `<div class="m-msg">${esc(m.message)}</div>` : ''}
+      <div class="m-scroll"><table class="m-table times"><thead><tr><th>Name</th><th>Phone</th><th>Result</th><th>Time</th></tr></thead><tbody>
+        ${m.recipients.map(r=>`<tr><td>${esc(r.name)}</td><td>${waLink(r.phone)}</td><td><span class="res ${r.result}">${r.result==='sent' ? '✓ Sent' : 'Skipped'}</span></td><td>${esc(fmtWhen(r.at))}</td></tr>`).join('')}
+      </tbody></table></div>
+    </td></tr>` : ''}`;
   }
 
   // ---------- Past events: registrations moved to History (kept in the sheet, out of the main list) ----------
@@ -1009,32 +1069,27 @@ See you there!</textarea>
         : Object.assign({}, g, {rows: g.rows.filter(r=>[r.Name,r.Phone,r.Email,r.Details].join(' ').toLowerCase().includes(q))}))
         .filter(g=>g.rows.length);
     }
-    return groups.sort((a,b)=> a.at < b.at ? 1 : -1);
+    return groups;
   }
 
   function pastHtml(g){
-    const all = allRows.filter(r=>r.Archive === g.name);
+    const all = pastPeople(g.name);
     const conf = all.filter(r=>r.Status==='Confirmed').length;
-    const key = 'past:' + g.name;
+    // a search narrows the people inside an event, so they show without opening it
+    const open = openMeetingIds.has('past:' + g.name) || (!!$('pastSearch').value.trim() && g.rows.length < all.length);
     return `
-    <article class="meeting" data-group="${esc(g.name)}">
-      <div class="m-head">
-        <div>
-          <div class="m-name">${esc(g.name)}</div>
-          <div class="m-meta"><span>Moved to history ${esc(fmtWhen(g.at))}</span><span>${all.length} ${all.length===1?'person':'people'}</span><span class="ok">✓ ${conf} confirmed</span></div>
-        </div>
-        <div class="m-actions">
-          <button class="btn sm" data-act="restore-group">Restore all</button>
-          <button class="btn sm" data-act="export-past">Export CSV</button>
-        </div>
-      </div>
-      <details data-key="${esc(key)}"${openMeetingIds.has(key) ? ' open' : ''}>
-        <summary>Show people</summary>
-        <div class="m-scroll"><table class="m-table past"><thead><tr><th>Name</th><th>Phone</th><th>Source</th><th>Status</th><th></th></tr></thead><tbody>
-          ${g.rows.map(r=>`<tr><td>${esc(r.Name)}</td><td>${waLink(r.Phone)}</td><td>${esc(r.Source)}</td><td><span class="res ${r.Status==='Confirmed'?'sent':'skipped'}">${esc(r.Status||'Pending')}</span></td><td><button class="btn sm" data-act="restore-one" data-id="${esc(r.ID)}">Restore</button></td></tr>`).join('')}
-        </tbody></table></div>
-      </details>
-    </article>`;
+    <tr data-group="${esc(g.name)}">
+      <td class="dt-lead" data-label="Event">${esc(g.name)}</td>
+      <td class="dt-nowrap dt-muted" data-label="Moved to history">${esc(fmtWhen(g.at))}</td>
+      <td class="dt-num" data-label="People">${all.length}</td>
+      <td class="dt-num" data-label="Confirmed"><span class="res sent">✓ ${conf}</span></td>
+      <td class="dt-actions"><button class="btn sm" data-act="restore-group">Restore all</button><button class="btn sm" data-act="export-past">Export CSV</button>${toggleBtn(open)}</td>
+    </tr>${open ? `
+    <tr class="dt-detail" data-group="${esc(g.name)}"><td colspan="5">
+      <div class="m-scroll"><table class="m-table past"><thead><tr><th>Name</th><th>Phone</th><th>Source</th><th>Status</th><th></th></tr></thead><tbody>
+        ${g.rows.map(r=>`<tr><td>${esc(r.Name)}</td><td>${waLink(r.Phone)}</td><td>${esc(r.Source)}</td><td><span class="res ${r.Status==='Confirmed'?'sent':'skipped'}">${esc(r.Status||'Pending')}</span></td><td><button class="btn sm" data-act="restore-one" data-id="${esc(r.ID)}">Restore</button></td></tr>`).join('')}
+      </tbody></table></div>
+    </td></tr>` : ''}`;
   }
 
   function renderHistory(){
@@ -1055,7 +1110,7 @@ See you there!</textarea>
           ? '<div style="text-align:center;padding:36px 10px;color:var(--muted)">No past events or people match.</div>'
           : '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>Nothing here yet. Tick people in the list and choose <strong>Move to history</strong> — for example once an event has happened.</div>';
       } else {
-        body.innerHTML = groups.map(pastHtml).join('');
+        body.innerHTML = histTable('past', groups, pastHtml);
       }
       return;
     }
@@ -1067,7 +1122,7 @@ See you there!</textarea>
     } else if(!meetings.length){
       body.innerHTML = '<div style="text-align:center;padding:40px 10px;color:var(--muted)"><div style="font-size:2.2rem">🗂️</div>No Zoom sends yet. Use <strong>Send Zoom Link</strong> — each send is saved here under its meeting name.</div>';
     } else {
-      body.innerHTML = meetings.map(meetingHtml).join('');
+      body.innerHTML = histTable('meetings', meetings, meetingHtml);
     }
   }
 
@@ -1120,24 +1175,27 @@ See you there!</textarea>
   $('pastSearch').addEventListener('input', renderHistory);
   $('stats').addEventListener('click', e=>{ if(e.target.closest('[data-open="past"]')) openHistory('past'); });
 
-  // <details> doesn't bubble "toggle", so listen in the capture phase to remember which are open
-  $('historyBody').addEventListener('toggle', e=>{
-    const d = e.target;
-    if(d.tagName !== 'DETAILS') return;
-    const key = d.dataset.id || d.dataset.key;
-    if(d.open) openMeetingIds.add(key); else openMeetingIds.delete(key);
-  }, true);
+  AjmTable.onSort($('historyBody'), ()=>histSort[historyTab], renderHistory, {updated:'desc', sent:'desc', skipped:'desc', at:'desc', people:'desc', confirmed:'desc'});
 
   $('historyBody').addEventListener('click', async e=>{
     const btn = e.target.closest('[data-act]');
     if(!btn) return;
     const act = btn.dataset.act;
     if(act === 'reload'){ btn.disabled = true; await loadMeetings(); renderHistory(); return; }
-    const card = btn.closest('.meeting');
+    const row = btn.closest('[data-meeting],[data-group]');
+    if(act === 'toggle'){
+      const attr = row.dataset.meeting !== undefined ? 'data-meeting' : 'data-group';
+      const key = row.dataset.meeting !== undefined ? row.dataset.meeting : 'past:' + row.dataset.group;
+      if(btn.getAttribute('aria-expanded') === 'true') openMeetingIds.delete(key); else openMeetingIds.add(key);
+      renderHistory();
+      const again = $('historyBody').querySelector(`tr[${attr}="${CSS.escape(row.getAttribute(attr))}"] [data-act="toggle"]`);
+      if(again) again.focus();
+      return;
+    }
     if(act === 'restore-one'){ restoreRows(allRows.filter(r=>r.ID && r.ID === btn.dataset.id)); return; }
-    if(act === 'restore-group'){ restoreRows(allRows.filter(r=>r.Archive === card.dataset.group)); return; }
-    if(act === 'export-past'){ exportPast(card.dataset.group); return; }
-    const m = meetings.find(x=>x.id === card.dataset.id);
+    if(act === 'restore-group'){ restoreRows(allRows.filter(r=>r.Archive === row.dataset.group)); return; }
+    if(act === 'export-past'){ exportPast(row.dataset.group); return; }
+    const m = meetings.find(x=>x.id === row.dataset.meeting);
     if(!m) return;
     if(act === 'export') exportMeeting(m);
     if(act === 'rest'){ closeHistory(); openBulkModal({all:true, meeting:m.name, message:m.message}); }
@@ -1502,7 +1560,8 @@ See you there!</textarea>
     let rows = getFilteredRows();
 
     rows = rows.slice().sort((a,b)=>{
-      const av = (a[sortField]||''), bv = (b[sortField]||'');
+      const get = FC_SORT[sortField] || (r=>r[sortField]||'');
+      const av = get(a), bv = get(b);
       const cmp = String(av).localeCompare(String(bv), undefined, {numeric:true});
       return sortDir==='asc' ? cmp : -cmp;
     });
@@ -1521,19 +1580,26 @@ See you there!</textarea>
     const sortValue = sortField + ':' + sortDir;
     if([...sortSelect.options].some(o=>o.value===sortValue)) sortSelect.value = sortValue;
 
+    const fcMode = activeFilter === 'Faith Conference';
+    $('table').classList.toggle('fc-mode', fcMode);
     $('tbody').innerHTML = rows.map((r,i)=>{
       const src = SOURCES[r.Source] || {cls:'', color:'#69758c'};
+      const fc = fcMode ? fcFields(r) : null;
       const status = STATUSES.includes(r.Status) ? r.Status : 'Pending';
       const picked = !!r.ID && selected.has(r.ID);
       return `
       <tr class="${(r._dupCount>1 ? 'dup-row ' : '') + (picked ? 'sel-row' : '')}">
         <td class="c-sel"><input type="checkbox" class="rowcheck" data-id="${esc(r.ID)}" data-idx="${i}"${picked ? ' checked' : ''}${r.ID ? '' : ' disabled title="No ID — change this one directly in the sheet"'} aria-label="Select ${esc(r.Name)}"></td>
         <td class="when c-date" data-label="Date">${r.Timestamp ? esc(new Date(r.Timestamp).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})) : ''}</td>
-        <td data-label="Source"><span class="src-badge ${src.cls}">${esc(r.Source)}</span></td>
+        <td class="c-src" data-label="Source"><span class="src-badge ${src.cls}">${esc(r.Source)}</span></td>
         <td class="c-name" data-label="Name"><div class="person"><span class="avatar" style="--c:${src.color}">${esc(initials(r.Name))}</span><span class="pname">${esc(r.Name)}${r._dupCount>1 ? `<span class="dup-badge" title="This phone number appears ${r._dupCount} times">⚠ ×${r._dupCount}</span>` : ''}</span></div></td>
         <td data-label="Phone">${waLink(r.Phone)}</td>
         <td class="mail" data-label="Email">${esc(r.Email)}</td>
-        <td class="details-cell" data-label="Details">${esc(r.Details)}</td>
+        <td class="c-fc" data-label="City">${fc ? esc(fc.City||'') : ''}</td>
+        <td class="c-fc" data-label="People">${fc ? esc(fc.People||'') : ''}</td>
+        <td class="c-fc when" data-label="Days">${fc ? esc(shortDays(fc.Days)) : ''}</td>
+        <td class="c-fc" data-label="Willingly">${fc ? willingBadge(fc['Attending willingly']) : ''}</td>
+        <td class="details-cell" data-label="Details">${esc(fc ? fc.rest : r.Details)}</td>
         <td data-label="Status"><select class="status-select st-${status.toLowerCase()}" data-id="${esc(r.ID)}" data-prev="${status}" aria-label="Status">${statusOptions(status)}</select></td>
         <td class="c-actions"><button type="button" class="btn followup-open" data-id="${esc(r.ID)}"${r.ID ? '' : ' disabled'}>Follow-up</button><button class="del-btn" data-id="${esc(r.ID)}" title="Delete" aria-label="Delete">${TRASH}</button></td>
       </tr>`;
@@ -1644,11 +1710,13 @@ See you there!</textarea>
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
+    if(activeFilter !== 'Faith Conference' && FC_SORT[sortField]){ sortField = 'Timestamp'; sortDir = 'desc'; }
     clearSelection();
     render();
   });
 
   $('search').addEventListener('input', ()=>{ clearSelection(); render(); });
+  $('statusFilter').addEventListener('change', ()=>{ clearSelection(); render(); });
 
   $('sortSelect').addEventListener('change', e=>{
     const [field, dir] = e.target.value.split(':');
@@ -1662,7 +1730,7 @@ See you there!</textarea>
     if(!th) return;
     const field = th.dataset.sort;
     if(sortField===field){ sortDir = sortDir==='asc' ? 'desc' : 'asc'; }
-    else { sortField = field; sortDir = field==='Timestamp' ? 'desc' : 'asc'; }
+    else { sortField = field; sortDir = field==='Timestamp' || field==='People' ? 'desc' : 'asc'; }
     render();
   });
 
