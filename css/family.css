@@ -180,7 +180,7 @@
 
 /* Faith Conference keeps its poster colours and hero; its form matches the panels */
 .fc-register .invite-form,.fc-register .invite-success{border:1px solid var(--panel-edge);border-radius:20px;box-shadow:0 18px 44px -28px rgba(20,10,40,.5)}
-.fc-register .invite-panel input,.fc-register .invite-panel textarea,.fc-register .fc-days label{border-radius:12px}
+.fc-register .invite-panel input,.fc-register .invite-panel textarea,.fc-register .fc-days label,.fc-register .fc-willing label{border-radius:12px}
 .fc-photos-head a,.fc-copy,.invite-again-btn{min-height:48px}
 /* leader photos stay whole: columns follow each photo's shape, sized to fit the screen */
 .fc-leader-grid{grid-template-columns:1.499fr .691fr;max-width:min(100%,calc(86svh*2.19));margin:0 auto}
@@ -216,4 +216,4 @@
   .fam-main .book-form .field-row{grid-template-columns:minmax(0,1fr)}
 }
 .fc-layout>*,.fc-register .invite-panel .field{min-width:0}
-.fc-register .invite-panel input:not([type=checkbox]),.fc-register .invite-panel textarea{width:100%;min-width:0}
+.fc-register .invite-panel input:not([type=checkbox]):not([type=radio]),.fc-register .invite-panel textarea{width:100%;min-width:0}
