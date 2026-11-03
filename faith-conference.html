@@ -294,7 +294,7 @@
   .invite-panel .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
   .invite-panel .field:last-child{margin-bottom:0}
   .invite-panel .field-row .field{margin-bottom:0}
-  .invite-panel label,.fc-days legend{font-size:.9rem;font-weight:600;color:var(--on-surface)}
+  .invite-panel label,.fc-days legend,.fc-willing legend{font-size:.9rem;font-weight:600;color:var(--on-surface)}
   .req{color:var(--accent)}
   .invite-panel input,.invite-panel textarea{
     background:var(--field);border:1px solid var(--hairline-2);border-radius:10px;padding:12px 14px;caret-color:var(--accent);
@@ -303,10 +303,12 @@
   .invite-panel input:focus,.invite-panel textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(236,154,43,.3)}
   .invite-panel textarea{resize:vertical;min-height:110px}
   .fc-days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border:0}
-  .fc-days legend{margin-bottom:8px}
-  .fc-days label{display:flex;align-items:center;gap:9px;background:var(--field);border:1px solid var(--hairline-2);border-radius:10px;padding:12px;font-weight:600;cursor:pointer;transition:border-color .25s,background .25s}
-  .fc-days label:has(input:checked){border-color:var(--amber);background:rgba(247,201,51,.2)}
-  .fc-days input{width:18px;height:18px;padding:0;accent-color:#c47400;flex:none}
+  .fc-willing{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;border:0}
+  .fc-days legend,.fc-willing legend{margin-bottom:8px}
+  .fc-willing .dev{display:block;margin-top:2px;font-weight:500;font-family:'Noto Sans Devanagari',sans-serif}
+  .fc-days label,.fc-willing label{display:flex;align-items:center;gap:9px;background:var(--field);border:1px solid var(--hairline-2);border-radius:10px;padding:12px;font-weight:600;cursor:pointer;transition:border-color .25s,background .25s}
+  .fc-days label:has(input:checked),.fc-willing label:has(input:checked){border-color:var(--amber);background:rgba(247,201,51,.2)}
+  .fc-days input,.fc-willing input{width:18px;height:18px;padding:0;accent-color:#c47400;flex:none}
   .fc-error{color:#b3261e;font-size:.86rem;font-weight:600;margin-top:8px}
   :root[data-theme="dark"] .fc-error{color:#ffb4a8}
   .invite-submit-row .btn-lg{width:100%}
@@ -595,6 +597,13 @@
               <p class="fc-error" id="fcDaysError" role="alert" hidden>Please choose at least one day.</p>
             </div>
             <div class="field">
+              <fieldset class="fc-willing" id="fcWilling">
+                <legend>Are you attending this conference willingly? <span class="req">*</span><span class="dev" lang="hi">क्या आप अपनी इच्छा से इस सम्मेलन में आ रहे हैं?</span></legend>
+                <label><input type="radio" name="willing" value="Yes" required> Yes</label>
+                <label><input type="radio" name="willing" value="No"> No</label>
+              </fieldset>
+            </div>
+            <div class="field">
               <label for="fcMessage">Message or prayer request</label>
               <textarea id="fcMessage" name="message" placeholder="Anything you would like us to know (optional)"></textarea>
             </div>
@@ -780,6 +789,7 @@
       fd.get('church')?('Church/Organization: '+fd.get('church')):null,
       'People: '+(fd.get('people')||'1'),
       'Days: '+days.join(', '),
+      'Attending willingly: '+(fd.get('willing')||''),
       fd.get('message')?('Message: '+fd.get('message')):null
     ].filter(Boolean).join('\n');
     const url='https://wa.me/917999929550?text='+encodeURIComponent(lines);
@@ -791,6 +801,7 @@
         fd.get('church')?('Church: '+fd.get('church')):null,
         'People: '+(fd.get('people')||'1'),
         'Days: '+days.join(', '),
+        'Attending willingly: '+(fd.get('willing')||''),
         fd.get('message')?('Message: '+fd.get('message')):null
       ].filter(Boolean).join('; ')
     });
