@@ -339,9 +339,8 @@
   /* faith conference — coming soon */
   .fc-banner{position:relative;overflow:hidden;color:var(--cream);
     background:
-      radial-gradient(60% 110% at 82% 45%,rgba(246,201,104,.30),transparent 70%),
-      radial-gradient(50% 90% at 8% 0%,rgba(74,140,255,.28),transparent 70%),
-      linear-gradient(160deg,#06122c 0%,#0a2a66 55%,#12397a 100%);
+      linear-gradient(90deg,rgba(42,5,9,.35) 0%,rgba(42,5,9,.78) 55%,rgba(42,5,9,.9) 100%),
+      url(img/faith-conference/stage.jpg) center 18%/cover no-repeat,#3a060b;
     box-shadow:inset 0 -1px 0 rgba(246,201,104,.4),inset 0 1px 0 rgba(246,201,104,.4)}
   .fc-inner{display:flex;align-items:center;justify-content:center;gap:clamp(32px,4.4vw,80px);padding:clamp(56px,6vw,108px) 28px;flex-wrap:wrap;max-width:1400px}
   .fc-photo{display:block;width:clamp(250px,25vw,420px);height:auto;border-radius:18px;flex:none;
@@ -350,12 +349,15 @@
   .fc-kicker{display:inline-flex;align-items:center;gap:10px;font-size:clamp(.78rem,1vw,.95rem);letter-spacing:.26em;text-transform:uppercase;font-weight:700;color:var(--gold-soft);margin-bottom:14px}
   .fc-kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);animation:fcPulse 2s infinite}
   @keyframes fcPulse{0%{box-shadow:0 0 0 0 rgba(246,201,104,.7)}70%{box-shadow:0 0 0 12px rgba(246,201,104,0)}100%{box-shadow:0 0 0 0 rgba(246,201,104,0)}}
-  .fc-copy h2{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(3.2rem,7.4vw,6.8rem);line-height:.98;margin-bottom:6px;letter-spacing:-.01em}
-  .fc-copy h2 em{display:block;font-style:normal;font-size:clamp(1.6rem,3.7vw,3.4rem);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-soft);margin-top:6px}
+  .fc-copy h2.fc-title{line-height:0;width:min(100%,500px);margin:0 0 8px}
+  .fc-title img{display:block;width:100%;height:auto}
+  .fc-title .fc-title-faith{filter:drop-shadow(0 8px 18px rgba(0,0,0,.55))}
+  .fc-title .fc-title-script{width:62%;margin:-7% 0 0 19%;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))}
   .fc-where{font-size:clamp(1.1rem,1.8vw,1.5rem);letter-spacing:.34em;text-transform:uppercase;font-weight:600;margin:18px 0 20px}
   .fc-where span{color:var(--gold-soft)}
-  .fc-soon{display:inline-block;padding:10px 26px;border-radius:12px;background:linear-gradient(135deg,#f6c968,#e8a33d);color:#07122e;font-family:'Fraunces',serif;font-style:italic;font-weight:700;
-    font-size:clamp(1.3rem,2.4vw,2rem);transform:rotate(-2deg);box-shadow:0 14px 40px -12px rgba(232,163,61,.7);margin-bottom:22px}
+  .fc-soon{display:inline-block;padding:10px 24px;border-radius:100px;border:1px solid rgba(255,233,77,.7);background:rgba(10,4,4,.78);color:#fff;
+    font:700 clamp(1rem,1.6vw,1.3rem)/1.2 'Montserrat',sans-serif;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 10px 30px -10px rgba(0,0,0,.6);margin-bottom:22px}
+  .fc-soon b{font-weight:800;color:#ffe94d;letter-spacing:.06em}
   .fc-text{color:rgba(250,246,238,.85);font-size:clamp(1rem,1.2vw,1.15rem);max-width:520px;margin-bottom:28px}
   .fc-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
@@ -543,6 +545,7 @@
     .fc-kicker{justify-content:center;text-align:center;line-height:1.5}
     .fc-kicker .dot{display:none}
     .fc-text{margin-left:auto;margin-right:auto}
+    .fc-copy h2.fc-title{margin-left:auto;margin-right:auto}
     .about-grid{grid-template-columns:1fr;gap:40px}
     .service{grid-template-columns:1fr}
     .service .left,.service .right{padding:40px 32px}
@@ -647,13 +650,13 @@
 
 <section class="fc-banner reveal in" id="faith-conference" aria-label="Faith Conference, Indore — 14, 15 and 16 January 2027" data-until="2027-01-16">
   <div class="wrap fc-inner">
-    <img class="fc-photo" src="img/faith-conference-2027.jpg" alt="Faith Conference — Anmol Jeevan Ministries presents. Stronger Faith, Greater Impact. 14, 15 and 16 January 2027." width="1024" height="1536">
+    <img class="fc-photo" src="img/faith-conference-2027-flyer.jpg" alt="Faith Conference flyer — Anmol Jeevan Ministries, 14, 15 and 16 January 2027, with Apostle Vishal Samuel, Pastor Juhi Vishal, Sister Shelley Reddy and Pastor Joseph Raj Allam. For registration contact 79999 29550. This conference is only for the Christian community." width="1122" height="1402">
     <div class="fc-copy">
       <span class="fc-kicker"><span class="dot"></span>Anmol Jeevan Ministries presents</span>
-      <h2>Faith <em>Conference</em></h2>
+      <h2 class="fc-title"><img class="fc-title-faith" src="img/faith-conference/faith-title.webp" alt="Faith" width="853" height="269"><img class="fc-title-script" src="img/faith-conference/conference-script.webp" alt="Conference" width="437" height="170"></h2>
       <div class="fc-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Indore</div>
-      <div class="fc-soon">14, 15 &amp; 16 January 2027</div>
-      <p class="fc-text">Stronger Faith · Greater Impact. A very big gathering is coming to Indore — register now and join us for all three days.</p>
+      <div class="fc-soon"><b>14 · 15 · 16</b> January 2027</div>
+      <p class="fc-text">A very big gathering is coming to Indore — register now and join us for all three days.</p>
       <div class="fc-actions">
         <a href="faith-conference.html" class="btn-lg btn-gold magnetic">Register now</a>
       </div>
